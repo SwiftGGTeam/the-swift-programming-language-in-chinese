@@ -1,37 +1,28 @@
-# Methods
 
-Define and call functions that are part of an instance or type.
+# 方法
 
-*Methods* are functions that are associated with a particular type.
-Classes, structures, and enumerations can all define instance methods,
-which encapsulate specific tasks and functionality for working with an instance of a given type.
-Classes, structures, and enumerations can also define type methods,
-which are associated with the type itself.
-Type methods are similar to class methods in Objective-C.
+定义并调用属于某个实例或者类型的函数。
 
-The fact that structures and enumerations can define methods in Swift
-is a major difference from C and Objective-C.
-In Objective-C, classes are the only types that can define methods.
-In Swift, you can choose whether to define a class, structure, or enumeration,
-and still have the flexibility to define methods on the type you create.
+*方法*是与特定类型关联的函数。
+类、结构体和枚举都可以定义实例方法，这些方法封装了特定的任务和功能，用于处理给定类型的实例。
+类、结构体和枚举还可以定义类型方法，这些方法与类型本身相关联。
+类型方法类似于 Objective-C 中的类方法。
 
-## Instance Methods
+结构体和枚举在 Swift 中能够定义方法，这是与 C 和 Objective-C 的一个重大区别。
+在 Objective-C 中，只有类可以定义方法。
+而在 Swift 中，无论你选择定义类、结构体或枚举，你都可以灵活地为你创建的类型定义方法。
 
-*Instance methods* are functions that belong to instances of
-a particular class, structure, or enumeration.
-They support the functionality of those instances,
-either by providing ways to access and modify instance properties,
-or by providing functionality related to the instance's purpose.
-Instance methods have exactly the same syntax as functions,
-as described in <doc:Functions>.
+## 实例方法
 
-You write an instance method within the opening and closing braces of the type it belongs to.
-An instance method has implicit access to all other instance methods and properties of that type.
-An instance method can be called only on a specific instance of the type it belongs to.
-It can't be called in isolation without an existing instance.
+*实例方法*是属于某个类、结构体或枚举实例的函数。
+它们通过提供访问和修改实例属性的方式，或者提供与实例功能相关的操作，来支持实例的整体功能。
+实例方法有着和函数完全一样的语法，具体描述可以参见 <doc:Functions>。
 
-Here's an example that defines a simple `Counter` class,
-which can be used to count the number of times an action occurs:
+你在所属类型的开闭大括号内编写实例方法。
+实例方法可以隐式访问该类型的所有其他实例方法和属性。
+实例方法只能在该类型的特定实例上调用，而不能在没有实例的情况下独立调用。
+
+这是一个定义简单“Counter”类的示例，可用于计算某个动作发生的次数：
 
 ```swift
 class Counter {
@@ -67,16 +58,15 @@ class Counter {
   ```
 -->
 
-The `Counter` class defines three instance methods:
+`Counter` 类定义了三个实例方法：
 
-- `increment()` increments the counter by `1`.
-- `increment(by: Int)` increments the counter by a specified integer amount.
-- `reset()` resets the counter to zero.
+- `increment()` 将计数器增加 `1`。
+- `increment(by: Int)` 将计数器增加指定的整数值。
+- `reset()` 将计数器重置为零。
 
-The `Counter` class also declares a variable property, `count`,
-to keep track of the current counter value.
+`Counter` 类还声明了一个变量属性 `count`，用于跟踪当前的计数器值。
 
-You call instance methods with the same dot syntax as properties:
+你可以使用与属性相同的点语法来调用实例方法：
 
 ```swift
 let counter = Counter()
@@ -108,20 +98,15 @@ counter.reset()
   ```
 -->
 
-Function parameters can have both a name (for use within the function's body)
-and an argument label (for use when calling the function),
-as described in <doc:Functions#Function-Argument-Labels-and-Parameter-Names>.
-The same is true for method parameters,
-because methods are just functions that are associated with a type.
+函数参数可以同时拥有一个参数名称（在函数体内使用）和一个参数标签（在调用函数时使用），参见<doc:Functions#Function-Argument-Labels-and-Parameter-Names>。
+方法参数也是如此，因为方法只是与某种类型关联的函数。
 
-### The self Property
+### self 属性
 
-Every instance of a type has an implicit property called `self`,
-which is exactly equivalent to the instance itself.
-You use the `self` property to refer to the current instance
-within its own instance methods.
+每个类型的实例都有一个隐式属性，称为 `self`，它与实例本身完全等同。
+你可以在实例方法中使用 `self` 属性来引用当前实例。
 
-The `increment()` method in the example above could have been written like this:
+上面示例中的 `increment()` 方法可以这样编写：
 
 ```swift
 func increment() {
@@ -146,22 +131,14 @@ func increment() {
   NOTE: I'm slightly cheating with my testing of this excerpt, but it works!
 -->
 
-In practice, you don't need to write `self` in your code very often.
-If you don't explicitly write `self`,
-Swift assumes that you are referring to a property or method of the current instance
-whenever you use a known property or method name within a method.
-This assumption is demonstrated by the use of `count` (rather than `self.count`)
-inside the three instance methods for `Counter`.
+实际上，在代码中你不需要经常写 `self`。
+如果你没有显式地写出 `self`，当你在方法中使用已知的属性或方法名称时，Swift 会假设你是在引用当前实例的属性或方法。
+这种假设在 `Counter` 类的三个实例方法中通过直接使用 `count`（而非 `self.count`）得到了体现。
 
-The main exception to this rule occurs when a parameter name for an instance method
-has the same name as a property of that instance.
-In this situation, the parameter name takes precedence,
-and it becomes necessary to refer to the property in a more qualified way.
-You use the `self` property to
-distinguish between the parameter name and the property name.
+此规则的主要例外情况发生在实例方法的形参名称与该实例的属性名称相同时。
+在这种情况下，形参名称优先，此时就需要以更明确的方式引用属性。你可以使用 `self` 属性来区分形参名称和属性名称。
 
-Here, `self` disambiguates between
-a method parameter called `x` and an instance property that's also called `x`:
+在如下情况中，`self` 用于区分一个名为 x 的方法形参和一个同样名为 x 的实例属性：
 
 ```swift
 struct Point {
@@ -195,29 +172,21 @@ if somePoint.isToTheRightOf(x: 1.0) {
   ```
 -->
 
-Without the `self` prefix,
-Swift would assume that both uses of `x` referred to the method parameter called `x`.
+如果没有 `self` 前缀，Swift 会假定 `x` 的两个使用都指的是名为 `x` 的方法形参。
 
-### Modifying Value Types from Within Instance Methods
+### 从实例方法内部修改值类型
 
-Structures and enumerations are *value types*.
-By default, the properties of a value type can't be modified from within its instance methods.
+结构体和枚举是 *值类型*。默认情况下，值类型的属性不能在其实例方法内部被修改。
 
 <!--
   TODO: find out why.  once I actually know why, explain it.
 -->
 
-However, if you need to modify the properties of your structure or enumeration
-within a particular method,
-you can opt in to *mutating* behavior for that method.
-The method can then mutate (that is, change)
-its properties from within the method,
-and any changes that it makes are written back to the original structure when the method ends.
-The method can also assign a completely new instance to its implicit `self` property,
-and this new instance will replace the existing one when the method ends.
+然而，如果你需要在特定方法内部修改结构体或枚举的属性，你可以为该方法启用 *mutating* 行为。
+这样方法就可以在内部改变其属性，并且所有的更改在方法结束时会写回到原始结构体中。
+该方法还可以将一个全新的实例赋值给隐式的 `self` 属性，并且这个新实例将在方法结束时替换现有实例。
 
-You can opt in to this behavior by placing the `mutating` keyword
-before the `func` keyword for that method:
+你可以通过在该方法的 `func` 关键字前添加 `mutating` 关键字来启用这种行为：
 
 ```swift
 struct Point {
@@ -251,16 +220,11 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
   ```
 -->
 
-The `Point` structure above defines a mutating `moveBy(x:y:)` method,
-which moves a `Point` instance by a certain amount.
-Instead of returning a new point,
-this method actually modifies the point on which it's called.
-The `mutating` keyword is added to its definition
-to enable it to modify its properties.
+上面的 `Point` 结构体定义了一个 mutating 的 `moveBy(x:y:)` 方法，该方法可以将一个 `Point` 实例移动一定的距离。
+这个方法直接修改其调用的点，而不是返回一个新的点。为了使该方法能够修改其属性，`mutating` 关键字被添加到它的定义中。
 
-Note that you can't call a mutating method on a constant of structure type,
-because its properties can't be changed, even if they're variable properties,
-as described in <doc:Properties#Stored-Properties-of-Constant-Structure-Instances>:
+请注意，你不能在结构体类型的常量上调用 mutating 方法，因为其属性不能被改变，即使它们是可变属性，
+参见：<doc:Properties#Stored-Properties-of-Constant-Structure-Instances>
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -299,10 +263,9 @@ fixedPoint.moveBy(x: 2.0, y: 3.0)
   if the setter for the computed property is explicitly defined as @!mutating.
 -->
 
-### Assigning to self Within a Mutating Method
+### 在 mutating 方法中给 self 赋值
 
-Mutating methods can assign an entirely new instance to the implicit `self` property.
-The `Point` example shown above could have been written in the following way instead:
+mutating 方法可以将一个全新的实例赋值给隐式的 `self` 属性。上面的 `Point` 示例可以改写为以下方式：
 
 ```swift
 struct Point {
@@ -330,13 +293,10 @@ struct Point {
   ```
 -->
 
-This version of the mutating `moveBy(x:y:)` method creates a new structure
-whose `x` and `y` values are set to the target location.
-The end result of calling this alternative version of the method
-will be exactly the same as for calling the earlier version.
+这个版本的 mutating `moveBy(x:y:)` 方法创建了一个新的结构体，其 `x` 和 `y` 值被设置为目标位置。
+调用这个替代版本方法与调用早期版本方法的最终结果完全相同。
 
-Mutating methods for enumerations can set the implicit `self` parameter to be
-a different case from the same enumeration:
+枚举的 mutating 方法可以将隐式的 `self` 参数设置为同一枚举的不同case：
 
 ```swift
 enum TriStateSwitch {
@@ -384,29 +344,22 @@ ovenLight.next()
   ```
 -->
 
-This example defines an enumeration for a three-state switch.
-The switch cycles between three different power states
-(`off`, `low` and `high`)
-every time its `next()` method is called.
+这个示例定义了一个三状态开关的枚举。每次调用其 `next()` 方法时，开关将在三种不同的电源状态（`off`, `low` 和 `high`）之间循环切换。
 
-## Type Methods
+## 类型方法
 
-Instance methods, as described above,
-are methods that you call on an instance of a particular type.
-You can also define methods that are called on the type itself.
-These kinds of methods are called *type methods*.
-You indicate type methods by writing
-the `static` keyword before the method's `func` keyword.
-Classes can use the `class` keyword instead,
-to allow subclasses to override the superclass’s implementation of that method.
+如上所述，实例方法是在特定类型的实例上调用的方法。
+你还可以定义在类型本身上调用的方法。这类方法称为 *类型方法*。
+你可以通过在方法的 `func` 关键字前添加 `static` 关键字来标识类型方法。
+类可以使用 `class` 关键字代替 `static` ，以允许子类覆盖父类对该方法的实现。
 
-> Note: In Objective-C, you can define type-level methods only for Objective-C classes.
-> In Swift, you can define type-level methods for all classes, structures, and enumerations.
-> Each type method is explicitly scoped to the type it supports.
+> 注意：在 Objective-C 中，你只能为 Objective-C 类定义类型级方法。
+> 在 Swift 中，你可以为所有类、结构体和枚举定义类型级方法。
+> 每个类型方法都明确作用于其对应的类型。
 
-Type methods are called with dot syntax, like instance methods.
-However, you call type methods on the type, not on an instance of that type.
-Here's how you call a type method on a class called `SomeClass`:
+类型方法与实例方法一样，使用点语法调用。
+然而你是在类型上调用类型方法，而不是在该类型的实例上调用。
+下面是如何在一个名为 `SomeClass`的类上调用类型方法的示例：
 
 ```swift
 class SomeClass {
@@ -430,31 +383,20 @@ SomeClass.someTypeMethod()
   ```
 -->
 
-Within the body of a type method,
-the implicit `self` property refers to the type itself,
-rather than an instance of that type.
-This means that you can use `self` to disambiguate between
-type properties and type method parameters,
-just as you do for instance properties and instance method parameters.
+在类型方法的主体内部，隐式的 `self` 属性指的是类型本身，而不是该类型的实例。
+这意味着你可以使用 `self` 来区分类型属性和类型方法形参，正如你在实例属性和实例方法形参中所做的那样。
 
-More generally, any unqualified method and property names that you use
-within the body of a type method will refer to other type-level methods and properties.
-A type method can call another type method with the other method's name,
-without needing to prefix it with the type name.
-Similarly, type methods on structures and enumerations can access type properties
-by using the type property's name without a type name prefix.
+更一般地说，在类型方法的主体内使用的任何未限定的方法和属性名称，都将指向其他类型级的方法和属性。
+类型方法可以直接通过其他方法的名称调用另一个类型方法，而无需在前面加上类型名称。
+类似地，结构体和枚举上的类型方法可以通过使用类型属性的名称来访问类型属性，无需加类型名称前缀。
 
-The example below defines a structure called `LevelTracker`,
-which tracks a player's progress through the different levels or stages of a game.
-It's a single-player game,
-but can store information for multiple players on a single device.
+下面的示例定义了一个名为 `LevelTracker` 的结构，用于跟踪玩家在游戏不同关卡或阶段的进度。
+这是一个单人游戏，但可以在单个设备上存储多个玩家的信息。
 
-All of the game's levels (apart from level one) are locked when the game is first played.
-Every time a player finishes a level,
-that level is unlocked for all players on the device.
-The `LevelTracker` structure uses type properties and methods
-to keep track of which levels of the game have been unlocked.
-It also tracks the current level for an individual player.
+游戏的所有关卡（除了第一关）在首次游玩时都是锁定的。
+每当一个玩家完成一个关卡，该关卡将对设备上的所有玩家解锁。
+`LevelTracker` 结构使用类型属性和方法来跟踪游戏中哪些关卡已被解锁。
+同时，它还跟踪每个玩家的当前关卡。
 
 ```swift
 struct LevelTracker {
@@ -510,38 +452,24 @@ struct LevelTracker {
   ```
 -->
 
-The `LevelTracker` structure keeps track of the highest level that any player has unlocked.
-This value is stored in a type property called `highestUnlockedLevel`.
+`LevelTracker` 结构跟踪所有玩家已解锁的最高关卡。
+该值存储在名为 `highestUnlockedLevel` 的类型属性中。
 
-`LevelTracker` also defines two type functions to work with
-the `highestUnlockedLevel` property.
-The first is a type function called `unlock(_:)`,
-which updates the value of `highestUnlockedLevel` whenever a new level is unlocked.
-The second is a convenience type function called `isUnlocked(_:)`,
-which returns `true` if a particular level number is already unlocked.
-(Note that these type methods can access the `highestUnlockedLevel` type property
-without your needing to write it as `LevelTracker.highestUnlockedLevel`.)
+`LevelTracker` 还定义了两个类型函数来处理 `highestUnlockedLevel` 属性。
+第一个是名为 `unlock(_:)` 的类型函数，它在解锁新关卡时更新 `highestUnlockedLevel` 的值。
+第二个是名为 `isUnlocked(_:)` 的便利类型函数，如果特定关卡编号已经解锁，则返回 `true`。
+（请注意，这些类型方法可以直接访问 `highestUnlockedLevel` 类型属性，而不需要写成 `LevelTracker.highestUnlockedLevel`。）
 
-In addition to its type property and type methods,
-`LevelTracker` tracks an individual player's progress through the game.
-It uses an instance property called `currentLevel` to track
-the level that a player is currently playing.
+除了类型属性和类型方法，`LevelTracker` 还跟踪每个玩家在游戏中的进度。
+它使用一个名为 `currentLevel` 的实例属性来记录玩家当前正在玩的关卡。
 
-To help manage the `currentLevel` property,
-`LevelTracker` defines an instance method called `advance(to:)`.
-Before updating `currentLevel`,
-this method checks whether the requested new level is already unlocked.
-The `advance(to:)` method returns a Boolean value to indicate
-whether or not it was actually able to set `currentLevel`.
-Because it's not necessarily a mistake for
-code that calls the `advance(to:)` method
-to ignore the return value,
-this function is marked with the `@discardableResult` attribute.
-For more information about this attribute,
-see <doc:Attributes>.
+为了帮助管理 `currentLevel` 属性，`LevelTracker` 定义了一个名为 `advance(to:)` 的实例方法。
+在更新 `currentLevel` 之前，该方法会检查请求的新关卡是否已经解锁。
+`advance(to:)` 方法返回一个布尔值，以指示是否成功设置了 `currentLevel`。
+由于调用 `advance(to:)` 方法的代码不一定会关注返回值，因此该函数被标记为 `@discardableResult` 属性。
+有关此属性的更多信息，请参见 <doc:Attributes>。
 
-The `LevelTracker` structure is used with the `Player` class, shown below,
-to track and update the progress of an individual player:
+`LevelTracker` 结构与下面展示的 `Player` 类一起使用，用于跟踪和更新每个玩家的进度：
 
 ```swift
 class Player {
@@ -575,18 +503,12 @@ class Player {
   ```
 -->
 
-The `Player` class creates a new instance of `LevelTracker`
-to track that player's progress.
-It also provides a method called `complete(level:)`,
-which is called whenever a player completes a particular level.
-This method unlocks the next level for all players
-and updates the player's progress to move them to the next level.
-(The Boolean return value of `advance(to:)` is ignored,
-because the level is known to have been unlocked
-by the call to `LevelTracker.unlock(_:)` on the previous line.)
+`Player` 类创建了一个新的 `LevelTracker` 实例来跟踪该玩家的进度。
+它还提供了一个名为 `complete(level:)`的方法，每当玩家完成某个关卡时调用。
+此方法为所有玩家解锁下一个关卡，并更新该玩家的进度，使其进入下一个关卡。
+（ `advance(to:)` 的Boolean返回值被忽略，因为通过前一行对 `LevelTracker.unlock(_:)` 的调用，关卡已被解锁。）
 
-You can create an instance of the `Player` class for a new player,
-and see what happens when the player completes level one:
+你可以为一个新玩家创建 `Player` 类的实例，并查看当该玩家完成第一关时会发生什么：
 
 ```swift
 var player = Player(name: "Argyrios")
@@ -606,9 +528,7 @@ print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
   ```
 -->
 
-If you create a second player, whom you try to move to a level
-that's not yet unlocked by any player in the game,
-the attempt to set the player's current level fails:
+如果你创建第二个玩家，并尝试将其移动到尚未被任何玩家解锁的关卡，那么尝试设置玩家的当前等级时会失败：
 
 ```swift
 player = Player(name: "Beto")

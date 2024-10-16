@@ -1,147 +1,66 @@
-# Attributes
+# 特性
 
-Add information to declarations and types.
+为声明和类型添加信息。
 
-There are two kinds of attributes in Swift ---
-those that apply to declarations and those that apply to types.
-An attribute provides additional information about the declaration or type.
-For example,
-the `discardableResult` attribute on a function declaration indicates that,
-although the function returns a value,
-the compiler shouldn't generate a warning if the return value is unused.
+在 Swift 中有两种特性——适用于声明的特性和适用于类型的特性。特性提供有关声明或类型的附加信息。例如，函数声明上的 `discardableResult` 特性表示，尽管函数返回一个值，但如果返回值未被使用，编译器不应生成警告。
 
-You specify an attribute by writing the `@` symbol followed by the attribute's name
-and any arguments that the attribute accepts:
+你可以通过编写 `@` 符号，并在其后加上特性的名称以及特性接受的任何参数，来指定一个特性。
 
 ```swift
 @<#attribute name#>
 @<#attribute name#>(<#attribute arguments#>)
 ```
 
-Some declaration attributes accept arguments
-that specify more information about the attribute
-and how it applies to a particular declaration.
-These *attribute arguments* are enclosed in parentheses,
-and their format is defined by the attribute they belong to.
+有些声明特性接受参数，这些参数指定有关特性的更多信息以及它如何适用于特定声明。这些*特性参数*被括号括起来，其格式由它们所属的特性定义。
 
-Attached macros and property wrappers also use attribute syntax.
-For information about how macros expand,
-see <doc:Expressions#Macro-Expansion-Expression>.
-For information about property wrappers,
-see <doc:Attributes#propertyWrapper>.
+附加宏和属性包装器也使用特性语法。有关宏如何展开的信息，参见 <doc:Expressions#Macro-Expansion-Expression>。有关属性包装器的信息，参见 <doc:Attributes#propertyWrapper>。
 
-## Declaration Attributes
+## 声明特性
 
-You can apply a declaration attribute to declarations only.
+你只能将声明特性应用于声明。
 
 ### attached
 
-Apply the `attached` attribute to a macro declaration.
-The arguments to this attribute indicate the macro's role.
-For a macro that has multiple roles,
-apply the `attached` macro multiple times, once for each role.
+将 `attached` 特性应用于宏声明。该特性的参数指示宏的角色。对于具有多个角色的宏，针对每个角色多次应用 `attached` 宏，每个角色应用一次。
 
 <!-- TODO:
 If there's a stable URL we can use, make the macro protocols below links.
 -->
 
-The first argument to this attribute
-indicates the macros role:
+特性的第一个参数指明宏的角色：
 
-- term Peer macros:
-  Write `peer` as the first argument to this attribute.
-  The type that implements the macro conforms to the `PeerMacro` protocol.
-  These macros produce new declarations
-  in the same scope as the declaration
-  that the macro is attached to.
-  For example,
-  applying a peer macro to a method of a structure
-  can define additional methods and properties on that structure.
+- Peer 宏：将 `peer` 作为此特性的第一个参数。实现该宏的类型遵循 `PeerMacro` 协议。这些宏在与宏附加的声明相同的作用域中生成新的声明。例如，将 peer 宏应用于结构体的方法可以在该结构体上定义额外的方法和属性。
 
-- term Member macros:
-  Write `member` as the first argument to this attribute.
-  The type that implements the macro conforms to the `MemberMacro` protocol.
-  These macros produce new declarations
-  that are members of the type or extension
-  that the macro is attached to.
-  For example,
-  applying a member macro to a structure declaration
-  can define additional methods and properties on that structure.
+- Member 宏：将 `member` 作为此特性的第一个参数。实现该宏的类型遵循 `MemberMacro` 协议。这些宏生成的新声明是该宏所附加的类型或扩展的成员。例如，将 member 宏应用于结构体声明可以在该结构体上定义额外的方法和属性。
 
-- term Member attribute:
-  Write `memberAttribute` as the first argument to this attribute.
-  The type that implements the macro conforms to the `MemberAttributeMacro` protocol.
-  These macros add attributes to members of the type or extension
-  that the macro is attached to.
+- Member 特性：将 `memberAttribute` 作为此特性的第一个参数。实现该宏的类型遵循 `MemberAttributeMacro` 协议。这些宏将特性添加到该宏所附加的类型或扩展的成员上。
 
-- term Accessor macros:
-  Write `accessor` as the first argument to this attribute.
-  The type that implements the macro conforms to the `AccessorMacro` protocol.
-  These macros add accessors to the stored property they're attached to,
-  turning it into a computed property.
+- Accessor 宏：将 `accessor` 作为此特性的第一个参数。实现该宏的类型遵循 `AccessorMacro` 协议。这些宏为它们附加的存储属性添加访问器，将其转换为计算属性。
 
-- term Extension macros:
-  Write `extension` as the first argument to this attribute.
-  The type that implements the macro conforms to the `ExtensionMacro` protocol.
-  These macros can add protocol conformance,
-  a `where` clause,
-  and new declarations that are members of the type the macro is attached to.
-  If the macro adds protocol conformances,
-  include the `conformances:` argument and specify those protocols.
-  The conformance list contains protocol names,
-  type aliases that refer to conformance list items,
-  or protocol compositions of conformance list items.
-  An extension macro on a nested type
-  expands to an extension at the top level of that file.
-  You can't write an extension macro
-  on an extension, a type alias, or a type that's nested inside a function,
-  or use an extension macro to add an extension that has a peer macro.
+- Extension 扩展宏：将 `extension` 作为此特性的第一个参数。实现宏的类型遵循 `ExtensionMacro` 协议。这些宏可以添加协议遵循、`where` 从句，以及宏所附加到的类型的成员的新声明。如果宏添加了协议遵循，请包含 `conformances:` 参数并指定这些协议。遵循列表包含协议名称、指向遵循列表项的类型别名，或者是遵循列表项的协议组合。嵌套类型上的扩展宏会展开为该文件顶层的扩展。你不能在扩展、类型别名或嵌套在函数内的类型上编写扩展宏，也不能使用扩展宏添加具有 peer 宏的扩展。
 
-The peer, member, and accessor macro roles require a `names:` argument,
-listing the names of the symbols that the macro generates.
-The extension macro role also requires a `names:` argument
-if the macro adds declarations inside the extension.
-When a macro declaration includes the `names:` argument,
-the macro implementation must generate
-only symbol with names that match that list.
-That said,
-a macro need not generate a symbol for every listed name.
-The value for that argument is a list of one or more of the following:
+peer、member 和 accessor 宏角色需要一个 `names:` 参数，列出宏生成的符号名称。如果宏在扩展内部添加声明，扩展宏角色也需要一个 `names:` 参数。当宏声明包含 `names:` 参数时，宏实现必须仅生成与该列表匹配的名称的符号。也就是说，宏不必为每个列出的名称生成符号。该参数的值是以下一个或多个项的列表：
 
-- `named(<#name#>)`
-  where *name* is that fixed symbol name,
-  for a name that's known in advance.
+- `named(<#name#>)` 其中 *name* 是那个固定的符号名称，用于一个已知的名称。
 
-- `overloaded`
-  for a name that's the same as an existing symbol.
+- `overloaded` 用于与现有符号同名的名称。
 
-- `prefixed(<#prefix#>)`
-  where *prefix* is prepended to the symbol name,
-  for a name that starts with a fixed string.
+- `prefixed(<#prefix#>)` 其中 *prefix* 被添加到符号名称前，用于以固定字符串开头的名称。
 
-- `suffixed(<#suffix#>)`
-  where *suffix* is appended to the symbol name,
-  for a name that ends with a fixed string.
+- `suffixed(<#suffix#>)` 其中 *suffix* 被附加到符号名称后，用于以固定字符串结尾的名称。
 
-- `arbitrary`
-  for a name that can't be determined until macro expansion.
+- `arbitrary` 用于一个在宏展开之前无法确定的名称。
 
-As a special case,
-you can write `prefixed($)`
-for a macro that behaves similar to a property wrapper.
+作为一个特殊情况，你可以为一个行为类似于属性包装器的宏编写 `prefixed($)`。
 <!--
 TODO TR: Is there any more detail about this case?
 -->
 
 ### available
 
-Apply this attribute to indicate a declaration's life cycle
-relative to certain Swift language versions
-or certain platforms and operating system versions.
+应用此特性来表明某个声明的生命周期是相对于特定的 Swift 语言版本或特定的平台和操作系统版本的。
 
-The `available` attribute always appears
-with a list of two or more comma-separated attribute arguments.
-These arguments begin with one of the following platform or language names:
+`available` 特性总是与两个或更多用逗号分隔的特性参数列表一起出现。这些参数以以下平台或语言名称之一开头：
 
 - `iOS`
 - `iOSApplicationExtension`
@@ -166,81 +85,48 @@ These arguments begin with one of the following platform or language names:
   For the list in source, see include/swift/AST/PlatformKinds.def
 -->
 
-You can also use an asterisk (`*`) to indicate the
-availability of the declaration on all of the platform names listed above.
-An `available` attribute
-that specifies availability using a Swift version number
-can't use the asterisk.
+你还可以使用星号 (`*`) 来表示在上述所有列出的平台上声明的可用性。使用 Swift 版本号指定可用性的 `available` 特性不能再使用星号。
 
-The remaining arguments can appear in any order
-and specify additional information about the declaration's life cycle,
-including important milestones.
+其余参数可以以任何顺序出现，并指定有关声明生命周期的附加信息，包括重要的里程碑。
 
-- The `unavailable` argument indicates that the declaration
-  isn't available on the specified platform.
-  This argument can't be used when specifying Swift version availability.
-- The `introduced` argument indicates the first version
-  of the specified platform or language in which the declaration was introduced.
-  It has the following form:
+- `unavailable` 参数表示该声明在指定平台上不可用。指定 Swift 版本可用性时无法使用此参数。
+- `introduced` 参数表示声明引入到指定平台或语言的第一个版本。它具有以下形式：
 
   ```swift
   introduced: <#version number#>
   ```
-  The *version number* consists of one to three positive integers,
-  separated by periods.
-- The `deprecated` argument indicates the first version
-  of the specified platform or language in which the declaration was deprecated.
-  It has the following form:
+  *version number* 由一个到三个正整数组成，数字之间用句点分隔。
+- `deprecated` 参数表示声明在指定平台或语言上被弃用的的第一个版本。它具有以下形式：
 
   ```swift
   deprecated: <#version number#>
   ```
-  The optional *version number* consists of one to three positive integers,
-  separated by periods.
-  Omitting the version number indicates that the declaration is currently deprecated,
-  without giving any information about when the deprecation occurred.
-  If you omit the version number, omit the colon (`:`) as well.
-- The `obsoleted` argument indicates the first version
-  of the specified platform or language in which the declaration was obsoleted.
-  When a declaration is obsoleted,
-  it's removed from the specified platform or language and can no longer be used.
-  It has the following form:
+  可选的 *version number* 由一个到三个正整数组成，数字之间用句点分隔。省略版本号表示该声明当前已被弃用，但没有提供有关何时被弃用的任何信息。如果省略版本号，也要省略冒号 (`:`)。
+- `obsoleted` 参数表示指定平台或语言中声明被废除的第一个版本。当声明被废除时，它会从指定的平台或语言中移除，并且不能再使用。它的形式如下：
 
   ```swift
   obsoleted: <#version number#>
   ```
-  The *version number* consists of one to three positive integers, separated by periods.
-- The `message` argument provides a textual message that the compiler displays
-  when emitting a warning or error about the use of a deprecated or obsoleted declaration.
-  It has the following form:
+   *version number* 由一个到三个正整数组成，数字之间用句点分隔。
+- `message` 参数提供了一个文本消息，当编译器发出关于使用已弃用或已废除声明的警告或错误时，会显示该消息。它具有以下形式：
 
   ```swift
   message: <#message#>
   ```
-  The *message* consists of a string literal.
-- The `renamed` argument provides a textual message
-  that indicates the new name for a declaration that's been renamed.
-  The compiler displays the new name
-  when emitting an error about the use of a renamed declaration.
-  It has the following form:
+   *message* 由一个字符串字面量组成。
+- `renamed` 参数提供了一个文本消息，表示声明被重命名到的新名称。当发出有关使用重命名声明的错误时，编译器会显示新名称。它具有以下形式：
 
   ```swift
   renamed: <#new name#>
   ```
-  The *new name* consists of a string literal.
+   *new name* 由一个字符串字面量组成。
 
-  You can apply the `available` attribute
-  with the `renamed` and `unavailable` arguments
-  to a type alias declaration, as shown below,
-  to indicate that the name of a declaration changed
-  between releases of a framework or library.
-  This combination results in a compile-time error
-  that the declaration has been renamed.
+  你可以将带有 `renamed` 和 `unavailable` 参数的 `available` 特性应用于类型别名声明，如下所示，以指示声明的名称在框架或库的不同版本之间发生了变化。此组合会导致编译时错误，表明声明已被重命名。
 
   ```swift
-  // First release
+  // 首个版本
   protocol MyProtocol {
-      // protocol definition
+      // 协议定义
   }
   ```
 
@@ -257,9 +143,9 @@ including important milestones.
   -->
 
   ```swift
-  // Subsequent release renames MyProtocol
+  // 后续版本将 MyProtocol 重命名为 MyRenamedProtocol
   protocol MyRenamedProtocol {
-      // protocol definition
+      // 协议定义
   }
 
   @available(*, unavailable, renamed: "MyRenamedProtocol")
@@ -281,15 +167,7 @@ including important milestones.
     ```
   -->
 
-You can apply multiple `available` attributes on a single declaration
-to specify the declaration's availability on different platforms
-and different versions of Swift.
-The declaration that the `available` attribute applies to
-is ignored if the attribute specifies
-a platform or language version that doesn't match the current target.
-If you use multiple `available` attributes,
-the effective availability is the combination of
-the platform and Swift availabilities.
+你可以在单个声明上应用多个 `available` 特性，以指定该声明在不同平台和不同版本的 Swift 上的可用性。如果 `available` 特性指定的平台或语言版本与当前目标不匹配，则该特性被应用到的声明将被忽略。如果你使用多个 `available` 特性，则有效的可用性是平台和 Swift 可用性的组合。
 
 <!--
   - test: `multipleAvailableAttributes`
@@ -302,19 +180,14 @@ the platform and Swift availabilities.
   ```
 -->
 
-If an `available` attribute only specifies an `introduced` argument
-in addition to a platform or language name argument,
-you can use the following shorthand syntax instead:
+如果除了平台或语言名称参数之外，`available` 特性仅指定一个 `introduced` 参数，则可以使用以下简写语法：
 
 ```swift
 @available(<#platform name#> <#version number#>, *)
 @available(swift <#version number#>)
 ```
 
-The shorthand syntax for `available` attributes
-concisely expresses availability for multiple platforms.
-Although the two forms are functionally equivalent,
-the shorthand form is preferred whenever possible.
+`available` 特性的简写语法简洁地表达了多个平台的可用性。尽管这两种形式在功能上是等效的，但在可能的情况下，优先使用简写形式。
 
 ```swift
 @available(iOS 10.0, macOS 10.12, *)
@@ -334,11 +207,7 @@ class MyClass {
   ```
 -->
 
-An `available` attribute
-that specifies availability using a Swift version number
-can't additionally specify a declaration's platform availability.
-Instead, use separate `available` attributes to specify a Swift
-version availability and one or more platform availabilities.
+使用 Swift 版本号指定可用性的 `available` 特性不能另外指定声明的平台可用性。相反，使用单独的 `available` 特性来指定 Swift 版本的可用性和在一个或多个平台上的可用性。
 
 ```swift
 @available(swift 3.0.2)
@@ -362,22 +231,9 @@ struct MyStruct {
 
 ### backDeployed
 
-Apply this attribute to a function, method, subscript, or computed property
-to include a copy of the symbol's implementation
-in programs that call or access the symbol.
-You use this attribute to annotate symbols that ship as part of a platform,
-like the APIs that are included with an operating system.
-This attribute marks symbols that can be made available retroactively
-by including a copy of their implementation in programs that access them.
-Copying the implementation is also known as *emitting into the client*.
+将此特性应用于函数、方法、下标操作或计算属性，以便在调用或访问该符号的程序中包含符号实现的副本。你可以使用此特性来标注作为平台一部分发布的符号，例如某操作系统中所包含的 API。此特性标注可以通过在访问它们的程序中包含其实现的副本来可追溯地使用这些符号。复制实现也称为*发送到客户端*。
 
-This attribute takes a `before:` argument,
-specifying the first version of platforms that provide this symbol.
-These platform versions have the same meaning
-as the platform version you specify for the `available` attribute.
-Unlike the `available` attribute,
-the list can't contain an asterisk (`*`) to refer to all versions.
-For example, consider the following code:
+此特性接受一个 `before:` 参数，指定提供此符号的平台的第一个版本。这些平台版本与你为 `available` 特性的指定的平台版本具有相同的含义。与 `available` 特性不同，列表中不能包含星号 (`*`) 来指代所有版本。例如，考虑以下代码：
 
 ```swift
 @available(iOS 16, *)
@@ -385,32 +241,12 @@ For example, consider the following code:
 func someFunction() { /* ... */ }
 ```
 
-In the example above,
-the iOS SDK provides `someFunction()` starting in iOS 17.
-In addition,
-the SDK makes `someFunction()` available on iOS 16 using back deployment.
+在上面的例子中，iOS SDK 从 iOS 17 开始提供 `someFunction()`。此外，SDK 通过向后兼容在 iOS 16 上提供 `someFunction()`。
 
-When compiling code that calls this function,
-Swift inserts a layer of indirection that finds the function's implementation.
-If the code is run using a version of the SDK that includes this function,
-the SDK's implementation is used.
-Otherwise, the copy included in the caller is used.
-In the example above,
-calling `someFunction()` uses the implementation from the SDK
-when running on iOS 17 or later,
-and when running on iOS 16
-it uses the copy of `someFunction()` that's included in the caller.
+在编译调用此函数的代码时，Swift 插入了一层间接调用，以找到该函数的实现。如果代码已包含此函数的 SDK 版本运行，则使用 SDK 的实现。否则，将使用调用者中包含的副本。在上面的示例中，当在 iOS 17 或更高版本上运行时，调用 `someFunction()` 使用 SDK 的实现，而在 iOS 16 上运行时，则使用调用者中包含的 `someFunction()` 的副本。
 
-> Note:
-> When the caller's minimum deployment target
-> is the same as or greater than
-> the first version of the SDK that includes the symbol,
-> the compiler can optimize away the runtime check
-> and call the SDK's implementation directly.
-> In this case,
-> if you access the back-deployed symbol directly,
-> the compiler can also omit
-> the copy of the symbol's implementation from the client.
+> 注意:
+> 当调用者的最低部署目标与包含该符号的 SDK 的第一个版本相同或更高时，编译器可以优化掉运行时检查，直接调用 SDK 的实现。在这种情况下，如果你直接访问向后兼容的符号，编译器也可以省略客户端中符号实现的副本。
 
 <!--
 Stripping out the copy emitted into the client
@@ -422,32 +258,21 @@ and the details could change over time,
 so we don't guarantee in docs that it always happens.
 -->
 
-Functions, methods, subscripts, and computed properties
-that meet the following criteria can be back deployed:
+满足以下标准的函数、方法、下标操作和计算属性可以进行向后兼容：
 
-- The declaration is `public` or `@usableFromInline`.
-- For class instance methods and class type methods,
-  the method is marked `final` and isn't marked `@objc`.
-- The implementation satisfies the requirements for an inlinable function,
-  described in <doc:Attributes#inlinable>.
+- 声明是 `public` 或 `@usableFromInline`。
+- 对于实例方法和类方法，该方法被标记为 `final`，并且没有标记 `@objc`。
+- 该实现满足 <doc:Attributes#inlinable> 中描述的对内联函数的要求。
 
 ### discardableResult
 
-Apply this attribute to a function or method declaration
-to suppress the compiler warning
-when the function or method that returns a value
-is called without using its result.
+将此特性应用于函数或方法声明，以在调用返回值的函数或方法而不使用其结果时抑制编译器警告。
 
 ### dynamicCallable
 
-Apply this attribute to a class, structure, enumeration, or protocol
-to treat instances of the type as callable functions.
-The type must implement either a `dynamicallyCall(withArguments:)` method,
-a `dynamicallyCall(withKeywordArguments:)` method,
-or both.
+将此特性应用于类、结构体、枚举或协议，以将该类型的实例视为可调用函数。该类型必须实现 `dynamicallyCall(withArguments:)` 方法和 `dynamicallyCall(withKeywordArguments:)` 方法中的至少一个或都实现。
 
-You can call an instance of a dynamically callable type
-as if it's a function that takes any number of arguments.
+你可以像调用有任意数量参数的函数一样调用动态可调用类型的实例。
 
 ```swift
 @dynamicCallable
@@ -463,14 +288,14 @@ struct TelephoneExchange {
 
 let dial = TelephoneExchange()
 
-// Use a dynamic method call.
+// 使用动态方法调用
 dial(4, 1, 1)
-// Prints "Get Swift help on forums.swift.org"
+// 打印 "Get Swift help on forums.swift.org"
 
 dial(8, 6, 7, 5, 3, 0, 9)
-// Prints "Unrecognized number"
+// 打印 "Unrecognized number"
 
-// Call the underlying method directly.
+// 直接调用内部的方法
 dial.dynamicallyCall(withArguments: [4, 1, 1])
 ```
 
@@ -504,14 +329,9 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
   ```
 -->
 
-The declaration of the `dynamicallyCall(withArguments:)` method
-must have a single parameter that conforms to the
-[`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral)
-protocol --- like `[Int]` in the example above.
-The return type can be any type.
+`dynamicallyCall(withArguments:)` 方法的声明必须有一个遵循 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral) 协议的单一参数——就像上面的例子中的 `[Int]`。返回类型可以是任何类型。
 
-You can include labels in a dynamic method call
-if you implement the `dynamicallyCall(withKeywordArguments:)` method.
+如果你实现了 `dynamicallyCall(withKeywordArguments:)` 方法，则可以在动态方法调用中包含标签。
 
 ```swift
 @dynamicCallable
@@ -559,33 +379,14 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   ```
 -->
 
-The declaration of the `dynamicallyCall(withKeywordArguments:)` method
-must have a single parameter that conforms to the
-[`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral)
-protocol,
-and the return type can be any type.
-The parameter's [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key)
-must be
-[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral).
-The previous example uses [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs)
-as the parameter type
-so that callers can include duplicate parameter labels ---
-`a` and `b` appear multiple times in the call to `repeat`.
+`dynamicallyCall(withKeywordArguments:)` 方法的声明必须有一个遵循 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 协议的单一参数，返回类型可以是任何类型。参数的 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 必须遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral)。前面的例子使用 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 作为参数类型，以便调用者可以包含重复的参数标签——`a` 和 `b` 在对 `repeat` 的调用中出现多次。
 
-If you implement both `dynamicallyCall` methods,
-`dynamicallyCall(withKeywordArguments:)` is called
-when the method call includes keyword arguments.
-In all other cases, `dynamicallyCall(withArguments:)` is called.
+如果你实现了两种不同参数类型的 `dynamicallyCall` 方法，当方法调用包含关键字参数时，将调用 `dynamicallyCall(withKeywordArguments:)`。在所有其他情况下，将调用 `dynamicallyCall(withArguments:)`。
 
-You can only call a dynamically callable instance
-with arguments and a return value that match the types you specify
-in one of your `dynamicallyCall` method implementations.
-The call in the following example doesn't compile because
-there isn't an implementation of `dynamicallyCall(withArguments:)`
-that takes `KeyValuePairs<String, String>`.
+你只能使用与你在某个 `dynamicallyCall` 方法实现中指定的类型匹配的参数和返回值来调用动态可调用实例。以下示例中的调用无法编译，因为没有接受 `KeyValuePairs<String, String>` 的 `dynamicallyCall(withArguments:)` 的实现。
 
 ```swift
-repeatLabels(a: "four") // Error
+repeatLabels(a: "four") // 错误
 ```
 
 <!--
@@ -612,34 +413,15 @@ repeatLabels(a: "four") // Error
 
 ### dynamicMemberLookup
 
-Apply this attribute to a class, structure, enumeration, or protocol
-to enable members to be looked up by name at runtime.
-The type must implement a `subscript(dynamicMember:)` subscript.
+将此特性应用于类、结构体、枚举或协议，以便在运行时按名称查找成员。该类型必须实现一个 `subscript(dynamicMember:)` 下标操作。
 
-In an explicit member expression,
-if there isn't a corresponding declaration for the named member,
-the expression is understood as a call to
-the type's `subscript(dynamicMember:)` subscript,
-passing information about the member as the argument.
-The subscript can accept a parameter that's either a key path or a member name;
-if you implement both subscripts,
-the subscript that takes key path argument is used.
+在显式成员表达式中，如果没有对应的命名成员声明，则该表达式被理解为对类型的 `subscript(dynamicMember:)` 下标操作的调用，并将有关成员的信息作为参数传递。下标操作可以接受一个参数，该参数可以是键路径或成员名称；如果你实现了两种下标操作，则使用接受键路径参数的下标操作。
 
-An implementation of `subscript(dynamicMember:)`
-can accept key paths using an argument of type
-[`KeyPath`](https://developer.apple.com/documentation/swift/keypath),
-[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath),
-or [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath).
-It can accept member names using an argument of a type that conforms to the
-[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) protocol ---
-in most cases, `String`.
-The subscript's return type can be any type.
+`subscript(dynamicMember:)` 的实现可以接受
+[`KeyPath`](https://developer.apple.com/documentation/swift/keypath)、
+[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath) 或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 来作为键路径参数。它可以通过一个类型遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 协议的参数来接受成员名称——在大多数情况下，这个类型是 `String`。下标操作的返回类型可以是任何类型。
 
-Dynamic member lookup by member name
-can be used to create a wrapper type around data
-that can't be type checked at compile time,
-such as when bridging data from other languages into Swift.
-For example:
+通过成员名称的动态成员查找，可以创建一个包装类型，用于处理在编译时无法进行类型检查的数据，例如在将其他语言的数据桥接到 Swift 时。比如：
 
 ```swift
 @dynamicMemberLookup
@@ -652,15 +434,16 @@ struct DynamicStruct {
 }
 let s = DynamicStruct()
 
-// Use dynamic member lookup.
+// 使用动态成员查询
 let dynamic = s.someDynamicMember
 print(dynamic)
-// Prints "325"
+// 打印 "325"
 
-// Call the underlying subscript directly.
+// 直接调用底层下标
 let equivalent = s[dynamicMember: "someDynamicMember"]
 print(dynamic == equivalent)
-// Prints "true"
+// 打印 "true"
+
 ```
 
 <!--
@@ -689,10 +472,7 @@ print(dynamic == equivalent)
   ```
 -->
 
-Dynamic member lookup by key path
-can be used to implement a wrapper type
-in a way that supports compile-time type checking.
-For example:
+按键路径进行动态成员查找能以支持编译时类型检查的方式实现包装类型。例如：
 
 ```swift
 struct Point { var x, y: Int }
@@ -733,8 +513,7 @@ print(wrapper.x)
 
 ### freestanding
 
-Apply the `freestanding` attribute
-to the declaration of a freestanding macro.
+将 `freestanding` 特性应用于独立宏的声明。
 
 <!--
 
@@ -757,19 +536,10 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 ### frozen
 
-Apply this attribute to a structure or enumeration declaration
-to restrict the kinds of changes you can make to the type.
-This attribute is allowed only when compiling in library evolution mode.
-Future versions of the library can't change the declaration
-by adding, removing, or reordering
-an enumeration's cases
-or a structure's stored instance properties.
-These changes are allowed on nonfrozen types,
-but they break ABI compatibility for frozen types.
+将此特性应用于结构体或枚举的声明，以限制可以对该类型所能进行的更改类型。此特性仅在以库演进模式编译时允许使用。库的未来版本不能通过添加、删除或重新排序枚举的成员或结构体的存储实例属性来更改其声明。这些更改在非冻结类型上是允许的，但会破坏冻结类型的 ABI 兼容性。
 
-> Note: When the compiler isn't in library evolution mode,
-> all structures and enumerations are implicitly frozen,
-> and this attribute is ignored.
+> 注意:
+> 当编译器不处于库演进模式时，所有结构体和枚举都被隐式冻结，此特性将被忽略。
 
 <!--
   - test: `can-use-frozen-without-evolution`
@@ -793,28 +563,9 @@ but they break ABI compatibility for frozen types.
   ```
 -->
 
-In library evolution mode,
-code that interacts with members of nonfrozen structures and enumerations
-is compiled in a way that allows it to continue working without recompiling
-even if a future version of the library
-adds, removes, or reorders some of that type's members.
-The compiler makes this possible using techniques like
-looking up information at runtime
-and adding a layer of indirection.
-Marking a structure or enumeration as frozen
-gives up this flexibility to gain performance:
-Future versions of the library can make only limited changes to the type,
-but the compiler can make additional optimizations
-in code that interacts with the type's members.
+在库演进模式下，与非冻结结构体和枚举成员交互的代码会以一种特殊的方式编译，即使库的未来版本添加、移除或重新排序了该类型的一些成员，该代码也可以继续工作，而无需重新编译。编译器通过在运行时查找信息和添加间接层等技术实现了这一点。将结构体或枚举标记为冻结（frozen）会放弃这种灵活性以获得性能提升：库的未来版本只能对该类型进行有限的更改，但编译器可以在与该类型成员交互的代码中进行额外的优化。
 
-Frozen types,
-the types of the stored properties of frozen structures,
-and the associated values of frozen enumeration cases
-must be public or marked with the `usableFromInline` attribute.
-The properties of a frozen structure can't have property observers,
-and expressions that provide the initial value for stored instance properties
-must follow the same restrictions as inlinable functions,
-as discussed in <doc:Attributes#inlinable>.
+冻结类型、冻结结构体的存储属性类型以及冻结枚举成员的关联值类型必须是 public，或标记为 `usableFromInline` 特性。冻结结构体的属性不能有属性观察者，并且为存储实例属性提供初始值的表达式必须遵循与可内联函数相同的限制，详见 <doc:Attributes#inlinable>。
 
 <!--
   - test: `frozen-struct-prop-init-cant-refer-to-private-type`
@@ -839,12 +590,7 @@ as discussed in <doc:Attributes#inlinable>.
   ```
 -->
 
-To enable library evolution mode on the command line,
-pass the `-enable-library-evolution` option to the Swift compiler.
-To enable it in Xcode,
-set the "Build Libraries for Distribution" build setting
-(`BUILD_LIBRARY_FOR_DISTRIBUTION`) to Yes,
-as described in [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a04ba).
+要在命令行上启用库演化模式，请将 `-enable-library-evolution` 选项传递给 Swift 编译器。要在 Xcode 中启用它，请将 "Build Libraries for Distribution" 构建设置 (`BUILD_LIBRARY_FOR_DISTRIBUTION`) 设置 Yes，见：[Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a04ba)。
 
 <!--
   This is the first time we're talking about a specific compiler flag/option.
@@ -854,11 +600,7 @@ as described in [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a
   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
 -->
 
-A switch statement over a frozen enumeration doesn't require a `default` case,
-as discussed in <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
-Including a `default` or `@unknown default` case
-when switching over a frozen enumeration
-produces a warning because that code is never executed.
+对一个冻结的枚举进行 switch 语句时，不需要包含 `default` 分支，如 <doc:Statements#Switching-Over-Future-Enumeration-Cases> 中所述。在对冻结枚举进行 switch 时，如果包含 `default` 或 `@unknown default` 分支，会产生一个警告，因为这些代码永远不会被执行。
 
 <!--
   - test: `NoUnknownDefaultOverFrozenEnum`
@@ -918,9 +660,7 @@ produces a warning because that code is never executed.
 
 ### GKInspectable
 
-Apply this attribute to expose a custom GameplayKit component property
-to the SpriteKit editor UI.
-Applying this attribute also implies the `objc` attribute.
+应用此特性可将自定义 GameplayKit 组件属性公开给 SpriteKit 编辑器 UI。应用此特性还隐含着 `objc` 特性。
 
 <!--
   See also <rdar://problem/27287369> Document @GKInspectable attribute
@@ -929,27 +669,11 @@ Applying this attribute also implies the `objc` attribute.
 
 ### inlinable
 
-Apply this attribute to a
-function, method, computed property, subscript,
-convenience initializer, or deinitializer declaration
-to expose that declaration's implementation
-as part of the module's public interface.
-The compiler is allowed to replace calls to an inlinable symbol
-with a copy of the symbol's implementation at the call site.
+将此特性应用于函数、方法、计算属性、下标操作、便利构造器或析构器声明，以将该声明的实现公开为模块的公共接口的一部分。编译器可以允许在调用位置用符号实现的副本替换对可内联符号的调用。
 
-Inlinable code
-can interact with `open` and `public` symbols declared in any module,
-and it can interact with `internal` symbols
-declared in the same module
-that are marked with the `usableFromInline` attribute.
-Inlinable code can't interact with `private` or `fileprivate` symbols.
+可内联代码可以与任何模块中声明的 `open` 和 `public` 符号进行交互，并且可以与同一模块中标记为 `usableFromInline` 特性的 `internal` 符号进行交互。可内联代码无法与 `private` 或 `fileprivate` 符号进行交互。
 
-This attribute can't be applied
-to declarations that are nested inside functions
-or to `fileprivate` or `private` declarations.
-Functions and closures that are defined inside an inlinable function
-are implicitly inlinable,
-even though they can't be marked with this attribute.
+此特性不能应用于嵌套在函数内部的声明，也不能应用于 `fileprivate` 或 `private` 声明。定义在可内联函数内部的函数和闭包是隐式可内联的，即使它们不能用此特性标记。
 
 <!--
   - test: `cant-inline-private`
@@ -998,19 +722,16 @@ even though they can't be marked with this attribute.
 
 ### main
 
-Apply this attribute to a structure, class, or enumeration declaration
-to indicate that it contains the top-level entry point for program flow.
-The type must provide a `main` type function
-that doesn't take any arguments and returns `Void`.
-For example:
+将此特性应用于结构体、类或枚举声明，以表示它包含程序流程的顶级入口点。该类型必须提供一个不接受任何参数并返回 `Void` 的 `main` 类型函数。例如：
 
 ```swift
 @main
 struct MyTopLevel {
     static func main() {
-        // Top-level code goes here
+        // 顶层代码在此处编写
     }
 }
+
 ```
 
 <!--
@@ -1028,10 +749,7 @@ struct MyTopLevel {
   ```
 -->
 
-Another way to describe the requirements of the `main` attribute
-is that the type you write this attribute on
-must satisfy the same requirements
-as types that conform to the following hypothetical protocol:
+描述 `main` 特性要求的另一种方法是，特性作用于的类型必须满足与遵循以下假设协议的类型相同的要求：
 
 ```swift
 protocol ProvidesMain {
@@ -1049,9 +767,7 @@ protocol ProvidesMain {
   ```
 -->
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，详见 <doc:Declarations#Top-Level-Code>。
 
 <!--
   - test: `no-at-main-in-top-level-code`
@@ -1095,47 +811,22 @@ as discussed in <doc:Declarations#Top-Level-Code>.
 
 ### nonobjc
 
-Apply this attribute to a
-method, property, subscript, or initializer declaration
-to suppress an implicit `objc` attribute.
-The `nonobjc` attribute tells the compiler
-to make the declaration unavailable in Objective-C code,
-even though it's possible to represent it in Objective-C.
+将此特性应用于方法、属性、下标操作或构造器声明，以抑制隐式 `objc` 特性。`nonobjc` 特性告诉编译器此声明在 Objective-C 代码中不可用，尽管在 Objective-C 中可以表示它。
 
-Applying this attribute to an extension
-has the same effect as
-applying it to every member of that extension
-that isn't explicitly marked with the `objc` attribute.
+将此特性应用于扩展与将其应用于该扩展中未显式标记为 `objc` 特性的每个成员具有相同的效果。
 
-You use the `nonobjc` attribute to resolve circularity
-for bridging methods in a class marked with the `objc` attribute,
-and to allow overloading of methods and initializers
-in a class marked with the `objc` attribute.
+你可以使用 `nonobjc` 特性来解决标记为 `objc` 的类中桥接方法的循环引用问题，并且将允许重载标记为 `objc` 的类中的方法和构造器。
 
-A method marked with the `nonobjc` attribute
-can't override a method marked with the `objc` attribute.
-However, a method marked with the `objc` attribute
-can override a method marked with the `nonobjc` attribute.
-Similarly, a method marked with the `nonobjc` attribute
-can't satisfy a protocol requirement
-for a method marked with the `objc` attribute.
+标记为 `nonobjc` 特性的方法不能被标记为 `objc` 特性的方法重写。然而，标记为 `objc` 特性的方法可以被标记为 `nonobjc` 特性的方法重写。同样，标记为 `nonobjc` 特性的方法不能满足标记为 `objc` 特性的方法的协议要求。
 
 ### NSApplicationMain
 
-> Deprecated:
-> This attribute is deprecated;
-> use the <doc:Attributes#main> attribute instead.
-> In Swift 6,
-> using this attribute will be an error.
+> 已弃用:
+> 此特性已弃用；请改用 <doc:Attributes#main> 特性。在 Swift 6 中，使用此特性将会导致错误。
 
-Apply this attribute to a class
-to indicate that it's the app delegate.
-Using this attribute is equivalent to calling the
-`NSApplicationMain(_:_:)` function.
+将此特性应用于一个类，以指示它是应用程序委托。使用此特性等同于调用 `NSApplicationMain(_:_:)` 函数。
 
-If you don't use this attribute,
-supply a `main.swift` file with code at the top level
-that calls the `NSApplicationMain(_:_:)` function as follows:
+如果你不使用此特性，请提供一个在顶层调用 `NSApplicationMain(_:_:)` 函数的 `main.swift` 文件，如下所示：
 
 ```swift
 import AppKit
@@ -1147,20 +838,13 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
   which is correct behavior if you call a non-returning function like this.
 -->
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+你编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，见 <doc:Declarations#Top-Level-Code> 中的讨论。
 
 ### NSCopying
 
-Apply this attribute to a stored variable property of a class.
-This attribute causes the property's setter to be synthesized with a *copy*
-of the property's value --- returned by the `copyWithZone(_:)` method --- instead of the
-value of the property itself.
-The type of the property must conform to the `NSCopying` protocol.
+将此特性应用于类的存储变量属性。此特性会导致属性的 setter 被合成为使用 `copyWithZone(_:)` 方法返回的属性值*副本*，而不是属性值本身。属性的类型必须遵循 `NSCopying` 协议。
 
-The `NSCopying` attribute behaves in a way similar to the Objective-C `copy`
-property attribute.
+`NSCopying` 特性的行为类似于 Objective-C 的 `copy` 属性特性。
 
 <!--
   TODO: If and when Dave includes a section about this in the Guide,
@@ -1169,79 +853,31 @@ property attribute.
 
 ### NSManaged
 
-Apply this attribute to an instance method or stored variable property
-of a class that inherits from `NSManagedObject`
-to indicate that Core Data dynamically provides its implementation at runtime,
-based on the associated entity description.
-For a property marked with the `NSManaged` attribute,
-Core Data also provides the storage at runtime.
-Applying this attribute also implies the `objc` attribute.
+将此特性应用于从 `NSManagedObject` 继承的类的实例方法或存储属性变量，以表明 Core Data 会在运行时根据关联的实体描述动态提供其实现。对于标有 `NSManaged` 特性的属性，Core Data 还会在运行时提供存储。应用此特性也隐含了 `objc` 特性。
 
 ### objc
 
-Apply this attribute to any declaration that can be represented in Objective-C ---
-for example, nonnested classes, protocols,
-nongeneric enumerations (constrained to integer raw-value types),
-properties and methods (including getters and setters) of classes,
-protocols and optional members of a protocol,
-initializers, and subscripts.
-The `objc` attribute tells the compiler
-that a declaration is available to use in Objective-C code.
+将此特性应用于任何可以用 Objective-C 表示的声明——例如，非嵌套类、协议、非泛型枚举（限制为整数原始值类型）、类的属性和方法（包括 getter 和 setter）、协议的可选成员、构造器和下标操作。`objc` 特性告诉编译器该声明可以在 Objective-C 代码中使用。
 
-Applying this attribute to an extension
-has the same effect as
-applying it to every member of that extension
-that isn't explicitly marked with the `nonobjc` attribute.
+将此特性应用于扩展与将其应用于该扩展中未显式标记为 `nonobjc` 特性的每个成员具有相同的效果。
 
-The compiler implicitly adds the `objc` attribute
-to subclasses of any class defined in Objective-C.
-However, the subclass must not be generic,
-and must not inherit from any generic classes.
-You can explicitly add the `objc` attribute
-to a subclass that meets these criteria,
-to specify its Objective-C name as discussed below.
-Protocols that are marked with the `objc` attribute can't inherit
-from protocols that aren't marked with this attribute.
+编译器隐式地将 `objc` 特性添加到 Objective-C 中定义的任何类的子类中。然而，子类不能是泛型的，也不能继承任何泛型类。如下所述，你可以显式地将 `objc` 特性添加到满足这些标准的子类中，以指定其 Objective-C 名称。标记为 `objc` 特性的协议不能继承未标记此特性的协议。
 
-The `objc` attribute is also implicitly added in the following cases:
+`objc` 特性在以下情况下也会被隐式添加：
 
-- The declaration is an override in a subclass,
-  and the superclass's declaration has the `objc` attribute.
-- The declaration satisfies a requirement
-  from a protocol that has the `objc` attribute.
-- The declaration has the `IBAction`, `IBSegueAction`, `IBOutlet`,
-  `IBDesignable`, `IBInspectable`,
-  `NSManaged`, or `GKInspectable` attribute.
+- 该声明是在子类中的重写，超类的声明具有 `objc` 特性。
+- 该声明满足具有 `objc` 特性的协议的要求。
+- 声明包含 `IBAction`、`IBSegueAction`、`IBOutlet`、`IBDesignable`、`IBInspectable`、`NSManaged` 或 `GKInspectable` 特性。
 
-If you apply the `objc` attribute to an enumeration,
-each enumeration case is exposed to Objective-C code
-as the concatenation of the enumeration name and the case name.
-The first letter of the case name is capitalized.
-For example, a case named `venus` in a Swift `Planet` enumeration
-is exposed to Objective-C code as a case named `PlanetVenus`.
+如果你将 `objc` 特性应用于枚举，每个枚举成员都会在 Objective-C 代码中以枚举名称和枚举成员名称的组合形式暴露出来，且枚举成员名称的首字母会大写。例如，在 Swift 中名为 `Planet` 的枚举中的一个名为 `venus` 的枚举成员在 Objective-C 代码中将会以名为 `PlanetVenus` 的成员暴露出来。
 
-The `objc` attribute optionally accepts a single attribute argument,
-which consists of an identifier.
-The identifier specifies the name to be exposed to Objective-C
-for the entity that the `objc` attribute applies to.
-You can use this argument to name
-classes, enumerations, enumeration cases, protocols,
-methods, getters, setters, and initializers.
-If you specify the Objective-C name
-for a class, protocol, or enumeration,
-include a three-letter prefix on the name,
-as described in [Conventions](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)
-in [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210).
-The example below exposes
-the getter for the `enabled` property of the `ExampleClass`
-to Objective-C code as `isEnabled`
-rather than just as the name of the property itself.
+`objc` 特性可以选择接受一个特性参数，该参数由一个标识符组成。该标识符指定了向 Objective-C 暴露的被 `objc` 特性所应用到的实体的名称。你可以使用此参数为类、枚举、枚举成员、协议、方法、getter、setter 和构造器命名。如果你为类、协议或枚举指定 Objective-C 名称，请在名称前加上三个字母的前缀，如 [Conventions](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 和 [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中所述。下面的示例将 `ExampleClass` 的 `enabled` 属性的 getter 暴露给 Objective-C 代码，名称为 `isEnabled`，而不仅仅是属性本身的名称。
 
 ```swift
 class ExampleClass: NSObject {
     @objc var enabled: Bool {
         @objc(isEnabled) get {
-            // Return the appropriate value
+            // 返回适当的值
         }
     }
 }
@@ -1263,39 +899,16 @@ class ExampleClass: NSObject {
   ```
 -->
 
-For more information, see
-[Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c).
+更多信息，请参见 [Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c)。
 
-> Note: The argument to the `objc` attribute
-> can also change the runtime name for that declaration.
-> You use the runtime name when calling functions
-> that interact with the Objective-C runtime,
-> like [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring),
-> and when specifying class names in an app's Info.plist file.
-> If you specify a name by passing an argument,
-> that name is used as the name in Objective-C code
-> and as the runtime name.
-> If you omit the argument,
-> the name used in Objective-C code matches the name in Swift code,
-> and the runtime name follows the normal Swift compiler convention
-> of name mangling.
+> 注意:
+> `objc` 特性的参数也可以更改该声明的运行时名称。当调用与 Objective-C 运行时交互的函数（如 [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)）时，以及在应用的 Info.plist 文件中指定类名时，使用运行时名称。如果通过传递参数指定名称，则该名称将用作 Objective-C 代码中的名称和运行时名称。如果省略参数，则 Objective-C 代码中使用的名称与 Swift 代码中的名称相匹配，并且运行时名称遵循 Swift 编译器的名称重整惯例。
 
 ### objcMembers
 
-Apply this attribute to a class declaration,
-to implicitly apply the `objc` attribute
-to all Objective-C compatible members of the class,
-its extensions, its subclasses, and all of the extensions of its subclasses.
+将此特性应用于类声明，以隐式地将 `objc` 特性应用于该类所有与 Objective-C 兼容的成员、其扩展、其子类及其子类的所有扩展。
 
-Most code should use the `objc` attribute instead,
-to expose only the declarations that are needed.
-If you need to expose many declarations,
-you can group them in an extension that has the `objc` attribute.
-The `objcMembers` attribute is a convenience for
-libraries that make heavy use of
-the introspection facilities of the Objective-C runtime.
-Applying the `objc` attribute when it isn't needed
-can increase your binary size and adversely affect performance.
+大多数代码应使用 `objc` 特性，仅暴露需要的声明。如果你需要暴露多个声明，可以将它们分组到一个带有 `objc` 特性的扩展中。`objcMembers` 特性是一个方便的工具，适用于大量使用 Objective-C 运行时的自省功能的库。在不需要时应用 `objc` 特性可能会增加你的二进制文件大小并对性能产生不利影响。
 
 <!--
   The binary size comes from the additional thunks
@@ -1306,69 +919,34 @@ can increase your binary size and adversely affect performance.
 
 ### preconcurrency
 
-Apply this attribute to a declaration,
-to suppress strict concurrency checking.
-You can apply this attribute
-to the following kinds of declarations:
+将此特性应用于声明，以抑制严格的并发检查。你可以将此特性应用于以下类型的声明：
 
-- Imports
-- Structures, classes, and actors
-- Enumerations and enumeration cases
-- Protocols
-- Variables and constants
-- Subscripts
-- Initializers
-- Functions
+- 导入
+- 结构体, 类和 actor
+- 枚举和枚举成员
+- 协议
+- 变量和常量
+- 下标操作
+- 构造器
+- 函数
 
-On an import declaration,
-this attribute reduces the strictness of concurrency checking
-for code that uses types from the imported module.
-Specifically,
-types from the imported module
-that aren't explicitly marked as nonsendable
-can be used in a context that requires sendable types.
+在导入声明中，此特性降低了对使用导入模块类型的代码的并发检查的严格性。具体来说，导入模块中未显式标记为不可发送（nonsendable）的类型可以在需要可发送（sendable）类型的上下文中使用。
 
-On other declarations,
-this attribute reduces the strictness of concurrency checking
-for code that uses the symbol being declared.
-When you use this symbol in a scope that has minimal concurrency checking,
-concurrency-related constraints specified by that symbol,
-such as `Sendable` requirements or global actors,
-aren't checked.
+在其他声明中，此特性降低了对使用所声明符号的代码进行并发检查的严格性。当你在具有最小并发检查的范围内使用此符号时，该符号指定的与并发相关的约束，例如 `Sendable` 要求或全局 actor，将不会被检查。
 
-You can use this attribute as follows,
-to aid in migrating code to strict concurrency checking:
+你可以按如下方式使用此特性，以帮助将代码迁移到严格的并发检查：
 
-1. Enable strict checking.
-1. Annotate imports with the `preconcurrency` attribute
-   for modules that haven't enabled strict checking.
-1. After migrating a module to strict checking,
-   remove the `preconcurrency` attribute.
-   The compiler warns you about
-   any places where the `preconcurrency` attribute on an import
-   no longer has an effect and should be removed.
+1. 启用严格检查。
+1. 对尚未启用严格检查的模块，用 `preconcurrency` 特性标注导入。
+1. 在将模块迁移到严格检查后，移除 `preconcurrency` 特性。编译器会警告你关于导入中 `preconcurrency` 特性不再有效并应被移除的任何地方。
 
-For other declarations,
-add the `preconcurrency` attribute
-when you add concurrency-related constraints to the declaration,
-if you still have clients
-that haven't migrated to strict checking.
-Remove the `preconcurrency` attribute after all your clients have migrated.
+对于其他声明，当你在声明中添加与并发相关的约束时，如果你仍有未迁移到严格检查的客户端，请添加 `preconcurrency` 特性。在所有客户端迁移后，删除 `preconcurrency` 特性。
 
-Declarations from Objective-C are always imported
-as if they were marked with the `preconcurrency` attribute.
+来自 Objective-C 的声明在导入时始终被视为带有 `preconcurrency` 特性标记。
 
 ### propertyWrapper
 
-Apply this attribute to a class, structure, or enumeration declaration
-to use that type as a property wrapper.
-When you apply this attribute to a type,
-you create a custom attribute with the same name as the type.
-Apply that new attribute to a property of a class, structure, or enumeration
-to wrap access to the property through an instance of the wrapper type;
-apply the attribute to a local stored variable declaration
-to wrap access to the variable the same way.
-Computed variables, global variables, and constants can't use property wrappers.
+将此特性应用于类、结构体或枚举声明，以将该类型用作属性包装器。当你将此特性应用于某个类型时，你会创建一个与该类型同名的自定义特性。将该新特性应用于类、结构体或枚举的属性，以通过包装器类型的实例来包装对该属性的访问；将特性应用于局部存储变量声明，以相同方式包装对变量的访问。计算变量、全局变量和常量不能使用属性包装器。
 
 <!--
   - test: `property-wrappers-can-go-on-stored-variable`
@@ -1415,33 +993,11 @@ Computed variables, global variables, and constants can't use property wrappers.
   ```
 -->
 
-The wrapper must define a `wrappedValue` instance property.
-The *wrapped value* of the property
-is the value that the getter and setter for this property expose.
-In most cases, `wrappedValue` is a computed value,
-but it can be a stored value instead.
-The wrapper defines and manages
-any underlying storage needed by its wrapped value.
-The compiler synthesizes storage for the instance of the wrapper type
-by prefixing the name of the wrapped property with an underscore (`_`) ---
-for example, the wrapper for `someProperty` is stored as `_someProperty`.
-The synthesized storage for the wrapper has an access control level of `private`.
+包装器必须定义一个 `wrappedValue` 实例属性。该属性的*被包装值*是 getter 和 setter 所暴露的值。在大多数情况下，`wrappedValue` 是一个计算值，但它也可以是一个存储值。包装器定义并管理其被包装值所需的任何底层存储。编译器通过在包装属性的名称前加下划线 (`_`) 来合成包装器类型实例的存储——例如，`someProperty` 的包装器存储为 `_someProperty`。包装器的合成存储具有 `private` 的访问控制级别。
 
-A property that has a property wrapper
-can include `willSet` and `didSet` blocks,
-but it can't override the compiler-synthesized `get` or `set` blocks.
+一个具有属性包装器的属性可以包含 `willSet` 和 `didSet` 块，但它不能覆盖编译器合成的 `get` 或 `set` 块。
 
-Swift provides two forms of syntactic sugar
-for initialization of a property wrapper.
-You can use assignment syntax in the definition of a wrapped value
-to pass the expression on the right-hand side of the assignment
-as the argument to the `wrappedValue` parameter
-of the property wrapper's initializer.
-You can also provide arguments to the attribute
-when you apply it to a property,
-and those arguments are passed to the property wrapper's initializer.
-For example, in the code below,
-`SomeStruct` calls each of the initializers that `SomeWrapper` defines.
+Swift 提供了两种语法糖形式用于初始化属性包装器。你可以在被包装值的定义中使用赋值语法，将赋值右侧的表达式作为参数传递给属性包装器构造器的 `wrappedValue` 参数。你还可以在将特性应用于属性时提供参数，这些参数会传递给属性包装器的构造器。例如，在下面的代码中，`SomeStruct` 调用 `SomeWrapper` 定义的每个构造器。
 
 ```swift
 @propertyWrapper
@@ -1463,13 +1019,13 @@ struct SomeWrapper {
 }
 
 struct SomeStruct {
-    // Uses init()
+    // 使用 init()
     @SomeWrapper var a: Int
 
-    // Uses init(wrappedValue:)
+    // 使用 init(wrappedValue:)
     @SomeWrapper var b = 10
 
-    // Both use init(wrappedValue:custom:)
+    // 二者都使用 init(wrappedValue:custom:)
     @SomeWrapper(custom: 98.7) var c = 30
     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
 }
@@ -1529,18 +1085,7 @@ struct SomeStruct {
   -> e = 30  // Uses the property setter
 -->
 
-The *projected value* for a wrapped property is a second value
-that a property wrapper can use to expose additional functionality.
-The author of a property wrapper type
-is responsible for determining the meaning of its projected value
-and defining the interface that the projected value exposes.
-To project a value from a property wrapper,
-define a `projectedValue` instance property on the wrapper type.
-The compiler synthesizes an identifier for the projected value
-by prefixing the name of the wrapped property with a dollar sign (`$`) ---
-for example, the projected value for `someProperty` is `$someProperty`.
-The projected value has the same access control level
-as the original wrapped property.
+*被呈现值*对于一个被包装属性而言是可以让属性包装器用来暴露额外功能的第二个值。属性包装器类型的作者负责确定其被呈现值的含义，并定义被呈现值所暴露的接口。要从属性包装器中投射一个值，请在包装器类型上定义一个 `projectedValue` 实例属性。编译器通过在包装属性的名称前加上美元符号（`$`）来合成被呈现值的标识符——例如，`someProperty` 的被呈现值是 `$someProperty`。被呈现值具有与原始包装属性相同的访问控制级别。
 
 ```swift
 @propertyWrapper
@@ -1558,9 +1103,9 @@ struct SomeStruct {
     @WrapperWithProjection var x = 123
 }
 let s = SomeStruct()
-s.x           // Int value
-s.$x          // SomeProjection value
-s.$x.wrapper  // WrapperWithProjection value
+s.x           // Int 类型的值
+s.$x          // SomeProjection 类型的值
+s.$x.wrapper  // WrapperWithProjection 类型的值
 ```
 
 <!--
@@ -1593,116 +1138,41 @@ s.$x.wrapper  // WrapperWithProjection value
 
 ### resultBuilder
 
-Apply this attribute to a class, structure, enumeration
-to use that type as a result builder.
-A *result builder* is a type
-that builds a nested data structure step by step.
-You use result builders to implement a domain-specific language (DSL)
-for creating nested data structures in a natural, declarative way.
-For an example of how to use the `resultBuilder` attribute,
-see <doc:AdvancedOperators#Result-Builders>.
+将此特性应用于类、结构体或枚举，以将该类型用作结果构造器。*结果构造器*是一种逐步构建嵌套数据结构的类型。你可以使用结果构造器来实现一种用于以自然、声明式方式创建嵌套数据结构的领域特定语言（DSL）。有关如何使用 `resultBuilder` 特性的示例，见 <doc:AdvancedOperators#Result-Builders>。
 
-#### Result-Building Methods
+#### 结果构造方法
 
-A result builder implements static methods described below.
-Because all of the result builder's functionality
-is exposed through static methods,
-you don't ever initialize an instance of that type.
-A result builder must implement either the `buildBlock(_:)` method
-or both the `buildPartialBlock(first:)`
-and `buildPartialBlock(accumulated:next:)` methods.
-The other methods ---
-which enable additional functionality in the DSL ---
-are optional.
-The declaration of a result builder type
-doesn't actually have to include any protocol conformance.
+结果构造器实现了以下描述的静态方法。由于结果构造器的所有功能都是通过静态方法暴露的，因此你永远不需要初始化该类型的实例。结果构造器必须实现 `buildBlock(_:)` 方法，或者同时实现 `buildPartialBlock(first:)` 和 `buildPartialBlock(accumulated:next:)` 方法。其他方法（这些方法在 DSL 中启用额外功能）是可选的。结果构造器类型的声明实际上不必包含对任何协议的遵循。
 
-The description of the static methods uses three types as placeholders.
-The type `Expression` is a placeholder
-for the type of the result builder's input,
-`Component` is a placeholder for the type of a partial result,
-and `FinalResult` is a placeholder
-for the type of the result that the result builder produces.
-You replace these types with the actual types that your result builder uses.
-If your result-building methods
-don't specify a type for `Expression` or `FinalResult`,
-they default to being the same as `Component`.
+静态方法的描述中使用了三种类型作为占位符。`Expression` 是构造器输入类型的占位符，`Component` 是部分结果类型的占位符，而 `FinalResult` 是构造器生成的结果类型的占位符。你需要用结果构造器实际使用的类型替换这些占位符。如果你的结果构建方法没有为 `Expression` 或 `FinalResult` 指定类型，那么它们默认与 `Component` 类型相同。
 
-The block-building methods are as follows:
+块的构造的方法如下：
 
-- term `static func buildBlock(_ components: Component...) -> Component`:
-  Combines an array of partial results into a single partial result.
+- `static func buildBlock(_ components: Component...) -> Component`：将一组部分结果组合成一个单一的部分结果。
 
-- term `static func buildPartialBlock(first: Component) -> Component`:
-  Builds a partial result component from the first component.
-  Implement both this method and `buildPartialBlock(accumulated:next:)`
-  to support building blocks one component at a time.
-  Compared to `buildBlock(_:)`,
-  this approach reduces the need for generic overloads
-  that handle different numbers of arguments.
+- `static func buildPartialBlock(first: Component) -> Component`：从第一个组件构建一个部分结果组件。实现此方法和 `buildPartialBlock(accumulated:next:)` 以支持一次构建一个组件的块。与 `buildBlock(_:)` 相比，这种方法减少了处理不同数量参数的泛型重载的需求。
 
-- term `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
-  Builds a partial result component
-  by combining an accumulated component with a new component.
-  Implement both this method and `buildPartialBlock(first:)`
-  to support building blocks one component at a time.
-  Compared to `buildBlock(_:)`,
-  this approach reduces the need for generic overloads
-  that handle different numbers of arguments.
+- `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`：通过将一个累积的组件与一个新组件结合，构建一个部分结果组件。实现此方法和 `buildPartialBlock(first:)` 以支持一次构建一个组件的块。与 `buildBlock(_:)` 相比，这种方法减少了处理不同数量参数的泛型重载的需求。
 
-A result builder can implement all three of the block-building methods listed above;
-in that case, availability determines which method is called.
-By default, Swift calls the `buildPartialBlock(first:)` and `buildPartialBlock(accumulated:next:)`
-methods. To make Swift call `buildBlock(_:)` instead,
-mark the enclosing declaration as being available
-before the availability you write on `buildPartialBlock(first:)` and
-`buildPartialBlock(accumulated:next:)`.
+结果构造器可以实现上述列出的所有三种块构建方法；在这种情况下，可用性决定调用哪个方法。默认情况下，Swift 会调用 `buildPartialBlock(first:)` 和 `buildPartialBlock(accumulated:next:)` 方法。要让 Swift 调用 `buildBlock(_:)` 方法，请将包围声明标记为早于 `buildPartialBlock(first:)` 和 `buildPartialBlock(accumulated:next:)` 方法的可用性。
 
-The additional result-building methods are as follows:
+其他结果构造方法如下：
 
-- term `static func buildOptional(_ component: Component?) -> Component`:
-  Builds a partial result from a partial result that can be `nil`.
-  Implement this method to support `if` statements
-  that don’t include an `else` clause.
+- `static func buildOptional(_ component: Component?) -> Component`：从可以为 `nil` 的部分结果构建一个部分结果。实现此方法以支持不包含 `else` 从句的 `if` 语句。
 
-- term `static func buildEither(first: Component) -> Component`:
-  Builds a partial result whose value varies depending on some condition.
-  Implement both this method and `buildEither(second:)`
-  to support `switch` statements
-  and `if` statements that include an `else` clause.
+- `static func buildEither(first: Component) -> Component`：构建一个部分结果，其值根据某些条件而变化。实现此方法和 `buildEither(second:)` 以支持 `switch` 语句和包含 `else` 从句的 `if` 语句。
 
-- term `static func buildEither(second: Component) -> Component`:
-  Builds a partial result whose value varies depending on some condition.
-  Implement both this method and `buildEither(first:)`
-  to support `switch` statements
-  and `if` statements that include an `else` clause.
+- `static func buildEither(second: Component) -> Component`：构建一个部分结果，其值根据某些条件而变化。实现此方法和 `buildEither(first:)` 以支持 `switch` 语句和包含 `else` 从句的 `if` 语句。
 
-- term `static func buildArray(_ components: [Component]) -> Component`:
-  Builds a partial result from an array of partial results.
-  Implement this method to support `for` loops.
+- `static func buildArray(_ components: [Component]) -> Component`：从部分结果的数组构造一个部分结果。实现此方法以支持 `for` 循环。
 
-- term `static func buildExpression(_ expression: Expression) -> Component`:
-  Builds a partial result from an expression.
-  You can implement this method to perform preprocessing ---
-  for example, converting expressions to an internal type ---
-  or to provide additional information for type inference at use sites.
+- `static func buildExpression(_ expression: Expression) -> Component`：从表达式构建部分结果。你可以实现此方法以执行预处理——例如，将表达式转换为内部类型——或为使用端的类型推断提供额外的信息。
 
-- term `static func buildFinalResult(_ component: Component) -> FinalResult`:
-  Builds a final result from a partial result.
-  You can implement this method as part of a result builder
-  that uses a different type for partial and final results,
-  or to perform other postprocessing on a result before returning it.
+- `static func buildFinalResult(_ component: Component) -> FinalResult`：从部分结果构建最终结果。你可以将此方法实现为结果构造器的一部分，该结果构造器对部分结果和最终结果使用不同的类型，或者在返回结果之前对结果执行其他后处理。
 
-- term `static func buildLimitedAvailability(_ component: Component) -> Component`:
-  Builds a partial result that erases type information.
-  You can implement this method to prevent type information
-  from propagating outside a compiler-control statement
-  that performs an availability check.
+- `static func buildLimitedAvailability(_ component: Component) -> Component`：构建一个擦除类型信息的部分结果。你可以实现此方法以防止类型信息传播到执行可用性检查的编译器控制语句之外。
 
-For example, the code below defines a simple result builder
-that builds an array of integers.
-This code defines `Component` and `Expression` as type aliases,
-to make it easier to match the examples below to the list of methods above.
+例如，下面的代码定义了一个简单的结果构造器，用于构建一个整数数组。此代码将 `Component` 和 `Expression` 定义为类型别名，以便更容易将下面的示例与上面的方法列表进行匹配。
 
 ```swift
 @resultBuilder
@@ -1765,16 +1235,11 @@ struct ArrayBuilder {
   ```
 -->
 
-#### Result Transformations
+#### 结果转换
 
-The following syntactic transformations are applied recursively
-to turn code that uses result-builder syntax
-into code that calls the static methods of the result builder type:
+递归应用以下语法转换，将使用结果构造器语法的代码转换为调用结果构造器类型的静态方法的代码：
 
-- If the result builder has a `buildExpression(_:)` method,
-  each expression becomes a call to that method.
-  This transformation is always first.
-  For example, the following declarations are equivalent:
+- 如果结果构造器有一个 `buildExpression(_:)` 方法，则每个表达式都变成对该方法的调用。这个转换总是首先进行。例如，以下声明是等价的：
 
   ```swift
   @ArrayBuilder var builderNumber: [Int] { 10 }
@@ -1791,24 +1256,10 @@ into code that calls the static methods of the result builder type:
     >> assert(builderNumber == manualNumber)
     ```
   -->
-- An assignment statement is transformed like an expression,
-  but is understood to evaluate to `()`.
-  You can define an overload of `buildExpression(_:)`
-  that takes an argument of type `()` to handle assignments specifically.
-- A branch statement that checks an availability condition
-  becomes a call to the `buildLimitedAvailability(_:)` method,
-  if that method is implemented.
-  If you don't implement `buildLimitedAvailability(_:)`,
-  then branch statements that check availability
-  use the same transformations as other branch statements.
-  This transformation happens before the transformation into a call to
-  `buildEither(first:)`, `buildEither(second:)`, or `buildOptional(_:)`.
+- 赋值语句的转换方式类似于表达式，但被理解为计算 `()`。你可以定义一个 `buildExpression(_:)` 的重载，它采用 `()` 类型的参数来专门处理赋值。
+- 检查可用性条件的分支语句将成为对 `buildLimitedAvailability(_:)` 方法的调用（如果该方法已实现）。如果未实现 `buildLimitedAvailability(_:)` 方法，那么检查可用性的分支语句将使用与其他分支语句相同的转换。这种转换发生在转换为对 `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)` 的调用之前。
 
-  You use the `buildLimitedAvailability(_:)` method to erase type information
-  that changes depending on which branch is taken.
-  For example,
-  the `buildEither(first:)` and  `buildEither(second:)` methods below
-  use a generic type that captures type information about both branches.
+你可以使用 `buildLimitedAvailability(_:)` 方法来擦除根据所采用的分支而变化的类型信息。例如，下面的 `buildEither(first:)` 和 `buildEither(second:)` 方法使用一个泛型类型，该类型捕获有关两个分支的类型信息。
 
   ```swift
   protocol Drawable {
@@ -1848,7 +1299,7 @@ into code that calls the static methods of the result builder type:
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-  However, this approach causes a problem in code that has availability checks:
+  然而，这种方法在具有可用性检查的代码中会导致问题：
 
   ```swift
   @available(macOS 99, *)
@@ -1857,30 +1308,22 @@ into code that calls the static methods of the result builder type:
       init(_ content: String) { self.content = content }
       func draw() -> String { return content }
   }
+
   @DrawingBuilder var brokenDrawing: Drawable {
       if #available(macOS 99, *) {
-          FutureText("Inside.future")  // Problem
+          FutureText("Inside.future")  // 问题所在
       } else {
           Text("Inside.present")
       }
   }
-  // The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+  // brokenDrawing 的类型是 Line<DrawEither<Line<FutureText>, Line<Text>>>
   ```
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-  In the code above,
-  `FutureText` appears as part of the type of `brokenDrawing`
-  because it's one of the types in the `DrawEither` generic type.
-  This could cause your program to crash if `FutureText`
-  isn't available at runtime,
-  even in the case where that type is explicitly not being used.
+  在上面的代码中，`FutureText` 作为 `brokenDrawing` 类型的一部分出现，因为它是 `DrawEither` 泛型类型中的类型之一。如果在运行时 `FutureText` 不可用， 即使在该类型显式未被使用的情况下，这可能会导致你的程序崩溃。
 
-  To solve this problem,
-  implement a `buildLimitedAvailability(_:)` method
-  to erase type information by returning a type that's always available.
-  For example, the code below builds an `AnyDrawable` value
-  from its availability check.
+  为了解决这个问题，实现一个 `buildLimitedAvailability(_:)` 方法，通过返回一个始终可用的类型来擦除类型信息。例如，下面的代码通过可用性检查构建一个 `AnyDrawable` 值。
 
   ```swift
   struct AnyDrawable: Drawable {
@@ -1900,27 +1343,14 @@ into code that calls the static methods of the result builder type:
           Text("Inside.present")
       }
   }
-  // The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
+  // typeErasedDrawing 的类型是 Line<DrawEither<AnyDrawable, Line<Text>>>
   ```
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-- A branch statement becomes a series of nested calls to the
-  `buildEither(first:)` and `buildEither(second:)` methods.
-  The statements' conditions and cases are mapped onto
-  the leaf nodes of a binary tree,
-  and the statement becomes
-  a nested call to the `buildEither` methods
-  following the path to that leaf node from the root node.
+- 一个分支语句变成了一系列对 `buildEither(first:)` 和 `buildEither(second:)` 方法的嵌套调用。语句的条件和分支情况被映射到二叉树的叶子节点上，该语句成为了对 `buildEither` 方法的嵌套调用，遵循从根节点到该叶节点的路径。
 
-  For example, if you write a switch statement that has three cases,
-  the compiler uses a binary tree with three leaf nodes.
-  Likewise,
-  because the path from the root node to the second case is
-  "second child" and then "first child",
-  that case becomes a nested call like
-  `buildEither(first: buildEither(second: ... ))`.
-  The following declarations are equivalent:
+  例如，如果你编写一个包含三个分支的 switch 语句，编译器将使用一个具有三个叶节点的二叉树。同样，因为从根节点到第二个 case 分支的路径是“第二个子节点”，然后是“第一个子节点”，所以该 case 分支变成了像 `buildEither(first: buildEither(second: ... ))` 这样的嵌套调用。以下声明是等效的：
 
   ```swift
   let someNumber = 19
@@ -1985,13 +1415,7 @@ into code that calls the static methods of the result builder type:
     << Building first... [32]
     ```
   -->
-- A branch statement that might not produce a value,
-  like an `if` statement without an `else` clause,
-  becomes a call to `buildOptional(_:)`.
-  If the `if` statement's condition is satisfied,
-  its code block is transformed and passed as the argument;
-  otherwise, `buildOptional(_:)` is called with `nil` as its argument.
-  For example, the following declarations are equivalent:
+- 一个可能不产生值的分支语句，比如没有 `else` 从句的 `if` 语句，会变成对 `buildOptional(_:)` 的调用。如果 `if` 语句的条件满足，它的代码块会被转换并作为参数传递；否则，`buildOptional(_:)` 会以 `nil` 作为参数被调用。例如，以下声明是等价的：
 
   ```swift
   @ArrayBuilder var builderOptional: [Int] {
@@ -2024,16 +1448,7 @@ into code that calls the static methods of the result builder type:
     >> assert(builderOptional == manualOptional)
     ```
   -->
-- If the result builder implements
-  the `buildPartialBlock(first:)`
-  and `buildPartialBlock(accumulated:next:)` methods,
-  a code block or `do` statement becomes a call to those methods.
-  The first statement inside of the block
-  is transformed to become an argument
-  to the `buildPartialBlock(first:)` method,
-  and the remaining statements become nested calls
-  to the `buildPartialBlock(accumulated:next:)` method.
-  For example, the following declarations are equivalent:
+- 如果结果构造器实现了 `buildPartialBlock(first:)` 和 `buildPartialBlock(accumulated:next:)` 方法，则代码块或 `do` 语句将变成对这些方法的调用。块内的第一条语句被转换为 `buildPartialBlock(first:)` 方法的一个参数，其余语句则变成对 `buildPartialBlock(accumulated:next:)` 方法的嵌套调用。例如，以下声明是等效的：
 
   ```swift
   struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
@@ -2104,12 +1519,7 @@ into code that calls the static methods of the result builder type:
     >> assert(type(of: builderBlock) == type(of: manualResult))
     ```
   -->
-- Otherwise, a code block or `do` statement
-  becomes a call to the `buildBlock(_:)` method.
-  Each of the statements inside of the block is transformed,
-  one at a time,
-  and they become the arguments to the `buildBlock(_:)` method.
-  For example, the following declarations are equivalent:
+- 否则，代码块或 `do` 语句会变成对 `buildBlock(_:)` 方法的调用。块内的每个语句都会逐个转换，并成为 `buildBlock(_:)` 方法的参数。例如，以下声明是等价的。
 
   ```swift
   @ArrayBuilder var builderBlock: [Int] {
@@ -2144,12 +1554,7 @@ into code that calls the static methods of the result builder type:
     >> assert(builderBlock == manualBlock)
     ```
   -->
-- A `for` loop becomes a temporary variable, a `for` loop,
-  and call to the `buildArray(_:)` method.
-  The new `for` loop iterates over the sequence
-  and appends each partial result to that array.
-  The temporary array is passed as the argument in the `buildArray(_:)` call.
-  For example, the following declarations are equivalent:
+- 一个 `for` 循环会变成一个临时变量、一个新的 `for` 循环和对 `buildArray(_:)` 方法的调用。新的 `for` 循环遍历序列，并将每个部分结果附加到该数组中。临时数组作为参数传递给 `buildArray(_:)` 调用。例如，以下声明是等价的：
 
   ```swift
   @ArrayBuilder var builderArray: [Int] {
@@ -2186,9 +1591,7 @@ into code that calls the static methods of the result builder type:
     >> assert(builderArray == manualArray)
     ```
   -->
-- If the result builder has a `buildFinalResult(_:)` method,
-  the final result becomes a call to that method.
-  This transformation is always last.
+- 如果结果构造器有一个 `buildFinalResult(_:)` 方法，则最终结果变为对该方法的调用。此转换始终是最后进行的。
 
 <!--
   - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`, `drawing-partial-result-builder`
@@ -2297,29 +1700,13 @@ into code that calls the static methods of the result builder type:
   ```
 -->
 
-Although the transformation behavior is described in terms of temporary variables,
-using a result builder doesn't actually create any new declarations
-that are visible from the rest of your code.
+尽管转换行为是通过临时变量来描述的，但使用结果构造器实际上并不会创建任何在代码其他部分可见的新声明。
 
-You can't use
-`break`, `continue`, `defer`, `guard`, or `return` statements,
-`while` statements,
-or `do`-`catch` statements
-in the code that a result builder transforms.
+你不能在结果构造器转换的代码中使用 `break`、`continue`、`defer`、`guard` 或 `return` 语句、`while` 语句或 `do`-`catch` 语句。
 
-The transformation process doesn't change declarations in the code,
-which lets you use temporary constants and variables
-to build up expressions piece by piece.
-It also doesn't change
-`throw` statements,
-compile-time diagnostic statements,
-or closures that contain a `return` statement.
+转换过程不会改变代码中的声明，这使得你可以使用临时常量和变量逐步构建表达式。它也不会改变 `throw` 语句、编译时诊断语句或包含 `return` 语句的闭包。
 
-Whenever possible, transformations are coalesced.
-For example, the expression `4 + 5 * 6` becomes
-`buildExpression(4 + 5 * 6)` rather multiple calls to that function.
-Likewise, nested branch statements become
-a single binary tree of calls to the `buildEither` methods.
+只要有可能，转换就会被合并。例如，表达式 `4 + 5 * 6` 变为 `buildExpression(4 + 5 * 6)`，而不是多次调用该函数。同样，嵌套分支语句成为调用 `buildEither` 方法的单个二叉树。
 
 <!--
   - test: `result-builder-transform-complex-expression`
@@ -2344,31 +1731,19 @@ a single binary tree of calls to the `buildEither` methods.
   ```
 -->
 
-#### Custom Result-Builder Attributes
+#### 自定义结果构造器特性
 
-Creating a result builder type creates a custom attribute with the same name.
-You can apply that attribute in the following places:
+创建结果构造器类型会创建一个同名的自定义特性。你可以在以下位置应用该特性：
 
-- On a function declaration,
-  the result builder builds the body of the function.
-- On a variable or subscript declaration that includes a getter,
-  the result builder builds the body of the getter.
-- On a parameter in a function declaration,
-  the result builder builds the body of a closure
-  that's passed as the corresponding argument.
+- 在函数声明中，结果构造器构建函数的主体。
+- 在包含 getter 的变量或下标操作声明中，结果构造器构建 getter 的主体。
+- 在函数声明中的一个参数上，结果构造器构建一个作为相应参数传递的闭包的主体。
 
-Applying a result builder attribute doesn't impact ABI compatibility.
-Applying a result builder attribute to a parameter
-makes that attribute part of the function's interface,
-which can affect source compatibility.
+应用结果构造器特性不会影响 ABI 兼容性。将结果构造器特性应用于参数会使该特性成为函数接口的一部分，这可能会影响源代码的兼容性。
 
 ### requires_stored_property_inits
 
-Apply this attribute to a class declaration
-to require all stored properties within the class
-to provide default values as part of their definitions.
-This attribute is inferred for any class
-that inherits from `NSManagedObject`.
+将此特性应用于类声明，以要求类中的所有存储属性在其定义中提供默认值。对于任何继承自 `NSManagedObject` 的类，都会推断出此特性。
 
 <!--
   - test: `requires_stored_property_inits-requires-default-values`
@@ -2393,81 +1768,32 @@ that inherits from `NSManagedObject`.
 
 ### testable
 
-Apply this attribute to an `import` declaration
-to import that module with changes to its access control
-that simplify testing the module's code.
-Entities in the imported module
-that are marked with the `internal` access-level modifier
-are imported as if they were declared with the `public` access-level modifier.
-Classes and class members
-that are marked with the `internal` or `public` access-level modifier
-are imported as if they were declared with the `open` access-level modifier.
-The imported module must be compiled with testing enabled.
+将此特性应用于 `import` 声明时，可以通过修改访问控制来简化对模块代码的测试。导入的模块中标记为 `internal` 访问级别的实体将被导入并视为 `public` 访问级别声明的实体。标记为 `internal` 或 `public` 访问级别的类和类成员将被导入并视为 `open` 访问级别声明的实体。导入的模块必须在启用了测试的情况下编译。
 
 ### UIApplicationMain
 
-> Deprecated:
-> This attribute is deprecated;
-> use the <doc:Attributes#main> attribute instead.
-> In Swift 6,
-> using this attribute will be an error.
+> 已弃用:
+> 此特性已弃用；请改用 <doc:Attributes#main> 特性。在 Swift 6 中，使用此特性将会导致错误。
 
-Apply this attribute to a class
-to indicate that it's the app delegate.
-Using this attribute is equivalent to calling the
-`UIApplicationMain` function and
-passing this class's name as the name of the delegate class.
+将此特性应用于一个类，以指示它是应用程序委托。使用此特性相当于调用 `UIApplicationMain` 函数，并将此类的名称作为委托类的名称传递。
 
-If you don't use this attribute,
-supply a `main.swift` file with code at the top level
-that calls the [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) function.
-For example,
-if your app uses a custom subclass of `UIApplication`
-as its principal class,
-call the `UIApplicationMain(_:_:_:_:)` function
-instead of using this attribute.
+如果你不使用此特性，请提供一个包含顶层代码的 `main.swift` 文件，该代码调用 [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 函数。例如，如果你的应用使用自定义的 `UIApplication` 子类作为其主类，请调用 `UIApplicationMain(_:_:_:_:)` 函数，而不是使用此特性。
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，详见 <doc:Declarations#Top-Level-Code>。
 
 ### unchecked
 
-Apply this attribute to a protocol type
-as part of a type declaration's list of adopted protocols
-to turn off enforcement of that protocol's requirements.
+将此特性应用于协议类型，作为类型声明中采用的协议列表的一部分，以关闭对该协议要求的强制执行。
 
-The only supported protocol is [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
+唯一支持的协议是 [`Sendable`](https://developer.apple.com/documentation/swift/sendable)。
 
 ### usableFromInline
 
-Apply this attribute to a
-function, method, computed property, subscript,
-initializer, or deinitializer declaration
-to allow that symbol to be used in inlinable code
-that's defined in the same module as the declaration.
-The declaration must have the `internal` access-level modifier.
-A structure or class marked `usableFromInline`
-can use only types that are public or `usableFromInline` for its properties.
-An enumeration marked `usableFromInline`
-can use only types that are public or `usableFromInline`
-for the raw values and associated values of its cases.
+将此特性应用于函数、方法、计算属性、下标操作、构造器或析构器声明，以允许该符号在与声明位于同一模块中定义的内联代码中使用。声明必须具有 `internal` 访问级别修饰符。标记为 `usableFromInline` 的结构体或类只能对其属性使用公共类型或 `usableFromInline` 类型。标记为 `usableFromInline` 的枚举只能对其枚举成员的原始值和关联值使用公共类型或 `usableFromInline` 类型。
 
-Like the `public` access-level modifier,
-this attribute
-exposes the declaration as part of the module's public interface.
-Unlike `public`,
-the compiler doesn't allow declarations marked with `usableFromInline`
-to be referenced by name in code outside the module,
-even though the declaration's symbol is exported.
-However, code outside the module might still be able
-to interact with the declaration's symbol by using runtime behavior.
+像 `public` 访问级别修饰符一样，这个特性将声明暴露为模块公共接口的一部分。与 `public` 不同，编译器不允许在模块外的代码中按名称引用标记为 `usableFromInline` 的声明，即使声明的符号已被导出。然而，模块外的代码仍然可以通过使用运行时行为与声明的符号进行交互。
 
-Declarations marked with the `inlinable` attribute
-are implicitly usable from inlinable code.
-Although either `inlinable` or `usableFromInline`
-can be applied to `internal` declarations,
-applying both attributes is an error.
+标记为 `inlinable` 特性的声明可以隐式地从可内联代码中使用。虽然 `inlinable` 或 `usableFromInline` 都可以应用于 `internal` 声明，但同时应用这两个特性是错误的。
 
 <!--
   - test: `usableFromInline-and-inlinable-is-redundant`
@@ -2482,136 +1808,73 @@ applying both attributes is an error.
 
 ### warn_unqualified_access
 
-Apply this attribute to a
-top-level function, instance method, or class or static method
-to trigger warnings when that function or method is used
-without a preceding qualifier,
-such as a module name, type name, or instance variable or constant.
-Use this attribute to help discourage ambiguity between functions
-with the same name that are accessible from the same scope.
+将此特性应用于顶级函数、实例方法、类方法或静态方法，以便在未使用前缀限定符（如模块名称、类型名称、实例变量或实例常量）的情况下使用该函数或方法时触发警告。使用此特性可以帮助减少在同一作用域内访问的具有相同名称的函数之间的歧义。
 
-For example,
-the Swift standard library includes both a top-level
-[`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/)
-function and a
-[`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min)
-method for sequences with comparable elements.
-The sequence method is declared with the `warn_unqualified_access` attribute
-to help reduce confusion
-when attempting to use one or the other from within a `Sequence` extension.
+例如，Swift 标准库包括一个顶级函数 [`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/) 和一个用于具有可比较元素的序列的 [`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 方法。序列方法使用 `warn_unqualified_access` 特性声明，以帮助减少在 `Sequence` 扩展中尝试使用其中一个或另一个时的混淆。
 
-### Declaration Attributes Used by Interface Builder
+### Interface Builder 使用的声明特性
 
-Interface Builder attributes are declaration attributes
-used by Interface Builder to synchronize with Xcode.
-Swift provides the following Interface Builder attributes:
-`IBAction`, `IBSegueAction`, `IBOutlet`,
-`IBDesignable`, and `IBInspectable`.
-These attributes are conceptually the same as their
-Objective-C counterparts.
+Interface Builder 特性是声明特性，供 Interface Builder 与 Xcode 同步使用。Swift 提供了以下 Interface Builder 特性：`IBAction`、`IBSegueAction`、`IBOutlet`、`IBDesignable` 和 `IBInspectable`。这些特性在概念上与其对应的 Objective-C 特性相同。
 
 <!--
   TODO: Need to link to the relevant discussion of these attributes in Objc.
 -->
 
-You apply the `IBOutlet` and `IBInspectable` attributes
-to property declarations of a class.
-You apply the `IBAction` and `IBSegueAction` attribute
-to method declarations of a class
-and the `IBDesignable` attribute to class declarations.
+你将 `IBOutlet` 和 `IBInspectable` 特性应用于类的属性声明。
+你将 `IBAction` 和 `IBSegueAction` 特性应用于类的方法声明，
+并将 `IBDesignable` 特性应用于类声明。
 
-Applying the `IBAction`, `IBSegueAction`, `IBOutlet`,
-`IBDesignable`, or `IBInspectable` attribute
-also implies the `objc` attribute.
+应用 `IBAction`, `IBSegueAction`, `IBOutlet`,
+`IBDesignable` 或 `IBInspectable` 特性也隐含 `objc` 特性。
 
-## Type Attributes
+## 类型特性
 
-You can apply type attributes to types only.
+你只能将类型特性应用于类型。
 
 ### autoclosure
 
-Apply this attribute to delay the evaluation of an expression
-by automatically wrapping that expression in a closure with no arguments.
-You apply it to a parameter's type in a function or method declaration,
-for a parameter whose type is a function type that takes no arguments
-and that returns a value of the type of the expression.
-For an example of how to use the `autoclosure` attribute,
-see <doc:Closures#Autoclosures> and <doc:Types#Function-Type>.
+使用此特性可以通过将表达式自动包装在一个无参数的闭包中来延迟对表达式的求值。你可以在函数或方法声明中将其应用于参数的类型，该参数的类型为不接受参数且返回与表达式类型相同的值的函数类型。关于如何使用 `autoclosure` 特性的示例，请参见 <doc:Closures#Autoclosures> 和 <doc:Types#Function-Type>。
 
 ### convention
 
-Apply this attribute to the type of a function
-to indicate its calling conventions.
+将此特性应用于函数的类型，以指示其调用约定。
 
-The `convention` attribute always appears with
-one of the following arguments:
+`convention` 特性总是与以下参数之一一起出现：
 
-- The `swift` argument indicates a Swift function reference.
-  This is the standard calling convention for function values in Swift.
-- The `block` argument indicates an Objective-C compatible block reference.
-  The function value is represented as a reference to the block object,
-  which is an `id`-compatible Objective-C object that embeds its invocation
-  function within the object.
-  The invocation function uses the C calling convention.
-- The `c` argument indicates a C function reference.
-  The function value carries no context and uses the C calling convention.
+- `swift` 参数表示一个 Swift 函数引用。这是 Swift 中函数值的标准调用约定。
+- `block` 参数表示一个与 Objective-C 兼容的块引用。函数值表示为对块对象的引用，该块对象是一个 `id` 类型兼容的 Objective-C 对象，它将其调用函数嵌入到该对象中。调用函数使用 C 调用约定。
+- `c` 参数表示一个 C 函数引用。函数值不携带上下文，并使用 C 调用约定。
 
 <!--
   Note: @convention(thin) is private, even though it doesn't have an underscore
   https://forums.swift.org/t/12087/6
 -->
 
-With a few exceptions,
-a function of any calling convention can be used
-when a function any other calling convention is needed.
-A nongeneric global function,
-a local function that doesn't capture any local variables,
-or a closure that doesn't capture any local variables
-can be converted to the C calling convention.
-Other Swift functions can't be converted to the C calling convention.
-A function with the Objective-C block calling convention
-can't be converted to the C calling convention.
+除了少数例外，任何调用约定的函数都可以在需要其他调用约定的函数时使用。一个非泛型的全局函数、一个不捕获任何局部变量的局部函数，或者一个不捕获任何局部变量的闭包可以转换为 C 调用约定。其他 Swift 函数无法转换为 C 调用约定。具有 Objective-C 块调用约定的函数无法转换为 C 调用约定。
 
 ### escaping
 
-Apply this attribute to a parameter's type in a function or method declaration
-to indicate that the parameter's value can be stored for later execution.
-This means that the value is allowed to outlive the lifetime of the call.
-Function type parameters with the `escaping` type attribute
-require explicit use of `self.` for properties or methods.
-For an example of how to use the `escaping` attribute,
-see <doc:Closures#Escaping-Closures>.
+将此特性应用于函数或方法声明中的参数类型，以指示参数的值可以存储以供后续执行。这隐含着该值可以超出这次调用的生命周期。具有 `escaping` 类型特性的函数类型参数需要对属性或方法显式使用 `self.`。有关如何使用 `escaping` 特性的示例，见 <doc:Closures#Escaping-Closures>。
 
 ### Sendable
 
-Apply this attribute to the type of a function
-to indicate that the function or closure is sendable.
-Applying this attribute to a function type
-has the same meaning as conforming a non–function type
-to the [`Sendable`](https://developer.apple.com/documentation/swift/sendable) protocol.
+将此特性应用于函数的类型，以指示该函数或闭包是可发送的。
 
-This attribute is inferred on functions and closures
-if the function or closure is used in a context
-that expects a sendable value,
-and the function or closure satisfies the requirements to be sendable.
+将此特性应用于函数类型与使非函数类型遵循 [`Sendable`](https://developer.apple.com/documentation/swift/sendable) 协议具有相同的含义。
 
-A sendable function type
-is a subtype of the corresponding nonsendable function type.
+如果函数或闭包在需要可发送值的上下文中使用，并且函数或闭包满足可发送的要求，则会在函数和闭包上推断有此特性。
 
-## Switch Case Attributes
+可发送函数类型是相应的不可发送函数类型的子类型。
 
-You can apply switch case attributes to switch cases only.
+## Switch Case 特性
+
+你只能将 switch case 特性应用于 switch case。
 
 ### unknown
 
-Apply this attribute to a switch case
-to indicate that it isn't expected to be matched
-by any case of the enumeration that's known
-at the time the code is compiled.
-For an example of how to use the `unknown` attribute,
-see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
+将此特性应用于 switch case，以指示在代码编译时不期望与任何已知的枚举 case 匹配。有关如何使用 `unknown` 特性的示例，见 <doc:Statements#Switching-Over-Future-Enumeration-Cases>。
 
-> Grammar of an attribute:
+> 特性的语法:
 >
 > *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_ \
 > *attribute-name* → *identifier* \
@@ -2622,14 +1885,14 @@ see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 > *balanced-token* → **`(`** *balanced-tokens*_?_ **`)`** \
 > *balanced-token* → **`[`** *balanced-tokens*_?_ **`]`** \
 > *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
-> *balanced-token* → Any identifier, keyword, literal, or operator \
-> *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
+> *balanced-token* → 任意标识符、关键字、字面量或运算符 \
+> *balanced-token* → 除了 **`(`**、**`)`**、**`[`**、**`]`**、**`{`** 或 **`}`** 之外的任何标点符号
 
-> Beta Software:
+> 测试版软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发中的 API 或技术的初步信息。此信息可能会有所变更，并且根据本文档实现的软件应使用最终的操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解更多关于 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的信息。
 
 <!--
 This source file is part of the Swift.org open source project
