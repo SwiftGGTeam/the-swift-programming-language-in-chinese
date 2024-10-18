@@ -799,7 +799,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
   ```
 -->
 
-#### 借用和消耗参数
+#### 借用和消费参数
 
 默认情况下，Swift 使用一套规则在函数调用之间自动管理对象生命周期，在需要时复制值。默认规则旨在在大多数情况下最小化开销——如果你想要更具体的控制，可以应用 `borrowing` 或 `consuming` 参数修饰符。在这种情况下，使用 `copy` 显式标记复制操作。
 
@@ -812,7 +812,7 @@ and everything else is borrowing.
 Where are copies implicitly inserted?
 -->
 
-`borrowing` 修饰符表示函数不会保留参数的值。在这种情况下，调用者保持对对象的所有权，并负责对象的生命周期管理。使用 `borrowing` 可以在函数只临时使用对象时，最大限度地减少开销。
+`borrowing` 修饰函数参数时，函数不会保留参数的值。在这种情况下，调用者保留对象的所有权，并负责对象的生命周期管理。所以当函数只是临时使用对象时，用 `borrowing` 修饰可以最大限度地减少开销。
 
 ```swift
 // `isLessThan` 不会保留任一参数
@@ -824,7 +824,7 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 如果函数需要保留参数的值，例如，通过将其存储在全局变量中——你可以使用 `copy` 显式地复制该值。
 
 ```swift
-// 如上所述，但这个 `isLessThan` 还需要记录最小值
+// 同样是 `isLessThan` 函数，这个 `isLessThan` 可以将最小值记录下来
 func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
     if lhs < storedValue {
         storedValue = copy lhs
@@ -847,7 +847,7 @@ func store(a: consuming A) {
 使用 `consuming` 可以在调用者在函数调用后不再需要使用该对象时，最小化开销。
 
 ```swift
-// 通常，这是你对一个值执行的最后一件事
+// 通常，这就是最后一次使用 value 了
 store(a: value)
 ```
 
@@ -855,7 +855,7 @@ store(a: value)
 
 ```swift
 // 编译器会在这里插入一个隐式副本
-store(a: someValue)  // 此函数消耗 someValue
+store(a: someValue)  // 此函数消费 someValue
 print(someValue)  // 这里使用的是 someValue 的副本
 ```
 
@@ -909,7 +909,7 @@ func consumingFunction3(a: consuming A) {
 
 ### 特殊类型的参数
 
-参数可以通过以下形式被忽略、接受可变数量的值，以及提供默认值：
+参数可以被忽略，数量可以不固定，还可以为其提供默认值，使用形式如下
 
 ```swift
 _ : <#parameter type#>
