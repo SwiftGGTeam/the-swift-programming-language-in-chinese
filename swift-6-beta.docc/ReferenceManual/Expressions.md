@@ -39,7 +39,7 @@
 >
 > *in-out-expression* → **`&`** *primary-expression*
 
-### 尝试操作员
+### Try 运算符
 
  try 表达式由`try` 运算符后跟一个可能引发错误的表达式组成。它具有以下形式：
 
