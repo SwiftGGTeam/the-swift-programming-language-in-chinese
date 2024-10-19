@@ -1,6 +1,6 @@
 # 可选链式调用（Optional Chaining）
 
-无需解包即可访问可选值的成员。
+在不解包的情况下访问可选值的成员。
 
 可选链式调用（Optional Chaining）是一种可以在当前值可能为 `nil` 的可选值上请求和调用属性、方法及下标的方法。如果可选值有值，那么调用就会成功；如果可选值是 `nil`，那么调用将返回 `nil`。多个调用可以连接在一起形成一个调用链，如果其中任何一个节点为 `nil`，整个调用链都会失败，即返回 `nil`。
 
@@ -75,9 +75,9 @@ john.residence = Residence()
 
 ```swift
 if let roomCount = john.residence?.numberOfRooms {
-	print("John's residence has \(roomCount) room(s).")
+    print("John's residence has \(roomCount) room(s).")
 } else {
-	print("Unable to retrieve the number of rooms.")
+    print("Unable to retrieve the number of rooms.")
 }
 // 打印 “John's residence has 1 room(s).”
 ```
@@ -102,7 +102,7 @@ class Person {
 
 ```swift
 class Residence {
-    var rooms = [Room]()
+    var rooms: [Room] = []
     var numberOfRooms: Int {
         return rooms.count
     }
@@ -146,10 +146,10 @@ class Address {
     var buildingNumber: String?
     var street: String?
     func buildingIdentifier() -> String? {
-        if buildingName != nil {
-            return buildingName
-        } else if buildingNumber != nil && street != nil {
+        if let buildingNumber = buildingNumber, let street = street {
             return "\(buildingNumber) \(street)"
+        } else if buildingName != nil {
+            return buildingName
         } else {
             return nil
         }
@@ -238,9 +238,9 @@ if john.residence?.printNumberOfRooms() != nil {
 
 ```swift
 if (john.residence?.address = someAddress) != nil {
-	print("It was possible to set the address.")
+    print("It was possible to set the address.")
 } else {
-	print("It was not possible to set the address.")
+    print("It was not possible to set the address.")
 }
 // 打印 “It was not possible to set the address.”
 ```
@@ -284,9 +284,9 @@ johnsHouse.rooms.append(Room(name: "Kitchen"))
 john.residence = johnsHouse
 
 if let firstRoomName = john.residence?[0].name {
-	print("The first room name is \(firstRoomName).")
+    print("The first room name is \(firstRoomName).")
 } else {
-	print("Unable to retrieve the first room name.")
+    print("Unable to retrieve the first room name.")
 }
 // 打印 “The first room name is Living Room.”
 ```
@@ -345,7 +345,7 @@ let johnsAddress = Address()
 johnsAddress.buildingName = "The Larches"
 johnsAddress.street = "Laurel Street"
 john.residence?.address = johnsAddress
-	
+
 if let johnsStreet = john.residence?.address?.street {
     print("John's street name is \(johnsStreet).")
 } else {
@@ -375,12 +375,12 @@ if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
 
 ```swift
 if let beginsWithThe =
-	john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
-		if beginsWithThe {
-			print("John's building identifier begins with \"The\".")
-		} else {
-			print("John's building identifier does not begin with \"The\".")
-		}
+    john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
+    if beginsWithThe {
+        print("John's building identifier begins with \"The\".")
+    } else {
+        print("John's building identifier doesn't begin with \"The\".")
+    }
 }
 // 打印 “John's building identifier begins with "The".”
 ```
