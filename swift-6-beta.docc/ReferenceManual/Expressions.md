@@ -153,7 +153,7 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
 > *infix-expression* → *type-casting-operator* \
 > *infix-expressions* → *infix-expression* *infix-expressions*_?_
 
-### 赋值表达式
+### 赋值赋值运算符
 
 赋值表达式会为某个给定的表达式赋值，形式如下；
 
