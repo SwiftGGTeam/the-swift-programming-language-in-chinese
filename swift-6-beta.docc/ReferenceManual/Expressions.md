@@ -1,333 +1,149 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/ReferenceManual/Expressions.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 表达式
 
-# Expressions
+访问、修改和分配值。
 
-Access, modify, and assign values.
+Swift 中存在四种表达式：前缀表达式，中缀表达式，基本表达式和后缀表达式。表达式在返回一个值的同时还可以引发副作用。
 
-In Swift, there are four kinds of expressions:
-prefix expressions, infix expressions, primary expressions, and postfix expressions.
-Evaluating an expression returns a value,
-causes a side effect, or both.
+通过前缀表达式和中缀表达式可以对简单表达式使用各种运算符。基本表达式从概念上讲是最简单的一种表达式，它是一种访问值的方式。后缀表达式则允许你建立复杂的表达式，例如函数调用和成员访问。每种表达式都在下面有详细论述。
 
-Prefix and infix expressions let you
-apply operators to smaller expressions.
-Primary expressions are conceptually the simplest kind of expression,
-and they provide a way to access values.
-Postfix expressions,
-like prefix and infix expressions,
-let you build up more complex expressions
-using postfixes such as function calls and member access.
-Each kind of expression is described in detail
-in the sections below.
-
-> Grammar of an expression:
+> 表达式语法：
 >
 > *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_ \
 
-## Prefix Expressions
+## 前缀表达式
 
-*Prefix expressions* combine
-an optional prefix operator with an expression.
-Prefix operators take one argument,
-the expression that follows them.
+前缀表达式由可选的前缀运算符和表达式组成。前缀运算符只接收一个参数，表达式则紧随其后。
 
-For information about the behavior of these operators,
-see <doc:BasicOperators> and <doc:AdvancedOperators>.
+关于这些运算符的更多信息，请参阅 <doc:BasicOperators> 和 <doc:AdvancedOperators>.
 
-For information about the operators provided by the Swift standard library,
-see [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
+关于 Swift 标准库提供的运算符的更多信息，请参阅  [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
 
-> Grammar of a prefix expression:
+> 前缀表达式语法
 >
 > *prefix-expression* → *prefix-operator*_?_ *postfix-expression* \
 > *prefix-expression* → *in-out-expression*
 
-### In-Out Expression
+### In-Out 表达式
 
-An *in-out expression* marks a variable
-that's being passed
-as an in-out argument to a function call expression.
+ *in-out表达式*将函数调用表达式传入的变量标记为输入输出实参。
 
 ```swift
-&<#expression#>
+&<#表达式#>
 ```
 
-For more information about in-out parameters and to see an example,
-see <doc:Functions#In-Out-Parameters>.
+输入输出表达式也可以用于将非指针实参传入到需要指针的上下文中，如 <doc:Functions#In-Out-Parameters>.
 
-In-out expressions are also used
-when providing a non-pointer argument
-in a context where a pointer is needed,
-as described in <doc:Expressions#Implicit-Conversion-to-a-Pointer-Type>.
+In-out 表达式也可以用于将非指针实参传入到需要指针的上下文中，如 <doc:Expressions#Implicit-Conversion-to-a-Pointer-Type>.
 
 > Grammar of an in-out expression:
 >
-> *in-out-expression* → **`&`** *primary-expression*
+> *in-out-expression* → **`&`** *标识符*
 
-### Try Operator
+### Try 运算符
 
-A *try expression* consists of the `try` operator
-followed by an expression that can throw an error.
-It has the following form:
+*try表达式*由 `try` 运算符加上紧随其后的可抛出错误的表达式组成，形式如下：
 
 ```swift
-try <#expression#>
+try <#表达式#>
 ```
 
-The value of a `try` expression is the value of the *expression*.
+`try` 表达式的返回值是该表达式的值。
 
-An *optional-try expression* consists of the `try?` operator
-followed by an expression that can throw an error.
-It has the following form:
+*可选 try* 表达式由 `try?` 运算符加上紧随其后的可抛出错误的表达式组成，形式如下：
 
 ```swift
-try? <#expression#>
+try? <#表达式#>
 ```
 
-If the *expression* doesn't throw an error,
-the value of the optional-try expression
-is an optional containing the value of the *expression*.
-Otherwise, the value of the optional-try expression is `nil`.
+如果*表达式*没有抛出错误，可选 try 表达式的返回值是可选的该表达式的值，否则，返回值为 `nil`。
 
-A *forced-try expression* consists of the `try!` operator
-followed by an expression that can throw an error.
-It has the following form:
+*强制 try 表达式*由 `try!` 运算符加上紧随其后的可抛出错误的表达式组成，形式如下：
 
 ```swift
-try! <#expression#>
+try! <#表达式#>
 ```
 
-The value of a forced-try expression is the value of the *expression*.
-If the *expression* throws an error,
-a runtime error is produced.
+强制 try 表达式的返回值是该*表达式*的值。如果该*表达式*抛出了错误，将会引发运行时错误。
 
-When the expression on the left-hand side of an infix operator
-is marked with `try`, `try?`, or `try!`,
-that operator applies to the whole infix expression.
-That said, you can use parentheses to be explicit about the scope of the operator's application.
+在中缀运算符左侧的表达式被标记上 `try`、`try?` 或者 `try!` 时，这个运算符对整个中缀表达式都产生作用。也就是说，你可以使用括号来明确运算符的作用范围。
+
+
 
 ```swift
-// try applies to both function calls
+// try 对两个函数调用都产生作用
 sum = try someThrowingFunction() + anotherThrowingFunction()
 
-// try applies to both function calls
+// try 对两个函数调用都产生作用
 sum = try (someThrowingFunction() + anotherThrowingFunction())
 
-// Error: try applies only to the first function call
+// 错误：try 只对第一个函数调用产生作用
 sum = (try someThrowingFunction()) + anotherThrowingFunction()
 ```
 
-<!--
-  - test: `placement-of-try`
+`try` 表达式不能出现在中缀运算符的的右侧，除非中缀运算符是赋值运算符或者 `try` 表达式是被圆括号括起来的。
 
-  ```swifttest
-  >> func someThrowingFunction() throws -> Int { return 10 }
-  >> func anotherThrowingFunction() throws -> Int { return 5 }
-  >> var sum = 0
-  // try applies to both function calls
-  -> sum = try someThrowingFunction() + anotherThrowingFunction()
-  ---
-  // try applies to both function calls
-  -> sum = try (someThrowingFunction() + anotherThrowingFunction())
-  ---
-  // Error: try applies only to the first function call
-  -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
-  !$ error: call can throw but is not marked with 'try'
-  !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
-  !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  !$ note: did you mean to use 'try'?
-  !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
-  !!                                      ^
-  !!                                      try
-  !$ note: did you mean to handle error as optional value?
-  !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
-  !!                                      ^
-  !!                                      try?
-  !$ note: did you mean to disable error propagation?
-  !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
-  !!                                      ^
-  !!                                      try!
-  ```
--->
+如果表达式中同时包含 `try` 和 `await` 运算符，`try` 运算符必须在前面。
 
-A `try` expression can't appear on the right-hand side of an infix operator,
-unless the infix operator is the assignment operator
-or the `try` expression is enclosed in parentheses.
+更多关于 `try`、`try?` 和 `try!` 的信息，以及该如何使用的例子，请参阅 <doc:ErrorHandling>.
 
-<!--
-  - test: `try-on-right`
-
-  ```swifttest
-  >> func someThrowingFunction() throws -> Int { return 10 }
-  >> var sum = 0
-  -> sum = 7 + try someThrowingFunction() // Error
-  !$ error: 'try' cannot appear to the right of a non-assignment operator
-  !! sum = 7 + try someThrowingFunction() // Error
-  !!           ^
-  -> sum = 7 + (try someThrowingFunction()) // OK
-  ```
--->
-
-If an expression includes both the `try` and `await` operator,
-the `try` operator must appear first.
-
-<!--
-  The "try await" ordering is also part of the grammar for 'expression',
-  but it's important enough to be worth re-stating in prose.
--->
-
-For more information and to see examples of how to use `try`, `try?`, and `try!`,
-see <doc:ErrorHandling>.
-
-> Grammar of a try expression:
+> Try 表达式语法
 >
-> *try-operator* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
+> *try运算符* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
 
-### Await Operator
+### Await 运算符
 
-An *await expression* consists of the `await` operator
-followed by an expression that uses the result of an asynchronous operation.
-It has the following form:
+ *await表达式*由 await 运算符加上紧随其后的异步操作结果的表达式。形式如下：
 
 ```swift
-await <#expression#>
+await <#表达式#>
 ```
 
-The value of an `await` expression is the value of the *expression*.
+ `await` 表达式返回值就是该*表达式*的值。
 
-An expression marked with `await` is called a *potential suspension point*.
-Execution of an asynchronous function can be suspended
-at each expression that's marked with `await`.
-In addition,
-execution of concurrent code is never suspended at any other point.
-This means code between potential suspension points
-can safely update state that requires temporarily breaking invariants,
-provided that it completes the update
-before the next potential suspension point.
+被 `await` 标记的表达式被称为*潜在的暂停点*。
 
-An `await` expression can appear only within an asynchronous context,
-such as the trailing closure passed to the `async(priority:operation:)` function.
-It can't appear in the body of a `defer` statement,
-or in an autoclosure of synchronous function type.
+异步函数的执行可以在每个标记 `await` 的表达式的位置暂停。除此之外，并发代码的执行永远不会在其他位置暂停。这意味着在潜在暂停点之间的代码可以暂时打破不变量的状态进行安全更新，只要更新在下一个潜在暂停点之前完成。
 
-When the expression on the left-hand side of an infix operator
-is marked with the `await` operator,
-that operator applies to the whole infix expression.
-That said, you can use parentheses
-to be explicit about the scope of the operator's application.
+await 表达式只能在异步的上下文中出现，比如传入 `async(priority:operation:)` 函数的尾随闭包中。它不能在 `defer` 语句的闭包中，或者在同步函数的自动闭包中出现。
+
+在中缀运算符左侧的表达式被标记上 `await` 运算符时，这个运算符对整个中缀表达式都产生作用。也就是说，你可以使用括号来明确运算符的作用范围。
+
+
 
 ```swift
-// await applies to both function calls
+// await 对两个函数调用都产生作用
 sum = await someAsyncFunction() + anotherAsyncFunction()
 
-// await applies to both function calls
+// await 对两个函数调用都产生作用
 sum = await (someAsyncFunction() + anotherAsyncFunction())
 
-// Error: await applies only to the first function call
+// 错误：await 只对第一个函数调用产生作用
 sum = (await someAsyncFunction()) + anotherAsyncFunction()
 ```
 
-<!--
-  - test: `placement-of-await`
+`await` 表达式不能出现在中缀运算符的的右侧，除非中缀运算符是赋值运算符或者 `await` 表达式是被圆括号括起来的。
 
-  ```swifttest
-  >> func someAsyncFunction() async -> Int { return 10 }
-  >> func anotherAsyncFunction() async -> Int { return 5 }
-  >> func f() async {
-  >> var sum = 0
-  // await applies to both function calls
-  -> sum = await someAsyncFunction() + anotherAsyncFunction()
-  ---
-  // await applies to both function calls
-  -> sum = await (someAsyncFunction() + anotherAsyncFunction())
-  ---
-  // Error: await applies only to the first function call
-  -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
-  >> _ = sum  // Suppress irrelevant written-but-not-read warning
-  >> }
-  !$ error: expression is 'async' but is not marked with 'await'
-  !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
-  !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  !! await
-  !$ note: call is 'async'
-  !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
-  !! ^
-  ```
--->
+如果表达式中同时包含 `try` 和 `await` 运算符，`try` 运算符必须在前面。
 
-An `await` expression can't appear on the right-hand side of an infix operator,
-unless the infix operator is the assignment operator
-or the `await` expression is enclosed in parentheses.
 
-<!--
-  - test: `await-on-right`
-
-  ```swifttest
-  >> func f() async {
-  >> func someAsyncFunction() async -> Int { return 10 }
-  >> var sum = 0
-  >> sum = 7 + await someAsyncFunction()    // Error
-  !$ error: 'await' cannot appear to the right of a non-assignment operator
-  !! sum = 7 + await someAsyncFunction()    // Error
-  !! ^
-  >> sum = 7 + (await someAsyncFunction())  // OK
-  >> _ = sum  // Suppress irrelevant written-but-not-read warning
-  >> }
-  ```
--->
-
-If an expression includes both the `await` and `try` operator,
-the `try` operator must appear first.
-
-<!--
-  The "try await" ordering is also part of the grammar for 'expression',
-  but it's important enough to be worth re-stating in prose.
--->
-
-> Grammar of an await expression:
+> Await 表达式语法:
 >
-> *await-operator* → **`await`**
+> *await运算符* → **`await`**
 
-## Infix Expressions
+## 中缀表达式
 
-*Infix expressions* combine
-an infix binary operator with the expression that it takes
-as its left- and right-hand arguments.
-It has the following form:
+*中缀表达式*由中缀运算符和左右参数表达式组成。形式如下：
 
 ```swift
-<#left-hand argument#> <#operator#> <#right-hand argument#>
+<#left-左侧参数#> <#中缀运算符#> <#右侧参数t#>
 ```
 
-For information about the behavior of these operators,
-see <doc:BasicOperators> and <doc:AdvancedOperators>.
+关于这些运算符的更多信息，请参阅<doc:BasicOperators> 和 <doc:AdvancedOperators>.
 
-For information about the operators provided by the Swift standard library,
-see [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
+关于 Swift 标准库提供的运算符的更多信息，请参阅[Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
 
-<!--
-  You have essentially expression sequences here, and within it are
-  parts of the expressions.  We're calling them "expressions" even
-  though they aren't what we ordinarily think of as expressions.  We
-  have this two-phase thing where we do the expression sequence parsing
-  which gives a rough parse tree.  Then after name binding we know
-  operator precedence and we do a second phase of parsing that builds
-  something that's a more traditional tree.
--->
-
-> Note: At parse time,
-> an expression made up of infix operators is represented
-> as a flat list.
-> This list is transformed into a tree
-> by applying operator precedence.
-> For example, the expression `2 + 3 * 5`
-> is initially understood as a flat list of five items,
-> `2`, `+`, `3`, `*`, and `5`.
-> This process transforms it into the tree (2 + (3 * 5)).
+> 注意
+> 在解析时，一个中缀表达式将作为一个扁平列表表示，然后根据运算符的优先级，再进一步进行组合。例如，> `2 + 3 * 5` 首先被看作具有五个元素的列表，即 `2`、`+`、`3`、`*`、`5`，随后根据运算符优先级组合为 `(2 + > (3 * 5))`。
 
 > Grammar of an infix expression:
 >
@@ -337,193 +153,81 @@ see [Operator Declarations](https://developer.apple.com/documentation/swift/oper
 > *infix-expression* → *type-casting-operator* \
 > *infix-expressions* → *infix-expression* *infix-expressions*_?_
 
-### Assignment Operator
+###  赋值运算符
 
-The *assignment operator* sets a new value
-for a given expression.
-It has the following form:
+ 赋值运算符会为某个给定的表达式赋值，形式如下；
 
 ```swift
-<#expression#> = <#value#>
+<#表达式#> = <#值#>
 ```
 
-The value of the *expression*
-is set to the value obtained by evaluating the *value*.
-If the *expression* is a tuple,
-the *value* must be a tuple
-with the same number of elements.
-(Nested tuples are allowed.)
-Assignment is performed from each part of the *value*
-to the corresponding part of the *expression*.
-For example:
+右边的值会被赋值给左边的表达式。如果左边表达式是一个元组，那么右边必须是一个具有同样元素个数的元组。（嵌套元组也是允许的。）右边的值中的每一部分都会被赋值给左边的表达式中的相应部分。例如：
 
 ```swift
 (a, _, (b, c)) = ("test", 9.45, (12, 3))
-// a is "test", b is 12, c is 3, and 9.45 is ignored
+//  a 为 "test"，b 为 12，c 为 3，9.45 会被忽略
 ```
 
-<!--
-  - test: `assignmentOperator`
-
-  ```swifttest
-  >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-  -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
-  /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
-  </ a is "test", b is 12, c is 3, and 9.45 is ignored
-  ```
--->
-
-The assignment operator doesn't return any value.
+赋值运算符不返回任何值。
 
 > Grammar of an assignment operator:
 >
 > *assignment-operator* → **`=`**
 
-### Ternary Conditional Operator
+### 三元条件运算符
 
-The *ternary conditional operator* evaluates to one of two given values
-based on the value of a condition.
-It has the following form:
+*三元条件运算符*会根据条件来对两个给定表达式中的一个进行求值，形式如下：
 
 ```swift
-<#condition#> ? <#expression used if true#> : <#expression used if false#>
+<#条件#> ? <#表达式 (条件为真则使用)#> : <#表达式（条件为假则使用）#>
 ```
 
-If the *condition* evaluates to `true`,
-the conditional operator evaluates the first expression
-and returns its value.
-Otherwise, it evaluates the second expression
-and returns its value.
-The unused expression isn't evaluated.
+如果条件为真，那么对第一个表达式进行求值并返回结果。否则，对第二个表达式进行求值并返回结果。未使用的表达式不会进行求值。
 
-For an example that uses the ternary conditional operator,
-see <doc:BasicOperators#Ternary-Conditional-Operator>.
+关于使用三元条件运算符的例子，请参阅 <doc:BasicOperators#Ternary-Conditional-Operator>.
 
 > Grammar of a conditional operator:
 >
 > *conditional-operator* → **`?`** *expression* **`:`**
 
-### Type-Casting Operators
+### 类型转换运算符
 
-There are four type-casting operators:
-the `is` operator,
-the `as` operator,
-the `as?` operator,
-and the `as!` operator.
-
-They have the following form:
+有 4 种类型转换运算符：is、as、as? 和 as!。它们有如下的形式：
 
 ```swift
-<#expression#> is <#type#>
-<#expression#> as <#type#>
-<#expression#> as? <#type#>
-<#expression#> as! <#type#>
+<#表达式#> is <#类型#>
+<#表达式#> as <#类型#>
+<#表达式#> as? <#类型#>
+<#表达式#> as! <#类型#>
 ```
 
-The `is` operator checks at runtime whether the *expression*
-can be cast to the specified *type*.
-It returns `true` if the *expression* can be cast to the specified *type*;
-otherwise, it returns `false`.
+`is` 运算符在运行时检查表达式能否向下转化为指定的类型，如果可以则返回 `ture`，否则返回 false。
 
-<!--
-  - test: `triviallyTrueIsAndAs`
-
-  ```swifttest
-  -> assert("hello" is String)
-  -> assert(!("hello" is Int))
-  !$ warning: 'is' test is always true
-  !! assert("hello" is String)
-  !!                ^
-  !$ warning: cast from 'String' to unrelated type 'Int' always fails
-  !! assert(!("hello" is Int))
-  !!          ~~~~~~~ ^  ~~~
-  ```
--->
-
-<!--
-  - test: `is-operator-tautology`
-
-  ```swifttest
-  -> class Base {}
-  -> class Subclass: Base {}
-  -> var s = Subclass()
-  -> var b = Base()
-  ---
-  -> assert(s is Base)
-  !$ warning: 'is' test is always true
-  !! assert(s is Base)
-  !!          ^
-  ```
--->
-
-The `as` operator performs a cast
-when it's known at compile time
-that the cast always succeeds,
-such as upcasting or bridging.
-Upcasting lets you use an expression as an instance of its type's supertype,
-without using an intermediate variable.
-The following approaches are equivalent:
+`as` 运算符在编译时执行向上转换和桥接。向上转换可将表达式转换成父类的实例而无需使用任何中间变量。以下表达式是等价的：
 
 ```swift
 func f(_ any: Any) { print("Function for Any") }
 func f(_ int: Int) { print("Function for Int") }
 let x = 10
 f(x)
-// Prints "Function for Int"
+// 打印 "Function for Int"
 
 let y: Any = x
 f(y)
-// Prints "Function for Any"
+// 打印 "Function for Any"
 
 f(x as Any)
-// Prints "Function for Any"
+// 打印 "Function for Any"
 ```
 
-<!--
-  - test: `explicit-type-with-as-operator`
+桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅[Working with Foundation Types](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types).
 
-  ```swifttest
-  -> func f(_ any: Any) { print("Function for Any") }
-  -> func f(_ int: Int) { print("Function for Int") }
-  -> let x = 10
-  -> f(x)
-  <- Function for Int
-  ---
-  -> let y: Any = x
-  -> f(y)
-  <- Function for Any
-  ---
-  -> f(x as Any)
-  <- Function for Any
-  ```
--->
+`as?` 运算符有条件地执行类型转换，返回目标类型的可选值。在运行时，如果转换成功，返回的可选值将包含转换后的值，否则返回 `nil`。如果在编译时就能确定转换一定会成功或是失败，则会导致编译报错。
 
-Bridging lets you use an expression of
-a Swift standard library type such as `String`
-as its corresponding Foundation type such as `NSString`
-without needing to create a new instance.
-For more information on bridging,
-see [Working with Foundation Types](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types).
+`as!` 运算符执行强制类型转换，返回目标类型的非可选值。如果转换失败，则会导致运行时错误。表达式 `x as! T` 效果等同于 `(x as? T)!`。
 
-The `as?` operator
-performs a conditional cast of the *expression*
-to the specified *type*.
-The `as?` operator returns an optional of the specified *type*.
-At runtime, if the cast succeeds,
-the value of *expression* is wrapped in an optional and returned;
-otherwise, the value returned is `nil`.
-If casting to the specified *type*
-is guaranteed to fail or is guaranteed to succeed,
-a compile-time error is raised.
-
-The `as!` operator performs a forced cast of the *expression* to the specified *type*.
-The `as!` operator returns a value of the specified *type*, not an optional type.
-If the cast fails, a runtime error is raised.
-The behavior of `x as! T` is the same as the behavior of `(x as? T)!`.
-
-For more information about type casting
-and to see examples that use the type-casting operators,
-see <doc:TypeCasting>.
+关于类型转换的更多内容和例子，请参阅 <doc:TypeCasting>.
+要查看使用类型转换运算符的示例，请参阅 <doc:TypeCasting#Type-Casting-Operators>.
 
 > Grammar of a type-casting operator:
 >
@@ -532,13 +236,9 @@ see <doc:TypeCasting>.
 > *type-casting-operator* → **`as`** **`?`** *type* \
 > *type-casting-operator* → **`as`** **`!`** *type*
 
-## Primary Expressions
+## 基本表达式
 
-*Primary expressions*
-are the most basic kind of expression.
-They can be used as expressions on their own,
-and they can be combined with other tokens
-to make prefix expressions, infix expressions, and postfix expressions.
+*基本表达式是最基本的表达式。它们可以单独使用，也可以跟前缀表达式、中置表达式、后缀表达式组合使用。
 
 > Grammar of a primary expression:
 >
@@ -557,27 +257,11 @@ to make prefix expressions, infix expressions, and postfix expressions.
 > *primary-expression* → *selector-expression* \
 > *primary-expression* → *key-path-string-expression*
 
-<!--
-  NOTE: One reason for breaking primary expressions out of postfix
-  expressions is for exposition -- it makes it easier to organize the
-  prose surrounding the production rules.
--->
+### 字面量表达式
 
-<!--
-  TR: Is a generic argument clause allowed
-  after an identifier in expression context?
-  It seems like that should only occur when an identifier
-  is a *type* identifier.
--->
+字面量表达式可由普通字面量（例如字符串或者数字），字典或者数组字面量，或者下面列表中的特殊字面量组成：
 
-### Literal Expression
-
-A *literal expression* consists of
-either an ordinary literal (such as a string or a number),
-an array or dictionary literal,
-or a playground literal.
-
-> Note:
+> 注意：
 > Prior to Swift 5.9,
 > the following special literals were recognized:
 > `#column`,
@@ -596,86 +280,33 @@ or a playground literal.
 > [`function()`](https://developer.apple.com/documentation/swift/function()),
 > and [`line()`](https://developer.apple.com/documentation/swift/line()).
 
-<!--
-  - test: `pound-file-flavors`
-
-  ```swifttest
-  >> print(#file == #filePath)
-  << true
-  >> print(#file == #fileID)
-  << false
-  ```
--->
-
-An *array literal* is
-an ordered collection of values.
-It has the following form:
+数组字面量是值的有序集合，形式如下：
 
 ```swift
-[<#value 1#>, <#value 2#>, <#...#>]
+[<#值 1#>, <#值 2#>, <#...#>]
 ```
 
-The last expression in the array can be followed by an optional comma.
-The value of an array literal has type `[T]`,
-where `T` is the type of the expressions inside it.
-If there are expressions of multiple types,
-`T` is their closest common supertype.
-Empty array literals are written using an empty
-pair of square brackets and can be used to create an empty array of a specified type.
+数组中的最后一个表达式可以紧跟一个逗号。数组字面量的类型是 `[T]`，这个 `T` 就是数组中元素的类型。如果数组中包含多种类型，`T`  则是跟这些类型最近的的公共父类型。空数组字面量由一组方括号定义，可用来创建特定类型的空数组。
 
 ```swift
 var emptyArray: [Double] = []
 ```
 
-<!--
-  - test: `array-literal-brackets`
-
-  ```swifttest
-  -> var emptyArray: [Double] = []
-  ```
--->
-
-A *dictionary literal* is
-an unordered collection of key-value pairs.
-It has the following form:
+字典字面量是一个包含无序键值对的集合，形式如下：
 
 ```swift
-[<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
+[<#键 1#>: <#值 1#>, <#键 2#>: <#值 2#>, <#...#>]
 ```
 
-The last expression in the dictionary can be followed by an optional comma.
-The value of a dictionary literal has type `[Key: Value]`,
-where `Key` is the type of its key expressions
-and `Value` is the type of its value expressions.
-If there are expressions of multiple types,
-`Key` and `Value` are the closest common supertype
-for their respective values.
-An empty dictionary literal is written as
-a colon inside a pair of brackets (`[:]`)
-to distinguish it from an empty array literal.
-You can use an empty dictionary literal to create an empty dictionary literal
-of specified key and value types.
+字典中的最后一个表达式可以紧跟一个逗号。字典字面量的类型是 `[Key : Value]`，`Key` 表示键的类型，`Value` 表示值的类型。如果字典中包含多种类型，那么 `Key` 表示的类型则为所有键最接近的公共父类型，`Value` 与之相似。一个空的字典字面量由方括号中加一个冒号组成（`[:]`），从而与空数组字面量区分开，可以使用空字典字面量来创建特定类型的字典。
 
 ```swift
 var emptyDictionary: [String: Double] = [:]
 ```
 
-<!--
-  - test: `dictionary-literal-brackets`
+Xcode 使用 playground 字面量对程序编辑器中的颜色、文件或者图片创建可交互的展示。在 Xcode 之外的空白文本中，playground 字面量使用一种特殊的字面量语法来展示。
 
-  ```swifttest
-  -> var emptyDictionary: [String: Double] = [:]
-  ```
--->
-
-A *playground literal*
-is used by Xcode to create an interactive representation
-of a color, file, or image within the program editor.
-Playground literals in plain text outside of Xcode
-are represented using a special literal syntax.
-
-For information on using playground literals in Xcode,
-see [Add a color, file, or image literal](https://help.apple.com/xcode/mac/current/#/dev4c60242fc)
+更多关于在 Xcode 中使用 playground 字面量的信息，请参阅[Add a color, file, or image literal](https://help.apple.com/xcode/mac/current/#/dev4c60242fc)
 in Xcode Help.
 
 > Grammar of a literal expression:
@@ -695,33 +326,21 @@ in Xcode Help.
 > *playground-literal* → **`#fileLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`** \
 > *playground-literal* → **`#imageLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`**
 
-### Self Expression
+### Self 表达式
 
-The `self` expression is an explicit reference to the current type
-or instance of the type in which it occurs.
-It has the following forms:
+ `self` 表达式是对当前类型或者当前实例的显式引用，它有如下形式：
 
 ```swift
 self
-self.<#member name#>
-self[<#subscript index#>]
-self(<#initializer arguments#>)
-self.init(<#initializer arguments#>)
+self.<#成员名称#>
+self[<#下标索引#>]
+self(<#初始化器参数#>)
+self.init(<#初始化器参数#>)
 ```
 
-<!--
-  TODO: Come back and explain the second to last form (i.e., self(arg: value)).
--->
+如果在构造器、下标、实例方法中，`self` 引用的是当前类型的实例。在一个类型方法中，`self` 引用的是当前的类型。
 
-In an initializer, subscript, or instance method, `self` refers to the current
-instance of the type in which it occurs. In a type method,
-`self` refers to the current type in which it occurs.
-
-The `self` expression is used to specify scope when accessing members,
-providing disambiguation when there's
-another variable of the same name in scope,
-such as a function parameter.
-For example:
+当访问成员时，`self` 可用来区分重名变量，例如函数的参数：
 
 ```swift
 class SomeClass {
@@ -732,22 +351,7 @@ class SomeClass {
 }
 ```
 
-<!--
-  - test: `self-expression`
-
-  ```swifttest
-  -> class SomeClass {
-         var greeting: String
-         init(greeting: String) {
-             self.greeting = greeting
-         }
-     }
-  ```
--->
-
-In a mutating method of a value type,
-you can assign a new instance of that value type to `self`.
-For example:
+在 `mutating` 方法中，你可以对 `self` 重新赋值：
 
 ```swift
 struct Point {
@@ -758,25 +362,6 @@ struct Point {
 }
 ```
 
-<!--
-  - test: `self-expression`
-
-  ```swifttest
-  -> struct Point {
-        var x = 0.0, y = 0.0
-        mutating func moveBy(x deltaX: Double, y deltaY: Double) {
-           self = Point(x: x + deltaX, y: y + deltaY)
-        }
-     }
-  >> var somePoint = Point(x: 1.0, y: 1.0)
-  >> somePoint.moveBy(x: 2.0, y: 3.0)
-  >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
-  << The point is now at (3.0, 4.0)
-  ```
--->
-
-<!-- Apple Books screenshot begins here. -->
-
 > Grammar of a self expression:
 >
 > *self-expression* → **`self`** | *self-method-expression* | *self-subscript-expression* | *self-initializer-expression*
@@ -785,25 +370,19 @@ struct Point {
 > *self-subscript-expression* → **`self`** **`[`** *function-call-argument-list* **`]`** \
 > *self-initializer-expression* → **`self`** **`.`** **`init`**
 
-### Superclass Expression
+### 父类表达式
 
-A *superclass expression* lets a class
-interact with its superclass.
-It has one of the following forms:
+*父类表达式*可以使我们在某个类中访问它的父类，它有如下形式：
 
 ```swift
-super.<#member name#>
-super[<#subscript index#>]
-super.init(<#initializer arguments#>)
+super.<#成员名称#>
+super[<#下标索引#>]
+super.init(<#初始化器参数#>)
 ```
 
-The first form is used to access a member of the superclass.
-The second form is used to access the superclass's subscript implementation.
-The third form is used to access an initializer of the superclass.
+第一种形式用来访问父类的某个成员，第二种形式用来访问父类的下标，第三种形式用来访问父类的构造器。
 
-Subclasses can use a superclass expression
-in their implementation of members, subscripting, and initializers
-to make use of the implementation in their superclass.
+子类可以通过父类表达式在它们的成员、下标和构造器中使用父类中的实现。
 
 > Grammar of a superclass expression:
 >
@@ -813,11 +392,9 @@ to make use of the implementation in their superclass.
 > *superclass-subscript-expression* → **`super`** **`[`** *function-call-argument-list* **`]`** \
 > *superclass-initializer-expression* → **`super`** **`.`** **`init`**
 
-### Conditional Expression
+### 闭包表达式
 
-A *conditional expression* evaluates to one of several given values
-based on the value of a condition.
-It has one the following forms:
+*闭包表达式*会创建一个闭包，在其他语言中也叫 *lambda* 或匿名函数。跟函数一样，闭包包含了待执行的代码，不同的是闭包还会捕获所在环境中的常量和变量。它的形式如下：
 
 ```swift
 if <#condition 1#> {
@@ -838,53 +415,32 @@ default:
 }
 ```
 
-A conditional expression
-has the same behavior and syntax as an `if` statement or a `switch` statement,
-except for the differences that the paragraphs below describe.
+如果闭包的主体中含有 try 表达式，则认为该闭包会引发异常。同理，若闭包主体含有 await 表达式，则认为该闭包是异步的。
 
-A conditional expression appears only in the following contexts:
+闭包还有几种特殊的形式，能让闭包使用起来更加简洁：
 
-  - As the value assigned to a variable.
-  - As the initial value in a variable or constant declaration.
-  - As the error thrown by a `throw` expression.
-  - As the value returned by a function, closure, or property getter.
-  - As the value inside a branch of a conditional expression.
+  - 作为变量赋值的值。
+  - 作为变量或常量声明的初始值。
+  - 作为 `throw` 表达式引发的错误。
+  - 作为函数、闭包或属性 getter 的返回值。
+  - 作为条件表达式分支中的值。
 
-The branches of a conditional expression are exhaustive,
-ensuring that the expression always produces a value
-regardless of the condition.
-This means each `if` branch needs a corresponding `else` branch.
+条件表达式的分支是穷尽的，确保表达式总是会返回一个值，无论条件如何。这意味着每个 `if` 分支都需要一个对应的 `else` 分支。
 
-Each branch contains either a single expression,
-which is used as the value for the conditional expression
-when that branch's conditional is true,
-a `throw` statement,
-or a call to a function that never returns.
+无论条件如何，这意味着每个 `if` 分支都需要一个对应的 `else` 分支。
 
-Each branch must produce a value of the same type.
-Because type checking of each branch is independent,
-you sometimes need to specify the value's type explicitly,
-like when branches include different kinds of literals,
-or when a branch's value is `nil`.
-When you need to provide this information,
-add a type annotation to the variable that the result is assigned to,
-or add an `as` cast to the branches' values.
+每个分支包含一个单独的表达式，该表达式在该分支的条件为真时用作条件表达式的值，或者是一个 `throw` 语句，或是一个永不返回的函数调用。
+
+每个分支必须产生相同类型的值。由于每个分支的类型检查是独立的，有时你需要明确指定值的类型，例如当分支包含不同类型的字面量，或者当某个分支的值为 `nil` 时。当你需要提供这些信息时，可以在结果赋值的变量上添加类型注解，或者在分支值上添加 `as` 类型转换。
 
 ```swift
 let number: Double = if someCondition { 10 } else { 12.34 }
 let number = if someCondition { 10 as Double } else { 12.34 }
 ```
 
-Inside a result builder,
-conditional expressions can appear
-only as the initial value of a variable or constant.
-This behavior means when you write `if` or `switch` in a result builder ---
-outside of a variable or constant declaration ---
-that code is understood as a branch statement
-and one of the result builder's methods transforms that code.
+在结果构建器内，条件表达式只能作为变量或常量的初始值出现。这种行为意味着，当你在结果构建器中编写 `if` 或 `switch` —— 在变量或常量声明之外 —— 这段代码被理解为分支语句，并且结果构建器的一个方法会对这段代码进行转换。
 
-Don't put a conditional expression in a `try` expression,
-even if one of the branches of a conditional expression is throwing.
+即使条件表达式的某个分支会抛出异常，也不要将条件表达式放入 try 表达式中。
 
 > Grammar of a conditional expression:
 >
@@ -899,15 +455,9 @@ even if one of the branches of a conditional expression is throwing.
 > *switch-expression-case* → *case-label* *statement* \
 > *switch-expression-case* → *default-label* *statement*
 
-### Closure Expression
+### 闭包表达式
 
-A *closure expression* creates a closure,
-also known as a *lambda* or an *anonymous function*
-in other programming languages.
-Like a function declaration,
-a closure contains statements,
-and it captures constants and variables from its enclosing scope.
-It has the following form:
+*闭包表达式*会创建一个闭包，在其他语言中也叫 *lambda* 或匿名函数。跟函数一样，闭包包含了待执行的代码，不同的是闭包还会捕获所在环境中的常量和变量。它的形式如下：
 
 ```swift
 { (<#parameters#>) -> <#return type#> in
@@ -915,12 +465,9 @@ It has the following form:
 }
 ```
 
-The *parameters* have the same form
-as the parameters in a function declaration,
-as described in <doc:Declarations#Function-Declaration>.
+闭包的参数声明形式跟函数一样，请参阅 <doc:Declarations#Function-Declaration>.
 
-Writing `throws` or `async` in a closure expression
-explicitly marks a closure as throwing or asynchronous.
+在闭包表达式中写入 `throws` 或 `async` 将显式地将闭包标记为丢掷或异步的。
 
 ```swift
 { (<#parameters#>) async throws -> <#return type#> in
@@ -928,36 +475,17 @@ explicitly marks a closure as throwing or asynchronous.
 }
 ```
 
-If the body of a closure includes a `throws` statement or a `try` expression
-that isn't nested inside of a `do` statement with exhaustive error handling,
-the closure is understood to be throwing.
-If a throwing closure throws errors of only a single type,
-the closure is understood as throwing that error type;
-otherwise, it's understood as throwing `any Error`.
-Likewise, if the body includes an `await` expression,
-it's understood to be asynchronous.
+如果闭包的主体中含有 try 表达式，则认为该闭包会引发异常。同理，若闭包主体含有 await 表达式，则认为该闭包是异步的。
 
-There are several special forms
-that allow closures to be written more concisely:
+闭包还有几种特殊的形式，能让闭包使用起来更加简洁：
 
-<!-- Apple Books screenshot ends here. -->
+- 闭包可以省略它的参数和返回值的类型。如果省略了参数名和所有的类型，也要省略 `in` 关键字。如果被省略的类型无法被编译器推断，那么就会导致编译错误。
 
-- A closure can omit the types
-  of its parameters, its return type, or both.
-  If you omit the parameter names and both types,
-  omit the `in` keyword before the statements.
-  If the omitted types can't be inferred,
-  a compile-time error is raised.
-- A closure may omit names for its parameters.
-  Its parameters are then implicitly named
-  `$` followed by their position:
-  `$0`, `$1`, `$2`, and so on.
-- A closure that consists of only a single expression
-  is understood to return the value of that expression.
-  The contents of this expression are also considered
-  when performing type inference on the surrounding expression.
+- 闭包可以省略参数名，参数会被隐式命名为 `$` 加上其索引位置，例如 `$0`、`$1`、`$2` 分别表示第一个、第二个、第三个参数，以此类推。
 
-The following closure expressions are equivalent:
+- 如果闭包中只包含一个表达式，那么该表达式的结果就会被视为闭包的返回值。表达式结果的类型也会被推断为闭包的返回类型。
+
+下面几个闭包表达式是等价的：
 
 ```swift
 myFunction { (x: Int, y: Int) -> Int in
@@ -973,66 +501,19 @@ myFunction { return $0 + $1 }
 myFunction { $0 + $1 }
 ```
 
-<!--
-  - test: `closure-expression-forms`
+关于如何将闭包作为参数来传递的内容，请参阅 <doc:Expressions#Function-Call-Expression>.
 
-  ```swifttest
-  >> func myFunction(f: (Int, Int) -> Int) {}
-  -> myFunction { (x: Int, y: Int) -> Int in
-         return x + y
-     }
-  ---
-  -> myFunction { x, y in
-         return x + y
-     }
-  ---
-  -> myFunction { return $0 + $1 }
-  ---
-  -> myFunction { $0 + $1 }
-  ```
--->
+使用闭包表达式时，可以不必将其存储在一个变量或常量中，例如作为函数调用的一部分来立即使用一个闭包。在上面的例子中，传入 `myFunction` 的闭包表达式就是这种立即使用类型的闭包。因此，一个闭包是否逃逸与其使用时的上下文相关。一个会被立即调用或者作为函数的非逃逸参数传递的闭包表达式是非逃逸的，否则，这个闭包表达式是逃逸的。
 
-For information about passing a closure as an argument to a function,
-see <doc:Expressions#Function-Call-Expression>.
+关于逃逸闭包的内容，请参阅<doc:Closures#Escaping-Closures>.
 
-Closure expressions can be used
-without being stored in a variable or constant,
-such as when you immediately use a closure as part of a function call.
-The closure expressions passed to `myFunction` in code above are
-examples of this kind of immediate use.
-As a result,
-whether a closure expression is escaping or nonescaping depends
-on the surrounding context of the expression.
-A closure expression is nonescaping
-if it's called immediately
-or passed as a nonescaping function argument.
-Otherwise, the closure expression is escaping.
+#### 捕获列表
 
-For more information about escaping closures, see <doc:Closures#Escaping-Closures>.
+默认情况下，闭包会捕获附近作用域中的常量和变量，并使用强引用指向它们。你可以通过一个*捕获列表*来显式指定它的捕获行为。
 
-#### Capture Lists
+捕获列表在参数列表之前，由中括号括起来，里面是由逗号分隔的一系列表达式。一旦使用了捕获列表，就必须使用 `in` 关键字，即使省略了参数名、参数类型和返回类型。
 
-By default, a closure expression captures
-constants and variables from its surrounding scope
-with strong references to those values.
-You can use a *capture list* to explicitly control
-how values are captured in a closure.
-
-A capture list is written as a comma-separated list of expressions
-surrounded by square brackets,
-before the list of parameters.
-If you use a capture list, you must also use the `in` keyword,
-even if you omit the parameter names, parameter types, and return type.
-
-The entries in the capture list are initialized
-when the closure is created.
-For each entry in the capture list,
-a constant is initialized
-to the value of the constant or variable that has the same name
-in the surrounding scope.
-For example in the code below,
-`a` is included in the capture list but `b` is not,
-which gives them different behavior.
+捕获列表中的项会在闭包创建时被初始化。每一项都会用闭包附近作用域中的同名常量或者变量的值初始化。例如下面的代码示例中，捕获列表包含 `a` 而不包含 `b`，这将导致这两个变量具有不同的行为。
 
 ```swift
 var a = 0
@@ -1044,58 +525,12 @@ let closure = { [a] in
 a = 10
 b = 10
 closure()
-// Prints "0 10"
+// 打印 "0 10"
 ```
 
-<!--
-  - test: `capture-list-value-semantics`
+在示例中，变量 `b` 只有一个，然而，变量 `a` 有两个，一个在闭包外，一个在闭包内。闭包内的变量 `a` 会在闭包创建时用闭包外的变量 `a` 的值来初始化，除此之外它们并无其他联系。这意味着在闭包创建后，改变某个 `a` 的值都不会对另一个 `a` 的值造成任何影响。与此相反，闭包内外都是同一个变量 `b`，因此在闭包外改变其值，闭包内的值也会受影响。
 
-  ```swifttest
-  -> var a = 0
-  -> var b = 0
-  -> let closure = { [a] in
-      print(a, b)
-  }
-  ---
-  -> a = 10
-  -> b = 10
-  -> closure()
-  <- 0 10
-  ```
--->
-
-There are two different things named `a`,
-the variable in the surrounding scope
-and the constant in the closure's scope,
-but only one variable named `b`.
-The `a` in the inner scope is initialized
-with the value of the `a` in the outer scope
-when the closure is created,
-but their values aren't connected in any special way.
-This means that a change to the value of `a` in the outer scope
-doesn't affect the value of `a` in the inner scope,
-nor does a change to `a` inside the closure
-affect the value of `a` outside the closure.
-In contrast, there's only one variable named `b` ---
-the `b` in the outer scope ---
-so changes from inside or outside the closure are visible in both places.
-
-<!--
-  [Contributor 6004] also describes the distinction as
-  "capturing the variable, not the value"
-  but he notes that we don't have a rigorous definition of
-  capturing a variable in Swift
-  (unlike some other languages)
-  so that description's not likely to be very helpful for developers.
--->
-
-This distinction isn't visible
-when the captured variable's type has reference semantics.
-For example,
-there are two things named `x` in the code below,
-a variable in the outer scope and a constant in the inner scope,
-but they both refer to the same object
-because of reference semantics.
+如果闭包捕获的值具有引用语义则有所不同。例如，下面示例中，有两个变量 `x`，一个在闭包外，一个在闭包内，由于它们的值是引用语义，虽然这是两个不同的变量，它们却都引用着同一实例。
 
 ```swift
 class SimpleClass {
@@ -1110,66 +545,10 @@ let closure = { [x] in
 x.value = 10
 y.value = 10
 closure()
-// Prints "10 10"
+// 打印 "10 10"
 ```
 
-<!--
-  - test: `capture-list-reference-semantics`
-
-  ```swifttest
-  -> class SimpleClass {
-         var value: Int = 0
-     }
-  -> var x = SimpleClass()
-  -> var y = SimpleClass()
-  -> let closure = { [x] in
-         print(x.value, y.value)
-     }
-  ---
-  -> x.value = 10
-  -> y.value = 10
-  -> closure()
-  <- 10 10
-  ```
--->
-
-<!--
-  - test: `capture-list-with-commas`
-
-  ```swifttest
-  -> var x = 100
-  -> var y = 7
-  -> var f: () -> Int = { [x, y] in x+y }
-  >> let r0 = f()
-  >> assert(r0 == 107)
-  ```
--->
-
-<!--
-  It's not an error to capture things that aren't included in the capture list,
-  although maybe it should be.  See also rdar://17024367.
--->
-
-<!--
-  - test: `capture-list-is-not-exhaustive`
-
-  ```swifttest
-  -> var x = 100
-     var y = 7
-     var f: () -> Int = { [x] in x }
-     var g: () -> Int = { [x] in x+y }
-  ---
-  -> let r0 = f()
-  -> assert(r0 == 100)
-  -> let r1 = g()
-  -> assert(r1 == 107)
-  ```
--->
-
-If the type of the expression's value is a class,
-you can mark the expression in a capture list
-with `weak` or `unowned` to capture a weak or unowned reference
-to the expression's value.
+如果捕获列表中的值是类类型，你可以使用 `weak` 或者 `unowned` 来修饰它，闭包会分别用弱引用和无主引用来捕获该值。
 
 ```swift
 myFunction { print(self.title) }                    // implicit strong capture
@@ -1178,78 +557,16 @@ myFunction { [weak self] in print(self!.title) }    // weak capture
 myFunction { [unowned self] in print(self.title) }  // unowned capture
 ```
 
-<!--
-  - test: `closure-expression-weak`
-
-  ```swifttest
-  >> func myFunction(f: () -> Void) { f() }
-  >> class C {
-  >> let title = "Title"
-  >> func method() {
-  -> myFunction { print(self.title) }                    // implicit strong capture
-  -> myFunction { [self] in print(self.title) }          // explicit strong capture
-  -> myFunction { [weak self] in print(self!.title) }    // weak capture
-  -> myFunction { [unowned self] in print(self.title) }  // unowned capture
-  >> } }
-  >> C().method()
-  << Title
-  << Title
-  << Title
-  << Title
-  ```
--->
-
-You can also bind an arbitrary expression
-to a named value in a capture list.
-The expression is evaluated when the closure is created,
-and the value is captured with the specified strength.
-For example:
+在捕获列表中，也可以将任意表达式的值绑定到一个常量上。该表达式会在闭包被创建时进行求值，闭包会按照指定的引用类型来捕获表达式的值。例如：
 
 ```swift
-// Weak capture of "self.parent" as "parent"
+// 以弱引用捕获 self.parent 并赋值给 parent
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-<!--
-  - test: `closure-expression-capture`
+关于闭包表达式的更多信息和例子，请参阅 <doc:Closures#Closure-Expressions>.
 
-  ```swifttest
-  >> func myFunction(f: () -> Void) { f() }
-  >> class P { let title = "Title" }
-  >> class C {
-  >> let parent = P()
-  >> func method() {
-  // Weak capture of "self.parent" as "parent"
-  -> myFunction { [weak parent = self.parent] in print(parent!.title) }
-  >> } }
-  >> C().method()
-  << Title
-  ```
--->
-
-For more information and examples of closure expressions,
-see <doc:Closures#Closure-Expressions>.
-For more information and examples of capture lists,
-see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closures>.
-
-<!--
-  - test: `async-throwing-closure-syntax`
-
-  ```swifttest
-  >> var a = 12
-  >> let c1 = { [a] in return a }                  // OK -- no async or throws
-  >> let c2 = { [a] async in return a }            // ERROR
-  >> let c3 = { [a] async -> in return a }         // ERROR
-  >> let c4 = { [a] () async -> Int in return a }  // OK -- has () and ->
-  !$ error: expected expression
-  !! let c3 = { [a] async -> in return a }         // ERROR
-  !! ^
-  !$ error: unable to infer type of a closure parameter 'async' in the current context
-  !! let c2 = { [a] async in return a }            // ERROR
-  !! ^
-  // NOTE: The error message for c3 gets printed by the REPL before the c2 error.
-  ```
--->
+关于捕获列表的更多信息和例子，请参阅 <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closures>.
 
 > Grammar of a closure expression:
 >
@@ -1271,66 +588,28 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
 > *capture-list-item* → *capture-specifier*_?_ *self-expression* \
 > *capture-specifier* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
 
-### Implicit Member Expression
+### 隐式成员表达式
 
-An *implicit member expression*
-is an abbreviated way to access a member of a type,
-such as an enumeration case or a type method,
-in a context where type inference
-can determine the implied type.
-It has the following form:
+*若类型*可被推断出来，可以使用*隐式成员表达式*来访问某个类型的成员（例如某个枚举成员或某个类型方法），形式如下：
 
 ```swift
-.<#member name#>
+.<#成员名称#>
 ```
 
-For example:
+例如：
 
 ```swift
 var x = MyEnumeration.someValue
 x = .anotherValue
 ```
 
-<!--
-  - test: `implicitMemberEnum`
-
-  ```swifttest
-  >> enum MyEnumeration { case someValue, anotherValue }
-  -> var x = MyEnumeration.someValue
-  -> x = .anotherValue
-  ```
--->
-
-If the inferred type is an optional,
-you can also use a member of the non-optional type
-in an implicit member expression.
+如果推断的是可选类型，可以在隐式成员表达式里使用不可选类型的成员。
 
 ```swift
 var someOptional: MyEnumeration? = .someValue
 ```
 
-<!--
-  - test: `implicitMemberEnum`
-
-  ```swifttest
-  -> var someOptional: MyEnumeration? = .someValue
-  ```
--->
-
-Implicit member expressions can be followed by
-a postfix operator or other postfix syntax listed in
-<doc:Expressions#Postfix-Expressions>.
-This is called a *chained implicit member expression*.
-Although it's common for all of the chained postfix expressions
-to have the same type,
-the only requirement is that the whole chained implicit member expression
-needs to be convertible to the type implied by its context.
-Specifically,
-if the implied type is an optional
-you can use a value of the non-optional type,
-and if the implied type is a class type
-you can use a value of one of its subclasses.
-For example:
+隐式成员表达式可以跟在后缀运算符或者其他在<doc:Expressions#Postfix-Expressions>里介绍的语法后面。这被称为 链式隐式成员表达式。尽管链式后缀表达式大多都是相同类型，但其实只需要整个链式成员表达式可以转换为上下文的类型就行了。更具体的，如果隐式类型是可选的，则可以使用非可选类型的值，如果隐式类型是类类型，则可以使用其子类的值。例如：
 
 ```swift
 class SomeClass {
@@ -1347,131 +626,32 @@ let x: SomeClass = .shared.a.f()
 let y: SomeClass? = .shared
 let z: SomeClass = .sharedSubclass
 ```
-
-<!--
-  - test: `implicit-member-chain`
-
-  ```swifttest
-  -> class SomeClass {
-         static var shared = SomeClass()
-         static var sharedSubclass = SomeSubclass()
-         var a = AnotherClass()
-     }
-  -> class SomeSubclass: SomeClass { }
-  -> class AnotherClass {
-         static var s = SomeClass()
-         func f() -> SomeClass { return AnotherClass.s }
-     }
-  -> let x: SomeClass = .shared.a.f()
-  -> let y: SomeClass? = .shared
-  -> let z: SomeClass = .sharedSubclass
-  ```
--->
-
-In the code above,
-the type of `x` matches the type implied by its context exactly,
-the type of `y` is convertible from `SomeClass` to `SomeClass?`,
-and the type of `z` is convertible from `SomeSubclass` to `SomeClass`.
+上面的代码中，`x` 的类型和上下文的隐式类型完全匹配，`y` 的类型是从 `SomeClass` 转换成 `SomeClass?`，`z` 的类型是从 `SomeSubclass` 转换成 `SomeClass`。
 
 > Grammar of an implicit member expression:
 >
 > *implicit-member-expression* → **`.`** *identifier* \
 > *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*
 
-<!--
-  The grammar above allows the additional pieces tested below,
-  which work even though they're omitted from the SE-0287 list.
-  The grammar also overproduces, allowing any primary expression
-  because of the definition of postfix-expression.
--->
+### 圆括号表达式
 
-<!--
-  - test: `implicit-member-grammar`
-
-  ```swifttest
-  // self expression
-  >> enum E { case left, right }
-  >> let e: E = .left
-  >> let e2: E = .left.self
-  >> assert(e == e2)
-  ---
-  // postfix operator
-  >> postfix operator ~
-  >> extension E {
-  >>     static postfix func ~ (e: E) -> E {
-  >>         switch e {
-  >>         case .left: return .right
-  >>         case .right: return .left
-  >>         }
-  >>     }
-  >> }
-  >> let e3: E = .left~
-  >> assert(e3 == .right)
-  ---
-  // initializer expression
-  >> class S {
-  >>     var num: Int
-  >>     init(bestNumber: Int) { self.num = bestNumber }
-  >> }
-  >> let s: S = .init(bestNumber: 42)
-  ```
--->
-
-### Parenthesized Expression
-
-A *parenthesized expression* consists of
-an expression surrounded by parentheses.
-You can use parentheses to specify the precedence of operations
-by explicitly grouping expressions.
-Grouping parentheses don't change an expression's type ---
-for example, the type of `(1)` is simply `Int`.
-
-<!--
-  See "Tuple Expression" below for langref grammar.
--->
+圆括号表达式是由圆括号包围的表达式。你可以用圆括号说明成组的表达式的先后操作。成组的圆括号不会改变表达式的类型 - 例如 `(1)` 的类型就是简单的 `Int`。
 
 > Grammar of a parenthesized expression:
 >
 > *parenthesized-expression* → **`(`** *expression* **`)`**
 
-### Tuple Expression
+### 元组表达式
 
-A *tuple expression* consists of
-a comma-separated list of expressions surrounded by parentheses.
-Each expression can have an optional identifier before it,
-separated by a colon (`:`).
-It has the following form:
+元组表达式由圆括号和其中多个逗号分隔的子表达式组成。每个子表达式前面可以有一个标识符，用冒号隔开。元组表达式形式如下：
 
 ```swift
-(<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
+(<#标识符 1#>: <#表达式 1#>, <#标识符 2#>: <#表达式 2#>, <#...#>)
 ```
 
-Each identifier in a tuple expression must be unique
-within the scope of the tuple expression.
-In a nested tuple expression,
-identifiers at the same level of nesting must be unique.
-For example,
-`(a: 10, a: 20)` is invalid
-because the label `a` appears twice at the same level.
-However, `(a: 10, b: (a: 1, x: 2))` is valid ---
-although `a` appears twice,
-it appears once in the outer tuple and once in the inner tuple.
+元组表达式里的每一个标识符在表达式作用域里必须是唯一的。在嵌套的元组表达式中，同嵌套层级里的标识符也必须是唯一的。例如，`(a: 10, a: 20)` 是不合法的，因为标签 `a` 在同一层级出现了两次。然而，`(a: 10, b: (a: 1, x: 2))` 是合法的，尽管 `a` 出现了两次，但有一次在外层元组里，一次在内层元组里。
 
-<!--
-  - test: `tuple-labels-must-be-unique`
-
-  ```swifttest
-  >> let bad = (a: 10, a: 20)
-  >> let good = (a: 10, b: (a: 1, x: 2))
-  !$ error: cannot create a tuple with a duplicate element label
-  !! let bad = (a: 10, a: 20)
-  !! ^
-  ```
--->
-
-A tuple expression can contain zero expressions,
-or it can contain two or more expressions.
-A single expression inside parentheses is a parenthesized expression.
+元组表达式可以一个表达式都没有，也可以包含两个或是更多的表达式。单个表达式用括号括起来就是括号表达式了。
 
 > Note: Both an empty tuple expression and an empty tuple type
 > are written `()` in Swift.
@@ -1486,140 +666,74 @@ A single expression inside parentheses is a parenthesized expression.
 > *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
 > *tuple-element* → *expression* | *identifier* **`:`** *expression*
 
-### Wildcard Expression
+### 通配符表达式
 
-A *wildcard expression*
-is used to explicitly ignore a value during an assignment.
-For example, in the following assignment
-10 is assigned to `x` and 20 is ignored:
+*通配符表达式*可以在赋值过程中显式忽略某个值。例如下面的代码中，`10` 被赋值给 `x`，而 `20` 则被忽略：
 
 ```swift
 (x, _) = (10, 20)
-// x is 10, and 20 is ignored
+// x  为 10，20 被忽略
 ```
-
-<!--
-  - test: `wildcardTuple`
-
-  ```swifttest
-  >> var (x, _) = (10, 20)
-  -> (x, _) = (10, 20)
-  -> // x is 10, and 20 is ignored
-  ```
--->
 
 > Grammar of a wildcard expression:
 >
 > *wildcard-expression* → **`_`**
 
-### Macro-Expansion Expression
+### 宏扩展表达式
 
-A *macro-expansion expression* consists of a macro name
-followed by a comma-separated list of the macro's arguments in parentheses.
-The macro is expanded at compile time.
-Macro-expansion expressions have the following form:
+*宏扩展表达式*由一个宏名称和一个用逗号分隔的宏参数列表（在括号内）组成。宏在编译时被扩展。宏扩展表达式的形式如下：
 
 ```swift
 <#macro name#>(<#macro argument 1#>, <#macro argument 2#>)
 ```
 
-A macro-expansion expression omits the parentheses after the macro's name
-if the macro doesn't take any arguments.
+如果宏不接受任何参数，宏扩展表达式可以省略宏名称后面的括号。
 
-A macro-expansion expression can't appear as the default value for a parameter,
-except the [`file()`][] and [`line()`][] macros from the Swift standard library.
-When used as the default value of a function or method parameter,
-these macros are evaluated using the source code location of the call site,
-not the location where they appear in a function definition.
+宏扩展表达式不能作为参数的默认值，除了 Swift 标准库中的 [`file()`][] 和 [`line()`][] 宏。当这些宏作为函数或方法参数的默认值时，它们会使用调用位置的源代码位置进行评估，而不是在函数定义中出现的位置。
 
 [`file()`]: https://developer.apple.com/documentation/swift/file()
 [`line()`]: https://developer.apple.com/documentation/swift/line()
 
-You use macro expressions to call freestanding macros.
-To call an attached macro,
-use the custom attribute syntax described in <doc:Attributes>.
-Both freestanding and attached macros expand as follows:
+你使用宏表达式来调用独立宏。要调用附加宏，请使用在 <doc:Attributes>.
+中描述的自定义属性语法。独立宏和附加宏的扩展方式如下：
 
-1. Swift parses the source code
-   to produce an abstract syntax tree (AST).
+1. Swift 解析源代码以生成抽象语法树（AST）。
 
-2. The macro implementation receives AST nodes as its input
-   and performs the transformations needed by that macro.
+2. 宏实现接收 AST 节点作为输入，并执行该宏所需的转换。
 
-3. The transformed AST nodes that the macro implementation produced
-   are added to the original AST.
+3. 宏实现生成的转换后 AST 节点会被添加到原始 AST 中。
 
-The expansion of each macro is independent and self-contained.
-However, as a performance optimization,
-Swift might start an external process that implements the macro
-and reuse the same process to expand multiple macros.
-When you implement a macro,
-that code must not depend on what macros your code previously expanded,
-or on any other external state like the current time.
+每个宏的扩展是独立且自包含的。然而，为了优化性能，Swift 可能会启动一个外部进程来实现宏，并重用同一个进程来扩展多个宏。当你实现一个宏时，该代码不能依赖于你的代码之前扩展过的宏，也不能依赖于任何其他外部状态，例如当前时间。
 
-For nested macros and attached macros that have multiple roles,
-the expansion process repeats.
-Nested macro-expansion expressions expand from the outside in.
-For example, in the code below
-`outerMacro(_:)` expands first and the unexpanded call to `innerMacro(_:)`
-appears in the abstract syntax tree
-that `outerMacro(_:)` receives as its input.
+对于嵌套宏和具有多个角色的附加宏，扩展过程会重复。嵌套的宏扩展表达式是从外到内进行扩展的。例如，在下面的代码中，`outerMacro(_:)` 首先被扩展，未扩展的对 `innerMacro(_:)` 的调用出现在 `outerMacro(_:)` 作为输入接收的抽象语法树中。
 
 ```swift
 #outerMacro(12, #innerMacro(34), "some text")
 ```
 
-An attached macro that has multiple roles expands once for each role.
-Each expansion receives the same, original, AST as its input.
-Swift forms the overall expansion
-by collecting all of the generated AST nodes
-and putting them in their corresponding places in the AST.
+一个具有多个角色的附加宏会针对每个角色进行一次扩展。每次扩展都接收相同的原始 AST 作为输入。Swift 通过收集所有生成的 AST 节点，并将它们放入 AST 中相应的位置，形成整体扩展。
 
-For an overview of macros in Swift, see <doc:Macros>.
+有关 Swift 中宏的概述 请参阅 <doc:Macros>。
 
 > Grammar of a macro-expansion expression:
 >
 > *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*_?_ *function-call-argument-clause*_?_ *trailing-closures*_?_
 
-### Key-Path Expression
+### Key-Path 表达式
 
-A *key-path expression*
-refers to a property or subscript of a type.
-You use key-path expressions
-in dynamic programming tasks,
-such as key-value observing.
-They have the following form:
+Key-path 表达式引用一个类型的属性或下标。在动态语言中使场景可以使用 Key-path 表达式，例如观察键值对。格式为：
 
 ```swift
-\<#type name#>.<#path#>
+\<#类型名#>.<#路径#>
 ```
 
-The *type name* is the name of a concrete type,
-including any generic parameters,
-such as `String`, `[Int]`, or `Set<Int>`.
+*类型名*是一个具体类型的名称，包含任何泛型参数，例如 `String`、`[Int]` 或 `Set<Int>`。
 
-The *path* consists of
-property names, subscripts, optional-chaining expressions,
-and forced unwrapping expressions.
-Each of these key-path components
-can be repeated as many times as needed,
-in any order.
+*路径*可由属性名称、下标、可选链表达式或者强制解包表达式组成。以上任意 key-path 组件可以以任何顺序重复多次。
 
-At compile time, a key-path expression
-is replaced by an instance
-of the [`KeyPath`](https://developer.apple.com/documentation/swift/keypath) class.
+在编译期，key-path 表达式会被一个 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath) 类的实例替换。
 
-To access a value using a key path,
-pass the key path to the `subscript(keyPath:)` subscript,
-which is available on all types.
-For example:
-
-<!--
-  The subscript name subscript(keyPath:) above is a little odd,
-  but it matches what would be displayed on the web.
-  There isn't actually an extension on Any that implements this subscript;
-  it's a special case in the compiler.
--->
+对于所有类型，都可以通过传递 key-path 参数到下标方法 `subscript(keyPath:)` 来访问它的值。例如：
 
 ```swift
 struct SomeStructure {
@@ -1630,31 +744,10 @@ let s = SomeStructure(someValue: 12)
 let pathToProperty = \SomeStructure.someValue
 
 let value = s[keyPath: pathToProperty]
-// value is 12
+// 值为 12
 ```
 
-<!--
-  - test: `keypath-expression`
-
-  ```swifttest
-  -> struct SomeStructure {
-         var someValue: Int
-     }
-  ---
-  -> let s = SomeStructure(someValue: 12)
-  -> let pathToProperty = \SomeStructure.someValue
-  ---
-  -> let value = s[keyPath: pathToProperty]
-  /> value is \(value)
-  </ value is 12
-  ```
--->
-
-The *type name* can be omitted
-in contexts where type inference
-can determine the implied type.
-The following code uses `\.someProperty`
-instead of `\SomeClass.someProperty`:
+在一些可以通过类型推断来确定所访问的具体类型的上下文中，可以省略 key-path 前的类型名字。下面的代码使用 `\.someProperty` 代替了 `SomeClass.someProperty` ：
 
 ```swift
 class SomeClass: NSObject {
@@ -1670,36 +763,7 @@ c.observe(\.someProperty) { object, change in
 }
 ```
 
-<!--
-  - test: `keypath-expression-implicit-type-name`
-
-  ```swifttest
-  >> import Foundation
-  -> class SomeClass: NSObject {
-  ->     @objc dynamic var someProperty: Int
-  ->     init(someProperty: Int) {
-  ->         self.someProperty = someProperty
-  ->     }
-  -> }
-  ---
-  -> let c = SomeClass(someProperty: 10)
-  >> let r0 =
-  -> c.observe(\.someProperty) { object, change in
-         // ...
-     }
-  ```
--->
-
-<!--
-  Rewrite the above to avoid discarding the function's return value.
-  Tracking bug is <rdar://problem/35301593>
--->
-
-The *path* can refer to `self` to create the identity key path (`\.self`).
-The identity key path refers to a whole instance,
-so you can use it to access and change all of the data stored in a variable
-in a single step.
-For example:
+使用 `self` 作为路径可以创建一个恒等 key path (`\.self`)。恒等 key path 可以作为整个实例的引用，因此你仅需一步操作便可以利用它来访问以及修改其存储的所有数据。例如：
 
 ```swift
 var compoundValue = (a: 1, b: 2)
@@ -1707,23 +771,7 @@ var compoundValue = (a: 1, b: 2)
 compoundValue[keyPath: \.self] = (a: 10, b: 20)
 ```
 
-<!--
-  - test: `keypath-expression-self-keypath`
-
-  ```swifttest
-  -> var compoundValue = (a: 1, b: 2)
-  // Equivalent to compoundValue = (a: 10, b: 20)
-  -> compoundValue[keyPath: \.self] = (a: 10, b: 20)
-  ```
--->
-
-The *path* can contain multiple property names,
-separated by periods,
-to refer to a property of a property's value.
-This code uses the key path expression
-`\OuterStructure.outer.someValue`
-to access the `someValue` property
-of the `OuterStructure` type's `outer` property:
+通过点语法，可以让路径包含多个属性名称，以此来访问某实例的属性的属性。下面的代码使用 key-path 表达式 `\OuterStructure.outer.someValue` 来访问 `OuterStructure` 类型中 `outer` 属性的 `someValue` 属性。
 
 ```swift
 struct OuterStructure {
@@ -1740,30 +788,7 @@ let nestedValue = nested[keyPath: nestedKeyPath]
 // nestedValue is 24
 ```
 
-<!--
-  - test: `keypath-expression`
-
-  ```swifttest
-  -> struct OuterStructure {
-         var outer: SomeStructure
-         init(someValue: Int) {
-             self.outer = SomeStructure(someValue: someValue)
-         }
-     }
-  ---
-  -> let nested = OuterStructure(someValue: 24)
-  -> let nestedKeyPath = \OuterStructure.outer.someValue
-  ---
-  -> let nestedValue = nested[keyPath: nestedKeyPath]
-  /> nestedValue is \(nestedValue)
-  </ nestedValue is 24
-  ```
--->
-
-The *path* can include subscripts using brackets,
-as long as the subscript's parameter type conforms to the `Hashable` protocol.
-This example uses a subscript in a key path
-to access the second element of an array:
+路径中也可以包含使用中括号的下标访问，只要下标访问的参数类型满足 `Hashable` 协议即可。下面的例子在 key path 中使用了下标来访问数组的第二个元素。
 
 ```swift
 let greetings = ["hello", "hola", "bonjour", "안녕"]
@@ -1771,32 +796,7 @@ let myGreeting = greetings[keyPath: \[String].[1]]
 // myGreeting is 'hola'
 ```
 
-<!--
-  - test: `keypath-expression`
-
-  ```swifttest
-  -> let greetings = ["hello", "hola", "bonjour", "안녕"]
-  -> let myGreeting = greetings[keyPath: \[String].[1]]
-  /> myGreeting is '\(myGreeting)'
-  </ myGreeting is 'hola'
-  ```
--->
-
-<!--
-  TODO: Update examples here and below to remove type names once
-  inference bugs are fixed. The compiler currently gives an error
-  that the usage is ambiguous.
-  <rdar://problem/34376681> [SR-5865]: Key path expression is "ambiguous without more context"
--->
-
-The value used in a subscript can be a named value or a literal.
-Values are captured in key paths using value semantics.
-The following code uses the variable `index`
-in both a key-path expression and in a closure to access
-the third element of the `greetings` array.
-When `index` is modified,
-the key-path expression still references the third element,
-while the closure uses the new index.
+T下标访问中使用的值可以是一个变量或者字面量，并且 key-path 表达式会使用值语义来捕获此值。下面的代码在 key-path 表达式和闭包中都使用了 `index` 变量来访问 `greetings` 数组的第三个元素。当 `index` 被修改时，key-path 表达式仍旧引用数组第三个元素，而闭包则使用了新的索引值。
 
 ```swift
 var index = 2
@@ -1804,47 +804,21 @@ let path = \[String].[index]
 let fn: ([String]) -> String = { strings in strings[index] }
 
 print(greetings[keyPath: path])
-// Prints "bonjour"
+// 打印 "bonjour"
 print(fn(greetings))
-// Prints "bonjour"
+// 打印 "bonjour"
 
-// Setting 'index' to a new value doesn't affect 'path'
+// 将 'index' 设置为一个新的值不会影响到 'path'
 index += 1
 print(greetings[keyPath: path])
-// Prints "bonjour"
+// 打印 "bonjour"
 
-// Because 'fn' closes over 'index', it uses the new value
+//  'fn' 闭包使用了新值。
 print(fn(greetings))
-// Prints "안녕"
+// 打印 "안녕"
 ```
 
-<!--
-  - test: `keypath-expression`
-
-  ```swifttest
-  -> var index = 2
-  -> let path = \[String].[index]
-  -> let fn: ([String]) -> String = { strings in strings[index] }
-  ---
-  -> print(greetings[keyPath: path])
-  <- bonjour
-  -> print(fn(greetings))
-  <- bonjour
-  ---
-  // Setting 'index' to a new value doesn't affect 'path'
-  -> index += 1
-  -> print(greetings[keyPath: path])
-  <- bonjour
-  ---
-  // Because 'fn' closes over 'index', it uses the new value
-  -> print(fn(greetings))
-  <- 안녕
-  ```
--->
-
-The *path* can use optional chaining and forced unwrapping.
-This code uses optional chaining in a key path
-to access a property of an optional string:
+路径可以使用可选链和强制解包。下面的代码在 key path 中使用了可选链来访问可选字符串的属性。
 
 ```swift
 let firstGreeting: String? = greetings.first
@@ -1857,32 +831,7 @@ print(count as Any)
 // Prints "Optional(5)"
 ```
 
-<!--
-  - test: `keypath-expression`
-
-  ```swifttest
-  -> let firstGreeting: String? = greetings.first
-  -> print(firstGreeting?.count as Any)
-  <- Optional(5)
-  ---
-  // Do the same thing using a key path.
-  -> let count = greetings[keyPath: \[String].first?.count]
-  -> print(count as Any)
-  <- Optional(5)
-  ```
--->
-
-<!--
-  The test above is failing, which appears to be a compiler bug.
-  <rdar://problem/58484319> Swift 5.2 regression in keypaths
--->
-
-You can mix and match components of key paths to access values
-that are deeply nested within a type.
-The following code accesses different values and properties
-of a dictionary of arrays
-by using key-path expressions
-that combine these components.
+可以混合使用各种 key path 组件来访问一些深度嵌套类型的值。下面的代码通过组合不同的组件，使用 key-path 表达式访问了一个字典数组中不同的值和属性。
 
 ```swift
 let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
@@ -1898,31 +847,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 // Prints "64"
 ```
 
-<!--
-  - test: `keypath-expression`
-
-  ```swifttest
-  -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
-                               "triangular": [1, 3, 6, 10, 15, 21, 28],
-                               "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
-  -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
-  <- Optional([2, 3, 5, 7, 11, 13, 17])
-  -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
-  <- 2
-  -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
-  <- 7
-  -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
-  <- 64
-  ```
--->
-
-You can use a key path expression
-in contexts where you would normally provide a function or closure.
-Specifically,
-you can use a key path expression
-whose root type is `SomeType`
-and whose path produces a value of type `Value`,
-instead of a function or closure of type `(SomeType) -> Value`.
+你可以在平时提供函数或者闭包的上下文里使用 key path 表达式。特别地，你可以用根类型是 `SomeType` 和路径产生 `Value` 类型值的 key path 表达式来替换类型是 `(SomeType) -> Value` 的函数或者闭包。
 
 ```swift
 struct Task {
@@ -1935,44 +860,12 @@ var toDoList = [
     Task(description: "Visit Boston in the Fall.", completed: false),
 ]
 
-// Both approaches below are equivalent.
+// 下面两种写法是等价的。
 let descriptions = toDoList.filter(\.completed).map(\.description)
 let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
 ```
 
-<!--
-  - test: `keypath-expression`
-
-  ```swifttest
-  -> struct Task {
-         var description: String
-         var completed: Bool
-     }
-  -> var toDoList = [
-         Task(description: "Practice ping-pong.", completed: false),
-         Task(description: "Buy a pirate costume.", completed: true),
-         Task(description: "Visit Boston in the Fall.", completed: false),
-     ]
-  ---
-  // Both approaches below are equivalent.
-  -> let descriptions = toDoList.filter(\.completed).map(\.description)
-  -> let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
-  >> assert(descriptions == descriptions2)
-  ```
--->
-
-<!--
-  REFERENCE
-  The to-do list above draws from the lyrics of the song
-  "The Pirates Who Don't Do Anything".
--->
-
-Any side effects of a key path expression
-are evaluated only at the point where the expression is evaluated.
-For example,
-if you make a function call inside a subscript in a key path expression,
-the function is called only once as part of evaluating the expression,
-not every time the key path is used.
+任何 key path 表达式的副作用发生的关键在于表达式在哪里被执行。例如，如果你在 key path 表达式中的一个下标里使用函数调用，该函数只会在表达式计算的时候调用一次，而不是每次这个 key path 被使用的时候。
 
 ```swift
 func makeIndex() -> Int {
@@ -1987,31 +880,9 @@ let taskKeyPath = \[Task][makeIndex()]
 let someTask = toDoList[keyPath: taskKeyPath]
 ```
 
-<!--
-  - test: `keypath-expression`
-
-  ```swifttest
-  -> func makeIndex() -> Int {
-         print("Made an index")
-         return 0
-     }
-  // The line below calls makeIndex().
-  -> let taskKeyPath = \[Task][makeIndex()]
-  <- Made an index
-  >> print(type(of: taskKeyPath))
-  << WritableKeyPath<Array<Task>, Task>
-  ---
-  // Using taskKeyPath doesn't call makeIndex() again.
-  -> let someTask = toDoList[keyPath: taskKeyPath]
-  ```
--->
-
-For more information about using key paths
-in code that interacts with Objective-C APIs,
-see [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
-For information about key-value coding and key-value observing,
-see [Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
-and [Key-Value Observing Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i).
+关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
+关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
+和 [Key-Value Observing Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i).
 
 > Grammar of a key-path expression:
 >
@@ -2022,12 +893,9 @@ and [Key-Value Observing Programming Guide](https://developer.apple.com/library/
 > *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*_?_ \
 > *key-path-postfix* → **`?`** | **`!`** | **`self`** | **`[`** *function-call-argument-list* **`]`**
 
-### Selector Expression
+### 选择器表达式
 
-A selector expression lets you access the selector
-used to refer to a method or to a property's
-getter or setter in Objective-C.
-It has the following form:
+*选择器表达式*可以让你通过选择器来引用在 Objective-C 中方法（method）和属性（property）的 setter 和 getter 方法。
 
 ```swift
 #selector(<#method name#>)
@@ -2035,10 +903,7 @@ It has the following form:
 #selector(setter: <#property name#>)
 ```
 
-The *method name* and *property name* must be a reference to a method or a property
-that's available in the Objective-C runtime.
-The value of a selector expression is an instance of the `Selector` type.
-For example:
+方法名和属性名必须是存在于 Objective-C 运行时中的方法和属性的引用。选择器表达式的返回值是一个 Selector 类型的实例。例如：
 
 ```swift
 class SomeClass: NSObject {
@@ -2055,35 +920,9 @@ let selectorForMethod = #selector(SomeClass.doSomething(_:))
 let selectorForPropertyGetter = #selector(getter: SomeClass.property)
 ```
 
-<!--
-  - test: `selector-expression`
+当为属性的 getter 创建选择器时，属性名可以是变量属性或者常量属性的引用。但是当为属性的 setter 创建选择器时，属性名只可以是对变量属性的引用。
 
-  ```swifttest
-  >> import Foundation
-  -> class SomeClass: NSObject {
-  ->     @objc let property: String
-  ---
-  ->     @objc(doSomethingWithInt:)
-         func doSomething(_ x: Int) { }
-  ---
-         init(property: String) {
-             self.property = property
-         }
-     }
-  -> let selectorForMethod = #selector(SomeClass.doSomething(_:))
-  -> let selectorForPropertyGetter = #selector(getter: SomeClass.property)
-  ```
--->
-
-When creating a selector for a property's getter,
-the *property name* can be a reference to a variable or constant property.
-In contrast, when creating a selector for a property's setter,
-the *property name* must be a reference to a variable property only.
-
-The *method name* can contain parentheses for grouping,
-as well the `as` operator to disambiguate between methods that share a name
-but have different type signatures.
-For example:
+方法名称可以包含圆括号来进行分组，并使用 as 操作符来区分具有相同方法名但类型不同的方法，例如:
 
 ```swift
 extension SomeClass {
@@ -2093,37 +932,12 @@ extension SomeClass {
 let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
 ```
 
-<!--
-  - test: `selector-expression-with-as`
-
-  ```swifttest
-  >> import Foundation
-  >> class SomeClass: NSObject {
-  >>     @objc let property: String
-  >>     @objc(doSomethingWithInt:)
-  >>     func doSomething(_ x: Int) {}
-  >>     init(property: String) {
-  >>         self.property = property
-  >>     }
-  >> }
-  -> extension SomeClass {
-  ->     @objc(doSomethingWithString:)
-         func doSomething(_ x: String) { }
-     }
-  -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
-  ```
--->
-
-Because a selector is created at compile time, not at runtime,
-the compiler can check that a method or property exists
-and that they're exposed to the Objective-C runtime.
+由于选择器是在编译时创建的，因此编译器可以检查方法或者属性是否存在，以及是否在运行时暴露给了 Objective-C 。
 
 > Note: Although the *method name* and the *property name* are expressions,
 > they're never evaluated.
 
-For more information about using selectors
-in Swift code that interacts with Objective-C APIs,
-see [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
+更多关于如何在 Swift 代码中使用选择器来与 Objective-C API 进行交互的信息，请参阅 [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
 
 > Grammar of a selector expression:
 >
@@ -2131,28 +945,15 @@ see [Using Objective-C Runtime Features in Swift](https://developer.apple.com/do
 > *selector-expression* → **`#selector`** **`(`** **`getter:`** *expression* **`)`** \
 > *selector-expression* → **`#selector`** **`(`** **`setter:`** *expression* **`)`**
 
-<!--
-  Note: The parser does allow an arbitrary expression inside #selector(), not
-  just a member name.  For example, see changes in Swift commit ef60d7289d in
-  lib/Sema/CSApply.cpp -- there's explicit code to look through parens and
-  optional binding.
--->
+### Key-Path 字符串表达式
 
-### Key-Path String Expression
-
-A key-path string expression lets you access the string
-used to refer to a property in Objective-C,
-for use in key-value coding and key-value observing APIs.
-It has the following form:
+key-path 字符串表达式可以访问一个引用 Objective-C 属性的字符串，通常在 key-value 编程和 key-value 观察 APIs 中使用。其格式如下：
 
 ```swift
 #keyPath(<#property name#>)
 ```
 
-The *property name* must be a reference to a property
-that's available in the Objective-C runtime.
-At compile time, the key-path string expression is replaced by a string literal.
-For example:
+属性名必须是一个可以在 Objective-C 运行时使用的属性的引用。在编译期，key-path 字符串表达式会被一个字符串字面量替换。例如：
 
 ```swift
 class SomeClass: NSObject {
@@ -2168,34 +969,10 @@ let keyPath = #keyPath(SomeClass.someProperty)
 if let value = c.value(forKey: keyPath) {
     print(value)
 }
-// Prints "12"
+// 打印 "12"
 ```
 
-<!--
-  - test: `keypath-string-expression`
-
-  ```swifttest
-  >> import Foundation
-  -> class SomeClass: NSObject {
-  ->    @objc var someProperty: Int
-        init(someProperty: Int) {
-            self.someProperty = someProperty
-        }
-     }
-  ---
-  -> let c = SomeClass(someProperty: 12)
-  -> let keyPath = #keyPath(SomeClass.someProperty)
-  ---
-  -> if let value = c.value(forKey: keyPath) {
-  ->     print(value)
-  -> }
-  <- 12
-  ```
--->
-
-When you use a key-path string expression within a class,
-you can refer to a property of that class
-by writing just the property name, without the class name.
+当在一个类中使用 key-path 字符串表达式时，可以省略类名，直接使用属性名来访问这个类的某个属性。
 
 ```swift
 extension SomeClass {
@@ -2204,33 +981,14 @@ extension SomeClass {
     }
 }
 print(keyPath == c.getSomeKeyPath())
-// Prints "true"
+// 打印 "true"
 ```
 
-<!--
-  - test: `keypath-string-expression`
+由于 key-path 字符串表达式在编译期才创建，编译期可以检查属性是否存在，以及属性是否暴露给 Objective-C 运行时。
 
-  ```swifttest
-  -> extension SomeClass {
-        func getSomeKeyPath() -> String {
-           return #keyPath(someProperty)
-        }
-     }
-  -> print(keyPath == c.getSomeKeyPath())
-  <- true
-  ```
--->
-
-Because the key path string is created at compile time, not at runtime,
-the compiler can check that the property exists
-and that the property is exposed to the Objective-C runtime.
-
-For more information about using key paths
-in Swift code that interacts with Objective-C APIs,
-see [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
-For information about key-value coding and key-value observing,
-see [Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
-and [Key-Value Observing Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i).
+关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
+关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
+和 [Key-Value Observing Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i).
 
 > Note: Although the *property name* is an expression, it's never evaluated.
 
@@ -2238,18 +996,13 @@ and [Key-Value Observing Programming Guide](https://developer.apple.com/library/
 >
 > *key-path-string-expression* → **`#keyPath`** **`(`** *expression* **`)`**
 
-## Postfix Expressions
+## 后缀表达式
 
-*Postfix expressions* are formed
-by applying a postfix operator or other postfix syntax
-to an expression.
-Syntactically, every primary expression is also a postfix expression.
+*后缀表达式*就是在某个表达式的后面运用后缀运算符或其他后缀语法。从语法构成上来看，基本表达式也是后缀表达式。
 
-For information about the behavior of these operators,
-see <doc:BasicOperators> and <doc:AdvancedOperators>.
+关于这些运算符的更多信息，请参阅 <doc:BasicOperators> 和 <doc:AdvancedOperators>.
 
-For information about the operators provided by the Swift standard library,
-see [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
+关于 Swift 标准库提供的运算符的更多信息，请参阅 [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
 
 > Grammar of a postfix expression:
 >
@@ -2263,195 +1016,65 @@ see [Operator Declarations](https://developer.apple.com/documentation/swift/oper
 > *postfix-expression* → *forced-value-expression* \
 > *postfix-expression* → *optional-chaining-expression*
 
-### Function Call Expression
+### 函数调用表达式
 
-<!--
-  TODO: After we rewrite function decls,
-  revisit this section to make sure that the names for things match.
--->
-
-A *function call expression* consists of a function name
-followed by a comma-separated list of the function's arguments in parentheses.
-Function call expressions have the following form:
+*函数调用表达式*由函数名和在括号里以逗号分隔的参数列表组成。函数调用表达式形式如下：
 
 ```swift
 <#function name#>(<#argument value 1#>, <#argument value 2#>)
 ```
 
-The *function name* can be any expression whose value is of a function type.
+函数名可以是值为函数类型的任意表达式。
 
-If the function definition includes names for its parameters,
-the function call must include names before its argument values,
-separated by a colon (`:`).
-This kind of function call expression has the following form:
+如果函数声明中指定了形参的名字，那么在调用的时候也必须得写出来，并通过冒号（`:`）分隔。这种函数调用表达式具有以下形式：
 
 ```swift
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
 
-A function call expression can include trailing closures
-in the form of closure expressions immediately after the closing parenthesis.
-The trailing closures are understood as arguments to the function,
-added after the last parenthesized argument.
-The first closure expression is unlabeled;
-any additional closure expressions are preceded by their argument labels.
-The example below shows the equivalent version of function calls
-that do and don't use trailing closure syntax:
+函数调用表达式可以在函数调用表达式的尾部（右圆括号之后）加上多个尾随闭包，该闭包会作为函数的实参，在括号中最后一个实参后面添加。第一个闭包表达式时没有实参签名的，其他任意闭包表达式签名都有实参标签。如下两种写法是等价的，区别在是否使用尾随闭包语法：
 
 ```swift
-// someFunction takes an integer and a closure as its arguments
+// someFunction 接受整型和闭包的实参
 someFunction(x: x, f: { $0 == 13 })
 someFunction(x: x) { $0 == 13 }
 
-// anotherFunction takes an integer and two closures as its arguments
+// anotherFunction 接受一个整型和两个闭包的实参
 anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
 anotherFunction(x: x) { $0 == 13 } g: { print(99) }
 ```
 
-<!--
-  - test: `trailing-closure`
-
-  ```swifttest
-  >> func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
-  >>    return f(x)
-  >> }
-  >> let x = 10
-  // someFunction takes an integer and a closure as its arguments
-  >> let r0 =
-  -> someFunction(x: x, f: { $0 == 13 })
-  >> assert(r0 == false)
-  >> let r1 =
-  -> someFunction(x: x) { $0 == 13 }
-  >> assert(r1 == false)
-  ---
-  >> func anotherFunction(x: Int, f: (Int) -> Bool, g: () -> Void) -> Bool {
-  >>    g(); return f(x)
-  >> }
-  // anotherFunction takes an integer and two closures as its arguments
-  >> let r2 =
-  -> anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
-  << 99
-  >> assert(r2 == false)
-  >> let r3 =
-  -> anotherFunction(x: x) { $0 == 13 } g: { print(99) }
-  << 99
-  >> assert(r3 == false)
-  ```
--->
-
-<!--
-  Rewrite the above to avoid bare expressions.
-  Tracking bug is <rdar://problem/35301593>
--->
-
-If the trailing closure is the function's only argument,
-you can omit the parentheses.
+如果闭包是该函数的唯一实参，那么圆括号可以省略。
 
 ```swift
-// someMethod takes a closure as its only argument
+// someMethod 只接受一个闭包参数
 myData.someMethod() { $0 == 13 }
 myData.someMethod { $0 == 13 }
 ```
 
-<!--
-  - test: `no-paren-trailing-closure`
+为了支持实参中的尾随闭包，编译器从左到右检查形参列表，如下所示：
 
-  ```swifttest
-  >> class Data {
-  >>    let data = 10
-  >>    func someMethod(f: (Int) -> Bool) -> Bool {
-  >>       return f(self.data)
-  >>    }
-  >> }
-  >> let myData = Data()
-  // someMethod takes a closure as its only argument
-  >> let r0 =
-  -> myData.someMethod() { $0 == 13 }
-  >> assert(r0 == false)
-  >> let r1 =
-  -> myData.someMethod { $0 == 13 }
-  >> assert(r1 == false)
-  ```
--->
-
-<!--
-  Rewrite the above to avoid bare expressions.
-  Tracking bug is <rdar://problem/35301593>
--->
-
-To include the trailing closures in the arguments,
-the compiler examines the function's parameters from left to right as follows:
-
-| Trailing Closure | Parameter | Action |
+| 尾随闭包 | 形参 | 行为 |
 | ---------------- | --------- | ------ |
-| Labeled | Labeled | If the labels are the same, the closure matches the parameter; otherwise, the parameter is skipped. |
-| Labeled | Unlabeled | The parameter is skipped. |
-| Unlabeled | Labeled or unlabeled | If the parameter structurally resembles a function type, as defined below, the closure matches the parameter; otherwise, the parameter is skipped. |
+| 有标签 | 有标签 | 如果标签相同，闭包和形参匹配，否则跳过该形参 |
+| 有标签 | 无标签 | 跳过该形参 |
+| 无标签 | 有标签或无标签 | 如果形参在结构上类似于下面定义的函数类型，和闭包匹配，否则跳过该形参|
 
-The trailing closure is passed as the argument for the parameter that it matches.
-Parameters that were skipped during the scanning process
-don't have an argument passed to them ---
-for example, they can use a default parameter.
-After finding a match, scanning continues
-with the next trailing closure and the next parameter.
-At the end of the matching process,
-all trailing closures must have a match.
+尾随闭包作为其匹配形参的实参传递。
 
-A parameter *structurally resembles* a function type
-if the parameter isn't an in-out parameter,
-and the parameter is one of the following:
+在扫描过程被跳过的形参不传递实参——例如，它们使用的是默认形参。当匹配后，扫描会继续下一个尾随闭包和形参。匹配过程结束后，所有的尾随闭包必须有对应的匹配。
 
-- A parameter whose type is a function type,
-  like `(Bool) -> Int`
-- An autoclosure parameter
-  whose wrapped expression's type is a function type,
-  like `@autoclosure () -> ((Bool) -> Int)`
-- A variadic parameter
-  whose array element type is a function type,
-  like `((Bool) -> Int)...`
-- A parameter whose type is wrapped in one or more layers of optional,
-  like `Optional<(Bool) -> Int>`
-- A parameter whose type combines these allowed types,
-  like `(Optional<(Bool) -> Int>)...`
+如果形参不是输入输出参数，并且类似下面的情况，则算是结构上类似函数类型：
 
-When a trailing closure is matched to a parameter
-whose type structurally resembles a function type, but isn't a function,
-the closure is wrapped as needed.
-For example, if the parameter's type is an optional type,
-the closure is wrapped in `Optional` automatically.
+- 函数类型的形参，例如 `(Bool) -> Int`
+- 函数类型表达式的自动闭包形参，例如 `@autoclosure () -> ((Bool) -> Int)`
+- 元素是函数类型的可变参数，例如 `((Bool) -> Int)...`
+- 单层或多层可选类型的形参，例如 `Optional<(Bool) -> Int>`
+- 由上面这些类型组合而成的形参，例如 `(Optional<(Bool) -> Int>)...`
 
-<!--
-  - test: `when-can-you-use-trailing-closure`
+尾随闭包和结构上类似函数类型的形参匹配，但它并不是函数，所以闭包会按需包装。例如，如果形参类是是可选类型，闭包会自动包装成 `Optional` 。
 
-  ```swifttest
-  // These tests match the example types given above
-  // when describing what "structurally resembles" a function type.
-  ---
-  >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
-  >> f1(x: 10) { $0 ? 1 : 100 }
-  << 11
-  >> func f2(x: Int, y: @autoclosure ()->((Bool)->Int)) { print(x + y()(false)) }
-  >> f2(x: 20) { $0 ? 2 : 200 }
-  << 220
-  >> func f3(x: Int, y: ((Bool)->Int)...) { print(x + y[0](true)) }
-  >> f3(x: 30) { $0 ? 3 : 300}
-  << 33
-  >> func f4(x: Int, y: Optional<(Bool)->Int>) { print(x + y!(false)) }
-  >> f4(x: 40) { $0 ? 4 : 400 }
-  << 440
-  >> func f5(x: Int, y: (Optional<(Bool) -> Int>)...) { print(x + y[0]!(true)) }
-  >> f5(x: 50) { $0 ? 5 : 500 }
-  << 55
-  ```
--->
-
-To ease migration of code from versions of Swift prior to 5.3 ---
-which performed this matching from right to left ---
-the compiler checks both the left-to-right and right-to-left orderings.
-If the scan directions produce different results,
-the old right-to-left ordering is used
-and the compiler generates a warning.
-A future version of Swift will always use the left-to-right ordering.
+为了简化 Swift 5.3 之前版本（从右到左匹配）的代码迁移 —— 编译器会同时检查从左到右和从右到左的顺序。如果不同的扫描方向产生了不同的结果，编译器则使用旧的从右到左的顺序，并生成警告。Swift 的未来版本将都使用从左到右的顺序。
 
 ```swift
 typealias Callback = (Int) -> Int
@@ -2462,60 +1085,19 @@ func someFunction(firstClosure: Callback? = nil,
     print(first ?? "-", second ?? "-")
 }
 
-someFunction()  // Prints "- -"
-someFunction { return $0 + 100 }  // Ambiguous
-someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
+someFunction()  // 打印 "- -"
+someFunction { return $0 + 100 }  // 歧义
+someFunction { return $0 } secondClosure: { return $0 }  // 打印 "10 20"
 ```
 
-<!--
-  - test: `trailing-closure-scanning-direction`
+在上面的例子中，Swift 5.3 中被标记为“歧义”的函数调用会打印”- 120“并产生一个编辑器警告。未来版本的 Swift 会打印”110 -“。
 
-  ```swifttest
-  -> typealias Callback = (Int) -> Int
-  -> func someFunction(firstClosure: Callback? = nil,
-                     secondClosure: Callback? = nil) {
-         let first = firstClosure?(10)
-         let second = secondClosure?(20)
-         print(first ?? "-", second ?? "-")
-     }
-  ---
-  -> someFunction()  // Prints "- -"
-  << - -
-  -> someFunction { return $0 + 100 }  // Ambiguous
-  << - 120
-  !$ warning: backward matching of the unlabeled trailing closure is deprecated; label the argument with 'secondClosure' to suppress this warning
-  !! someFunction { return $0 + 100 }  // Ambiguous
-  !!              ^
-  !!              (secondClosure:     )
-  !$ note: 'someFunction(firstClosure:secondClosure:)' declared here
-  !! func someFunction(firstClosure: Callback? = nil,
-  !!      ^
-  -> someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
-  << 10 20
-  ```
--->
 
-In the example above,
-the function call marked "Ambiguous"
-prints "- 120" and produces a compiler warning on Swift 5.3.
-A future version of Swift will print “110 -”.
+如 <doc:Declarations#Methods-with-Special-Names>所述，通过声明几种方法中的一种，类、结构体或枚举类型可以为函数调用语法启用语法糖。
 
-<!--
-  Smart quotes on the line above are needed
-  because the regex heuristics gets the close quote wrong.
--->
+#### 指针类型的隐式转换
 
-A class, structure, or enumeration type
-can enable syntactic sugar for function call syntax
-by declaring one of several methods,
-as described in <doc:Declarations#Methods-with-Special-Names>.
-
-#### Implicit Conversion to a Pointer Type
-
-In a function call expression,
-if the argument and parameter have a different type,
-the compiler tries to make their types match
-by applying one of the implicit conversions in the following list:
+在函数调用表达式里，如果实参和形参的类型不一致，编译器会尝试通过下面的规则进行隐式转换来匹配类型：
 
 - `inout SomeType` can become
   `UnsafePointer<SomeType>` or `UnsafeMutablePointer<SomeType>`
@@ -2524,7 +1106,7 @@ by applying one of the implicit conversions in the following list:
 - `Array<SomeType>` can become `UnsafePointer<SomeType>`
 - `String` can become `UnsafePointer<CChar>`
 
-The following two function calls are equivalent:
+下面两个函数调用是等价的：
 
 ```swift
 func unsafeFunction(pointer: UnsafePointer<Int>) {
@@ -2536,28 +1118,7 @@ unsafeFunction(pointer: &myNumber)
 withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 ```
 
-<!--
-  - test: `inout-unsafe-pointer`
-
-  ```swifttest
-  -> func unsafeFunction(pointer: UnsafePointer<Int>) {
-  ->     // ...
-  >>     print(pointer.pointee)
-  -> }
-  -> var myNumber = 1234
-  ---
-  -> unsafeFunction(pointer: &myNumber)
-  -> withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
-  << 1234
-  << 1234
-  ```
--->
-
-A pointer that's created by these implicit conversions
-is valid only for the duration of the function call.
-To avoid undefined behavior,
-ensure that your code
-never persists the pointer after the function call ends.
+隐式转换创建的指针仅在函数调用期间有效。为了避免发生未定义行为，确保代码在函数调用结束后没有继续持有这些指针。
 
 > Note: When implicitly converting an array to an unsafe pointer,
 > Swift ensures that the array's storage is contiguous
@@ -2569,55 +1130,7 @@ never persists the pointer after the function call ends.
 > so the implicit conversion never needs to do this work,
 > use `ContiguousArray` instead of `Array`.
 
-Using `&` instead of an explicit function like `withUnsafePointer(to:)`
-can help make calls to low-level C functions more readable,
-especially when the function takes several pointer arguments.
-However, when calling functions from other Swift code,
-avoid using `&` instead of using the unsafe APIs explicitly.
-
-<!--
-  - test: `implicit-conversion-to-pointer`
-
-  ```swifttest
-  >> import Foundation
-  >> func takesUnsafePointer(p: UnsafePointer<Int>) { }
-  >> func takesUnsafeMutablePointer(p: UnsafeMutablePointer<Int>) { }
-  >> func takesUnsafePointerCChar(p: UnsafePointer<CChar>) { }
-  >> func takesUnsafeMutablePointerCChar(p: UnsafeMutablePointer<CChar>) { }
-  >> var n = 12
-  >> var array = [1, 2, 3]
-  >> var nsarray: NSArray = [10, 20, 30]
-  >> var bridgedNSArray = nsarray as! Array<Int>
-  >> var string = "Hello"
-  ---
-  // bullet 1
-  >> takesUnsafePointer(p: &n)
-  >> takesUnsafeMutablePointer(p: &n)
-  ---
-  // bullet 2
-  >> takesUnsafePointer(p: &array)
-  >> takesUnsafeMutablePointer(p: &array)
-  >> takesUnsafePointer(p: &bridgedNSArray)
-  >> takesUnsafeMutablePointer(p: &bridgedNSArray)
-  ---
-  // bullet 3
-  >> takesUnsafePointer(p: array)
-  >> takesUnsafePointer(p: bridgedNSArray)
-  ---
-  // bullet 4
-  >> takesUnsafePointerCChar(p: string)
-  ---
-  // invalid conversions
-  >> takesUnsafeMutablePointer(p: array)
-  !$ error: cannot convert value of type '[Int]' to expected argument type 'UnsafeMutablePointer<Int>'
-  !! takesUnsafeMutablePointer(p: array)
-  !!                              ^
-  >> takesUnsafeMutablePointerCChar(p: string)
-  !$ error: cannot convert value of type 'String' to expected argument type 'UnsafeMutablePointer<CChar>' (aka 'UnsafeMutablePointer<Int8>')
-  !! takesUnsafeMutablePointerCChar(p: string)
-  !!                                   ^
-  ```
--->
+使用 `&` 代替类似 `withUnsafePointer(to:)` 的显式函数可以在调用底层 C 函数的可读性更高，特别是当函数传入多个指针实参时。如果是其他 Swift 代码调用函数，避免使用 `&` 代替显式的不安全 API。
 
 > Grammar of a function call expression:
 >
@@ -2633,175 +1146,81 @@ avoid using `&` instead of using the unsafe APIs explicitly.
 > *labeled-trailing-closures* → *labeled-trailing-closure* *labeled-trailing-closures*_?_ \
 > *labeled-trailing-closure* → *identifier* **`:`** *closure-expression*
 
-### Initializer Expression
+### 构造器表达式
 
-An *initializer expression* provides access
-to a type's initializer.
-It has the following form:
+*构造器表达式*用于访问某个类型的构造器，形式如下：
 
 ```swift
 <#expression#>.init(<#initializer arguments#>)
 ```
 
-You use the initializer expression in a function call expression
-to initialize a new instance of a type.
-You also use an initializer expression
-to delegate to the initializer of a superclass.
+你可以在函数调用表达式中使用构造器表达式来初始化某个类型的新实例。也可以使用构造器表达式来代理给父类构造器。
 
 ```swift
 class SomeSubClass: SomeSuperClass {
     override init() {
-        // subclass initialization goes here
+        // 此处为子类构造过程
         super.init()
     }
 }
 ```
 
-<!--
-  - test: `init-call-superclass`
-
-  ```swifttest
-  >> class SomeSuperClass { }
-  -> class SomeSubClass: SomeSuperClass {
-  ->     override init() {
-  ->         // subclass initialization goes here
-  ->         super.init()
-  ->     }
-  -> }
-  ```
--->
-
-Like a function, an initializer can be used as a value.
-For example:
+和函数类似，构造器表达式可以作为一个值。 例如：
 
 ```swift
-// Type annotation is required because String has multiple initializers.
+// 类型注解是必须的，因为 String 类型有多种构造器
 let initializer: (Int) -> String = String.init
 let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
 print(oneTwoThree)
-// Prints "123"
+// 打印 "123"
 ```
 
-<!--
-  - test: `init-as-value`
-
-  ```swifttest
-  // Type annotation is required because String has multiple initializers.
-  -> let initializer: (Int) -> String = String.init
-  -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
-  -> print(oneTwoThree)
-  <- 123
-  ```
--->
-
-If you specify a type by name,
-you can access the type's initializer without using an initializer expression.
-In all other cases, you must use an initializer expression.
+如果通过名字来指定某个类型，可以不用构造器表达式而直接使用类型的构造器。在其他情况下，你必须使用构造器表达式。
 
 ```swift
-let s1 = SomeType.init(data: 3)  // Valid
-let s2 = SomeType(data: 1)       // Also valid
+let s1 = SomeType.init(data: 3)  // 有效
+let s2 = SomeType(data: 1)       // 有效
 
-let s3 = type(of: someValue).init(data: 7)  // Valid
-let s4 = type(of: someValue)(data: 5)       // Error
+let s3 = type(of: someValue).init(data: 7)  // 有效
+let s4 = type(of: someValue)(data: 5)       // 错误
 ```
-
-<!--
-  - test: `explicit-implicit-init`
-
-  ```swifttest
-  >> struct SomeType {
-  >>     let data: Int
-  >> }
-  -> let s1 = SomeType.init(data: 3)  // Valid
-  -> let s2 = SomeType(data: 1)       // Also valid
-  ---
-  >> let someValue = s1
-  -> let s3 = type(of: someValue).init(data: 7)  // Valid
-  -> let s4 = type(of: someValue)(data: 5)       // Error
-  !$ error: initializing from a metatype value must reference 'init' explicitly
-  !! let s4 = type(of: someValue)(data: 5)       // Error
-  !!                              ^
-  !!                              .init
-  ```
--->
 
 > Grammar of an initializer expression:
 >
 > *initializer-expression* → *postfix-expression* **`.`** **`init`** \
 > *initializer-expression* → *postfix-expression* **`.`** **`init`** **`(`** *argument-names* **`)`**
 
-### Explicit Member Expression
+### 显式成员表达式
 
-An *explicit member expression* allows access
-to the members of a named type, a tuple, or a module.
-It consists of a period (`.`) between the item
-and the identifier of its member.
+*显式成员表达式*允许我们访问命名类型、元组或者模块的成员，其形式如下：
 
 ```swift
 <#expression#>.<#member name#>
 ```
 
-The members of a named type are named
-as part of the type's declaration or extension.
-For example:
+命名类型的某个成员在原始实现或者扩展中定义，例如：
 
 ```swift
 class SomeClass {
     var someProperty = 42
 }
 let c = SomeClass()
-let y = c.someProperty  // Member access
+let y = c.someProperty  // 访问成员
 ```
 
-<!--
-  - test: `explicitMemberExpression`
-
-  ```swifttest
-  -> class SomeClass {
-         var someProperty = 42
-     }
-  -> let c = SomeClass()
-  -> let y = c.someProperty  // Member access
-  ```
--->
-
-The members of a tuple
-are implicitly named using integers in the order they appear,
-starting from zero.
-For example:
+元组的成员会隐式地根据表示它们出现顺序的整数来命名，以 0 开始，例如：
 
 ```swift
 var t = (10, 20, 30)
 t.0 = t.1
-// Now t is (20, 20, 30)
+// 现在元组 (20, 20, 30)
 ```
 
-<!--
-  - test: `explicit-member-expression`
+对于模块的成员来说，只能直接访问顶级声明中的成员。
 
-  ```swifttest
-  -> var t = (10, 20, 30)
-  -> t.0 = t.1
-  -> // Now t is (20, 20, 30)
-  ```
--->
+使用 `dynamicMemberLookup` 属性声明的类型包含可以在运行时查找的成员，具体请参阅 <doc:Attributes>.
 
-The members of a module access
-the top-level declarations of that module.
-
-Types declared with the `dynamicMemberLookup` attribute
-include members that are looked up at runtime,
-as described in <doc:Attributes>.
-
-To distinguish between methods or initializers
-whose names differ only by the names of their arguments,
-include the argument names in parentheses,
-with each argument name followed by a colon (`:`).
-Write an underscore (`_`) for an argument with no name.
-To distinguish between overloaded methods,
-use a type annotation.
-For example:
+为了区分只有参数名有所不同的方法或构造器，在圆括号中写出参数名，参数名后紧跟一个冒号，对于没有参数名的参数，使用下划线代替参数名。而对于重载方法，则需使用类型注解进行区分。例如：
 
 ```swift
 class SomeClass {
@@ -2820,59 +1239,7 @@ let d = instance.overloadedMethod(x:y:)  // Still ambiguous
 let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 ```
 
-<!--
-  - test: `function-with-argument-names`
-
-  ```swifttest
-  -> class SomeClass {
-         func someMethod(x: Int, y: Int) {}
-         func someMethod(x: Int, z: Int) {}
-         func overloadedMethod(x: Int, y: Int) {}
-         func overloadedMethod(x: Int, y: Bool) {}
-     }
-  -> let instance = SomeClass()
-  ---
-  -> let a = instance.someMethod              // Ambiguous
-  !$ error: ambiguous use of 'someMethod'
-  !! let a = instance.someMethod              // Ambiguous
-  !!         ^
-  !$ note: found this candidate
-  !!              func someMethod(x: Int, y: Int) {}
-  !!                   ^
-  !$ note: found this candidate
-  !!              func someMethod(x: Int, z: Int) {}
-  !!                   ^
-  -> let b = instance.someMethod(x:y:)        // Unambiguous
-  ---
-  -> let d = instance.overloadedMethod        // Ambiguous
-  !$ error: ambiguous use of 'overloadedMethod(x:y:)'
-  !! let d = instance.overloadedMethod        // Ambiguous
-  !!         ^
-  !$ note: found this candidate
-  !!              func overloadedMethod(x: Int, y: Int) {}
-  !!                   ^
-  !$ note: found this candidate
-  !!              func overloadedMethod(x: Int, y: Bool) {}
-  !!                   ^
-  -> let d = instance.overloadedMethod(x:y:)  // Still ambiguous
-  !$ error: ambiguous use of 'overloadedMethod(x:y:)'
-  !!     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
-  !!             ^
-  !$ note: found this candidate
-  !!              func overloadedMethod(x: Int, y: Int) {}
-  !!                   ^
-  !$ note: found this candidate
-  !!              func overloadedMethod(x: Int, y: Bool) {}
-  !!                   ^
-  -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
-  ```
--->
-
-If a period appears at the beginning of a line,
-it's understood as part of an explicit member expression,
-not as an implicit member expression.
-For example, the following listing shows chained method calls
-split over several lines:
+如果点号（`.`）出现在行首，它会被视为显式成员表达式的一部分，而不是隐式成员表达式的一部分。例如如下代码所展示的被分为多行的链式方法调用：
 
 ```swift
 let x = [10, 3, 20, 15, 4]
@@ -2881,24 +1248,7 @@ let x = [10, 3, 20, 15, 4]
     .map { $0 * 100 }
 ```
 
-<!--
-  - test: `period-at-start-of-line`
-
-  ```swifttest
-  -> let x = [10, 3, 20, 15, 4]
-  ->     .sorted()
-  ->     .filter { $0 > 5 }
-  ->     .map { $0 * 100 }
-  >> print(x)
-  << [1000, 1500, 2000]
-  ```
--->
-
-You can combine this multiline chained syntax
-with compiler control statements
-to control when each method is called.
-For example,
-the following code uses a different filtering rule on iOS:
+你可以将这种多行链式语法与编译器控制语句结合，以控制调用每个方法的时间。例如，以下代码在 iOS 上应用了不同的过滤规则：
 
 ```swift
 let numbers = [10, 20, 33, 43, 50]
@@ -2909,82 +1259,11 @@ let numbers = [10, 20, 33, 43, 50]
 #endif
 ```
 
-<!--
-  - test: `pound-if-inside-postfix-expression`
+在 `#if`、`#endif` 和其它编译指令之间的条件编译块可以包含一个隐式成员表达式，后跟零个或多个后缀，以形成一个后缀表达式。这些条件编译块还可以包含另一个条件编译块，或者这些表达式和块的组合体。
 
-  ```swifttest
-  -> let numbers = [10, 20, 33, 43, 50]
-     #if os(iOS)
-         .filter { $0 < 40 }
-     #else
-         .filter { $0 > 25 }
-     #endif
-  >> print(numbers)
-  << [33, 43, 50]
-  ```
--->
+除了顶级代码（top-level code）以外，你还可以在任何能编写显式成员表达式的地方使用上述语法。
 
-Between `#if`, `#endif`, and other compilation directives,
-the conditional compilation block can contain
-an implicit member expression
-followed by zero or more postfixes,
-to form a postfix expression.
-It can also contain
-another conditional compilation block,
-or a combination of these expressions and blocks.
-
-You can use this syntax anywhere that you can write
-an explicit member expression,
-not just in top-level code.
-
-In the conditional compilation block,
-the branch for the `#if` compilation directive
-must contain at least one expression.
-The other branches can be empty.
-
-<!--
-  - test: `pound-if-empty-if-not-allowed`
-
-  ```swifttest
-  >> let numbers = [10, 20, 33, 43, 50]
-  >> #if os(iOS)
-  >> #else
-  >>     .filter { $0 > 25 }
-  >> #endif
-  !$ error: reference to member 'filter' cannot be resolved without a contextual type
-  !! .filter { $0 > 25 }
-  !! ~^~~~~~
-  ```
--->
-
-<!--
-  - test: `pound-if-else-can-be-empty`
-
-  ```swifttest
-  >> let numbers = [10, 20, 33, 43, 50]
-  >> #if os(iOS)
-  >>     .filter { $0 > 25 }
-  >> #else
-  >> #endif
-  >> print(numbers)
-  << [10, 20, 33, 43, 50]
-  ```
--->
-
-<!--
-  - test: `pound-if-cant-use-binary-operators`
-
-  ```swifttest
-  >> let s = "some string"
-  >> #if os(iOS)
-  >>     + " on iOS"
-  >> #endif
-  !$ error: unary operator cannot be separated from its operand
-  !! + " on iOS"
-  !! ^~
-  !!-
-  ```
--->
+在条件编译块中，编译指令 `#if` 的分支必须包含至少一个表达式，其它分支可以为空。
 
 > Grammar of an explicit member expression:
 >
@@ -2996,196 +1275,86 @@ The other branches can be empty.
 > *argument-names* → *argument-name* *argument-names*_?_ \
 > *argument-name* → *identifier* **`:`**
 
-<!--
-  The grammar for method-name doesn't include the following:
-      method-name -> identifier argument-names-OPT
-  because the "postfix-expression . identifier" line above already covers that case.
--->
+### 后缀 Self 表达式
 
-<!--
-  See grammar for initializer-expression for the related "argument name" production there.
--->
-
-### Postfix Self Expression
-
-A postfix `self` expression consists of an expression or the name of a type,
-immediately followed by `.self`. It has the following forms:
+后缀 `self` 表达式由某个表达式或类型名紧跟 `.self` 组成，其形式如下：
 
 ```swift
 <#expression#>.self
 <#type#>.self
 ```
 
-The first form evaluates to the value of the *expression*.
-For example, `x.self` evaluates to `x`.
+第一种形式返回表达式的值。例如：`x.self` 返回 `x`。
 
-The second form evaluates to the value of the *type*. Use this form
-to access a type as a value. For example,
-because `SomeClass.self` evaluates to the `SomeClass` type itself,
-you can pass it to a function or method that accepts a type-level argument.
+第二种形式返回相应的类型。我们可以用它来获取某个实例的类型作为一个值来使用。例如，`SomeClass.self` 会返回 `SomeClass` 类型本身，你可以将其传递给相应函数或者方法作为参数。
 
 > Grammar of a postfix self expression:
 >
 > *postfix-self-expression* → *postfix-expression* **`.`** **`self`**
 
-### Subscript Expression
+### 下标表达式
 
-A *subscript expression* provides subscript access
-using the getter and setter
-of the corresponding subscript declaration.
-It has the following form:
+可通过*下标表达式*访问相应的下标，形式如下：
 
 ```swift
 <#expression#>[<#index expressions#>]
 ```
 
-To evaluate the value of a subscript expression,
-the subscript getter for the *expression*'s type is called
-with the *index expressions* passed as the subscript parameters.
-To set its value,
-the subscript setter is called in the same way.
+要获取下标表达式的值，可将索引表达式作为下标表达式的参数来调用下标 getter。下标 setter 的调用方式与之一样。
 
-<!--
-  TR: Confirm that indexing on
-  a comma-separated list of expressions
-  is intentional, not just a side effect.
-  I see this working, for example:
-  (swift) class Test {
-            subscript(a: Int, b: Int) -> Int { return 12 }
-          }
-  (swift) var t = Test()
-  // t : Test = <Test instance>
-  (swift) t[1, 2]
-  // r0 : Int = 12
--->
-
-For information about subscript declarations,
-see <doc:Declarations#Protocol-Subscript-Declaration>.
+关于下标的声明，请参阅 <doc:Declarations#Protocol-Subscript-Declaration>.
 
 > Grammar of a subscript expression:
 >
 > *subscript-expression* → *postfix-expression* **`[`** *function-call-argument-list* **`]`**
 
-<!--
-  - test: `subscripts-can-take-operators`
+### 强制取值表达式
 
-  ```swifttest
-  >> struct S {
-         let x: Int
-         let y: Int
-         subscript(operation: (Int, Int) -> Int) -> Int {
-             return operation(x, y)
-         }
-     }
-  >> let s = S(x: 10, y: 20)
-  >> assert(s[+] == 30)
-  ```
--->
-
-### Forced-Value Expression
-
-A *forced-value expression* unwraps an optional value
-that you are certain isn't `nil`.
-It has the following form:
+当你确定可选值不是 `nil` 时，可以使用*强制取值表达式*来强制解包，形式如下：
 
 ```swift
 <#expression#>!
 ```
 
-If the value of the *expression* isn't `nil`,
-the optional value is unwrapped
-and returned with the corresponding non-optional type.
-Otherwise, a runtime error is raised.
+I如果该表达式的值不是 `nil`，则返回解包后的值。否则，抛出运行时错误。
 
-The unwrapped value of a forced-value expression can be modified,
-either by mutating the value itself,
-or by assigning to one of the value's members.
-For example:
+返回的值可以被修改，无论是修改值本身，还是修改值的成员。例如：
 
 ```swift
 var x: Int? = 0
 x! += 1
-// x is now 1
+// x 现在是 1
 
 var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
 someDictionary["a"]![0] = 100
-// someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
+// someDictionary 现在是 ["a": [100, 2, 3], "b": [10, 20]]
 ```
-
-<!--
-  - test: `optional-as-lvalue`
-
-  ```swifttest
-  -> var x: Int? = 0
-  -> x! += 1
-  /> x is now \(x!)
-  </ x is now 1
-  ---
-  -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-  -> someDictionary["a"]![0] = 100
-  /> someDictionary is now \(someDictionary)
-  </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
-  ```
--->
 
 > Grammar of a forced-value expression:
 >
 > *forced-value-expression* → *postfix-expression* **`!`**
 
-### Optional-Chaining Expression
+### 可选链表达式
 
-An *optional-chaining expression* provides a simplified syntax
-for using optional values in postfix expressions.
-It has the following form:
+可选链表达式提供了一种使用可选值的便捷方法，形式如下：
 
 ```swift
 <#expression#>?
 ```
 
-The postfix `?` operator makes an optional-chaining expression
-from an expression without changing the expression's value.
+后缀 `?` 运算符会根据表达式生成可选链表达式而不会改变表达式的值。
 
-Optional-chaining expressions must appear within a postfix expression,
-and they cause the postfix expression to be evaluated in a special way.
-If the value of the optional-chaining expression is `nil`,
-all of the other operations in the postfix expression are ignored
-and the entire postfix expression evaluates to `nil`.
-If the value of the optional-chaining expression isn't `nil`,
-the value of the optional-chaining expression is unwrapped
-and used to evaluate the rest of the postfix expression.
-In either case,
-the value of the postfix expression is still of an optional type.
+如果某个后缀表达式包含可选链表达式，那么它的执行过程会比较特殊。如果该可选链表达式的值是 `nil`，整个后缀表达式会直接返回 `nil`。如果该可选链表达式的值不是 `nil`，则返回可选链表达式解包后的值，并将该值用于后缀表达式中剩余的表达式。在这两种情况下，整个后缀表达式的值都会是可选类型。
 
-If a postfix expression that contains an optional-chaining expression
-is nested inside other postfix expressions,
-only the outermost expression returns an optional type.
-In the example below,
-when `c` isn't `nil`,
-its value is unwrapped and used to evaluate `.property`,
-the value of which is used to evaluate `.performAction()`.
-The entire expression `c?.property.performAction()`
-has a value of an optional type.
+如果某个后缀表达式中包含了可选链表达式，那么只有最外层的表达式会返回一个可选类型。例如，在下面的例子中，如果 c 不是 `nil`，那么它的值会被解包，然后通过 `.property` 访问它的属性，接着进一步通过 `.performAction()` 调用相应方法。整个 `c?.property.performAction()` 表达式返回一个可选类型的值，而不是多重可选类型。
 
 ```swift
 var c: SomeClass?
 var result: Bool? = c?.property.performAction()
 ```
 
-<!--
-  - test: `optional-chaining`
 
-  ```swifttest
-  >> class OtherClass { func performAction() -> Bool {return true} }
-  >> class SomeClass { var property: OtherClass = OtherClass() }
-  -> var c: SomeClass?
-  -> var result: Bool? = c?.property.performAction()
-  >> assert(result == nil)
-  ```
--->
-
-The following example shows the behavior
-of the example above
-without using optional chaining.
+上面的例子跟下面的不使用可选链表达式的例子等价：
 
 ```swift
 var result: Bool?
@@ -3194,27 +1363,7 @@ if let unwrappedC = c {
 }
 ```
 
-<!--
-  - test: `optional-chaining-alt`
-
-  ```swifttest
-  >> class OtherClass { func performAction() -> Bool {return true} }
-  >> class SomeClass { var property: OtherClass = OtherClass() }
-  >> var c: SomeClass?
-  -> var result: Bool?
-  -> if let unwrappedC = c {
-        result = unwrappedC.property.performAction()
-     }
-  ```
--->
-
-The unwrapped value of an optional-chaining expression can be modified,
-either by mutating the value itself,
-or by assigning to one of the value's members.
-If the value of the optional-chaining expression is `nil`,
-the expression on the right-hand side of the assignment operator
-isn't evaluated.
-For example:
+可选链表达式解包后的值可以被修改，无论是修改值本身，还是修改值的成员。如果可选链表达式的值为 `nil`，则表达式右侧的赋值操作不会被执行。例如：
 
 ```swift
 func someFunctionWithSideEffects() -> Int {
@@ -3231,44 +1380,13 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
 // someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
 ```
 
-<!--
-  - test: `optional-chaining-as-lvalue`
-
-  ```swifttest
-  -> func someFunctionWithSideEffects() -> Int {
-        return 42  // No actual side effects.
-     }
-  -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-  ---
-  -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-  // someFunctionWithSideEffects isn't evaluated
-  /> someDictionary is still \(someDictionary)
-  </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
-  ---
-  -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
-  /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
-  </ someFunctionWithSideEffects is evaluated and returns 42
-  /> someDictionary is now \(someDictionary)
-  </ someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
-  ```
--->
-
-> Grammar of an optional-chaining expression:
+>可选链表达式语法：
 >
-> *optional-chaining-expression* → *postfix-expression* **`?`**
+> *可选链表达式* → *后缀表达式* **`?`**
 
-> Beta Software:
+> 测试版软件：
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 此文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，按照此文档实现的软件应在最终操作系统软件下进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解更多关于使用的内容[Apple's beta software](https://developer.apple.com/support/beta-software/).
 
-<!--
-This source file is part of the Swift.org open source project
-
-Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
-Licensed under Apache License v2.0 with Runtime Library Exception
-
-See https://swift.org/LICENSE.txt for license information
-See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
--->
