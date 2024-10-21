@@ -1114,7 +1114,7 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 
 调用抛出函数或方法的必须被包裹在一个 `try` 或 `try!` 表达式中（即，在 `try` 或 `try!` 操作符的作用域内）。
 
-函数的类型包括它是否会抛出错误以及它抛出的错误类型。这个子类型关系意味着，例如，你可以在需要抛出错误的上下文中使用不抛出错误的函数。有关抛出错误函数类型的更多信息，请参阅 <doc:Types#Function-Type>。有关处理具有显式类型的错误的示例，请参阅 <doc:ErrorHandling#Specifying-the-Error-Type>。
+函数的类型包括：它是否会抛出错误，以及它抛出的错误类型。非抛出函数是抛出函数的子类型。所以，可以在使用抛出函数的地方使用非抛出函数。有关抛出错误函数类型的更多信息，请参阅 <doc:Types#Function-Type>。有关处理具有显式类型的错误的示例，请参阅 <doc:ErrorHandling#Specifying-the-Error-Type>。
 
 你不能仅根据函数是否会抛出错误来重载一个函数。不过，你可以根据函数的*参数*是否会抛出错误来重载函数。
 
