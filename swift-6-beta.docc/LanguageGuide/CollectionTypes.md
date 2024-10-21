@@ -48,7 +48,7 @@ Swift 数组的类型完整写作 `Array<Element>`，其中 `Element` 是数组�
 ```swift
 var someInts: [Int] = []
 print("someInts is of type [Int] with \(someInts.count) items.")
-// 打印 "someInts is of type [Int] with 0 items."
+// 打印 “someInts is of type [Int] with 0 items.“
 ```
 
 <!--
@@ -67,7 +67,7 @@ print("someInts is of type [Int] with \(someInts.count) items.")
 
 ```swift
 someInts.append(3)
-// someInts 现在包含 1 个类型为 Int 的值。
+// someInts 现在包含 1 个类型为 Int 的值
 someInts = []
 // someInts 现在是一个空数组, 但它仍是 [Int] 类型的
 ```
@@ -154,7 +154,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
 
 ```swift
 var shoppingList: [String] = ["Eggs", "Milk"]
-// shoppingList has been initialized with two initial items
+// shoppingList 已经用两个初始项进行了初始化
 ```
 
 <!--
@@ -196,7 +196,7 @@ var shoppingList = ["Eggs", "Milk"]
 
 ```swift
 print("The shopping list contains \(shoppingList.count) items.")
-// 打印 "The shopping list contains 2 items."
+// 打印 “The shopping list contains 2 items.“
 ```
 
 <!--
@@ -216,7 +216,7 @@ if shoppingList.isEmpty {
 } else {
     print("The shopping list isn't empty.")
 }
-// 打印 "The shopping list isn't empty."
+// 打印 “The shopping list isn't empty.“
 ```
 
 <!--
@@ -236,7 +236,7 @@ if shoppingList.isEmpty {
 
 ```swift
 shoppingList.append("Flour")
-// shoppingList 现在包含 3 个项目，而有人正在做煎饼
+// shoppingList 现在包含 3 项，而有人正在做煎饼
 ```
 
 <!--
@@ -253,9 +253,9 @@ shoppingList.append("Flour")
 
 ```swift
 shoppingList += ["Baking Powder"]
-// shoppingList 现在包含 4 个项目
+// shoppingList 现在包含 4 项
 shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
-// shoppingList 现在包含 7 个项目
+// shoppingList 现在包含 7 项
 ```
 
 <!--
@@ -275,7 +275,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
 
 ```swift
 var firstItem = shoppingList[0]
-// firstItem 的值为 "Eggs"
+// firstItem 的值为 “Eggs”
 ```
 
 <!--
@@ -294,7 +294,7 @@ var firstItem = shoppingList[0]
 
 ```swift
 shoppingList[0] = "Six eggs"
-// the first item in the list is now equal to "Six eggs" rather than "Eggs"
+// 列表中的第一个项现在是 “Six eggs” 而不是 “Eggs”
 ```
 
 <!--
@@ -315,11 +315,11 @@ shoppingList[0] = "Six eggs"
   to make that index become valid.
 -->
 
-您还可以使用下标语法一次更改一个范围的值，即使替换值集的长度与要替换的范围不同。以下示例将`"Chocolate Spread"`, `"Cheese"` 和 `"Butter"` 替换为 `"Bananas"` 和 `"Apples"`：
+您还可以使用下标语法一次更改一个范围的值，即使替换值集的长度与要替换的范围不同。以下示例将 `"Chocolate Spread"`, `"Cheese"` 和 `"Butter"` 替换为 `"Bananas"` 和 `"Apples"`：
 
 ```swift
 shoppingList[4...6] = ["Bananas", "Apples"]
-// shoppingList now contains 6 items
+// shoppingList 现在包含 6 项
 ```
 
 <!--
@@ -336,8 +336,8 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 
 ```swift
 shoppingList.insert("Maple Syrup", at: 0)
-// shoppingList now contains 7 items
-// "Maple Syrup" is now the first item in the list
+// shoppingList 现在包含 7 项
+// ”Maple Syrup“ 现在是列表中的第一项
 ```
 
 <!--
@@ -358,9 +358,9 @@ shoppingList.insert("Maple Syrup", at: 0)
 
 ```swift
 let mapleSyrup = shoppingList.remove(at: 0)
-// the item that was at index 0 has just been removed
-// shoppingList now contains 6 items, and no Maple Syrup
-// the mapleSyrup constant is now equal to the removed "Maple Syrup" string
+// 索引 0 处的项刚刚被移除了
+// shoppingList 现在包含 6 项，且不包含 Maple Syrup
+// mapleSyrup 常量现在等于已移除的 “Maple Syrup” 字符串
 ```
 
 <!--
@@ -382,7 +382,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 
 ```swift
 firstItem = shoppingList[0]
-// firstItem is now equal to "Six eggs"
+// firstItem 现在等于 “Six eggs”
 ```
 
 <!--
@@ -399,9 +399,9 @@ firstItem = shoppingList[0]
 
 ```swift
 let apples = shoppingList.removeLast()
-// the last item in the array has just been removed
-// shoppingList now contains 5 items, and no apples
-// the apples constant is now equal to the removed "Apples" string
+// 数组中的最后一项刚刚被移除了
+// shoppingList 现在包含 5 项，且不包含 apples
+// apples 常量现在等于已移除的 “Apples” 字符串
 ```
 
 <!--
@@ -475,7 +475,7 @@ for (index, value) in shoppingList.enumerated() {
   ```
 -->
 
-有关 `for-in` 循环的更多信息，请参阅 <doc:ControlFlow#For-In-Loops>.
+有关 `for`-`in` 循环的更多信息，请参阅 <doc:ControlFlow#For-In-Loops>.
 
 ## 集合
 
@@ -508,7 +508,7 @@ Swift 集合的类型写作 `Set<Element>`，其中 `Element` 是集合允许存
 ```swift
 var letters = Set<Character>()
 print("letters is of type Set<Character> with \(letters.count) items.")
-// 打印 "letters is of type Set<Character> with 0 items."
+// 打印 “letters is of type Set<Character> with 0 items.“
 ```
 
 <!--
@@ -527,9 +527,9 @@ print("letters is of type Set<Character> with \(letters.count) items.")
 
 ```swift
 letters.insert("a")
-// letters 现在包含 1 个类型为 Character 的值。
+// letters 现在包含 1 个类型为 Character 的值
 letters = []
-// letters 现在是一个空集合，但仍然是 Set<Character> 类型。
+// letters 现在是一个空集合，但仍然是 Set<Character> 类型
 ```
 
 <!--
@@ -552,7 +552,7 @@ letters = []
 
 ```swift
 var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
-// favoriteGenres 已经用三个初始元素进行了初始化。
+// favoriteGenres 已经用三个初始元素进行了初始化
 ```
 
 <!--
@@ -592,7 +592,7 @@ var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
 
 ```swift
 print("I have \(favoriteGenres.count) favorite music genres.")
-// 打印 "I have 3 favorite music genres."
+// 打印 “I have 3 favorite music genres.“
 ```
 
 <!--
@@ -613,7 +613,7 @@ if favoriteGenres.isEmpty {
 } else {
     print("I have particular music preferences.")
 }
-// 打印 "I have particular music preferences."
+// 打印 “I have particular music preferences.“
 ```
 
 <!--
@@ -633,7 +633,7 @@ if favoriteGenres.isEmpty {
 
 ```swift
 favoriteGenres.insert("Jazz")
-// favoriteGenres 现在包含 4 个元素
+// favoriteGenres 现在包含 4 项
 ```
 
 <!--
@@ -654,7 +654,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
 } else {
     print("I never much cared for that.")
 }
-// 打印 "Rock? I'm over it."
+// 打印 “Rock? I'm over it.“
 ```
 
 <!--
@@ -678,7 +678,7 @@ if favoriteGenres.contains("Funk") {
 } else {
     print("It's too funky in here.")
 }
-// 打印 "It's too funky in here."
+// 打印 “It's too funky in here.“
 ```
 
 <!--
@@ -808,7 +808,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
   Tracking bug is <rdar://problem/35301593>
 -->
 
-### 集合成员资格与相等性
+### 集合成员关系与相等
 
 下图描述了三个集合 --- `a`、`b` 和 `c`，其中重叠区域表示集合间共享的元素。集合 `a` 是集合 `b` 的 **超集**，因为 `a` 包含了 `b` 中的所有元素。相反，集合 `b` 是集合 `a` 的 **子集**，因为 `b` 中的所有元素都包含在 `a` 中。集合 `b` 和集合 `c` 是 **不相交的**，因为它们没有任何共同的元素。
 
@@ -884,7 +884,7 @@ Swift 字典的完整类型写作 `Dictionary<Key, Value>`，其中 `Key` 是可
 
 ```swift
 var namesOfIntegers: [Int: String] = [:]
-// namesOfIntegers 是一个空的 [Int: String] 字典。
+// namesOfIntegers 是一个空的 [Int: String] 字典
 ```
 
 <!--
@@ -902,9 +902,9 @@ var namesOfIntegers: [Int: String] = [:]
 
 ```swift
 namesOfIntegers[16] = "sixteen"
-// namesOfIntegers 现在包含 1 个键值对。
+// namesOfIntegers 现在包含 1 个键值对
 namesOfIntegers = [:]
-// namesOfIntegers 再次成为一个类型为 [Int: String] 的空字典。
+// namesOfIntegers 再次成为一个类型为 [Int: String] 的空字典
 ```
 
 <!--
@@ -975,7 +975,7 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 ```swift
 print("The airports dictionary contains \(airports.count) items.")
-// 打印 "The airports dictionary contains 2 items."
+// 打印 “The airports dictionary contains 2 items.“
 ```
 
 <!--
@@ -995,7 +995,7 @@ if airports.isEmpty {
 } else {
     print("The airports dictionary isn't empty.")
 }
-// 打印 "The airports dictionary isn't empty."
+// 打印 “The airports dictionary isn't empty.“
 ```
 
 <!--
@@ -1015,7 +1015,7 @@ if airports.isEmpty {
 
 ```swift
 airports["LHR"] = "London"
-// airports 字典现在包含 3 个元素。
+// airports 字典现在包含 3 项
 ```
 
 <!--
@@ -1032,7 +1032,7 @@ airports["LHR"] = "London"
 
 ```swift
 airports["LHR"] = "London Heathrow"
-// “LHR”的值已更改为“London Heathrow”。
+// “LHR”的值已更改为“London Heathrow”
 ```
 
 <!--
@@ -1053,7 +1053,7 @@ airports["LHR"] = "London Heathrow"
 if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
     print("The old value for DUB was \(oldValue).")
 }
-// 打印 "The old value for DUB was Dublin."
+// 打印 “The old value for DUB was Dublin.“
 ```
 
 <!--
@@ -1075,7 +1075,7 @@ if let airportName = airports["DUB"] {
 } else {
     print("That airport isn't in the airports dictionary.")
 }
-// 打印 "The name of the airport is Dublin Airport."
+// 打印 “The name of the airport is Dublin Airport.“
 ```
 
 <!--
@@ -1095,9 +1095,9 @@ if let airportName = airports["DUB"] {
 
 ```swift
 airports["APL"] = "Apple International"
-// "Apple International" 不是APL的真实机场，所以删除它。
+// “Apple International“ 不是APL的真实机场，所以删除它
 airports["APL"] = nil
-// APL 已经从字典中删除。
+// APL 已经从字典中删除
 ```
 
 <!--
@@ -1126,7 +1126,7 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
 } else {
     print("The airports dictionary doesn't contain a value for DUB.")
 }
-// 打印 "The removed airport's name is Dublin Airport."
+// 打印 “The removed airport's name is Dublin Airport.“
 ```
 
 <!--
