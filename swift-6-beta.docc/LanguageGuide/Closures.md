@@ -57,7 +57,7 @@ func backward(_ s1: String, _ s2: String) -> Bool {
     return s1 > s2
 }
 var reversedNames = names.sorted(by: backward)
-// reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+// reversedNames 等于 ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 ```
 
 <!--
@@ -230,19 +230,19 @@ reversedNames = names.sorted(by: >)
 
 ```swift
 func someFunctionThatTakesAClosure(closure: () -> Void) {
-    // function body goes here
+    // 函数主体在这里
 }
 
-// Here's how you call this function without using a trailing closure:
+// 以下是如何在不使用尾随闭包的情况下调用此函数的示例：
 
 someFunctionThatTakesAClosure(closure: {
-    // closure's body goes here
+    // 闭包的主体在这里
 })
 
-// Here's how you call this function with a trailing closure instead:
+// 以下是如何使用尾随闭包调用此函数的示例：
 
 someFunctionThatTakesAClosure() {
-    // trailing closure's body goes here
+    // 尾随闭包的主体在这里
 }
 ```
 
@@ -339,8 +339,8 @@ let strings = numbers.map { (number) -> String in
     } while number > 0
     return output
 }
-// strings is inferred to be of type [String]
-// its value is ["OneSix", "FiveEight", "FiveOneZero"]
+// strings 的类型被推断为 [String]
+// 它的值是 ["OneSix", "FiveEight", "FiveOneZero"]
 ```
 
 <!--
@@ -529,11 +529,11 @@ let incrementByTen = makeIncrementer(forIncrement: 10)
 
 ```swift
 incrementByTen()
-// returns a value of 10
+// 返回值为 10
 incrementByTen()
-// returns a value of 20
+// 返回值为 20
 incrementByTen()
-// returns a value of 30
+// 返回值为 30
 ```
 
 <!--
@@ -565,7 +565,7 @@ incrementByTen()
 ```swift
 let incrementBySeven = makeIncrementer(forIncrement: 7)
 incrementBySeven()
-// returns a value of 7
+// 返回值为 7
 ```
 
 <!--
@@ -584,7 +584,7 @@ incrementBySeven()
 
 ```swift
 incrementByTen()
-// returns a value of 40
+// 返回值为 40
 ```
 --------
 <!--
@@ -611,10 +611,10 @@ incrementByTen()
 ```swift
 let alsoIncrementByTen = incrementByTen
 alsoIncrementByTen()
-// returns a value of 50
+// 返回值为 50
 
 incrementByTen()
-// returns a value of 60
+// 返回值为 60
 ```
 
 <!--
@@ -684,11 +684,11 @@ class SomeClass {
 let instance = SomeClass()
 instance.doSomething()
 print(instance.x)
-// Prints "200"
+// 打印 “200”
 
 completionHandlers.first?()
 print(instance.x)
-// Prints "100"
+// 打印 “100”
 ```
 
 <!--
@@ -844,16 +844,16 @@ struct SomeStruct {
 ```swift
 var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 print(customersInLine.count)
-// Prints "5"
+// 打印 “5”
 
 let customerProvider = { customersInLine.remove(at: 0) }
 print(customersInLine.count)
-// Prints "5"
+// 打印 ”5“
 
 print("Now serving \(customerProvider())!")
-// Prints "Now serving Chris!"
+// 打印 “Now serving Chris!”
 print(customersInLine.count)
-// Prints "4"
+// 打印 “4”
 ```
 
 <!--
@@ -894,12 +894,12 @@ print(customersInLine.count)
 将闭包作为参数传递给函数时，你能获得同样的延时计算行为。
 
 ```swift
-// customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
+// customersInLine 是 ["Alex", "Ewa", "Barry", "Daniella"]
 func serve(customer customerProvider: () -> String) {
     print("Now serving \(customerProvider())!")
 }
 serve(customer: { customersInLine.remove(at: 0) } )
-// Prints "Now serving Alex!"
+// 打印 “Now serving Alex!”
 ```
 
 <!--
@@ -920,12 +920,12 @@ serve(customer: { customersInLine.remove(at: 0) } )
 上面列表中的 `serve(customer:)` 函数接受一个显式的闭包，该闭包返回顾客的名字。下面的 `serve(customer:)` 版本执行相同的操作，但它不接受显式的闭包，而是通过将其参数类型标记为 `@autoclosure` 特性来接受一个自动闭包。现在你可以调用这个函数，就像它接受一个 `String` 参数而不是闭包一样。因为 customerProvider 参数的类型被标记为 `@autoclosure` 特性，所以参数会自动转换为闭包。
 
 ```swift
-// customersInLine is ["Ewa", "Barry", "Daniella"]
+// customersInLine 是 ["Ewa", "Barry", "Daniella"]
 func serve(customer customerProvider: @autoclosure () -> String) {
     print("Now serving \(customerProvider())!")
 }
 serve(customer: customersInLine.remove(at: 0))
-// Prints "Now serving Ewa!"
+// 打印 “Now serving Ewa!”
 ```
 
 <!--
@@ -948,7 +948,7 @@ serve(customer: customersInLine.remove(at: 0))
 如果您想要允许一个自动闭包可以逃逸，请同时使用 `@autoclosure` 和 `@escaping` 属性。`@escaping` 属性在上面的 <doc:Closures#Escaping-Closures> 中进行了描述。
 
 ```swift
-// customersInLine is ["Barry", "Daniella"]
+// customersInLine 是 ["Barry", "Daniella"]
 var customerProviders: [() -> String] = []
 func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
     customerProviders.append(customerProvider)
@@ -957,12 +957,12 @@ collectCustomerProviders(customersInLine.remove(at: 0))
 collectCustomerProviders(customersInLine.remove(at: 0))
 
 print("Collected \(customerProviders.count) closures.")
-// Prints "Collected 2 closures."
+// 打印 “Collected 2 closures.”
 for customerProvider in customerProviders {
     print("Now serving \(customerProvider())!")
 }
-// Prints "Now serving Barry!"
-// Prints "Now serving Daniella!"
+// 打印 “Now serving Barry!”
+// 打印 ”Now serving Daniella!“
 ```
 
 <!--
