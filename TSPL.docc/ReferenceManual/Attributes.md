@@ -1593,7 +1593,7 @@ s.$x.wrapper  // WrapperWithProjection value
 
 ### resultBuilder
 
-Apply this attribute to a class, structure, enumeration
+Apply this attribute to a class, structure, or enumeration
 to use that type as a result builder.
 A *result builder* is a type
 that builds a nested data structure step by step.
