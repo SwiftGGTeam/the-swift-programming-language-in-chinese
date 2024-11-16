@@ -25,35 +25,21 @@ Swift handles the absence of a value
 using optional types.
 Optionals say either “there *is* a value, which is *x*”
 or “there *isn't* a value at all”.
+Optionals ensure that code always
+checks whether a value is missing before using the value,
+and non-optional values are guaranteed to never be missing.
 
-XXX OUTLINE XXX
-
-* Swift is a safe language
-  It provides several kinds of safety guarantees
-    - Type safety means you can't accidentally use a value of the wrong type
-      and conversion between types is explicit
-      (use existing text below)
-    - Data safety means no out-of-bounds access, dangling pointers, etc.
-      (Fold discussion of optionals in here too)
-    - Concurrency safety means no overlapping access to shared mutable state
-      Not discussed here -- xref the concurrency chapter
-* Idea of safety: the code either does the right thing,
-  or the program stops with an error.
-  Unsafe code silently does the wrong thing,
-  or muddles on past errors and crashes later,
-  or similar.
-* Writing safe code eliminates categories of errors
-
-Swift is a type-safe language,
-which means the language helps you to be clear about
+Swift is a safe language,
+which means it helps you find and fix several categories of bugs
+as early as possible during the development process.
+Type safety helps you to be clear about
 the types of values your code works with.
 If part of your code requires a `String`,
 type safety prevents you from passing it an `Int` by mistake.
-Likewise, type safety prevents you from
-accidentally passing an optional `String`
-to a piece of code that requires a non-optional `String`.
-Type safety helps you catch and fix these kinds of errors
-as early as possible during the development process.
+Data safety helps you work with only valid data,
+not uninitialized memory or deinitialized objects,
+and ensures that you work with that data in safe ways ---
+even in programs that run multiple pieces of code at the same time.
 
 ## Constants and Variables
 
@@ -1819,6 +1805,17 @@ if let definiteString = assumedString {
 -->
 
 ## Data Safety
+
+The general principle of safety is that you know,
+when you compile your Swift code,
+that it will either run correctly or stop running ---
+it won't silently try to continue past an invalid state.
+
+Swift uses two kinds of checks for safety:
+*static* checks when compiling the code
+and *dynamic* checks while the code is running.
+
+XXX the only things worse than crashing now are crashing later & corrupting data
 
 XXX OUTLINE XXX
 
