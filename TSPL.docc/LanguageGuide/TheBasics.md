@@ -1017,9 +1017,6 @@ they were initialized with Boolean literal values.
 As with `Int` and `Double` above,
 you don't need to declare constants or variables as `Bool`
 if you set them to `true` or `false` as soon as you create them.
-Type inference helps make Swift code more concise and readable
-when it initializes constants or variables with other values whose type is already known.
-<!-- XXX remove repeat comment about type inference? -->
 
 Boolean values are particularly useful when you work with conditional statements
 such as the `if` statement:
