@@ -567,37 +567,28 @@ Swift provides two signed floating-point number types:
 
 ## Type Safety and Type Inference
 
-Swift is a *type-safe* language.
-Every value in a Swift program has a type,
+Every value in a Swift program has a type.
 Every place you store a value —
 including constants, variables, and properties —
 also has a type,
 which you might write explicitly using a type annotation
 or which might inferred from an initial value.
 Every place in your code where you provide a value,
-that value's type must be compatible the place you use it.
+that value's type must match the place you use it.
 For example,
 if part of your code requires a `String`,
 you can't pass it an `Int` by mistake.
-Values of one type are never implicitly converted to another type.
-However, some types can be explicitly converted.
-<!-- XXX mention subtypes? -->
+This kind of checking makes Swift a *type-safe* language.
 
 A type safe language encourages you to be clear about
-the types of values your code can work with.
-
-<!-- XXX define "type safe" in the para above -->
-
-Because Swift is type safe,
-it performs *type checks* when compiling your code
+the types of values your code works with.
+Values of one type are never implicitly converted to another type.
+However, some types can be explicitly converted.
+When building code
+Swift checks the code for type safety
 and flags any mismatched types as errors.
-This enables you to catch and fix errors
-as early as possible during the development process.
 
-<!-- XXX define "type checks" in the para above -->
-<!-- XXX reduce overlap with intro paras? -->
-
-Type-checking helps you avoid errors when you're working with different types of values.
+Type checking helps you avoid errors when you're working with different types of values.
 However, this doesn't mean that you have to specify the type of
 every constant and variable that you declare.
 If you don't specify the type of value you need,
@@ -1028,6 +1019,7 @@ you don't need to declare constants or variables as `Bool`
 if you set them to `true` or `false` as soon as you create them.
 Type inference helps make Swift code more concise and readable
 when it initializes constants or variables with other values whose type is already known.
+<!-- XXX remove repeat comment about type inference? -->
 
 Boolean values are particularly useful when you work with conditional statements
 such as the `if` statement:
@@ -1102,7 +1094,7 @@ if i == 1 {
 -->
 
 The result of the `i == 1` comparison is of type `Bool`,
-and so this second example passes the type-check.
+and so this second example passes the type checking.
 Comparisons like `i == 1` are discussed in <doc:BasicOperators>.
 
 As with other examples of type safety in Swift,
@@ -1806,40 +1798,45 @@ if let definiteString = assumedString {
 
 ## Data Safety
 
-The general principle of safety is that you know,
-when you compile your Swift code,
-that it will either run correctly or stop running ---
-it won't silently try to continue past an invalid state.
+In addition to the checks that prevent type mismatches,
+which are described above in <doc:TheBasics#Type-Safety-and-Type-Inference>,
+Swift also protects code against working with invalid memory.
+This is known as *data safety* or *memory safety*
+and includes the following requirements:
 
+- Values are set before being read;
+  code doesn't interact with uninitialized regions of memory.
+- Arrays and buffers are accessed only at valid indexes,
+  never out of bounds.
+- Memory is accessed only during the value’s lifetime,
+  preventing use-after-free errors and wild pointers.
+- Access to memory overlaps only in provably safe ways;
+  concurrent code doesn't create possible data races.
+
+If you've worked in languages that don't provide these guarantees,
+you may be familiar with some of the errors and bugs
+named in the list above.
+If you haven't encountered these issues, that's ok;
+safe code in Swift avoids these problems.
+For information about how Swift ensures you set initial values,
+see <doc:Initialization>,
+and for information about how Swift checks data safety in concurrent code,
+see <doc:Concurrency>.
+
+<!-- XXX need better framing for what safety means -->
+The general principle of safety is that you know ahead of time
+your code either runs correctly or stops running.
+Safe code can still have other kinds of bugs,
+but it won't have the issues listed above.
 Swift uses two kinds of checks for safety:
 *static* checks when compiling the code
 and *dynamic* checks while the code is running.
 
-XXX the only things worse than crashing now are crashing later & corrupting data
-
-XXX OUTLINE XXX
-
-* Call this memory safety?
-* “Safe” means the compiler verifies, at compile time:
-    - Values are set before being read — no uninitialized data
-    - Arrays and buffers are accessed only at valid indexes — no out-of-bounds access
-    - Memory is accessed only during the value’s lifetime — no use-after-free errors or wild pointers
-    - Access to memory overlaps only in provably safe ways — no races
-* When you see APIs whose name starts with “unsafe”
-  this means you take on the responsibility for these guarantees
-
-<!-- XXX Borrow terminology from this blog post
-https://www.swift.org/blog/swift-5.10-released/
-
-An increasingly important source of undefined behavior is concurrent code
-that inadvertently accesses memory from one thread
-at the same time that another thread is writing to the same memory.
-This kind of unsafety is called a data race,
-and data races make concurrent programs
-exceptionally difficult to write correctly.
-Swift solves this problem through data isolation provided by actors and tasks,
-which guarantees mutually exclusive access to shared mutable state.
--->
+Sometimes you need to work outside of the bounds of safety ---
+for example, because of limitations of the language or standard library ---
+so Swift also provides unsafe versions of some APIs.
+When you use types or methods whose name includes the word "unsafe",
+you take on the responsibility for safety.
 
 ## Error Handling
 
