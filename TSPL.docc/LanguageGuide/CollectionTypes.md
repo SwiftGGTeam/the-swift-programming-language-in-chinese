@@ -83,7 +83,7 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   - test: `arraysEmpty`
 
   ```swifttest
-  -> var someInts: [Int] = []
+  -> var someInts = [Int]()
   -> print("someInts is of type [Int] with \(someInts.count) items.")
   <- someInts is of type [Int] with 0 items.
   ```
