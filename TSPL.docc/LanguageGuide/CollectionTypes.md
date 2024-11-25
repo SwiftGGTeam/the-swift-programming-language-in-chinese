@@ -70,8 +70,34 @@ and is used throughout this guide when referring to the type of an array.
 
 ### Creating an Empty Array
 
-You can create an empty array of a certain type
-using initializer syntax:
+You can create an empty array in Swift using one of two approaches:
+
+If the context already provides type information,
+such as a function argument or an already typed variable or constant,
+you can create an empty array with an *empty array literal*,
+which is written as `[]`
+(an empty pair of square brackets):
+
+```swift
+var someInts: [Int] = []
+print("someInts is of type [Int] with \(someInts.count) items.")
+// Prints "someInts is of type [Int] with 0 items."
+```
+
+<!--
+  - test: `arraysEmpty`
+
+  ```swifttest
+  -> var someInts: [Int] = []
+  -> print("someInts is of type [Int] with \(someInts.count) items.")
+  <- someInts is of type [Int] with 0 items.
+  ```
+-->
+
+Alternatively, you can create an empty array of a certain type 
+using *initializer syntax*, 
+which is done by writing the type in square brackets 
+followed by parentheses (`[Element]()`):
 
 ```swift
 var someInts = [Int]()
@@ -89,14 +115,13 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   ```
 -->
 
-Note that the type of the `someInts` variable is inferred to be `[Int]`
-from the type of the initializer.
+Both approaches produce the same result. 
+However, the empty array literal (`[]`) is the preferred way to 
+initialize an empty array because it is more concise and aligns with 
+the style guidelines used throughout this guide.
 
-Alternatively, if the context already provides type information,
-such as a function argument or an already typed variable or constant,
-you can create an empty array with an empty array literal,
-which is written as `[]`
-(an empty pair of square brackets):
+In both cases, you can use the empty array literal (`[]`) to 
+reassign an empty array to an existing variable:
 
 ```swift
 someInts.append(3)
