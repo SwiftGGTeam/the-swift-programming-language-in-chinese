@@ -74,7 +74,7 @@ You can create an empty array of a certain type
 using initializer syntax:
 
 ```swift
-var someInts: [Int] = []
+var someInts = [Int]()
 print("someInts is of type [Int] with \(someInts.count) items.")
 // Prints "someInts is of type [Int] with 0 items."
 ```
