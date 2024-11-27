@@ -26,12 +26,12 @@ jobs:
       - name: Get swift version
         run: swift --version
       - name: Build
-        run: xcrun docc convert swift-6-beta.docc --output-path ./docs --hosting-base-path swift-6-beta --fallback-display-name "Swift 6 Beta" --fallback-bundle-identifier com.example.swift6beta --fallback-bundle-version 1.0.0 --transform-for-static-hosting
+        run: xcrun docc convert swift-6-beta.docc --output-path ./docs --fallback-display-name "Swift 6 Programming Language" --fallback-bundle-identifier team.swiftgg.swift6 --fallback-bundle-version 1.0.0 --transform-for-static-hosting
       - name: Publish
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: the-swift-programming-language-in-chinese
+          projectName: swift-programming-lang
           directory: docs
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
