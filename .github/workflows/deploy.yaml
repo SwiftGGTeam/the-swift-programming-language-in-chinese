@@ -5,7 +5,7 @@ on:
       - try-pages
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: "macos-15"
     permissions:
       contents: read
       deployments: write
@@ -19,14 +19,14 @@ jobs:
           node-version: "20"
       - name: Install npm packages
         run: npm install
-      - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-          swift-version: "5.9"
+          xcode-version: "16.0"
       - name: Get swift version
         run: swift --version
       - name: Build
-        run: docc convert swift-6-beta.docc \
+        run: xcrun docc convert swift-6-beta.docc \
           --output-path ./docs \
           --hosting-base-path swift-6-beta \
           --fallback-display-name "Swift 6 Beta" \
