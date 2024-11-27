@@ -1,4 +1,8 @@
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - try-pages
 jobs:
   deploy:
     runs-on: ubuntu-latest
