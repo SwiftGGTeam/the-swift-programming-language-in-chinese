@@ -26,9 +26,9 @@ jobs:
       - name: Get swift version
         run: swift --version
       - name: Build
-        run: xcrun docc convert swift-6-beta.docc --output-path ./docs --transform-for-static-hosting --experimental-enable-custom-templates
+        run: xcrun docc convert swift-6.docc --output-path ./docs --transform-for-static-hosting --experimental-enable-custom-templates
       - name: Copy Redirects
-        run: cp swift-6-beta.docc/_redirects ./docs/_redirects
+        run: cp swift-6.docc/_redirects ./docs/_redirects
       - name: Publish
         uses: cloudflare/pages-action@v1
         with:

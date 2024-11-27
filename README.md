@@ -13,7 +13,7 @@ This repository includes the latest version of TSPL, as well as Simplified Chine
 
 ## Building
 
-Clone this repository and run `docc preview swift-6-beta.docc`
+Clone this repository and run `docc preview swift-6.docc`
 in this repository's root directory.
 
 After running DocC, open the link that `docc` outputs
@@ -41,7 +41,7 @@ to display a local preview in your browser.
 > includes that directory.
 >
 > If you installed DocC by downloading Xcode,
-> run `xcrun docc preview swift-6-beta.docc` instead.
+> run `xcrun docc preview swift-6.docc` instead.
 
 3. Replace the content of the original Markdown file with your Chinese translation, following the terminology table below and the [SwiftGG style guide][swiftgg-style-guide]. Submit your translation through a Pull Request. Once verified by SwiftGG members, it will be merged into the current translation branch.
 
@@ -59,7 +59,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 
 ## 构建
 
-克隆此仓库并在仓库根目录运行 `docc preview swift-6-beta.docc`。
+克隆此仓库并在仓库根目录运行 `docc preview swift-6.docc`。
 
 运行 DocC 后，打开 `docc` 输出的链接，即可在浏览器中显示本地预览。
 
@@ -83,7 +83,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 > 确保您的 shell 的 `PATH` 环境变量包含该目录。
 >
 > 如果您通过下载 Xcode 安装了 DocC，
-> 请运行 `xcrun docc preview swift-6-beta.docc`。
+> 请运行 `xcrun docc preview swift-6.docc`。
 
 3. 按照下面的术语表和 [SwiftGG 排版指南][swiftgg-style-guide] 将原始 Markdown 文件的内容替换为您的中文翻译。通过 Pull Request 提交您的翻译。经 SwiftGG 成员验证后，将合并到当前的翻译分支。
 
