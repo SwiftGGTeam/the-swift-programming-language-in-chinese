@@ -525,10 +525,6 @@ Swift 的类型推断是在单个表达式或语句层级进行的。这意味�
 <!-- TODO: Email Doug for a list of rules or situations describing when type-inference is allowed and when types must be fully typed.
 -->
 
-> Beta 版软件:
-> > 本文档包含有关正在开发中的 API 或技术的初步信息。此信息可能会发生变化，并且根据本文档实施的软件应该与最终的操作系统软件一起进行测试。
-> > 了解更多关于使用 [Apple 的 Beta 软件](https://developer.apple.com/support/beta-software/)的信息。
-
 <!--
 This source file is part of the Swift.org open source project
 

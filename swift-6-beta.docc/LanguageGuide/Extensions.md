@@ -590,12 +590,6 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
 
 > 注意: `number.kind` 已经被认为是 `Int.Kind` 类型。所以，在 `switch` 语句中所有的 `Int.Kind` 枚举值可以被缩写，例如使用 `.negative` 替代 `Int.Kind.negative`。
 
-> 测试版软件:
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
->
-> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
-
 <!--
 This source file is part of the Swift.org open source project
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors

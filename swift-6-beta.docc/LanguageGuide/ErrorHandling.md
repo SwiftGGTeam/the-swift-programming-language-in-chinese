@@ -704,13 +704,6 @@ func processFile(filename: String) throws {
 
 即使不涉及错误处理代码，您也可以使用 `defer` 语句。有关详细信息，请参阅 <doc:ControlFlow#Deferred-Actions>。
 
-> 注意:
-> 测试版软件
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档开发实现的软件应与最终的操作系统软件一起进行测试。
->
-> 点击了解更多关于使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的信息。
-
 <!--
 This source file is part of the Swift.org open source project
 

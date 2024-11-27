@@ -2837,12 +2837,6 @@ Swift 提供五种访问控制级别：open、public、internal、file private �
 >
 > *actor-isolation-modifier* → **`nonisolated`**
 
-> 测试版软件:
->
-> 本文件包含有关正在开发的 API 或技术的初步信息。此信息可能会更改，按照本文件实施的软件应与最终操作系统软件进行测试。
->
-> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息。
-
 <!--
 This source file is part of the Swift.org open source project
 

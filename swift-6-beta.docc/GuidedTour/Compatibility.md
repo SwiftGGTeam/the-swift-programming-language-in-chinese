@@ -16,12 +16,6 @@
 
 用 Swift 6 编写的项目可以依赖 Swift 5、Swift 4.2 或 Swift 4 编写的项目，反之亦然。这意味着，如果你有一个大型项目，并将其分为多个框架，你可以逐个框架地将代码迁移到新版本。
 
-> Beta 版软件：
->
-> 本文档包含关于正在开发的 API 或技术的初步信息。这些信息可能会发生变化，并且根据本文档实现的软件应与最终的操作系统软件一起进行测试。
->
-> 点击了解更多关于使用 [Apple Beta 版本软件](https://developer.apple.com/support/beta-software/) 的信息。
-
 <!--
 This source file is part of the Swift.org open source project
 

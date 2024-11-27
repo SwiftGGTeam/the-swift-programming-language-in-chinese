@@ -1601,12 +1601,6 @@ precondition(index > 0, "Index must be greater than zero.")
   but doesn't stop at assertions.
 -->
 
-> 测试版软件: 
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档制作的软件应使用最终的操作系统软件进行测试。
->
-> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/)的更多信息。
-
 <!--
 This source file is part of the Swift.org open source project
 

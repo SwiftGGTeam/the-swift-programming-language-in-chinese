@@ -154,11 +154,6 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
 
 在上面的例子中，这使得 `Suit`, `Rank`, 和 `Values`的名称可以故意保持简短，因为它们的名称由定义它们的上下文自然限定。
 
-> Beta 软件：
-> 此文档包含关于 API 或开发中技术的初步信息。此信息可能会发生更改，依照此文档实现的软件应使用最终操作系统软件进行测试。
-> 
-> 了解更多关于使用 [Apple's 测试软件](https://developer.apple.com/support/beta-software/).的信息。
-
 <!--
 This source file is part of the Swift.org open source project
 

@@ -840,12 +840,6 @@ Swift 标准库定义了许多运算符供你使用，其中许多运算符在 <
 > *prefix-operator* → *operator* \
 > *postfix-operator* → *operator*
 
-> 测试版软件:
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档实施的软件应与最终的操作系统软件一起进行测试。
->
-> 了解更多有关使用 [Apple's beta software](https://developer.apple.com/support/beta-software/) 的信息。
-
 <!--
 This source file is part of the Swift.org open source project
 

@@ -1442,12 +1442,6 @@ for scalar in dogString.unicodeScalars {
   ```
 -->
 
-> 测试版软件:
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档制作的软件应使用最终的操作系统软件进行测试。
->
-> 点击了解更多关于使用 [Apple's beta software](https://developer.apple.com/support/beta-software/)的信息.
-
 <!--
 This source file is part of the Swift.org open source project
 

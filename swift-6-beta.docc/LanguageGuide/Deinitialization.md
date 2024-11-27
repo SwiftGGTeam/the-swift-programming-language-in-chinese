@@ -182,12 +182,6 @@ print("The bank now has \(Bank.coinsInBank) coins")
 
 玩家现在已经退出游戏。这是通过将可选类型变量 `playerOne` 设置为 `nil` 来表示的，意味着“没有 `Player` 实例”。在这一刻，`playerOne` 变量对 `Player` 实例的引用被断开。没有其他属性或变量仍然引用该 `Player` 实例，因此它会被释放以回收其内存。在此之前，它的析构器会被自动调用，并将其金币返还给银行。
 
-> 测试版软件: 
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终的操作系统一起进行测试。
->
-> 了解更多关于[Apple 测试版软件](https://developer.apple.com/support/beta-software/)的使用。
-
 <!--
 This source file is part of the Swift.org open source project
 

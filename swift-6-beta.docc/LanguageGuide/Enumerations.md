@@ -653,12 +653,6 @@ print(evaluate(product))
 
 该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法运算，则分别计算左边表达式和右边表达式的值，然后相加或相乘。
 
-> 测试版软件:
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档开发的软件应与最终版本的操作系统一起进行测试。
->
-> 进一步了解如何使用 [Apple 的 Beta 版软件](https://developer.apple.com/support/beta-software/).
-
 <!--
 This source file is part of the Swift.org open source project
 

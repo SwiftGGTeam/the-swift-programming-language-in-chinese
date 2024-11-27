@@ -1015,13 +1015,6 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 虽然复合表达式的输出没有改变，但整体意图对读者来说更加清晰明了。
 可读性永远比简洁性更重要，因此在有助于阐明意图的地方使用括号是很有必要的。
 
-> 测试版软件: 
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
->
-> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息。
-
-
 <!--
 此源文件属于 Swift.org 开源项目的一部分
 

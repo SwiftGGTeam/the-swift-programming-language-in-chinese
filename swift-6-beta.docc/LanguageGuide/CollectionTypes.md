@@ -1228,12 +1228,6 @@ let airportNames = [String](airports.values)
 
 Swift 的 `Dictionary` 类型没有定义的顺序。要以特定顺序迭代字典的键或值，可以对其 `keys` 或 `values` 属性使用 `sorted()` 方法。
 
-> 测试版软件:
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
->
-> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
-
 <!--
 This source file is part of the Swift.org open source project
 

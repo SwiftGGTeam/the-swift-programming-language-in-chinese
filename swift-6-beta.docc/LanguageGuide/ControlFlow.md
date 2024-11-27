@@ -1718,12 +1718,6 @@ if #unavailable(iOS 10) {
   You can use it with if-let, and other Boolean conditions, using a comma
 -->
 
-> 测试版软件:
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档开发的软件应与最终版本的操作系统一起进行测试。
->
-> 进一步了解如何使用 [Apple 的 Beta 版软件](https://developer.apple.com/support/beta-software/).
-
 <!--
 This source file is part of the Swift.org open source project
 

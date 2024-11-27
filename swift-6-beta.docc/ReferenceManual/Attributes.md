@@ -1888,12 +1888,6 @@ Interface Builder 特性是声明特性，供 Interface Builder 与 Xcode 同步
 > *balanced-token* → 任意标识符、关键字、字面量或运算符 \
 > *balanced-token* → 除了 **`(`**、**`)`**、**`[`**、**`]`**、**`{`** 或 **`}`** 之外的任何标点符号
 
-> 测试版软件:
->
-> 本文档包含有关正在开发中的 API 或技术的初步信息。此信息可能会有所变更，并且根据本文档实现的软件应使用最终的操作系统软件进行测试。
->
-> 了解更多关于 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的信息。
-
 <!--
 This source file is part of the Swift.org open source project
 

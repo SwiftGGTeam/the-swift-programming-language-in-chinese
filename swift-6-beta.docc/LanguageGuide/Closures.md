@@ -991,12 +991,6 @@ for customerProvider in customerProviders {
 
 在上面的代码中，`collectCustomerProviders(_:)` 函数将闭包追加到 `customerProviders` 数组中，而不是调用作为其 `customerProvider` 参数传递给它的闭包。数组是在函数的作用域之外声明的，这意味着数组中的闭包可以在函数返回后执行。因此 `customerProvider` 参数必须允许逃逸出函数的作用域。
 
-> 测试版软件: 
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
->
-> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
-
 <!--
 This source file is part of the Swift.org open source project
 

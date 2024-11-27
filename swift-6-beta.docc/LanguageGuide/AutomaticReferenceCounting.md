@@ -1120,12 +1120,6 @@ paragraph = nil
 
 关于捕获列表的更多信息，请参见<doc:Expressions#Capture-Lists>。
 
-> 测试软件:
->
-> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据此文档实现的软件应该使用最终的操作系统软件进行测试。
->
-> 了解更多关于使用[Apple 的测试软件](https://developer.apple.com/support/beta-software/)的信息。
-
 <!--
 This source file is part of the Swift.org open source project
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors

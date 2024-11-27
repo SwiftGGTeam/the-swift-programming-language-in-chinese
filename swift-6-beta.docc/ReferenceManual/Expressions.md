@@ -1395,10 +1395,3 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
 >可选链表达式语法：
 >
 > *可选链表达式* → *后缀表达式* **`?`**
-
-> 测试版软件：
->
-> 此文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，按照此文档实现的软件应在最终操作系统软件下进行测试。
->
-> 了解更多关于使用的内容[Apple's beta software](https://developer.apple.com/support/beta-software/).
-

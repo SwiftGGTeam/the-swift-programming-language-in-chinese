@@ -1217,12 +1217,6 @@ let manyStars = draw {
   TODO: generic operators
 -->
 
-> Beta 软件：
->
-> 本文档包含有关正在开发中的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实现的软件应该用最终的操作系统软件进行测试。
->
-> 了解更多关于使用 [Apple 的 beta 软件](https://developer.apple.com/support/beta-software/)的信息。
-
 <!--
 This source file is part of the Swift.org open source project
 
