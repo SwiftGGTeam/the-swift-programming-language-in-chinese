@@ -65,7 +65,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 
 ## 当前状态
 
-- The Swift Programming Language 的最新英文版本。[最新提交: 11a2b29][11a2b29]
+- The Swift Programming Language 的最新英文版本。[最新提交: fe0121d][https://github.com/swiftlang/swift-book/commit/fe0121d1f2d86d6139c2b424d45a7889b82ff5e2] 
 - 对应的简体中文翻译 (进行中和已归档)：
   - Swift 6 beta (当前正在翻译)
   - Swift 5.x 及更早版本 (可在 [GitBook][legacy-documentations] 上阅读)

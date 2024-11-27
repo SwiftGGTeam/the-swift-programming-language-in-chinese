@@ -24,7 +24,7 @@
 > *declaration* → *subscript-declaration* \
 > *declaration* → *macro-declaration* \
 > *declaration* → *operator-declaration* \
-> *declaration* → *precedence-group-declaration* \
+> *declaration* → *precedence-group-declaration*
 
 ## 顶级代码
 

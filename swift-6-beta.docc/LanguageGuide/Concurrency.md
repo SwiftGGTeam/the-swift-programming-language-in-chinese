@@ -485,9 +485,9 @@ let photos = await withTaskGroup(of: Optional<Data>.self) { group in
 
 [`Task.isCancelled` instance]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.property
 
-如果你的事务需要在被取消时立即收到提醒，可以使用 [`Task.withTaskCancellationHandler(operation:onCancel:)`][] 方法。例如：
+如果你的事务需要在被取消时立即收到提醒，可以使用 [`Task.withTaskCancellationHandler(operation:onCancel:isolation:)`][] 方法。例如：
 
-[`Task.withTaskCancellationHandler(operation:onCancel:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:)
+[`Task.withTaskCancellationHandler(operation:onCancel:isolation:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:isolation:)
 
 ```swift
 let task = await Task.withTaskCancellationHandler {

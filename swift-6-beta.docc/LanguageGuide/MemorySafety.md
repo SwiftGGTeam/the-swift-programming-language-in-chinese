@@ -67,13 +67,20 @@ print("We're number \(one)!")
 
 在访问冲突的语境下，我们需要考虑内存访问的三个特点：此次访问是读还是写、访问的时长、被访问内存区域的位置。特别地，两次内存访问会在满足以下所有条件时产生冲突：
 
-- 至少其中一次访问是写入操作或非原子化访问。
+- 它们不是都是读操作，也不是都是原子化操作。
 - 它们访问的是同一块内存区域。
 - 它们的时间窗口出现了重叠。
 
 读操作和写操作之间的区别是显而易见的：写操作会改变内存区域，而读操作不会。「内存区域」指的是被访问的内容（例如变量、常量、属性）。内存访问的要么瞬间完成，要么持续较长时间。
 
-如果一项操作仅仅使用了 C 的原子化操作，则这项操作本身也是**原子化**的。请查看 `stdatomic(3)` 手册来了解有哪些函数满足这个定义。
+一次访问如果满足以下条件之一则为*原子*访问:
+- 是对 [`Atomic`] 或 [`AtomicLazyReference`] 的原子操作调用
+- 仅使用 C 原子操作
+否则就是非原子访问。
+关于 C 原子函数的列表,请参阅 `stdatomic(3)` 手册页。
+
+[`Atomic`]: https://developer.apple.com/documentation/synchronization/atomic
+[`AtomicLazyReference`]: https://developer.apple.com/documentation/synchronization/atomiclazyreference
 
 <!--
   Using these functions from Swift requires some shimming -- for example:
@@ -528,3 +535,7 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+
+[`Atomic`]: https://developer.apple.com/documentation/synchronization/atomic
+[`AtomicLazyReference`]: https://developer.apple.com/documentation/synchronization/atomiclazyreference

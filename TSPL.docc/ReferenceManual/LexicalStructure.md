@@ -263,8 +263,8 @@ so they must be escaped with backticks in that context.
   `nonisolated`,
   `open`,
   `operator`,
-  `private`,
   `precedencegroup`,
+  `private`,
   `protocol`,
   `public`,
   `rethrows`,
@@ -294,8 +294,8 @@ so they must be escaped with backticks in that context.
   `in`,
   `repeat`,
   `return`,
-  `throw`,
   `switch`,
+  `throw`,
   `where`,
   and `while`.
 - Keywords used in expressions and types:
@@ -373,6 +373,7 @@ so they must be escaped with backticks in that context.
 
 - Keywords reserved in particular contexts:
   `associativity`,
+  `async`,
   `convenience`,
   `didSet`,
   `dynamic`,
@@ -1250,12 +1251,6 @@ see <doc:AdvancedOperators#Operator-Methods>.
 > *infix-operator* → *operator* \
 > *prefix-operator* → *operator* \
 > *postfix-operator* → *operator*
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

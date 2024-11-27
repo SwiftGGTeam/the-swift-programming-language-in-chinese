@@ -210,7 +210,7 @@ https://github.com/apple/swift-markdown/issues/93
   which looks like it's related to a future feature around memory ownership.
 -->
 
-- 在特定上下文中保留的关键字：`associativity`、`convenience`、`didSet`、`dynamic`、`final`、`get`、`indirect`、`infix`、`lazy`、`left`、`mutating`、`none`、`nonmutating`、`optional`、`override`、`package`、`postfix`、`precedence`、`prefix`、`Protocol`、`required`、`right`、`set`、`some`、`Type`、`unowned`、`weak` 和 `willSet`。除了在语法中的特定上下文出现之外，它们可以被当作标识符使用。
+- 在特定上下文中保留的关键字：`associativity`、`async`,`convenience`、`didSet`、`dynamic`、`final`、`get`、`indirect`、`infix`、`lazy`、`left`、`mutating`、`none`、`nonmutating`、`optional`、`override`、`package`、`postfix`、`precedence`、`prefix`、`Protocol`、`required`、`right`、`set`、`some`、`Type`、`unowned`、`weak` 和 `willSet`。除了在语法中的特定上下文出现之外，它们可以被当作标识符使用。
 
 <!--
   NOTE: The list of context-sensitive keywords above
