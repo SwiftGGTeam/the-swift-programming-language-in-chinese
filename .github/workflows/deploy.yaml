@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - main
-      - try-pages
+      - release
 jobs:
   deploy:
     runs-on: "macos-15"
