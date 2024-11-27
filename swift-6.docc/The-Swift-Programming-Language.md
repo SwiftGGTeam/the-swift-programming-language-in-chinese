@@ -10,6 +10,10 @@
   @AutomaticArticleSubheading(disabled)
 }
 
+> 非常感谢以下贡献者：
+
+<doc:Contributors>
+
 ## Topics
 
 ### 欢迎来到 Swift

@@ -13,6 +13,7 @@
     "axios": "^1.7.3"
   },
   "devDependencies": {
+    "simple-git": "^3.27.0",
     "wrangler": "^3.91.0"
   }
 }
