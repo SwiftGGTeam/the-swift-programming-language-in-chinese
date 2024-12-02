@@ -937,7 +937,7 @@ of any type that satisfies the *constraint*.
 This behavior contrasts with how an opaque types work,
 where there is some specific conforming type known at compile time.
 The additional level of indirection that's used
-when working with a boxed protocol type is called :newTerm:`boxing`.
+when working with a boxed protocol type is called *boxing*.
 Boxing typically requires a separate memory allocation for storage
 and an additional level of indirection for access,
 which incurs a performance cost at runtime.
@@ -1358,12 +1358,6 @@ the expression or one of its subexpressions.
   TODO: Email Doug for a list of rules or situations describing when type-inference
   is allowed and when types must be fully typed.
 -->
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
