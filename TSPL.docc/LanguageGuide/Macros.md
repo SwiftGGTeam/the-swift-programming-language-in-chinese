@@ -240,7 +240,7 @@ to add conformance to the `OptionSet` protocol.
 For a freestanding macro,
 you write the `@freestanding` attribute to specify its role:
 
-```
+```swift
 @freestanding(expression)
 public macro line<T: ExpressibleByIntegerLiteral>() -> T =
         /* ... location of the macro implementation... */
@@ -317,7 +317,7 @@ Specifically, Swift expands macros in the following way:
 
 To go through the specific steps, consider the following:
 
-```
+```swift
 let magicNumber = #fourCharacterCode("ABCD")
 ```
 
@@ -413,7 +413,7 @@ That produces a final AST that can be compiled as usual:
 
 This AST corresponds to Swift code like this:
 
-```
+```swift
 let magicNumber = 1145258561 as UInt32
 ```
 
