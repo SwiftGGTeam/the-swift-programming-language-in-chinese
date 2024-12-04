@@ -162,7 +162,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
   -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
   /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
   </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
-  ---
+
   -> var sixDoubles = threeDoubles + anotherThreeDoubles
   /> sixDoubles is inferred as [Double], and equals \(sixDoubles)
   </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
@@ -934,7 +934,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
   -> let oddDigits: Set = [1, 3, 5, 7, 9]
   -> let evenDigits: Set = [0, 2, 4, 6, 8]
   -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-  ---
+
   >> let a =
   -> oddDigits.union(evenDigits).sorted()
   >> assert(a == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -998,7 +998,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
   -> let houseAnimals: Set = ["🐶", "🐱"]
   -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
   -> let cityAnimals: Set = ["🐦", "🐭"]
-  ---
+
   >> let aa =
   -> houseAnimals.isSubset(of: farmAnimals)
   >> assert(aa == true)
@@ -1430,7 +1430,7 @@ for airportName in airports.values {
      }
   </ Airport code: LHR
   </ Airport code: YYZ
-  ---
+
   -> for airportName in airports.values {
         print("Airport name: \(airportName)")
      }
@@ -1458,7 +1458,7 @@ let airportNames = [String](airports.values)
   -> let airportCodes = [String](airports.keys)
   /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
   </ airportCodes is ["LHR", "YYZ"]
-  ---
+
   -> let airportNames = [String](airports.values)
   /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
   </ airportNames is ["London Heathrow", "Toronto Pearson"]

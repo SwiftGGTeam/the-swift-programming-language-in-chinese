@@ -523,7 +523,7 @@ print(anotherGreeting(for: "Dave"))
      }
   -> print(greeting(for: "Dave"))
   <- Hello, Dave!
-  ---
+
   -> func anotherGreeting(for person: String) -> String {
         return "Hello, " + person + "!"
      }
@@ -560,7 +560,7 @@ property getters can also use an implicit return.
   >> func testFatal() -> Int {
   >>     fatalError("Oh no!")
   >> }
-  ---
+
   // But not this:
   >> func testPrint() -> Int {
   >>     print(13)
@@ -803,10 +803,10 @@ that come after the variadic parameter.
   ```swifttest
   // Labeled, immediately after
   >> func f(_ a: Int..., b: String) {}
-  ---
+
   // Unlabeled, not immediately after
   >> func g(_ a: Int..., b: String, _ c: Int) {}
-  ---
+
   // Multiple
   >> func h(_a: Int..., b: String, _ c: Int..., d: String) {}
   ```

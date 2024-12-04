@@ -275,7 +275,7 @@ including important milestones.
     -> protocol MyRenamedProtocol {
            // protocol definition
        }
-    ---
+
     -> @available(*, unavailable, renamed: "MyRenamedProtocol")
        typealias MyProtocol = MyRenamedProtocol
     ```
@@ -488,16 +488,16 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
              }
          }
      }
-  ---
+
   -> let dial = TelephoneExchange()
-  ---
+
   -> // Use a dynamic method call.
   -> dial(4, 1, 1)
   <- Get Swift help on forums.swift.org
-  ---
+
   -> dial(8, 6, 7, 5, 3, 0, 9)
   <- Unrecognized number
-  ---
+
   -> // Call the underlying method directly.
   -> dial.dynamicallyCall(withArguments: [4, 1, 1])
   << Get Swift help on forums.swift.org
@@ -548,7 +548,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
                  .joined(separator: "\n")
          }
      }
-  ---
+
   -> let repeatLabels = Repeater()
   -> print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   </ a
@@ -676,12 +676,12 @@ print(dynamic == equivalent)
          }
      }
   -> let s = DynamicStruct()
-  ---
+
   // Use dynamic member lookup.
   -> let dynamic = s.someDynamicMember
   -> print(dynamic)
   <- 325
-  ---
+
   // Call the underlying subscript directly.
   -> let equivalent = s[dynamicMember: "someDynamicMember"]
   -> print(dynamic == equivalent)
@@ -715,7 +715,7 @@ print(wrapper.x)
 
   ```swifttest
   -> struct Point { var x, y: Int }
-  ---
+
   -> @dynamicMemberLookup
      struct PassthroughWrapper<Value> {
          var value: Value
@@ -723,7 +723,7 @@ print(wrapper.x)
              get { return value[keyPath: member] }
          }
      }
-  ---
+
   -> let point = Point(x: 381, y: 431)
   -> let wrapper = PassthroughWrapper(value: point)
   -> print(wrapper.x)
@@ -1496,14 +1496,14 @@ struct SomeStruct {
              self.someValue = custom
          }
      }
-  ---
+
   -> struct SomeStruct {
   ->     // Uses init()
   ->     @SomeWrapper var a: Int
-  ---
+
   ->     // Uses init(wrappedValue:)
   ->     @SomeWrapper var b = 10
-  ---
+
   ->     // Both use init(wrappedValue:custom:)
   ->     @SomeWrapper(custom: 98.7) var c = 30
   ->     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
@@ -1577,7 +1577,7 @@ s.$x.wrapper  // WrapperWithProjection value
   -> struct SomeProjection {
          var wrapper: WrapperWithProjection
   }
-  ---
+
   -> struct SomeStruct {
   ->     @WrapperWithProjection var x = 123
   -> }
@@ -1966,7 +1966,7 @@ into code that calls the static methods of the result builder type:
        }
     << Building second... [32]
     << Building first... [32]
-    ---
+
     -> var manualConditional: [Int]
     -> if someNumber < 12 {
            let partialResult = ArrayBuilder.buildExpression(31)
@@ -2014,7 +2014,7 @@ into code that calls the static methods of the result builder type:
            if (someNumber % 2) == 1 { 20 }
        }
     << Building optional... Optional([20])
-    ---
+
     -> var partialResult: [Int]? = nil
     -> if (someNumber % 2) == 1 {
            partialResult = ArrayBuilder.buildExpression(20)
@@ -2091,7 +2091,7 @@ into code that calls the static methods of the result builder type:
           Line(elements: [Text("Second"), Text("Third")])
           Text("Last")
        }
-    ---
+
     -> let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
     -> let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
           accumulated: partialResult1,
@@ -2135,7 +2135,7 @@ into code that calls the static methods of the result builder type:
            200
            300
        }
-    ---
+
     -> var manualBlock = ArrayBuilder.buildBlock(
            ArrayBuilder.buildExpression(100),
            ArrayBuilder.buildExpression(200),
@@ -2176,7 +2176,7 @@ into code that calls the static methods of the result builder type:
                100 + i
            }
        }
-    ---
+
     -> var temporary: [[Int]] = []
     -> for i in 5...7 {
            let partialResult = ArrayBuilder.buildExpression(100 + i)
@@ -2212,7 +2212,7 @@ into code that calls the static methods of the result builder type:
          var content: Drawable
          func draw() -> String { return content.draw() }
      }
-  ---
+
   -> @resultBuilder
      struct DrawingBuilder {
          static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
@@ -2284,7 +2284,7 @@ into code that calls the static methods of the result builder type:
              return AnyDrawable(content: content)
          }
      }
-  ---
+
   -> @DrawingBuilder var typeErasedDrawing: Drawable {
          if #available(macOS 99, *) {
              FutureText("Inside.future")

@@ -142,7 +142,7 @@ func cannotThrowErrors() -> String
   ```swifttest
   -> func canThrowErrors() throws -> String
   >> { return "foo" }
-  ---
+
   -> func cannotThrowErrors() -> String
   >> { return "foo" }
   ```
@@ -246,7 +246,7 @@ class VendingMachine {
         var price: Int
         var count: Int
      }
-  ---
+
   -> class VendingMachine {
   ->     var inventory = [
              "Candy Bar": Item(price: 12, count: 7),
@@ -254,7 +254,7 @@ class VendingMachine {
              "Pretzels": Item(price: 7, count: 11)
          ]
   ->     var coinsDeposited = 0
-  ---
+
   ->     func vend(itemNamed name: String) throws {
              guard let item = inventory[name] else {
                  throw VendingMachineError.invalidSelection
@@ -521,7 +521,7 @@ do {
              print("Couldn't buy that from the vending machine.")
          }
      }
-  ---
+
   -> do {
          try nourish(with: "Beet-Flavored Chips")
      } catch {
@@ -615,11 +615,11 @@ do {
         // ...
   >>    return 40
   -> }
-  ---
+
   -> let x = try? someThrowingFunction()
   >> print(x as Any)
   << Optional(40)
-  ---
+
   -> let y: Int?
      do {
          y = try someThrowingFunction()

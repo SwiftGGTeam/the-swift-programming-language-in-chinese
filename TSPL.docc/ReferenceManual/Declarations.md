@@ -481,7 +481,7 @@ newAndOld.x = 200
              set { print("Setter was called"); xValue = newValue }
          }
      }
-  ---
+
   // This subclass doesn't refer to oldValue in its observer, so the
   // superclass's getter is called only once to print the value.
   -> class New: Superclass {
@@ -494,7 +494,7 @@ newAndOld.x = 200
   <- Setter was called
   <- Getter was called
   <- New value 100
-  ---
+
   // This subclass refers to oldValue in its observer, so the superclass's
   // getter is called once before the setter, and again to print the value.
   -> class NewAndOld: Superclass {
@@ -607,7 +607,7 @@ var dictionary2: Dictionary<String, Int> = [:]
 
   ```swifttest
   -> typealias StringDictionary<Value> = Dictionary<String, Value>
-  ---
+
   // The following dictionaries have the same type.
   -> var dictionary1: StringDictionary<Int> = [:]
   -> var dictionary2: Dictionary<String, Int> = [:]
@@ -688,7 +688,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
          associatedtype Iterator: IteratorProtocol
          typealias Element = Iterator.Element
      }
-  ---
+
   -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
          // ...
   >>     return 9000
@@ -1800,7 +1800,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
      }
   -> let f = Number.integer
   -> // f is a function of type (Int) -> Number
-  ---
+
   -> // Apply f to create an array of Number instances with integer values
   -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
   ```
@@ -1891,10 +1891,10 @@ it can't contain any cases that are also marked with the `indirect` modifier.
   !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
   !! enum E { indirect case c }
   !!          ^
-  ---
+
   -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
-  ---
+
   -> indirect enum E3 { case x }
 -->
 
@@ -2667,7 +2667,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   -> protocol SomeProtocol {
          associatedtype SomeType
      }
-  ---
+
   -> protocol SubProtocolA: SomeProtocol {
          // This syntax produces a warning.
          associatedtype SomeType: Equatable
@@ -2679,7 +2679,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   !$ note: 'SomeType' declared here
   !! associatedtype SomeType
   !! ^
-  ---
+
   // This syntax is preferred.
   -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   ```
@@ -3109,7 +3109,7 @@ extension String: TitledLoggable {
              print(self)
          }
      }
-  ---
+
      protocol TitledLoggable: Loggable {
          static var logTitle: String { get }
      }
@@ -3118,7 +3118,7 @@ extension String: TitledLoggable {
              print("\(Self.logTitle): \(self)")
          }
      }
-  ---
+
      struct Pair<T>: CustomStringConvertible {
          let first: T
          let second: T
@@ -3126,14 +3126,14 @@ extension String: TitledLoggable {
              return "(\(first), \(second))"
          }
      }
-  ---
+
      extension Pair: Loggable where T: Loggable { }
      extension Pair: TitledLoggable where T: TitledLoggable {
          static var logTitle: String {
              return "Pair of '\(T.logTitle)'"
          }
      }
-  ---
+
      extension String: TitledLoggable {
         static var logTitle: String {
            return "String"
@@ -3247,7 +3247,7 @@ extension Array: Serializable where Element == String {
   -> protocol Serializable {
         func serialize() -> Any
      }
-  ---
+
      extension Array: Serializable where Element == Int {
          func serialize() -> Any {
              // implementation
@@ -3294,7 +3294,7 @@ extension Array: Serializable where Element: SerializableInArray {
   -> protocol SerializableInArray { }
      extension Int: SerializableInArray { }
      extension String: SerializableInArray { }
-  ---
+
   -> extension Array: Serializable where Element: SerializableInArray {
          func serialize() -> Any {
              // implementation
@@ -3349,14 +3349,14 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
   -> protocol MarkedLoggable: Loggable {
         func markAndLog()
      }
-  ---
+
      extension MarkedLoggable {
         func markAndLog() {
            print("----------")
            log()
         }
      }
-  ---
+
      extension Array: Loggable where Element: Loggable { }
      extension Array: TitledLoggable where Element: TitledLoggable {
         static var logTitle: String {

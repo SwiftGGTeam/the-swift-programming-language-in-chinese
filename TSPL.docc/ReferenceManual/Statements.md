@@ -1118,7 +1118,7 @@ otherwise, it returns `false`.
   >> #else
   >> #error("Can't import A")
   >> #endif
-  ---
+
   >> #if canImport(canImport_A.B)
   >> #else
   >> #error("Can't import A.B")
