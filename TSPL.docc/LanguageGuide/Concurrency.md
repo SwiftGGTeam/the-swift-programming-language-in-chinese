@@ -917,10 +917,10 @@ You have complete flexibility to manage unstructured tasks
 in whatever way your program needs,
 but you're also completely responsible for their correctness.
 To create an unstructured task that runs on the current actor,
-call the [`Task.init(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856790-init) initializer.
+call the [`Task.init(priority:operation:)`][] initializer.
 To create an unstructured task that's not part of the current actor,
 known more specifically as a *detached task*,
-call the [`Task.detached(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856786-detached) class method.
+call the [`Task.detached(priority:operation:)`][] class method.
 Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
 
@@ -934,6 +934,9 @@ let result = await handle.value
 
 For more information about managing detached tasks,
 see [`Task`](https://developer.apple.com/documentation/swift/task).
+
+[`Task.init(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(priority:operation:)-7f0zv
+[`Task.detached(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(priority:operation:)-d24l
 
 <!--
   TODO Add some conceptual guidance about

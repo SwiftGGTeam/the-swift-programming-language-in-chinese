@@ -1316,8 +1316,8 @@ the `#warning` and `#error` statements emit a diagnostic during compilation.
 This behavior is now provided by
 the [`warning(_:)`][] and [`error(_:)`][] macros in the Swift standard library.
 
-[`warning(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/warning(_:)
-[`error(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/error(_:)
+[`warning(_:)`]: https://developer.apple.com/documentation/swift/warning(_:)
+[`error(_:)`]: https://developer.apple.com/documentation/swift/error(_:)
 
 ## Availability Condition
 
