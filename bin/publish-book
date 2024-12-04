@@ -52,3 +52,6 @@ cp -r bin/redirects/LanguageGuide "$output"
 cp -r bin/redirects/ReferenceManual "$output"
 cp -r bin/redirects/RevisionHistory "$output"
 cp -r bin/redirects/index.html "$output"
+
+# Add a redirect page from swift.org/swift-book/documentation/.
+cp -r bin/redirects/documentation/index.html "$output/documentation/"
