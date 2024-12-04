@@ -2450,7 +2450,7 @@ class UntitledDocument: Document {
 In this case, if the `init(name:)` initializer of the superclass
 were ever called with an empty string as the name,
 the forced unwrapping operation would result in a runtime error.
-However, because it's called with a string constant,
+However, because it's called with a string literal,
 you can see that the initializer won't fail,
 so no runtime error can occur in this case.
 
