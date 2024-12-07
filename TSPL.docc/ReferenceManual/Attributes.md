@@ -46,7 +46,7 @@ If there's a stable URL we can use, make the macro protocols below links.
 -->
 
 The first argument to this attribute
-indicates the macros role:
+indicates the macro's role:
 
 - term Peer macros:
   Write `peer` as the first argument to this attribute.
@@ -1593,7 +1593,7 @@ s.$x.wrapper  // WrapperWithProjection value
 
 ### resultBuilder
 
-Apply this attribute to a class, structure, enumeration
+Apply this attribute to a class, structure, or enumeration
 to use that type as a result builder.
 A *result builder* is a type
 that builds a nested data structure step by step.
@@ -2624,12 +2624,6 @@ see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 > *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
 > *balanced-token* → Any identifier, keyword, literal, or operator \
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

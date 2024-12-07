@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.3"
+  },
+  "devDependencies": {
+    "wrangler": "^3.91.0"
   }
 }

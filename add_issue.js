@@ -124,9 +124,9 @@ async function main() {
     console.log(`Found ${existingIssues.size} existing issues.`);
 
     const directories = [
-        "swift-6-beta.docc/GuidedTour",
-        "swift-6-beta.docc/LanguageGuide",
-        "swift-6-beta.docc/ReferenceManual"
+        "swift-6.docc/GuidedTour",
+        "swift-6.docc/LanguageGuide",
+        "swift-6.docc/ReferenceManual"
     ];
 
     for (const dir of directories) {

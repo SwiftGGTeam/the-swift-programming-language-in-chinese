@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+      - main
+      - release/*
+jobs:
+  deploy:
+    runs-on: "macos-15"
+    permissions:
+      contents: read
+      deployments: write
+    name: Deploy to Cloudflare Pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install npm packages
+        run: npm install
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "16.0"
+      - name: Get swift version
+        run: swift --version
+      - name: Build
+        run: xcrun docc convert swift-6.docc --output-path ./docs --transform-for-static-hosting --experimental-enable-custom-templates
+      - name: Copy Redirects
+        run: cp swift-6.docc/_redirects ./docs/_redirects
+      - name: Publish
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: swift-programming-lang
+          directory: ./docs
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

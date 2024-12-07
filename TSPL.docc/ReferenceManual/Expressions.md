@@ -1,4 +1,4 @@
-# Expressions
+Expressions.md# Expressions
 
 Access, modify, and assign values.
 
@@ -20,7 +20,7 @@ in the sections below.
 
 > Grammar of an expression:
 >
-> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_ \
+> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_
 
 ## Prefix Expressions
 
@@ -1520,14 +1520,39 @@ Macro-expansion expressions have the following form:
 A macro-expansion expression omits the parentheses after the macro's name
 if the macro doesn't take any arguments.
 
-A macro-expansion expression can't appear as the default value for a parameter,
-except the [`file()`][] and [`line()`][] macros from the Swift standard library.
+A macro-expansion expression can appear as the default value for a parameter.
 When used as the default value of a function or method parameter,
-these macros are evaluated using the source code location of the call site,
+macros are evaluated using the source code location of the call site,
 not the location where they appear in a function definition.
+However, when a default value is a larger expression
+that contains a macro in addition to other code,
+those macros are evaluated where they appear in the function definition.
 
-[`file()`]: https://developer.apple.com/documentation/swift/file()
-[`line()`]: https://developer.apple.com/documentation/swift/line()
+```
+func f(a: Int = #line, b: Int = (#line), c: Int = 100 + #line) {
+    print(a, b, c)
+}
+f()  // Prints "4 1 101"
+```
+
+In the function above,
+the default value for `a` is a single macro expression,
+so that macro is evaluated using the source code location
+where `f(a:b:c:)` is called.
+In contrast, the values for `b` and `c`
+are expressions that contain a macro ---
+the macros in those expressions are evaluated
+using the source code location where `f(a:b:c:)` is defined.
+
+When you use a macro as a default value,
+it's type checked without expanding the macro,
+to check the following requirements:
+
+- The macro's access level
+  is the same as or less restrictive than the function that uses it.
+- The macro either takes no arguments,
+  or its arguments are literals without string interpolation.
+- The macro's return type matches the parameter's type.
 
 You use macro expressions to call freestanding macros.
 To call an attached macro,
@@ -3250,12 +3275,6 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
 > Grammar of an optional-chaining expression:
 >
 > *optional-chaining-expression* → *postfix-expression* **`?`**
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

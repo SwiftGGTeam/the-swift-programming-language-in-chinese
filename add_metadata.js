@@ -5,10 +5,10 @@ const path = require('path');
 const jsonData = require('./swift_docs_structure.json');
 
 // 根目录路径
-const rootDir = './swift-6-beta.docc';
+const rootDir = './swift-6.docc';
 
 // GitHub 仓库的基础 URL
-const githubBaseUrl = 'https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc';
+const githubBaseUrl = 'https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6.docc';
 
 // 递归遍历目录
 function traverseDirectory(dir) {
