@@ -1107,8 +1107,8 @@ the code below converts measured temperatures from Fahrenheit to Celsius:
 ```swift
 extension TemperatureLogger {
     func convertFahrenheitToCelsius() {
-        measurements = measurements.map { measurement in
-            (measurement - 32) * 5 / 9
+        for i in measurements.indices {
+            measurements[i] =  (measurements[i] - 32) * 5 / 9
         }
     }
 }
