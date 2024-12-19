@@ -1910,7 +1910,6 @@ let userID = await server.connect()
   ```
 -->
 
-
 ## Protocols and Extensions
 
 Use `protocol` to declare a protocol.

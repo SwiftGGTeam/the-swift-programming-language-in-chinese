@@ -126,7 +126,6 @@ When the @OptionSet macro comes back, change both links back:
 [`OptionSet`]: https://developer.apple.com/documentation/swift/optionset-swift.protocol
 -->
 
-
 For comparison,
 here's what the expanded version of the `@OptionSet` macro looks like.
 You don't write this code,
@@ -635,7 +634,6 @@ The return-a-string APIs come from here
 
 https://github.com/swiftlang/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
 -->
-
 
 <!-- OUTLINE:
 

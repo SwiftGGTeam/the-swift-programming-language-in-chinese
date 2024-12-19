@@ -244,7 +244,6 @@ including important milestones.
   }
   ```
 
-
   <!--
     - test: `renamed1`
 
@@ -265,7 +264,6 @@ including important milestones.
   @available(*, unavailable, renamed: "MyRenamedProtocol")
   typealias MyProtocol = MyRenamedProtocol
   ```
-
 
   <!--
     - test: `renamed2`
@@ -1781,7 +1779,6 @@ into code that calls the static methods of the result builder type:
   var manualNumber = ArrayBuilder.buildExpression(10)
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -1949,7 +1946,6 @@ into code that calls the static methods of the result builder type:
   }
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2004,7 +2000,6 @@ into code that calls the static methods of the result builder type:
   }
   var manualOptional = ArrayBuilder.buildOptional(partialResult)
   ```
-
 
   <!--
     - test: `array-result-builder`
@@ -2125,7 +2120,6 @@ into code that calls the static methods of the result builder type:
   )
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2165,7 +2159,6 @@ into code that calls the static methods of the result builder type:
   }
   let manualArray = ArrayBuilder.buildArray(temporary)
   ```
-
 
   <!--
     - test: `array-result-builder`

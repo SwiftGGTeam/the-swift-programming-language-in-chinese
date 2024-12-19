@@ -1187,7 +1187,6 @@ you'll get compile-time error instead of introducing a bug.
    then it behaves like code outside of the actor
    because it could execute concurrently with other code that's part of the actor
 
-
    exercise the log actor, using its client API to mutate state
 
    ::
@@ -1379,7 +1378,6 @@ preventing the type from being sendable.
   The Main Actor
   ~~~~~~~~~~~~~~
 
-
   - the main actor is kinda-sorta like the main thread
 
   - use it when you have shared mutable state,
@@ -1415,7 +1413,6 @@ preventing the type from being sendable.
   - In the future, when we get distributed actors,
     the TemperatureSensor example
     might be a good example to expand when explaining them.
-
 
   ::
 

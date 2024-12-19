@@ -874,7 +874,6 @@ Any changes made within the function are not visible in the caller.
 To make an in-out parameter instead,
 you apply the `inout` parameter modifier.
 
-
 ```swift
 func someFunction(a: inout Int) {
     a += 1
