@@ -528,7 +528,7 @@ print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
   ```
 -->
 
-如果你创建第二个玩家，并尝试将其移动到尚未被任何玩家解锁的关卡，那么尝试设置玩家的当前等级时会失败：
+如果你创建第二个玩家，并尝试将其移动到尚未被任何玩家解锁的关卡，那么尝试设置玩家的当前关卡时会失败：
 
 ```swift
 player = Player(name: "Beto")
