@@ -156,7 +156,7 @@ increment(&stepSize)
   ```
 -->
 
-在上面的代码里，`stepSize` 是一个全局变量，并且它可以通常可以在 `increment(_:)` 里被访问。然而，对于 `stepSize` 的读访问与 `number` 的写访问重叠了。就像下面展示的那样，`number` 和 `stepSize` 都指向了同一个内存区域。针对同一块内存区域的读和写访问重叠了，因此产生了冲突。
+在上面的代码里，`stepSize` 是一个全局变量，并且它通常可以在 `increment(_:)` 里被访问。然而，对于 `stepSize` 的读访问与 `number` 的写访问重叠了。就像下面展示的那样，`number` 和 `stepSize` 都指向了同一个内存区域。针对同一块内存区域的读和写访问重叠了，因此产生了冲突。
 
 ![](memory_increment)
 
