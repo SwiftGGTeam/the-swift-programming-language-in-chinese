@@ -661,7 +661,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
   ```
 -->
 
-构造器 init(center:size:)` 可以直接将 `origin` 和 `size` 的新值赋值到对应的属性中。然而，构造器 `init(center:size:)` 通过使用提供了相关功能的现有构造器将会更加便捷（而且意图更清晰）。
+构造器 `init(center:size:)` 可以直接将 `origin` 和 `size` 的新值赋值到对应的属性中。然而，构造器 `init(center:size:)` 通过使用提供了相关功能的现有构造器将会更加便捷（而且意图更清晰）。
 
 > 注意: 如果你想使用另一种不需要自己定义的 `init()` and `init(origin:size:)` 构造器的方式来实现这个例子, 请参考 <doc:Extensions>.
 
