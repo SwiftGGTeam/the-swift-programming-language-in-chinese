@@ -462,7 +462,7 @@ var item = ShoppingListItem()
 
 ![](initializersExample03)
 
-### 结构体类型的成员逐一构造器
+### 结构体类型的逐一成员构造器
 
 如果结构体类型没有定义任何自定义构造器，它们会自动获得*逐一成员构造器*。与默认构造器不同，即使存储属性没有默认值，结构体也会获得逐一成员构造器。
 
@@ -478,7 +478,7 @@ var item = ShoppingListItem()
   ```
 -->
 
-成员逐一构造器是一种用于初始化新结构体实例里成员属性的快捷方法。新实例的属性的初始值可以通过名称传递给逐一成员构造器。
+逐一成员构造器是一种用于初始化新结构体实例里成员属性的快捷方法。新实例的属性的初始值可以通过名称传递给逐一成员构造器。
 
 下面的示例定义了一个名为 `Size` 的结构体，该结构体有两个属性，分别是 `width` 和 `height`。通过赋予默认值 `0.0`，这两个属性都被推断为 `Double` 类型。
 
@@ -502,15 +502,6 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
   ```
 -->
 
-When you call a memberwise initializer,
-you can omit values for any properties
-that have default values.
-In the example above,
-the `Size` structure has a default value
-for both its `height` and `width` properties.
-You can omit either property or both properties,
-and the initializer uses the default value for anything you omit.
-For example:
 当你调用逐一成员构造器时，你可以省略任何具有默认值的属性。在上面的示例中，`Size` 结构体的 `height` 和 `width` 属性都有默认值。你可以省略其中一个或两个属性，构造器会使用默认值。例如：
 
 ```swift
