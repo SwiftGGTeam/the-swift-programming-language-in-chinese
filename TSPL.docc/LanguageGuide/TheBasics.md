@@ -571,8 +571,8 @@ Swift provides two signed floating-point number types:
 ## Type Safety and Type Inference
 
 Every value in a Swift program has a type.
-Every place you store a value —
-including constants, variables, and properties —
+Every place you store a value ---
+including constants, variables, and properties ---
 also has a type,
 which you might write explicitly using a type annotation
 or which might inferred from an initial value.
