@@ -31,7 +31,8 @@ and non-optional values are guaranteed to never be missing.
 
 Swift is a safe language,
 which means it helps you find and fix several categories of bugs
-as early as possible during the development process.
+as early as possible during the development process,
+and lets you guarantee that certain kinds of bugs can't happen.
 Type safety helps you to be clear about
 the types of values your code works with.
 If part of your code requires a `String`,
@@ -40,6 +41,8 @@ Data safety helps you work with only valid data,
 not uninitialized memory or deinitialized objects,
 and ensures that you work with that data in safe ways ---
 even in programs that run multiple pieces of code at the same time.
+Swift performs most of its safety checks while building your code,
+and in some cases performs additional checks while your code is running.
 
 ## Constants and Variables
 
@@ -1806,7 +1809,7 @@ and includes the following requirements:
 - Arrays and buffers are accessed only at valid indexes,
   never out of bounds.
 - Memory is accessed only during the value’s lifetime,
-  preventing use-after-free errors and wild pointers.
+  preventing use-after-free errors.
 - Access to memory overlaps only in provably safe ways;
   concurrent code doesn't create possible data races.
 
@@ -1819,15 +1822,6 @@ For information about how Swift ensures you set initial values,
 see <doc:Initialization>,
 and for information about how Swift checks data safety in concurrent code,
 see <doc:Concurrency>.
-
-<!-- XXX need better framing for what safety means -->
-The general principle of safety is that you know ahead of time
-your code either runs correctly or stops running.
-Safe code can still have other kinds of bugs,
-but it won't have the issues listed above.
-Swift uses two kinds of checks for safety:
-*static* checks when compiling the code
-and *dynamic* checks while the code is running.
 
 Sometimes you need to work outside of the bounds of safety ---
 for example, because of limitations of the language or standard library ---
