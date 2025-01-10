@@ -1829,6 +1829,15 @@ so Swift also provides unsafe versions of some APIs.
 When you use types or methods whose name includes the word "unsafe",
 you take on the responsibility for safety.
 
+Safe code in Swift can still encounter errors and unexpected failures,
+which might stop the program's execution.
+Safety makes no guarantee about whether your code runs to completion.
+Swift provides several ways to indicate and recover from errors,
+discussed in <doc:TheBasics#Error-Handling>
+and <doc:TheBasics#Assertions-and-Preconditions> below.
+However, in some cases,
+the *only* safe way to handle an error is to stop execution.
+
 ## Error Handling
 
 You use *error handling* to respond to error conditions
