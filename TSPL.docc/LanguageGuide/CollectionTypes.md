@@ -105,16 +105,6 @@ print("someInts is of type [Int] with \(someInts.count) items.")
 // Prints "someInts is of type [Int] with 0 items."
 ```
 
-<!--
-  - test: `arraysEmpty`
-
-  ```swifttest
-  -> var someInts = [Int]()
-  -> print("someInts is of type [Int] with \(someInts.count) items.")
-  <- someInts is of type [Int] with 0 items.
-  ```
--->
-
 Both approaches produce the same result.
 However, the empty array literal (`[]`) is the preferred way to
 initialize an empty array because it is more concise and aligns with
