@@ -94,9 +94,9 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   ```
 -->
 
-Alternatively, you can create an empty array of a certain type 
-using *initializer syntax*, 
-which is done by writing the type in square brackets 
+Alternatively, you can create an empty array of a certain type
+using *initializer syntax*,
+which is done by writing the type in square brackets
 followed by parentheses (`[Element]()`):
 
 ```swift
@@ -115,12 +115,12 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   ```
 -->
 
-Both approaches produce the same result. 
-However, the empty array literal (`[]`) is the preferred way to 
-initialize an empty array because it is more concise and aligns with 
+Both approaches produce the same result.
+However, the empty array literal (`[]`) is the preferred way to
+initialize an empty array because it is more concise and aligns with
 the style guidelines used throughout this guide.
 
-In both cases, you can use the empty array literal (`[]`) to 
+In both cases, you can use the empty array literal (`[]`) to
 reassign an empty array to an existing variable:
 
 ```swift
