@@ -1992,6 +1992,8 @@ XXX
 noncopyable values must be passed as in-out, borrowing, or consuming
 xref reference > Declarations > Borrowing and Consuming Parameters
 
+XXX xref Protocols > Implicit Conformance
+
 <!--
   TODO: Generic Enumerations
   --------------------------

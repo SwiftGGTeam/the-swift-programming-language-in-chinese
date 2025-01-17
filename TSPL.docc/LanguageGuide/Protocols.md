@@ -754,21 +754,48 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 ## Protocols That Don't Have Requirements
 
-<!-- XXX NOTES
-Some protocols don’t require methods or properties;
-they require some other characteristic to be true on conforming types.
-
-- `Copyable`
-- `Sendable`
-- `BitwiseCopyable`
-
-You conform to these as usual --
-just there’s nothing in the body,
-because there aren’t any requirements to satisfy.
-
-```
-extension struct MyStruct: Codable { }
+All of the example protocols above have some requirements,
+but a protocol doesn't have to include any requirements.
+You can use a protocol to mark types that satisfy *semantic* requirements,
+not just requirements that you express in code.
+<!--
+Avoiding the term "marker protocol",
+which more specifically refers to @_marker on a protocol.
 -->
+The Swift standard library defines several protocols
+that don't have any required methods or properties:
+
+- `Copyable` for values that can be copied.
+- `Sendable` for values that can be shared across concurrency contexts.
+- `BitwiseCopyable` for values that con be copied, bit-by-bit.
+
+<!-- XXX make the above links -->
+For more information about the semantic requirements,
+see the protocols' documentation.
+
+You use the same syntax as usual to adopt these protocols.
+The only difference is that
+there's no code to implement the protocol's requirements.
+
+```swift
+struct MyStruct: Copyable {
+    var counter = 12
+}
+
+extension MyStruct: BitwiseCopyable { }
+```
+
+The code above defines a new structure
+Because `Copyable` has only semantic requirements,
+there isn't any code in the structure declaration to adopt the protocol.
+Likewise, because `BitwiseCopyable` has only semantic requirements,
+the extension that adopts that protocol has an empty body.
+
+You usually don't need to write conformance to these protocols ---
+instead, Swift implicitly adds the conformance for you,
+as described in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
+
+<!-- XXX TR: Mention why you might define your own empty protocols? -->
 
 ## Protocols as Types
 
@@ -1388,44 +1415,54 @@ for level in levels.sorted() {
 
 ## Implicit Conformance to a Protocol
 
-<!-- XXX NOTES
-Some protocols get conformance implicitly if they satisfy the requirements.
-For details on exactly when this is implied,
-see the reference for each type:
+Some protocols are so common that you would write them on almost every type.
+For the following protocols,
+Swift automatically infers the conformance
+when you define a type that implements the protocol's requirements:
 
 - `Codable`
 - `Copyable`
 - `Sendable`
 - `BitwiseCopyale`
 
-Normally,
-the struct in example below would be implicitly codable,
-but this syntax lets you suppress that conformance:
+<!-- XXX make the above links -->
 
-```
-struct MyStruct: ~Codable { var someNumber: Int }
-```
+You can still write the conformance explicitly,
+but it doesn't have any effect.
+To suppress an implicit conformance,
+write a tilde (`~`) before the protocol name in the conformance list:
 
-Writing `~Sendable` suppresses implicit sendability.
-In contrast,
-the following suppresses implicit conformance,
-and also prevents you from conforming elsewhere:
-
-```
-@available(*, unavailable) extension X: Sendable {}
+```swift
+struct FileDescriptor: ~Copyable {
+    let rawValue: Int
+}
 ```
 
-This replaces the existing `@available(*, unavailable)` example from the Concurrency chapter for most use cases.
-
-See also the comparison on this forum thread <https://forums.swift.org/t/70525/96>
-
-XREF new section in Generics about `~Foo` syntax in a requirement.
-
-Enums with no associated types are implicitly equatable and hashable.
-(TR: And also sendable?)
-This is an exception to the rule that public API
-must be declared explicitly.
+<!--
+The example above is based on a Swift System API.
+https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
 -->
+
+The declaration of the `FileDescriptor` type above
+satisfies all of the requirements of the `Copyable` protocol,
+which would normally mean it's implicitly considered to be copyable.
+However,
+writing a conformance to `~Copyable` suppresses this implicit conformance.
+
+XXX conditional re-conformance after suppression
+
+Another way to suppress implicit conformance
+is with an extension that you mark as unavailable:
+
+```swift
+@available(*, unavailable)
+extension FileDescriptor Copyable { }
+```
+
+This code not only suppresses the implicit conformance to `Copyable`,
+but also prevents any extensions elsewhere in your code
+from adding `Copyable` conformance to the type.
+<!-- XXX Remove the example from the Concurrency chapter -->
 
 ## Collections of Protocol Types
 
