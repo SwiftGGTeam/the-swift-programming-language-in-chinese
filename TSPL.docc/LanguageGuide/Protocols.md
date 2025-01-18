@@ -1433,7 +1433,7 @@ To suppress an implicit conformance,
 write a tilde (`~`) before the protocol name in the conformance list:
 
 ```swift
-struct FileDescriptor: ~Copyable {
+struct FileDescriptor: ~Sendable {
     let rawValue: Int
 }
 ```
@@ -1441,13 +1441,46 @@ struct FileDescriptor: ~Copyable {
 <!--
 The example above is based on a Swift System API.
 https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+
+See also this PR that adds Sendable conformance to FileDescriptor:
+https://github.com/apple/swift-system/pull/112
 -->
 
-The declaration of the `FileDescriptor` type above
-satisfies all of the requirements of the `Copyable` protocol,
-which would normally mean it's implicitly considered to be copyable.
+The code above shows part of a wrapper around POSIX file descriptors.
+The `FileDescriptor` structure
+satisfies all of the requirements of the `Sendable` protocol,
+which would normally make it sendable.
 However,
-writing a conformance to `~Copyable` suppresses this implicit conformance.
+writing `~Sendable` suppresses this implicit conformance.
+
+Even though file descriptors use integers
+to identify and interact with open files,
+and integer values are sendable,
+making it nonsendable can help avoid certain kinds of bugs.
+
+<!--
+  - test: `suppressing-implied-sendable-conformance`
+
+  -> struct FileDescriptor {
+  ->     let rawValue: CInt
+  -> }
+  ---
+  -> @available(*, unavailable)
+  -> extension FileDescriptor: Sendable { }
+  >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !$ warning: conformance of 'FileDescriptor' to 'Sendable' is unavailable; this is an error in Swift 6
+  !! let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !! ^
+  !$ note: conformance of 'FileDescriptor' to 'Sendable' has been explicitly marked unavailable here
+  !! extension FileDescriptor: Sendable { }
+  !! ^
+-->
+
+In the code above,
+the `FileDescriptor` is a structure
+that meets the criteria to be implicitly sendable.
+However, the extension makes its conformance to `Sendable` unavailable,
+preventing the type from being sendable.
 
 XXX conditional re-conformance after suppression
 
@@ -1456,13 +1489,13 @@ is with an extension that you mark as unavailable:
 
 ```swift
 @available(*, unavailable)
-extension FileDescriptor Copyable { }
+extension FileDescriptor Sendable { }
 ```
 
-This code not only suppresses the implicit conformance to `Copyable`,
+This code not only suppresses the implicit conformance to `Sendable`,
 but also prevents any extensions elsewhere in your code
-from adding `Copyable` conformance to the type.
-<!-- XXX Remove the example from the Concurrency chapter -->
+from adding `Sendable` conformance to the type.
+
 
 ## Collections of Protocol Types
 
