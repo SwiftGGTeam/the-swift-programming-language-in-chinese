@@ -921,6 +921,34 @@ which means that the type of `twelve` is also inferred to be `Int`.
   }
 -->
 
+
+## Opaque Parameter Types
+
+XXX Outline:
+
+- You can write `some` as the type for a parameter
+  to a function, initializer, or subscript.
+- In that usage, it's syntactic sugar for a generic.
+- You can't refer to the generic type -- because it has no name.
+- If you write `some P` more than once,
+  they each refer to a different type.
+
+```swift
+func drawTwice(_ shape: some Shape) -> String {
+    let drawn = shape.draw()
+    return drawn + "\n" + drawn
+}
+func combine(shape s1: some Shape, with s2: some Shape) -> String {
+    return s1.draw() + "\n" + s2.draw()
+}
+
+// The same as:
+func drawTwice<SomeShape: Shape>(_ shape: SomeShape) -> String { ... }
+func combine<S1: Shape, S2: Shape>(shape s1: S1, with s2: S2) -> String { ... }
+```
+
+
+
 <!--
 This source file is part of the Swift.org open source project
 
