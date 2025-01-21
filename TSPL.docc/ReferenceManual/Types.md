@@ -864,7 +864,8 @@ that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
 Opaque types appear as the return type of a function or subscript,
-or the type of a property.
+as the type of a parameter to a function, initializer, or subscript,
+or as the type of a property.
 Opaque types can't appear as part of a tuple type or a generic type,
 such as the element type of an array or the wrapped type of an optional.
 
@@ -908,6 +909,35 @@ The return type can include types
 that are part of the function's generic type parameters.
 For example, a function `someFunction<T>()`
 could return a value of type `T` or `Dictionary<String, T>`.
+
+A parameter whose type is an opaque type
+is syntactic sugar for a parameter of generic type,
+without specifying a name for the generic type parameter.
+That is, the following declarations are equivalent,
+with `T1` and `T2` representing the unnamed generic type parameters:
+
+```swift
+func someFunction(x: some MyProtocol, y: some MyProtocol) { }
+func someFunction<T1: MyProtocol, T2: MyProtocol>(x: T1, y: T2) { }
+```
+
+Because the generic types doesn't have a name,
+there's no way to refer to it in code.
+
+You can't use this syntactic sugar on the type of a variadic parameter.
+
+You can't use an opaque type
+as a parameter to a function type being returned,
+or as a parameter in a parameter type that's a function type.
+In these positions,
+the function's caller would have to construct a value
+of that unknown type.
+
+```swift
+protocol MyProtocol { }
+func badFunction() -> (some MyProtocol) -> Void { }  // Error
+func anotherBadFunction(callback: (some MyProtocol) -> Void) { }  // Error
+```
 
 > Grammar of an opaque type:
 >
