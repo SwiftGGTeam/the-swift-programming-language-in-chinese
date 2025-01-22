@@ -910,21 +910,28 @@ that are part of the function's generic type parameters.
 For example, a function `someFunction<T>()`
 could return a value of type `T` or `Dictionary<String, T>`.
 
-A parameter whose type is an opaque type
-is syntactic sugar for a parameter of generic type,
+Writing an opaque type for a parameter
+is syntactic sugar for using a generic type,
 without specifying a name for the generic type parameter.
-That is, the following declarations are equivalent,
-with `T1` and `T2` representing the unnamed generic type parameters:
+The implicit generic type parameter has a constraint
+that requires it to conform to the protocol named in the opaque type.
+If you write multiple opaque types,
+each one makes its own generic type parameter.
+For example, the following declarations are equivalent:
 
 ```swift
 func someFunction(x: some MyProtocol, y: some MyProtocol) { }
 func someFunction<T1: MyProtocol, T2: MyProtocol>(x: T1, y: T2) { }
 ```
 
-Because the generic types doesn't have a name,
-there's no way to refer to it in code.
+In the second declaration,
+because the generic type parameters `T1` and `T2` have names,
+you can refer use these types elsewhere in the code.
+In contrast,
+the generic type parameters in the first declaration
+don't have names and can't be referenced in other code.
 
-You can't use this syntactic sugar on the type of a variadic parameter.
+You can't use an opaque type in the type of a variadic parameter.
 
 You can't use an opaque type
 as a parameter to a function type being returned,
