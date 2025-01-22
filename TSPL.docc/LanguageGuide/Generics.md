@@ -286,9 +286,14 @@ However, when there isn't a meaningful relationship between them,
 it's traditional to name them using single letters such as `T`, `U`, and `V`,
 such as `T` in the `swapTwoValues(_:_:)` function above.
 
-> Note: Always give type parameters upper camel case names
-> (such as `T` and `MyTypeParameter`)
-> to indicate that they're a placeholder for a *type*, not a value.
+Use upper camel case names for type parameters,
+like `T` and `MyTypeParameter`,
+to indicate that they're a placeholder for a *type*, not a value.
+
+> Note:
+> If you don't need to name a type parameter or give it any constraints,
+> there's an alternate, lightweight syntax you can use instead,
+> as described in <doc:OpaqueTypes#Opaque-Parameter-Types>.
 
 ## Generic Types
 
