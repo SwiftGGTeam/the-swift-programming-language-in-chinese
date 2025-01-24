@@ -864,7 +864,7 @@ that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
 Opaque types appear as the return type of a function or subscript,
-as the type of a parameter to a function, initializer, or subscript,
+as the type of a parameter to a function, subscript, or initializer,
 or as the type of a property.
 Opaque types can't appear as part of a tuple type or a generic type,
 such as the element type of an array or the wrapped type of an optional.
