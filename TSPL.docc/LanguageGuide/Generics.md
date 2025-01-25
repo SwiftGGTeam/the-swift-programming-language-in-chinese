@@ -1958,26 +1958,41 @@ is a sequence of integers.
 ## Implicit Constraints
 
 In addition to the constraints you write explicitly,
-many places in your code <!-- XXX WHERE? -->
+many places in your code
 also implicitly include an constraint
 that types conform to the `Copyable` protocol.
+<!-- XXX
+all generic type parameters,
+boxed protocol types types,
+protocols,
+and associated type requirements
+implicitly require Copyable conformance.
+
+What other conformances are implicit?
+-->
 This constraint is implicit because almost all types in Swift are copyable,
 so you only have to specify when something shouldn't be copyable.
 For example, both of the following function declarations
-require `T` to be copyable:
+require `MyType` to be copyable:
 
+```swift
+function someFunction<MyType> { ... }
+function someFunction<MyType: Copyable> { ... }
 ```
-function someFunction<T> { ... }
-function someFunction<T: Copyable> { ... }
-```
+
+XXX the constraint is implicit -- and so is satisfying it most of the time
+For more information,
+see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
+
 
 To suppress an implicit conformance to `Copyable`
+or an implicit `Copyable` requirement,
 you write the protocol name with a tilde (`~`) in front of it.
 You can read `~Copyable` as "maybe copyable",
 because can can contain values of both copyable an noncopyable types.
 
-```
-func f<T>(t: inout T) {
+```swift
+func f<MyType>(t: inout MyType) {
     let t1 = t  // The value of 't' is copyied into 't1'
     let t2 = t  // The value of 't' is copyied into 't2'
 }
@@ -1988,11 +2003,14 @@ func g<T: ~Copyable>(t: inout T) {
 }
 ```
 
+XXX where you can/can't suppress Copyable
+
+XXX xref stdlib reference for Copyable?
+
 XXX
 noncopyable values must be passed as in-out, borrowing, or consuming
 xref reference > Declarations > Borrowing and Consuming Parameters
-
-XXX xref Protocols > Implicit Conformance
+<doc:Declarations#Borrowing-and-Consuming-Parameters>.
 
 <!--
   TODO: Generic Enumerations

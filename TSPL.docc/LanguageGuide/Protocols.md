@@ -765,11 +765,19 @@ which more specifically refers to @_marker on a protocol.
 The Swift standard library defines several protocols
 that don't have any required methods or properties:
 
-- `Copyable` for values that can be copied.
-- `Sendable` for values that can be shared across concurrency contexts.
-- `BitwiseCopyable` for values that con be copied, bit-by-bit.
+- [`Copyable`][] for values that can be copied.
+- [`Sendable`][] for values that can be shared across concurrency contexts.
+- [`BitwiseCopyable`][] for values that con be copied, bit-by-bit.
 
-<!-- XXX make the above links -->
+[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
+[`Sendable`]: https://developer.apple.com/documentation/swift/sendable
+[`BitwiseCopyable`]: https://developer.apple.com/documentation/swift/bitwisecopyable
+
+<!--
+These link definitions are also used in the section below,
+Implicit Conformance to a Protocol.
+-->
+
 For more information about the semantic requirements,
 see the protocols' documentation.
 
@@ -1423,9 +1431,18 @@ when you define a type that implements the protocol's requirements:
 - `Codable`
 - `Copyable`
 - `Sendable`
-- `BitwiseCopyale`
+- `BitwiseCopyable`
 
-<!-- XXX make the above links -->
+[`Codable`]: https://developer.apple.com/documentation/swift/codable
+<!--
+The remaining definitions for the links in this list
+are in the section above, Protocols That Don't Have Requirements.
+-->
+
+<!--
+XXX Above applies structs and enums, not classes or actors
+How much should we summarize the requirements of each protocol here?
+-->
 
 You can still write the conformance explicitly,
 but it doesn't have any effect.
@@ -1452,7 +1469,6 @@ satisfies all of the requirements of the `Sendable` protocol,
 which would normally make it sendable.
 However,
 writing `~Sendable` suppresses this implicit conformance.
-
 Even though file descriptors use integers
 to identify and interact with open files,
 and integer values are sendable,
@@ -1476,14 +1492,6 @@ making it nonsendable can help avoid certain kinds of bugs.
   !! ^
 -->
 
-In the code above,
-the `FileDescriptor` is a structure
-that meets the criteria to be implicitly sendable.
-However, the extension makes its conformance to `Sendable` unavailable,
-preventing the type from being sendable.
-
-XXX conditional re-conformance after suppression
-
 Another way to suppress implicit conformance
 is with an extension that you mark as unavailable:
 
@@ -1492,10 +1500,15 @@ is with an extension that you mark as unavailable:
 extension FileDescriptor Sendable { }
 ```
 
-This code not only suppresses the implicit conformance to `Sendable`,
-but also prevents any extensions elsewhere in your code
+When you write `~Sendable` in one place in your code,
+as in the previous example,
+code elsewhere in your program can still
+extend the `FileDescriptor` type to add `Sendable` conformance.
+In contrast,
+the unavailable extension in this example
+suppresses the implicit conformance to `Sendable`
+and also prevents any extensions elsewhere in your code
 from adding `Sendable` conformance to the type.
-
 
 ## Collections of Protocol Types
 
