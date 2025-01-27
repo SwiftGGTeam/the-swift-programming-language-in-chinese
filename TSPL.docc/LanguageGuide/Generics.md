@@ -1960,18 +1960,17 @@ is a sequence of integers.
 In addition to the constraints you write explicitly,
 many places in your code
 also implicitly include an constraint
-that types conform to the `Copyable` protocol.
-<!-- XXX
-all generic type parameters,
-boxed protocol types types,
-protocols,
-and associated type requirements
-implicitly require Copyable conformance.
+that types conform to some very common protocols
+like [`Copyable`][].
+<!-- When SE-0446 is implemented, add Escapable above -->
+For information on when a protocol is implied,
+see the reference for that protocol.
 
-What other conformances are implicit?
--->
-This constraint is implicit because almost all types in Swift are copyable,
-so you only have to specify when something shouldn't be copyable.
+[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
+
+This constraint is implicit because
+almost all types in Swift conform to these protocols,
+so you specify only the exceptions.
 For example, both of the following function declarations
 require `MyType` to be copyable:
 
@@ -1980,37 +1979,46 @@ function someFunction<MyType> { ... }
 function someFunction<MyType: Copyable> { ... }
 ```
 
-XXX the constraint is implicit -- and so is satisfying it most of the time
+Both declarations of `someFunction()` in the code above
+require the generic type parameter `MyType` to be copyable.
+In the first version, the constraint is implicit;
+the second version lists the explicitly.
+In most code,
+types also implicitly conform to these common protocol.
 For more information,
 see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
-
-To suppress an implicit conformance to `Copyable`
-or an implicit `Copyable` requirement,
+To suppress an implicit protocol conformance requirement,
 you write the protocol name with a tilde (`~`) in front of it.
-You can read `~Copyable` as "maybe copyable",
-because can can contain values of both copyable an noncopyable types.
+You can read the `~Copyable` constraint as "maybe copyable",
+because values of this type
+can contain values of both copyable and noncopyable types.
 
 ```swift
-func f<MyType>(t: inout MyType) {
-    let t1 = t  // The value of 't' is copyied into 't1'
-    let t2 = t  // The value of 't' is copyied into 't2'
+func f<MyType>(x: inout MyType) {
+    let x1 = x  // The value of x1 is a copy of x's value.
+    let x2 = x  // The value of x2 is a copy of x's value.
 }
 
-func g<T: ~Copyable>(t: inout T) {
-    let t1 = t  // The value of 't' is consumed by 't1'
-    let t2 = t  // Error: 't' consumed more than once
+func g<AnotherType: ~Copyable>(y: inout AnotherType) {
+    let y1 = y  // The assignment consumes y's value.
+    let y2 = y  // Error: Value consumed more than once.
 }
 ```
 
-XXX where you can/can't suppress Copyable
-
-XXX xref stdlib reference for Copyable?
-
-XXX
-noncopyable values must be passed as in-out, borrowing, or consuming
-xref reference > Declarations > Borrowing and Consuming Parameters
-<doc:Declarations#Borrowing-and-Consuming-Parameters>.
+In the code above,
+the function `f()` implicitly requires `MyType` to be copyable.
+Within the function body,
+the value of `x` is copied to `x1` and `x2` in the assignment.
+In contrast, `g()` suppresses the implicit requirement,
+which allows you to pass either a copyable or noncopyable type.
+Within the function body,
+the value of `y` is consumed instead of copied,
+and it's an error to consume that value more than once.
+Noncopyable values like `y`
+must be passed as in-out, borrowing, or consuming parameters ---
+for more information,
+see <doc:Declarations#Borrowing-and-Consuming-Parameters>.
 
 <!--
   TODO: Generic Enumerations
