@@ -1471,6 +1471,14 @@ to identify and interact with open files,
 and integer values are sendable,
 making it nonsendable can help avoid certain kinds of bugs.
 
+Another way to suppress implicit conformance
+is with an extension that you mark as unavailable:
+
+```swift
+@available(*, unavailable)
+extension FileDescriptor Sendable { }
+```
+
 <!--
   - test: `suppressing-implied-sendable-conformance`
 
@@ -1488,14 +1496,6 @@ making it nonsendable can help avoid certain kinds of bugs.
   !! extension FileDescriptor: Sendable { }
   !! ^
 -->
-
-Another way to suppress implicit conformance
-is with an extension that you mark as unavailable:
-
-```swift
-@available(*, unavailable)
-extension FileDescriptor Sendable { }
-```
 
 When you write `~Sendable` in one place in your code,
 as in the previous example,
