@@ -1988,12 +1988,13 @@ types also implicitly conform to these common protocol.
 For more information,
 see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
-To suppress an implicit constraint
-that requires conformance to a given protocol,
+To suppress an implicit constraint,
 you write the protocol name with a tilde (`~`) in front of it.
-You can read the `~Copyable` constraint as "maybe copyable",
-because values of this type
-can contain values of both copyable and noncopyable types.
+You can read `~Copyable` as "maybe copyable" ---
+this suppressed constraint allows
+both copyable and noncopyable types in this position.
+Note that `~Copyable` doesn't *require* the type to be noncopyable.
+For example:
 
 ```swift
 func f<MyType>(x: inout MyType) {
@@ -2011,10 +2012,12 @@ In the code above,
 the function `f()` implicitly requires `MyType` to be copyable.
 Within the function body,
 the value of `x` is copied to `x1` and `x2` in the assignment.
-In contrast, `g()` suppresses the implicit constraint,
-which allows you to pass either a copyable or noncopyable type.
+In contrast, `g()` suppresses the implicit constraint on `AnotherType`,
+which allows you to pass either a copyable or noncopyable value.
 Within the function body,
-the value of `y` is consumed instead of copied,
+you can't copy the value of `y`
+because `AnotherType` might be noncopyable.
+Assignment consumes the value of `y`
 and it's an error to consume that value more than once.
 Noncopyable values like `y`
 must be passed as in-out, borrowing, or consuming parameters ---
