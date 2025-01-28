@@ -1988,7 +1988,8 @@ types also implicitly conform to these common protocol.
 For more information,
 see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
-To suppress an implicit protocol conformance requirement,
+To suppress an implicit constraint
+that requires conformance to a given protocol,
 you write the protocol name with a tilde (`~`) in front of it.
 You can read the `~Copyable` constraint as "maybe copyable",
 because values of this type
@@ -2010,7 +2011,7 @@ In the code above,
 the function `f()` implicitly requires `MyType` to be copyable.
 Within the function body,
 the value of `x` is copied to `x1` and `x2` in the assignment.
-In contrast, `g()` suppresses the implicit requirement,
+In contrast, `g()` suppresses the implicit constraint,
 which allows you to pass either a copyable or noncopyable type.
 Within the function body,
 the value of `y` is consumed instead of copied,
