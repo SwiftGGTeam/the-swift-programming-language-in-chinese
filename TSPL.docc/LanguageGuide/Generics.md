@@ -100,7 +100,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         a = b
         b = temporaryA
      }
-  ---
+
   -> func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         let temporaryA = a
         a = b
@@ -237,7 +237,7 @@ swapTwoValues(&someString, &anotherString)
   -> swapTwoValues(&someInt, &anotherInt)
   /> someInt is now \(someInt), and anotherInt is now \(anotherInt)
   </ someInt is now 107, and anotherInt is now 3
-  ---
+
   -> var someString = "hello"
   -> var anotherString = "world"
   -> swapTwoValues(&someString, &anotherString)
@@ -1276,19 +1276,19 @@ func allItemsMatch<C1: Container, C2: Container>
   -> func allItemsMatch<C1: Container, C2: Container>
            (_ someContainer: C1, _ anotherContainer: C2) -> Bool
            where C1.Item == C2.Item, C1.Item: Equatable {
-  ---
+
         // Check that both containers contain the same number of items.
         if someContainer.count != anotherContainer.count {
            return false
         }
-  ---
+
         // Check each pair of items to see if they're equivalent.
         for i in 0..<someContainer.count {
            if someContainer[i] != anotherContainer[i] {
               return false
            }
         }
-  ---
+
         // All items match, so return true.
         return true
      }
@@ -1370,9 +1370,9 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
   -> stackOfStrings.push("uno")
   -> stackOfStrings.push("dos")
   -> stackOfStrings.push("tres")
-  ---
+
   -> var arrayOfStrings = ["uno", "dos", "tres"]
-  ---
+
   -> if allItemsMatch(stackOfStrings, arrayOfStrings) {
         print("All items match.")
      } else {
@@ -1757,7 +1757,7 @@ protocol Container {
         mutating func append(_ item: Item)
         var count: Int { get }
         subscript(i: Int) -> Item { get }
-  ---
+
         associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
         func makeIterator() -> Iterator
      }

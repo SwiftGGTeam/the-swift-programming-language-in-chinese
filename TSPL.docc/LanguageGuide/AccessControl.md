@@ -23,9 +23,10 @@ you may not need to specify explicit access control levels at all.
 > (properties, types, functions, and so on)
 > are referred to as “entities” in the sections below, for brevity.
 
-## Modules and Source Files
+## Modules, Source Files, and Packages
 
-Swift's access control model is based on the concept of modules and source files.
+Swift's access control model is based on the concept of
+modules, source files, and packages.
 
 A *module* is a single unit of code distribution ---
 a framework or application that's built and shipped as a single unit
@@ -44,17 +45,36 @@ A *source file* is a single Swift source code file within a module
 Although it's common to define individual types in separate source files,
 a single source file can contain definitions for multiple types, functions, and so on.
 
+A *package* is a group of modules that you develop as a unit.
+You define the modules that form a package
+as part of configuring the build system you're using,
+not as part of your Swift source code.
+For example, if you use Swift Package Manager to build your code,
+you define a package in your `Package.swift` file
+using APIs from the [PackageDescription][] module,
+and if you use Xcode, you specify the package name
+in the Package Access Identifier build setting.
+
+[PackageDescription]: https://developer.apple.com/documentation/packagedescription
+
 ## Access Levels
 
-Swift provides five different *access levels* for entities within your code.
+Swift provides six different *access levels* for entities within your code.
 These access levels are relative to the source file in which an entity is defined,
-and also relative to the module that source file belongs to.
+the module that source file belongs to,
+and the package that the module belongs to.
 
 - *Open access* and *public access*
   enable entities to be used within any source file from their defining module,
   and also in a source file from another module that imports the defining module.
   You typically use open or public access when specifying the public interface to a framework.
   The difference between open and public access is described below.
+- *Package access*
+  enables entities to be used within
+  any source files from their defining package
+  but not in any source file outside of that package.
+  You typically use package access
+  within an app or framework that's structured into multiple modules.
 - *Internal access*
   enables entities to be used within any source file from their defining module,
   but not in any source file outside of that module.
@@ -175,7 +195,7 @@ private func somePrivateFunction() {}
   -> internal class SomeInternalClass {}
   -> fileprivate class SomeFilePrivateClass {}
   -> private class SomePrivateClass {}
-  ---
+
   -> open var someOpenVariable = 0
   -> public var somePublicVariable = 0
   -> internal let someInternalConstant = 0
@@ -231,25 +251,25 @@ the default access level of the type's members will be internal.
 > and avoids presenting the internal workings of a type as public API by mistake.
 
 ```swift
-public class SomePublicClass {                  // explicitly public class
+public class SomePublicClass {                   // explicitly public class
     public var somePublicProperty = 0            // explicitly public class member
     var someInternalProperty = 0                 // implicitly internal class member
     fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
     private func somePrivateMethod() {}          // explicitly private class member
 }
 
-class SomeInternalClass {                       // implicitly internal class
+class SomeInternalClass {                        // implicitly internal class
     var someInternalProperty = 0                 // implicitly internal class member
     fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
     private func somePrivateMethod() {}          // explicitly private class member
 }
 
-fileprivate class SomeFilePrivateClass {        // explicitly file-private class
+fileprivate class SomeFilePrivateClass {         // explicitly file-private class
     func someFilePrivateMethod() {}              // implicitly file-private class member
     private func somePrivateMethod() {}          // explicitly private class member
 }
 
-private class SomePrivateClass {                // explicitly private class
+private class SomePrivateClass {                 // explicitly private class
     func somePrivateMethod() {}                  // implicitly private class member
 }
 ```
@@ -264,18 +284,18 @@ private class SomePrivateClass {                // explicitly private class
         fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> class SomeInternalClass {                       // implicitly internal class
         var someInternalProperty = 0                 // implicitly internal class member
         fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> fileprivate class SomeFilePrivateClass {        // explicitly file-private class
         func someFilePrivateMethod() {}              // implicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> private class SomePrivateClass {                // explicitly private class
         func somePrivateMethod() {}                  // implicitly private class member
      }
@@ -537,7 +557,7 @@ you must explicitly declare the nested type as public.
   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
-  ---
+
   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
   ```
@@ -549,12 +569,12 @@ you must explicitly declare the nested type as public.
   ```swifttest
   // these are all expected to fail, because they're private to the other file
   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
-  ---
+
   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
-  ---
+
   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
-  ---
+
   !$ error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
   !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
   !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -595,14 +615,14 @@ you must explicitly declare the nested type as public.
   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
-  ---
+
   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
-  ---
+
   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
-  ---
+
   !$ error: 'InternalEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
   !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   !!                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -681,7 +701,7 @@ internal class B: A {
   -> public class A {
         fileprivate func someMethod() {}
      }
-  ---
+
   -> internal class B: A {
         override internal func someMethod() {}
      }
@@ -714,7 +734,7 @@ internal class B: A {
   -> public class A {
         fileprivate func someMethod() {}
      }
-  ---
+
   -> internal class B: A {
         override internal func someMethod() {
            super.someMethod()
@@ -790,14 +810,15 @@ the constant, variable, property, or subscript they belong to.
 You can give a setter a *lower* access level than its corresponding getter,
 to restrict the read-write scope of that variable, property, or subscript.
 You assign a lower access level by writing
-`fileprivate(set)`, `private(set)`, or `internal(set)`
+`fileprivate(set)`, `private(set)`, `internal(set)`, or `package(set)`
 before the `var` or `subscript` introducer.
 
 > Note: This rule applies to stored properties as well as computed properties.
 > Even though you don't write an explicit getter and setter for a stored property,
 > Swift still synthesizes an implicit getter and setter for you
 > to provide access to the stored property's backing storage.
-> Use `fileprivate(set)`, `private(set)`, and `internal(set)` to change the access level
+> Use `fileprivate(set)`, `private(set)`, `internal(set)`, and `package(set)`
+> to change the access level
 > of this synthesized setter in exactly the same way as for an explicit setter
 > in a computed property.
 
@@ -1141,7 +1162,7 @@ on any type that adopts the protocol.
         var publicProperty = 0
         func publicMethod() {}
      }
-  ---
+
   -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
         var internalProperty = 0
         func internalMethod() {}
@@ -1169,7 +1190,7 @@ on any type that adopts the protocol.
   !$ error: cannot find type 'FilePrivateProtocol' in scope
   !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
   !! ^~~~~~~~~~~~~~~~~~~
-  ---
+
   // these will fail, because PrivateProtocol isn't visible outside of its file
   -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
         var privateProperty = 0
@@ -1419,7 +1440,7 @@ extension SomeStruct: SomeProtocol {
   -> struct SomeStruct {
          private var privateVariable = 12
      }
-  ---
+
   -> extension SomeStruct: SomeProtocol {
          func doSomething() {
              print(privateVariable)
@@ -1453,19 +1474,19 @@ but a public type alias can't alias an internal, file-private, or private type.
   -> public struct PublicStruct {}
   -> internal struct InternalStruct {}
   -> private struct PrivateStruct {}
-  ---
+
   -> public typealias PublicAliasOfPublicType = PublicStruct
   -> internal typealias InternalAliasOfPublicType = PublicStruct
   -> private typealias PrivateAliasOfPublicType = PublicStruct
-  ---
+
   -> public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
   -> internal typealias InternalAliasOfInternalType = InternalStruct
   -> private typealias PrivateAliasOfInternalType = InternalStruct
-  ---
+
   -> public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
   -> internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
   -> private typealias PrivateAliasOfPrivateType = PrivateStruct
-  ---
+
   !$ error: type alias cannot be declared public because its underlying type uses an internal type
   !! public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
   !! ^                           ~~~~~~~~~~~~~~

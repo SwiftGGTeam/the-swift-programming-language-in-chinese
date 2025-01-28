@@ -62,4 +62,5 @@ TSPL.docc/ReferenceManual/SummaryOfTheGrammar.md
 
 TSPL.docc/RevisionHistory/RevisionHistory.md
 
-# Files that don't match a pattern listed above appear at the end.
+# Files that don't match a pattern listed above, such as assets and
+# build scripts, will appear at the end of the diff.

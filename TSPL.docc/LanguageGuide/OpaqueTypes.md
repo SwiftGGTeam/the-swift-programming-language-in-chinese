@@ -1,4 +1,4 @@
-# Opaque and Boxed Types
+# Opaque and Boxed Protocol Types
 
 Hide implementation details about a value's type.
 
@@ -60,7 +60,7 @@ print(smallTriangle.draw())
   -> protocol Shape {
          func draw() -> String
      }
-  ---
+
   -> struct Triangle: Shape {
         var size: Int
         func draw() -> String {
@@ -257,7 +257,7 @@ print(trapezoid.draw())
              return result.joined(separator: "\n")
          }
      }
-  ---
+
   -> func makeTrapezoid() -> some Shape {
          let top = Triangle(size: 2)
          let middle = Square(size: 2)
@@ -336,7 +336,7 @@ print(opaqueJoinedTriangles.draw())
   -> func join<T: Shape, U: Shape>(_ top: T, _ bottom: U) -> some Shape {
          JoinedShape(top: top, bottom: bottom)
      }
-  ---
+
   -> let opaqueJoinedTriangles = join(smallTriangle, flip(smallTriangle))
   -> print(opaqueJoinedTriangles.draw())
   </ *
@@ -833,7 +833,7 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
   -> func makeProtocolContainer<T>(item: T) -> Container {
          return [item]
      }
-  ---
+
   // Error: Not enough information to infer C.
   -> func makeProtocolContainer<T, C: Container>(item: T) -> C {
          return [item]
@@ -930,4 +930,3 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
-

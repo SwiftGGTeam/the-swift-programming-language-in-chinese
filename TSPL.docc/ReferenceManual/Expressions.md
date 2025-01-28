@@ -20,7 +20,7 @@ in the sections below.
 
 > Grammar of an expression:
 >
-> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_ \
+> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_
 
 ## Prefix Expressions
 
@@ -124,10 +124,10 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
   >> var sum = 0
   // try applies to both function calls
   -> sum = try someThrowingFunction() + anotherThrowingFunction()
-  ---
+
   // try applies to both function calls
   -> sum = try (someThrowingFunction() + anotherThrowingFunction())
-  ---
+
   // Error: try applies only to the first function call
   -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
   !$ error: call can throw but is not marked with 'try'
@@ -235,10 +235,10 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   >> var sum = 0
   // await applies to both function calls
   -> sum = await someAsyncFunction() + anotherAsyncFunction()
-  ---
+
   // await applies to both function calls
   -> sum = await (someAsyncFunction() + anotherAsyncFunction())
-  ---
+
   // Error: await applies only to the first function call
   -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
   >> _ = sum  // Suppress irrelevant written-but-not-read warning
@@ -442,7 +442,7 @@ otherwise, it returns `false`.
   -> class Subclass: Base {}
   -> var s = Subclass()
   -> var b = Base()
-  ---
+
   -> assert(s is Base)
   !$ warning: 'is' test is always true
   !! assert(s is Base)
@@ -482,11 +482,11 @@ f(x as Any)
   -> let x = 10
   -> f(x)
   <- Function for Int
-  ---
+
   -> let y: Any = x
   -> f(y)
   <- Function for Any
-  ---
+
   -> f(x as Any)
   <- Function for Any
   ```
@@ -922,9 +922,13 @@ explicitly marks a closure as throwing or asynchronous.
 }
 ```
 
-If the body of a closure includes a try expression,
+If the body of a closure includes a `throws` statement or a `try` expression
+that isn't nested inside of a `do` statement with exhaustive error handling,
 the closure is understood to be throwing.
-Likewise, if it includes an await expression,
+If a throwing closure throws errors of only a single type,
+the closure is understood as throwing that error type;
+otherwise, it's understood as throwing `any Error`.
+Likewise, if the body includes an `await` expression,
 it's understood to be asynchronous.
 
 There are several special forms
@@ -971,13 +975,13 @@ myFunction { $0 + $1 }
   -> myFunction { (x: Int, y: Int) -> Int in
          return x + y
      }
-  ---
+
   -> myFunction { x, y in
          return x + y
      }
-  ---
+
   -> myFunction { return $0 + $1 }
-  ---
+
   -> myFunction { $0 + $1 }
   ```
 -->
@@ -1046,7 +1050,7 @@ closure()
   -> let closure = { [a] in
       print(a, b)
   }
-  ---
+
   -> a = 10
   -> b = 10
   -> closure()
@@ -1115,7 +1119,7 @@ closure()
   -> let closure = { [x] in
          print(x.value, y.value)
      }
-  ---
+
   -> x.value = 10
   -> y.value = 10
   -> closure()
@@ -1148,7 +1152,7 @@ closure()
      var y = 7
      var f: () -> Int = { [x] in x }
      var g: () -> Int = { [x] in x+y }
-  ---
+
   -> let r0 = f()
   -> assert(r0 == 100)
   -> let r1 = g()
@@ -1245,7 +1249,7 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
 >
 > *closure-expression* → **`{`** *attributes*_?_ *closure-signature*_?_ *statements*_?_ **`}`**
 >
-> *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_ **`in`** \
+> *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
 > *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
@@ -1384,7 +1388,7 @@ and the type of `z` is convertible from `SomeSubclass` to `SomeClass`.
   >> let e: E = .left
   >> let e2: E = .left.self
   >> assert(e == e2)
-  ---
+
   // postfix operator
   >> postfix operator ~
   >> extension E {
@@ -1397,7 +1401,7 @@ and the type of `z` is convertible from `SomeSubclass` to `SomeClass`.
   >> }
   >> let e3: E = .left~
   >> assert(e3 == .right)
-  ---
+
   // initializer expression
   >> class S {
   >>     var num: Int
@@ -1516,14 +1520,39 @@ Macro-expansion expressions have the following form:
 A macro-expansion expression omits the parentheses after the macro's name
 if the macro doesn't take any arguments.
 
-A macro-expansion expression can't appear as the default value for a parameter,
-except the [`file()`][] and [`line()`][] macros from the Swift standard library.
+A macro-expansion expression can appear as the default value for a parameter.
 When used as the default value of a function or method parameter,
-these macros are evaluated using the source code location of the call site,
+macros are evaluated using the source code location of the call site,
 not the location where they appear in a function definition.
+However, when a default value is a larger expression
+that contains a macro in addition to other code,
+those macros are evaluated where they appear in the function definition.
 
-[`file()`]: https://developer.apple.com/documentation/swift/file()
-[`line()`]: https://developer.apple.com/documentation/swift/line()
+```swift
+func f(a: Int = #line, b: Int = (#line), c: Int = 100 + #line) {
+    print(a, b, c)
+}
+f()  // Prints "4 1 101"
+```
+
+In the function above,
+the default value for `a` is a single macro expression,
+so that macro is evaluated using the source code location
+where `f(a:b:c:)` is called.
+In contrast, the values for `b` and `c`
+are expressions that contain a macro ---
+the macros in those expressions are evaluated
+using the source code location where `f(a:b:c:)` is defined.
+
+When you use a macro as a default value,
+it's type checked without expanding the macro,
+to check the following requirements:
+
+- The macro's access level
+  is the same as or less restrictive than the function that uses it.
+- The macro either takes no arguments,
+  or its arguments are literals without string interpolation.
+- The macro's return type matches the parameter's type.
 
 You use macro expressions to call freestanding macros.
 To call an attached macro,
@@ -1630,10 +1659,10 @@ let value = s[keyPath: pathToProperty]
   -> struct SomeStructure {
          var someValue: Int
      }
-  ---
+
   -> let s = SomeStructure(someValue: 12)
   -> let pathToProperty = \SomeStructure.someValue
-  ---
+
   -> let value = s[keyPath: pathToProperty]
   /> value is \(value)
   </ value is 12
@@ -1671,7 +1700,7 @@ c.observe(\.someProperty) { object, change in
   ->         self.someProperty = someProperty
   ->     }
   -> }
-  ---
+
   -> let c = SomeClass(someProperty: 10)
   >> let r0 =
   -> c.observe(\.someProperty) { object, change in
@@ -1740,10 +1769,10 @@ let nestedValue = nested[keyPath: nestedKeyPath]
              self.outer = SomeStructure(someValue: someValue)
          }
      }
-  ---
+
   -> let nested = OuterStructure(someValue: 24)
   -> let nestedKeyPath = \OuterStructure.outer.someValue
-  ---
+
   -> let nestedValue = nested[keyPath: nestedKeyPath]
   /> nestedValue is \(nestedValue)
   </ nestedValue is 24
@@ -1815,17 +1844,17 @@ print(fn(greetings))
   -> var index = 2
   -> let path = \[String].[index]
   -> let fn: ([String]) -> String = { strings in strings[index] }
-  ---
+
   -> print(greetings[keyPath: path])
   <- bonjour
   -> print(fn(greetings))
   <- bonjour
-  ---
+
   // Setting 'index' to a new value doesn't affect 'path'
   -> index += 1
   -> print(greetings[keyPath: path])
   <- bonjour
-  ---
+
   // Because 'fn' closes over 'index', it uses the new value
   -> print(fn(greetings))
   <- 안녕
@@ -1854,7 +1883,7 @@ print(count as Any)
   -> let firstGreeting: String? = greetings.first
   -> print(firstGreeting?.count as Any)
   <- Optional(5)
-  ---
+
   // Do the same thing using a key path.
   -> let count = greetings[keyPath: \[String].first?.count]
   -> print(count as Any)
@@ -1943,7 +1972,7 @@ let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
          Task(description: "Buy a pirate costume.", completed: true),
          Task(description: "Visit Boston in the Fall.", completed: false),
      ]
-  ---
+
   // Both approaches below are equivalent.
   -> let descriptions = toDoList.filter(\.completed).map(\.description)
   -> let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
@@ -1990,7 +2019,7 @@ let someTask = toDoList[keyPath: taskKeyPath]
   <- Made an index
   >> print(type(of: taskKeyPath))
   << WritableKeyPath<Array<Task>, Task>
-  ---
+
   // Using taskKeyPath doesn't call makeIndex() again.
   -> let someTask = toDoList[keyPath: taskKeyPath]
   ```
@@ -2052,10 +2081,10 @@ let selectorForPropertyGetter = #selector(getter: SomeClass.property)
   >> import Foundation
   -> class SomeClass: NSObject {
   ->     @objc let property: String
-  ---
+
   ->     @objc(doSomethingWithInt:)
          func doSomething(_ x: Int) { }
-  ---
+
          init(property: String) {
              self.property = property
          }
@@ -2172,10 +2201,10 @@ if let value = c.value(forKey: keyPath) {
             self.someProperty = someProperty
         }
      }
-  ---
+
   -> let c = SomeClass(someProperty: 12)
   -> let keyPath = #keyPath(SomeClass.someProperty)
-  ---
+
   -> if let value = c.value(forKey: keyPath) {
   ->     print(value)
   -> }
@@ -2313,7 +2342,7 @@ anotherFunction(x: x) { $0 == 13 } g: { print(99) }
   >> let r1 =
   -> someFunction(x: x) { $0 == 13 }
   >> assert(r1 == false)
-  ---
+
   >> func anotherFunction(x: Int, f: (Int) -> Bool, g: () -> Void) -> Bool {
   >>    g(); return f(x)
   >> }
@@ -2416,7 +2445,7 @@ the closure is wrapped in `Optional` automatically.
   ```swifttest
   // These tests match the example types given above
   // when describing what "structurally resembles" a function type.
-  ---
+
   >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
   >> f1(x: 10) { $0 ? 1 : 100 }
   << 11
@@ -2468,7 +2497,7 @@ someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
          let second = secondClosure?(20)
          print(first ?? "-", second ?? "-")
      }
-  ---
+
   -> someFunction()  // Prints "- -"
   << - -
   -> someFunction { return $0 + 100 }  // Ambiguous
@@ -2535,7 +2564,7 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
   >>     print(pointer.pointee)
   -> }
   -> var myNumber = 1234
-  ---
+
   -> unsafeFunction(pointer: &myNumber)
   -> withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
   << 1234
@@ -2579,24 +2608,24 @@ avoid using `&` instead of using the unsafe APIs explicitly.
   >> var nsarray: NSArray = [10, 20, 30]
   >> var bridgedNSArray = nsarray as! Array<Int>
   >> var string = "Hello"
-  ---
+
   // bullet 1
   >> takesUnsafePointer(p: &n)
   >> takesUnsafeMutablePointer(p: &n)
-  ---
+
   // bullet 2
   >> takesUnsafePointer(p: &array)
   >> takesUnsafeMutablePointer(p: &array)
   >> takesUnsafePointer(p: &bridgedNSArray)
   >> takesUnsafeMutablePointer(p: &bridgedNSArray)
-  ---
+
   // bullet 3
   >> takesUnsafePointer(p: array)
   >> takesUnsafePointer(p: bridgedNSArray)
-  ---
+
   // bullet 4
   >> takesUnsafePointerCChar(p: string)
-  ---
+
   // invalid conversions
   >> takesUnsafeMutablePointer(p: array)
   !$ error: cannot convert value of type '[Int]' to expected argument type 'UnsafeMutablePointer<Int>'
@@ -2705,7 +2734,7 @@ let s4 = type(of: someValue)(data: 5)       // Error
   >> }
   -> let s1 = SomeType.init(data: 3)  // Valid
   -> let s2 = SomeType(data: 1)       // Also valid
-  ---
+
   >> let someValue = s1
   -> let s3 = type(of: someValue).init(data: 7)  // Valid
   -> let s4 = type(of: someValue)(data: 5)       // Error
@@ -2821,7 +2850,7 @@ let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
          func overloadedMethod(x: Int, y: Bool) {}
      }
   -> let instance = SomeClass()
-  ---
+
   -> let a = instance.someMethod              // Ambiguous
   !$ error: ambiguous use of 'someMethod'
   !! let a = instance.someMethod              // Ambiguous
@@ -2833,7 +2862,7 @@ let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
   !!              func someMethod(x: Int, z: Int) {}
   !!                   ^
   -> let b = instance.someMethod(x:y:)        // Unambiguous
-  ---
+
   -> let d = instance.overloadedMethod        // Ambiguous
   !$ error: ambiguous use of 'overloadedMethod(x:y:)'
   !! let d = instance.overloadedMethod        // Ambiguous
@@ -3110,7 +3139,7 @@ someDictionary["a"]![0] = 100
   -> x! += 1
   /> x is now \(x!)
   </ x is now 1
-  ---
+
   -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
   -> someDictionary["a"]![0] = 100
   /> someDictionary is now \(someDictionary)
@@ -3229,12 +3258,12 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
         return 42  // No actual side effects.
      }
   -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-  ---
+
   -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
   // someFunctionWithSideEffects isn't evaluated
   /> someDictionary is still \(someDictionary)
   </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
-  ---
+
   -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
   /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
   </ someFunctionWithSideEffects is evaluated and returns 42

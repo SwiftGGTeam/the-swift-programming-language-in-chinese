@@ -646,13 +646,13 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
   -> protocol SomeProtocol {
         init()
      }
-  ---
+
   -> class SomeSuperClass {
         init() {
            // initializer implementation goes here
         }
      }
-  ---
+
   -> class SomeSubClass: SomeSuperClass, SomeProtocol {
         // "required" from SomeProtocol conformance; "override" from SomeSuperClass
         required override init() {
@@ -1293,7 +1293,7 @@ if twoThreeFour == anotherTwoThreeFour {
   -> struct Vector3D: Equatable {
         var x = 0.0, y = 0.0, z = 0.0
      }
-  ---
+
   -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
   -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
   -> if twoThreeFour == anotherTwoThreeFour {
@@ -1477,7 +1477,7 @@ making it nonsendable can help avoid certain kinds of bugs.
   -> struct FileDescriptor {
   ->     let rawValue: CInt
   -> }
-  ---
+
   -> @available(*, unavailable)
   -> extension FileDescriptor: Sendable { }
   >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
@@ -1871,7 +1871,7 @@ beginConcert(in: seattle)
   -> func beginConcert(in location: Location & Named) {
          print("Hello, \(location.name)!")
      }
-  ---
+
   -> let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
   -> beginConcert(in: seattle)
   <- Hello, Seattle!

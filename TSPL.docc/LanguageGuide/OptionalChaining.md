@@ -60,7 +60,7 @@ class Residence {
   -> class Person {
         var residence: Residence?
      }
-  ---
+
   -> class Residence {
         var numberOfRooms = 1
      }
@@ -462,11 +462,11 @@ john.residence?.address = createAddress()
   ```swifttest
   -> func createAddress() -> Address {
          print("Function was called.")
-  ---
+
          let someAddress = Address()
          someAddress.buildingNumber = "29"
          someAddress.street = "Acacia Road"
-  ---
+
          return someAddress
      }
   -> john.residence?.address = createAddress()
@@ -657,7 +657,7 @@ if let firstRoomName = john.residence?[0].name {
   -> johnsHouse.rooms.append(Room(name: "Living Room"))
   -> johnsHouse.rooms.append(Room(name: "Kitchen"))
   -> john.residence = johnsHouse
-  ---
+
   -> if let firstRoomName = john.residence?[0].name {
         print("The first room name is \(firstRoomName).")
      } else {
@@ -795,7 +795,7 @@ if let johnsStreet = john.residence?.address?.street {
   -> johnsAddress.buildingName = "The Larches"
   -> johnsAddress.street = "Laurel Street"
   -> john.residence?.address = johnsAddress
-  ---
+
   -> if let johnsStreet = john.residence?.address?.street {
         print("John's street name is \(johnsStreet).")
      } else {

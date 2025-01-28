@@ -33,7 +33,7 @@ the term *declaration* covers both declarations and definitions.
 > *declaration* → *subscript-declaration* \
 > *declaration* → *macro-declaration* \
 > *declaration* → *operator-declaration* \
-> *declaration* → *precedence-group-declaration* \
+> *declaration* → *precedence-group-declaration*
 
 ## Top-Level Code
 
@@ -481,7 +481,7 @@ newAndOld.x = 200
              set { print("Setter was called"); xValue = newValue }
          }
      }
-  ---
+
   // This subclass doesn't refer to oldValue in its observer, so the
   // superclass's getter is called only once to print the value.
   -> class New: Superclass {
@@ -494,7 +494,7 @@ newAndOld.x = 200
   <- Setter was called
   <- Getter was called
   <- New value 100
-  ---
+
   // This subclass refers to oldValue in its observer, so the superclass's
   // getter is called once before the setter, and again to print the value.
   -> class NewAndOld: Superclass {
@@ -607,7 +607,7 @@ var dictionary2: Dictionary<String, Int> = [:]
 
   ```swifttest
   -> typealias StringDictionary<Value> = Dictionary<String, Value>
-  ---
+
   // The following dictionaries have the same type.
   -> var dictionary1: StringDictionary<Int> = [:]
   -> var dictionary2: Dictionary<String, Int> = [:]
@@ -688,7 +688,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
          associatedtype Iterator: IteratorProtocol
          typealias Element = Iterator.Element
      }
-  ---
+
   -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
          // ...
   >>     return 9000
@@ -873,7 +873,6 @@ By default, function arguments in Swift are passed by value:
 Any changes made within the function are not visible in the caller.
 To make an in-out parameter instead,
 you apply the `inout` parameter modifier.
-
 
 ```swift
 func someFunction(a: inout Int) {
@@ -1467,13 +1466,25 @@ func <#function name#>(<#parameters#>) throws -> <#return type#> {
 }
 ```
 
+A function that throws a specific error type has the following form:
+
+```swift
+func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
+   <#statements#>
+}
+```
+
 Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
 (that is, in the scope of a `try` or `try!` operator).
 
-The `throws` keyword is part of a function's type,
-and nonthrowing functions are subtypes of throwing functions.
-As a result, you can use a nonthrowing function
+A function's type includes whether it can throw an error
+and what type of error it throws.
+This subtype relationship means, for example, you can use a nonthrowing function
 in a context where a throwing one is expected.
+For more information about the type of a throwing function,
+see <doc:Types#Function-Type>.
+For examples of working with errors that have explicit types,
+see <doc:ErrorHandling#Specifying-the-Error-Type>.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -1584,6 +1595,28 @@ and a throwing method can't satisfy a protocol requirement for a rethrowing meth
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
+An alternative to rethrowing is throwing a specific error type in generic code.
+For example:
+
+```swift
+func someFunction<E: Error>(callback: () throws(E) -> Void) throws(E) {
+    try callback()
+}
+```
+
+This approach to propagating an error
+preserves type information about the error.
+However, unlike marking a function `rethrows`,
+this approach doesn't prevent the function
+from throwing an error of the same type.
+
+<!--
+TODO: Revisit the comparison between rethrows and throws(E) above,
+since it seems likely that the latter will generally replace the former.
+
+See also rdar://128972373
+-->
+
 ### Asynchronous Functions and Methods
 
 Functions and methods that run asynchronously must be marked with the `async` keyword.
@@ -1662,7 +1695,7 @@ but the new method must preserve its return type and nonreturning behavior.
 > *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
 > *function-name* → *identifier* | *operator*
 >
-> *function-signature* → *parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_ \
+> *function-signature* → *parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ \
 > *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
 > *function-result* → **`->`** *attributes*_?_ *type* \
 > *function-body* → *code-block*
@@ -1768,7 +1801,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
      }
   -> let f = Number.integer
   -> // f is a function of type (Int) -> Number
-  ---
+
   -> // Apply f to create an array of Number instances with integer values
   -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
   ```
@@ -1859,10 +1892,10 @@ it can't contain any cases that are also marked with the `indirect` modifier.
   !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
   !! enum E { indirect case c }
   !!          ^
-  ---
+
   -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
-  ---
+
   -> indirect enum E3 { case x }
 -->
 
@@ -2560,7 +2593,7 @@ See also <doc:Declarations#Initializer-Declaration>.
 
 > Grammar of a protocol initializer declaration:
 >
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`throws`**_?_ *generic-where-clause*_?_ \
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
 ### Protocol Subscript Declaration
@@ -2635,7 +2668,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   -> protocol SomeProtocol {
          associatedtype SomeType
      }
-  ---
+
   -> protocol SubProtocolA: SomeProtocol {
          // This syntax produces a warning.
          associatedtype SomeType: Equatable
@@ -2647,7 +2680,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   !$ note: 'SomeType' declared here
   !! associatedtype SomeType
   !! ^
-  ---
+
   // This syntax is preferred.
   -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   ```
@@ -2905,7 +2938,7 @@ see <doc:Initialization#Failable-Initializers>.
 
 > Grammar of an initializer declaration:
 >
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`throws`**_?_ *generic-where-clause*_?_ *initializer-body* \
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
 > *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
 > *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
 > *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
@@ -3077,7 +3110,7 @@ extension String: TitledLoggable {
              print(self)
          }
      }
-  ---
+
      protocol TitledLoggable: Loggable {
          static var logTitle: String { get }
      }
@@ -3086,7 +3119,7 @@ extension String: TitledLoggable {
              print("\(Self.logTitle): \(self)")
          }
      }
-  ---
+
      struct Pair<T>: CustomStringConvertible {
          let first: T
          let second: T
@@ -3094,14 +3127,14 @@ extension String: TitledLoggable {
              return "(\(first), \(second))"
          }
      }
-  ---
+
      extension Pair: Loggable where T: Loggable { }
      extension Pair: TitledLoggable where T: TitledLoggable {
          static var logTitle: String {
              return "Pair of '\(T.logTitle)'"
          }
      }
-  ---
+
      extension String: TitledLoggable {
         static var logTitle: String {
            return "String"
@@ -3215,7 +3248,7 @@ extension Array: Serializable where Element == String {
   -> protocol Serializable {
         func serialize() -> Any
      }
-  ---
+
      extension Array: Serializable where Element == Int {
          func serialize() -> Any {
              // implementation
@@ -3262,7 +3295,7 @@ extension Array: Serializable where Element: SerializableInArray {
   -> protocol SerializableInArray { }
      extension Int: SerializableInArray { }
      extension String: SerializableInArray { }
-  ---
+
   -> extension Array: Serializable where Element: SerializableInArray {
          func serialize() -> Any {
              // implementation
@@ -3317,14 +3350,14 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
   -> protocol MarkedLoggable: Loggable {
         func markAndLog()
      }
-  ---
+
      extension MarkedLoggable {
         func markAndLog() {
            print("----------")
            log()
         }
      }
-  ---
+
      extension Array: Loggable where Element: Loggable { }
      extension Array: TitledLoggable where Element: TitledLoggable {
         static var logTitle: String {
@@ -3550,7 +3583,7 @@ Call the `externalMacro(module:type:)` macro from the Swift standard library,
 passing in the name of a type that contains the macro's implementation,
 and the name of the module that contains that type.
 
-[SwiftSyntax]: http://github.com/apple/swift-syntax/
+[SwiftSyntax]: https://github.com/swiftlang/swift-syntax
 
 Macros can be overloaded,
 following the same model used by functions.
@@ -3881,6 +3914,18 @@ Access control is discussed in detail in <doc:AccessControl>.
   Declarations marked with the `public` access-level modifier can also be accessed (but not subclassed)
   by code in a module that imports the module that contains that declaration.
 
+- term `package`:
+  Apply this modifier to a declaration
+  to indicate that the declaration can be accessed
+  only by code in the same package as the declaration.
+  A package is a unit of code distribution
+  that you define in the build system you're using.
+  When the build system compiles code,
+  it specifies the package name
+  by passing the `-package-name` flag to the Swift compiler.
+  Two modules are part of the same package
+  if the build system specifies the same package name when building them.
+
 - term `internal`:
   Apply this modifier to a declaration to indicate the declaration can be accessed
   only by code in the same module as the declaration.
@@ -3896,17 +3941,25 @@ Access control is discussed in detail in <doc:AccessControl>.
   only by code within the declaration's immediate enclosing scope.
 
 For the purpose of access control,
-extensions to the same type that are in the same file
-share an access-control scope.
-If the type they extend is also in the same file,
-they share the type's access-control scope.
-Private members declared in the type's declaration
-can be accessed from extensions,
-and private members declared in one extension
-can be accessed from other extensions and from the type's declaration.
+extensions behave as follows:
+
+- If there are multiple extensions in the same file,
+  and those extensions all extend the same type,
+  then all of those extensions have the same access-control scope.
+  The extensions and the type they extend can be in different files.
+
+- If there are extensions in the same file as the type they extend,
+  the extensions have the same access-control scope as the type they extend.
+
+- Private members declared in a type's declaration
+  can be accessed from extensions to that type.
+  Private members declared in one extension
+  can be accessed from other extensions
+  and from the extended type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the `set` keyword enclosed in parentheses (for example, `private(set)`).
+which consists of the `set` keyword enclosed in parentheses ---
+for example, `private(set)`.
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,
@@ -3923,6 +3976,7 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 > *access-level-modifier* → **`private`** | **`private`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`internal`** | **`internal`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`package`** | **`package`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`public`** | **`public`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`open`** | **`open`** **`(`** **`set`** **`)`**
 >
