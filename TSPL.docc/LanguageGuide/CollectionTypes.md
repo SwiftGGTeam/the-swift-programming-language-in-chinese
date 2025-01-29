@@ -70,9 +70,7 @@ and is used throughout this guide when referring to the type of an array.
 
 ### Creating an Empty Array
 
-You can create an empty array in Swift using two approaches,
-as shown in the following examples.
-
+You can create an empty array in Swift using two approaches.
 If the context already provides type information,
 such as a function argument or an already typed variable or constant,
 you can use an empty array literal,
