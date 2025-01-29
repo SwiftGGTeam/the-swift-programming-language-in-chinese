@@ -1108,7 +1108,7 @@ the code below converts measured temperatures from Fahrenheit to Celsius:
 extension TemperatureLogger {
     func convertFahrenheitToCelsius() {
         for i in measurements.indices {
-            measurements[i] =  (measurements[i] - 32) * 5 / 9
+            measurements[i] = (measurements[i] - 32) * 5 / 9
         }
     }
 }
