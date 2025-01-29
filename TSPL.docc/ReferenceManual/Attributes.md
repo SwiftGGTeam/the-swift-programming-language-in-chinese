@@ -210,8 +210,105 @@ including important milestones.
   obsoleted: <#version number#>
   ```
   The *version number* consists of one to three positive integers, separated by periods.
+
+- The `noasync` argument indicates that the declared symbol can't be used directly
+  in an asynchronous context.
+
+  Because Swift concurrency can resume on a different thread
+  after a potential suspension point,
+  you can't use elements like thread-local storage, locks, mutexes, and semaphores
+  across suspension points. For example, accessing thread-local storage
+  on both sides of a suspension point could produce unintended behaviors.
+
+  ```swift
+  let customThreadLog = "CustomThreadLog"
+  
+  // Reads the log for the current thread.
+  func readLog() -> String? {
+      return Thread.current.threadDictionary[customThreadLog] as? String
+  }
+  
+  // Add text to the log for the current thread.
+  func appendToLog(_ text: String) {
+      var log = readLog() ?? ""
+      log.append(text)
+      Thread.current.threadDictionary[customThreadLog] = log
+  }
+  
+  // This function modifies thread-local storage across a 
+  // potential suspension point.
+  func verify(name: String) async {
+      // This call appends the text to the current thread's log.
+      appendToLog("Verifying \(name).\n")
+      
+      // This is a potential suspension point.
+      let result = await coin.flip()
+
+      // This call might append the text to a different thread's log.
+      appendToLog("\(name) \(result ? "is" : "isn't") verified!\n\n")
+  }
+  ```
+  
+  In the previous code listing, 
+  the compiler doesn't have enough information to detect the problem. 
+  To prevent issues like this, 
+  add an `@available(*, noasync)` attribute to the symbol's declaration:
+
+  ```swift
+  // Reads the name for the current thread.
+  @available(*, noasync)
+  func readLog() -> String? {
+      return Thread.current.threadDictionary[customThreadLog] as? String
+  }
+  ```
+ 
+  This attribute tells the compiler to raise a build error 
+  when the symbol is used in an asynchronous context. 
+  You can also use the `message` attribute to provide additional information
+  about the symbol.
+
+  ```swift
+  // Reads the name for the current thread.
+  @available(*, noasync, message: "Use safeVerify(name:) instead.")
+  func readLog() -> String? {
+      return Thread.current.threadDictionary[customThreadLog] as? String
+  }
+  ```
+
+  While the `noasync` argument prevents accidental, unsafe use of a symbol,
+  it can also prevent safe uses.
+  In many cases, `nonasync` symbols can still be used safely in specific situations.
+  If you can ensure that a particular use is safe in an asynchronous context,
+  wrap the symbol in a safe, synchronous function. 
+  You can then call that synchronous wrapper from your asynchronous context.
+  The compiler won't raise an error, because the `noasync` symbol 
+  isn't used directly in an asynchronous context.
+
+  ```swift
+  // A synchronous wrapper function around the noasync functions
+  // guarantees that there won't be a potential suspension point
+  // between the appendToLog() calls.
+  func safeVerify(name: String) -> String {
+      appendToLog("Verifying \(name).\n")
+
+      // This is no longer a potential suspension point.
+      let result = coin.synchronousFlip()
+      
+      appendToLog("\(name) \(result ? "is" : "isn't") verified!\n\n")
+
+      // Multiple calls to safeVerify() may not occur on the same thread.
+      // Return the log for the current thread.
+      return readLog() ?? "No log found."
+  }
+  ```
+
+  You can use the `noasync` argument with most declarations; 
+  however, you can't use it when declaring destructors,
+  because the system must be able to call destructors from any context.
+
 - The `message` argument provides a textual message that the compiler displays
-  when emitting a warning or error about the use of a deprecated or obsoleted declaration.
+  when emitting a warning or error about the use of a deprecated, obsoleted, 
+  or noasync declaration.
   It has the following form:
 
   ```swift
