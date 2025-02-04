@@ -216,9 +216,10 @@ including important milestones.
 
   Because Swift concurrency can resume on a different thread
   after a potential suspension point,
-  you can't use elements like thread-local storage, locks, mutexes, and semaphores
-  across suspension points. For example, accessing thread-local storage
-  on both sides of a suspension point could produce unintended behaviors.
+  you can't use elements like thread-local storage, locks, mutexes, or semaphores
+  across suspension points.
+  For example, accessing thread-local storage
+  on both sides of a suspension point could produce incorrect results.
 
   ```swift
   let customThreadLog = "CustomThreadLog"
@@ -275,12 +276,12 @@ including important milestones.
   }
   ```
 
-  While the `noasync` argument prevents accidental, unsafe use of a symbol,
+  While declaring noasync availability prevents accidental, unsafe use of a symbol,
   it can also prevent safe uses.
-  In many cases, `nonasync` symbols can still be used safely in specific situations.
+  In some cases, the symbols can be used safely in specific situations.
   If you can ensure that a particular use is safe in an asynchronous context,
   wrap the symbol in a safe, synchronous function. 
-  You can then call that synchronous wrapper from your asynchronous context.
+  You can then call the synchronous wrapper from your asynchronous code.
   The compiler won't raise an error, because the `noasync` symbol 
   isn't used directly in an asynchronous context.
 
@@ -296,15 +297,17 @@ including important milestones.
       
       appendToLog("\(name) \(result ? "is" : "isn't") verified!\n\n")
 
-      // Multiple calls to safeVerify() may not occur on the same thread.
+      // If this is called from an asynchronous context,
+      // multiple calls to safeVerify() don't necessarily occur on the same thread,
+      // and each thread has its own log.
       // Return the log for the current thread.
       return readLog() ?? "No log found."
   }
   ```
 
-  You can use the `noasync` argument with most declarations; 
-  however, you can't use it when declaring destructors,
-  because the system must be able to call destructors from any context.
+  You can use noasync availability with most declarations; 
+  however, you can't use it when declaring destructors.
+  The system must be able to call destructors from any context.
 
 - The `message` argument provides a textual message that the compiler displays
   when emitting a warning or error about the use of a deprecated, obsoleted, 
