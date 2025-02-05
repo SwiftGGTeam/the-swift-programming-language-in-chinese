@@ -216,92 +216,53 @@ including important milestones.
 
   Because Swift concurrency can resume on a different thread
   after a potential suspension point,
-  you can't use elements like thread-local storage, locks, mutexes, or semaphores
-  across suspension points.
-  For example, accessing thread-local storage
-  on both sides of a suspension point could produce incorrect results.
+  using elements like thread-local storage, locks, mutexes, or semaphores
+  across suspension points can lead to incorrect results.
+
+  To avoid any errors, add an `@available(*, noasync)` attribute to the symbol's declaration:
 
   ```swift
-  let customThreadLog = "CustomThreadLog"
-  
-  // Reads the log for the current thread.
-  func readLog() -> String? {
-      return Thread.current.threadDictionary[customThreadLog] as? String
-  }
-  
-  // Add text to the log for the current thread.
-  func appendToLog(_ text: String) {
-      var log = readLog() ?? ""
-      log.append(text)
-      Thread.current.threadDictionary[customThreadLog] = log
-  }
-  
-  // This function modifies thread-local storage across a 
-  // potential suspension point.
-  func verify(name: String) async {
-      // This call appends the text to the current thread's log.
-      appendToLog("Verifying \(name).\n")
-      
-      // This is a potential suspension point.
-      let result = await coin.flip()
-
-      // This call might append the text to a different thread's log.
-      appendToLog("\(name) \(result ? "is" : "isn't") verified!\n\n")
-  }
-  ```
-  
-  In the previous code listing, 
-  the compiler doesn't have enough information to detect the problem. 
-  To prevent issues like this, 
-  add an `@available(*, noasync)` attribute to the symbol's declaration:
-
-  ```swift
-  // Reads the name for the current thread.
-  @available(*, noasync)
-  func readLog() -> String? {
-      return Thread.current.threadDictionary[customThreadLog] as? String
+  extension pthread_mutex_t {
+    
+    @available(*, noasync)
+    mutating func lock() {
+        pthread_mutex_lock(&self)
+    }
+    
+    @available(*, noasync)
+    mutating func unlock() {
+        pthread_mutex_unlock(&self)
+    }
   }
   ```
  
   This attribute tells the compiler to raise a build error 
   when the symbol is used in an asynchronous context. 
-  You can also use the `message` attribute to provide additional information
+  You can also use the `message` argument to provide additional information
   about the symbol.
 
   ```swift
-  // Reads the name for the current thread.
-  @available(*, noasync, message: "Use safeVerify(name:) instead.")
-  func readLog() -> String? {
-      return Thread.current.threadDictionary[customThreadLog] as? String
+  @available(*, noasync, message: "Migrate locks to Swift concurrency.")
+  mutating func lock() {
+    pthread_mutex_lock(&self)
   }
   ```
 
-  While declaring noasync availability prevents accidental, unsafe use of a symbol,
-  it can also prevent safe uses.
-  In some cases, the symbols can be used safely in specific situations.
-  If you can ensure that a particular use is safe in an asynchronous context,
-  wrap the symbol in a safe, synchronous function. 
-  You can then call the synchronous wrapper from your asynchronous code.
-  The compiler won't raise an error, because the `noasync` symbol 
-  isn't used directly in an asynchronous context.
+  If you can guarantee that your code uses a potentially unsafe symbol in a safe way, 
+  You can wrap it in a function and call that function 
+  from an asynchronous context.
 
   ```swift
-  // A synchronous wrapper function around the noasync functions
-  // guarantees that there won't be a potential suspension point
-  // between the appendToLog() calls.
-  func safeVerify(name: String) -> String {
-      appendToLog("Verifying \(name).\n")
-
-      // This is no longer a potential suspension point.
-      let result = coin.synchronousFlip()
+  // Using a wrapper ensures the mutex is locked
+  // and unlocked on the same thread.
+  func modifyProtectedData() -> Int {
+      var mutex = pthread_mutex_t()
       
-      appendToLog("\(name) \(result ? "is" : "isn't") verified!\n\n")
-
-      // If this is called from an asynchronous context,
-      // multiple calls to safeVerify() don't necessarily occur on the same thread,
-      // and each thread has its own log.
-      // Return the log for the current thread.
-      return readLog() ?? "No log found."
+      mutex.lock()
+      count += 1
+      mutex.unlock()
+      
+      return count
   }
   ```
 
