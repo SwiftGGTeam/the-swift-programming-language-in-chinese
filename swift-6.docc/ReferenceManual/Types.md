@@ -9,7 +9,7 @@
 除了用户自定义的命名类型，Swift 标准库还定义了许多常用的命名类型，包括表示数组、字典和可选值的类型。
 
 在很多编程语言中通常被认为是基本或原始的数据类型——例如表示数字、字符和字符串的类型——实际上是使用结构体在 Swift 标准库中定义和实现的命名类型。
-因为这些基本数据类型是命名类型，所以您可以使用扩展声明(在<doc:Extensions>和<doc:Declarations#Extension-Declaration>中讨论)来扩展它们的行为，以满足您程序的需求。
+因为这些基本数据类型是命名类型，所以您可以使用扩展声明(在<doc:Extensions>和<doc:Declarations#扩展声明>中讨论)来扩展它们的行为，以满足您程序的需求。
 
 复合类型指的是在 Swift 语言本身中定义的没有名称的类型。有两种复合类型:函数类型和元组类型。
 复合类型可能包含命名类型和其他复合类型。
@@ -64,7 +64,7 @@ let origin: Point = (0, 0)
 var someValue: ExampleModule.MyType
 ```
 
-元组类型是一个用逗号分隔的类型列表，用括号括起来。你可以将元组类型用作函数的返回类型，以使函数能够返回包含多个值的单个元组。你还可以命名元组类型的元素，并使用这些名称来引用各个元素的值。元素名称由一个标识符后跟一个冒号(:)组成。有关演示这两个特性的示例，请参阅<doc:Functions#Functions-with-Multiple-Return-Values>。当元组类型的元素有名称时，该名称是类型的一部分。
+元组类型是一个用逗号分隔的类型列表，用括号括起来。你可以将元组类型用作函数的返回类型，以使函数能够返回包含多个值的单个元组。你还可以命名元组类型的元素，并使用这些名称来引用各个元素的值。元素名称由一个标识符后跟一个冒号(:)组成。有关演示这两个特性的示例，请参阅<doc:Functions#多重返回值函数>。当元组类型的元素有名称时，该名称是类型的一部分。
 
 ```swift
 var someTuple = (top: 10, bottom: 12)  // someTuple 的类型为 (top: Int, bottom: Int)
@@ -83,11 +83,11 @@ someTuple = (left: 5, right: 5)  // 错误: 名称不匹配
 
 参数类型是一个用逗号分隔的类型列表。由于返回类型可以是元组类型，函数类型支持返回多个值的函数和方法。
 
-函数类型 () -> T (其中 T 是任何类型)的参数可以应用 autoclosure 属性，在调用时隐式创建闭包。这提供了一种语法上方便的方式，在调用函数时延迟表达式的计算，而无需编写显式闭包。有关 autoclosure 函数类型参数的示例，请参阅<doc:Closures#Autoclosures>。
+函数类型 () -> T (其中 T 是任何类型)的参数可以应用 autoclosure 属性，在调用时隐式创建闭包。这提供了一种语法上方便的方式，在调用函数时延迟表达式的计算，而无需编写显式闭包。有关 autoclosure 函数类型参数的示例，请参阅<doc:Closures#自动闭包>。
 
-函数类型可以在其参数类型中有可变参数。在语法上，可变参数由一个基本类型名后跟三个点(...)组成，如 Int...。可变参数被视为包含基本类型名元素的数组。例如，可变参数 Int... 被视为 [Int]。有关使用可变参数的示例，请参阅<doc:Functions#Variadic-Parameters>。
+函数类型可以在其参数类型中有可变参数。在语法上，可变参数由一个基本类型名后跟三个点(...)组成，如 Int...。可变参数被视为包含基本类型名元素的数组。例如，可变参数 Int... 被视为 [Int]。有关使用可变参数的示例，请参阅<doc:Functions#可变参数>。
 
-要指定一个输入输出参数，需要在参数类型前加上 `inout` 关键字。你不能在可变参数或返回类型上使用 `inout` 关键字。输入输出参数在 <doc:Functions#In-Out-Parameters> 中有讨论。
+要指定一个输入输出参数，需要在参数类型前加上 `inout` 关键字。你不能在可变参数或返回类型上使用 `inout` 关键字。输入输出参数在 <doc:Functions#输入输出参数> 中有讨论。
 
 如果函数类型只有一个参数，且参数类型为元组，则在写该函数类型时必须给元组加括号。例如，`((Int, Int)) -> Void` 是一个接受单个参数的函数类型，该参数的类型为 `(Int, Int)`，并且不返回任何值。相反，如果不加括号，`(Int, Int) -> Void` 是一个接受两个 `Int` 参数并且不返回任何值的函数类型。同样，因为 `Void` 是 `()` 的类型别名，所以函数类型 `(Void) -> Void` 与 `(()) -> ()` 相同 --- 一个接受单个参数为空元组的函数。这些类型与 `() -> ()` 不同 --- 一个不接受任何参数的函数。
 
@@ -157,7 +157,7 @@ func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void
 
 在上述代码中，`takesTwoFunctions(first:second:)` 的两个参数都是函数。由于它们都没有标记为 `@escaping`，因此它们都是非逃逸的。
 
-上述代码中标记为“错误”的四个函数调用会导致编译器错误。因为 `first` 和 `second` 参数是非逃逸函数，所以它们不能被传递给另一个非逃逸函数参数。另一方面，标记为“正确”的两个函数调用不会导致编译器错误。这些函数调用没有违反限制，因为 `external` 不是 `takesTwoFunctions(first:second:)` 的参数之一。
+上述代码中标记为"错误"的四个函数调用会导致编译器错误。因为 `first` 和 `second` 参数是非逃逸函数，所以它们不能被传递给另一个非逃逸函数参数。另一方面，标记为"正确"的两个函数调用不会导致编译器错误。这些函数调用没有违反限制，因为 `external` 不是 `takesTwoFunctions(first:second:)` 的参数之一。
 
 如果你需要避免这个限制，可以将其中一个参数标记为逃逸的，或者使用 `withoutActuallyEscaping(_:do:)` 函数临时将其中一个非逃逸函数参数转换为逃逸函数。有关避免内存访问冲突的信息，请参阅 <doc:MemorySafety>。
 
@@ -205,7 +205,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 当访问多维数组的元素时，最左边的下标索引指的是最外层数组中该索引处的元素。下一个向右的下标索引指的是嵌套一层的数组中该索引处的元素。以此类推。这意味着在上面的示例中，`array3D[0]` 指的是 `[[1, 2], [3, 4]]`、`array3D[0][1]` 指的是 `[3, 4]`、`array3D[0][1][1]` 指的是值 4。
 
-有关 Swift 标准库 `Array` 类型的详细讨论，请参阅 <doc:CollectionTypes#Arrays>。
+有关 Swift 标准库 `Array` 类型的详细讨论，请参阅 <doc:CollectionTypes#数组>。
 
 > 数组类型的语法:
 > > *array-type* → **`[`** *type* **`]`**
@@ -233,7 +233,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
 字典的键类型必须符合 Swift 标准库 `Hashable` 协议。
 
-有关 Swift 标准库 `Dictionary` 类型的详细讨论，请参阅 <doc:CollectionTypes#Dictionaries>。
+有关 Swift 标准库 `Dictionary` 类型的详细讨论，请参阅 <doc:CollectionTypes#字典>。
 
 > 字典类型的语法:
 > > *dictionary-type* → **`[`** *type* **`:`** *type* **`]`**
@@ -264,7 +264,7 @@ optionalInteger! // 42
 
 你也可以使用可选链和可选绑定来有条件地对可选表达式执行操作。如果值为 `nil`，则不执行任何操作，因此也不会产生运行时错误。
 
-有关更多信息和示例说明如何使用可选类型，请参阅 <doc:TheBasics#Optionals>。
+有关更多信息和示例说明如何使用可选类型，请参阅 <doc:TheBasics#可选项>。
 
 > 可选类型的语法:
 > > *optional-type* → *type* **`?`**
@@ -296,7 +296,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 使用可选链来有条件地对隐式解包可选表达式执行操作。如果值为 `nil`，则不执行任何操作，因此也不会产生运行时错误。
 
-有关隐式解包可选类型的更多信息，请参阅 <doc:TheBasics#Implicitly-Unwrapped-Optionals>。
+有关隐式解包可选类型的更多信息，请参阅 <doc:TheBasics#隐式解析可选类型>。
 
 > 隐式解包可选类型的语法:
 > > *implicitly-unwrapped-optional-type* → *type* **`!`**  
@@ -442,7 +442,7 @@ if let first = mixed.first as? String {
 `AnyObject` 协议类似于 `Any` 类型。
 所有类型都隐式符合 `AnyObject`。
 与由语言定义的 `Any` 不同， `AnyObject` 由 Swift 标准库定义。
-有关更多信息，请参阅 <doc:Protocols#Class-Only-Protocols> 和 [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject)。
+有关更多信息，请参阅 <doc:Protocols#类专属协议> 和 [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject)。
 
 > Any 类型语法:
 > > *any-type* → **`Any`**
@@ -492,7 +492,7 @@ if let first = mixed.first as? String {
 
 其他命名类型只能继承自或符合一系列协议。协议类型可以继承自任意数量的其他协议。当一个协议类型继承自其他协议时，来自那些其他协议的要求会被聚合在一起，任何继承自当前协议的类型都必须符合所有这些要求。
 
-对于为枚举案例分配原始值的枚举定义，类型继承子句可以是指定这些原始值类型的单个命名类型。有关使用类型继承子句指定其原始值类型的枚举定义示例，请参阅 <doc:Enumerations#Raw-Values>。
+对于为枚举案例分配原始值的枚举定义，类型继承子句可以是指定这些原始值类型的单个命名类型。有关使用类型继承子句指定其原始值类型的枚举定义示例，请参阅 <doc:Enumerations#原始值>。
 
 > 类型继承子句的语法:
 > > *type-inheritance-clause* → **`:`** *type-inheritance-list* 

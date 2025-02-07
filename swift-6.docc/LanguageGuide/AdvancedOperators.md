@@ -345,7 +345,7 @@ unsignedOverflow = unsignedOverflow &- 1
 
 ![](overflowUnsignedSubtraction)
 
-有符号整数也会发生溢出。所有有符号整数的加法和减法都以按位方式执行，符号位作为被加或被减数字的一部分包含在内，如 <doc:AdvancedOperators#Bitwise-Left-and-Right-Shift-Operators> 中所述。
+有符号整数也会发生溢出。所有有符号整数的加法和减法都以按位方式执行，符号位作为被加或被减数字的一部分包含在内，如 <doc:AdvancedOperators#按位左移和右移运算符> 中所述。
 
 ```swift
 var signedOverflow = Int8.min
@@ -717,11 +717,11 @@ if twoThree == anotherTwoThree {
   ```
 -->
 
-在许多简单的情况下，你可以要求 Swift 为你提供等价运算符的合成实现，如 <doc:Protocols#Adopting-a-Protocol-Using-a-Synthesized-Implementation> 中所述。
+在许多简单的情况下，你可以要求 Swift 为你提供等价运算符的合成实现，如 <doc:Protocols#使用合成实现来遵循协议> 中所述。
 
 ## 自定义运算符
 
-除了 Swift 提供的标准运算符外，你还可以声明和实现自己的 **自定义运算符**。有关可用于定义自定义运算符的字符列表，请参见 <doc:LexicalStructure#Operators>。
+除了 Swift 提供的标准运算符外，你还可以声明和实现自己的 **自定义运算符**。有关可用于定义自定义运算符的字符列表，请参见 <doc:LexicalStructure#运算符>。
 
 新运算符使用 `operator` 关键字在全局级别声明，并用 `prefix`、`infix` 或 `postfix` 修饰符标记：
 
@@ -775,7 +775,7 @@ let afterDoubling = +++toBeDoubled
 
 ### 自定义中缀运算符的优先级
 
-每个自定义中缀运算符都属于一个优先级组。优先级组指定了一个运算符相对于其他中缀运算符的优先级，以及运算符的结合性。有关这些特性如何影响中缀运算符与其他中缀运算符交互的解释，请参见 <doc:AdvancedOperators#Precedence-and-Associativity>。
+每个自定义中缀运算符都属于一个优先级组。优先级组指定了一个运算符相对于其他中缀运算符的优先级，以及运算符的结合性。有关这些特性如何影响中缀运算符与其他中缀运算符交互的解释，请参见 <doc:AdvancedOperators#优先级和结合性>。
 
 没有被明确放入优先级组的自定义中缀运算符会被赋予一个默认优先级组，其优先级紧高于三元条件运算符的优先级。
 
@@ -812,7 +812,7 @@ let plusMinusVector = firstVector +- secondVector
   ```
 -->
 
-这个运算符将两个向量的 `x` 值相加，并从第一个向量的 `y` 值中减去第二个向量的 `y` 值。由于它本质上是一个"加法"运算符，因此它被赋予了与加法中缀运算符（如 `+` 和 `-`)相同的优先级组。有关 Swift 标准库提供的运算符的信息，包括运算符优先级组和结合性设置的完整列表，请参见 [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations)。有关优先级组的更多信息以及定义自己的运算符和优先级组的语法，请参见 <doc:Declarations#Operator-Declaration>。
+这个运算符将两个向量的 `x` 值相加，并从第一个向量的 `y` 值中减去第二个向量的 `y` 值。由于它本质上是一个"加法"运算符，因此它被赋予了与加法中缀运算符（如 `+` 和 `-`)相同的优先级组。有关 Swift 标准库提供的运算符的信息，包括运算符优先级组和结合性设置的完整列表，请参见 [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations)。有关优先级组的更多信息以及定义自己的运算符和优先级组的语法，请参见 <doc:Declarations#操作符声明>。
 
 > 注意： 在定义前缀或后缀运算符时，你不需要指定优先级。但是，如果你对同一个操作数同时应用前缀和后缀运算符，后缀运算符会先被应用。
 

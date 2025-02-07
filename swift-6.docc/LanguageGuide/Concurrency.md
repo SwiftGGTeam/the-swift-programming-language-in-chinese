@@ -143,7 +143,7 @@ show(photo)
 
 - 静态函数 `main()` 中被打上 `@main` 标记的结构体、类或者枚举中的代码
   
-- 非结构化的子任务中的代码，之后会在 <doc:Concurrency#Unstructured-Concurrency> 中说明
+- 非结构化的子任务中的代码，之后会在 <doc:Concurrency#非结构化并发> 中说明
 
 <!--
   SE-0296 specifically calls out that top-level code is *not* an async context,
@@ -650,7 +650,7 @@ let result = await handle.value
 
 你可以使用任务来将自己的程序分割为相互独立、并行的片段。任务之间时相互隔离的，这样他们才能安全地同时运行。但有时候，你需要在任务之前共享信息。此时，你就可以使用 actors 来安全地在并行代码之间共享这些信息。
 
-就和类一样，actor 也是应用类型，所以在  <doc:ClassesAndStructures#Classes-Are-Reference-Types> 一文中有关引用类型和值类型的对比，同时适用于类和 actor。与类不同的是，actor 在同一时刻只允许一项任务访问其可变状态，这样多个任务同时与 actor 交互时才不会产生安全性问题。举个例子，下面是一个用于记录温度的 actor：
+就和类一样，actor 也是应用类型，所以在  <doc:ClassesAndStructures#类是引用类型> 一文中有关引用类型和值类型的对比，同时适用于类和 actor。与类不同的是，actor 在同一时刻只允许一项任务访问其可变状态，这样多个任务同时与 actor 交互时才不会产生安全性问题。举个例子，下面是一个用于记录温度的 actor：
 
 ```swift
 actor TemperatureLogger {

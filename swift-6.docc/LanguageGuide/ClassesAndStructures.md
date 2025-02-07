@@ -588,7 +588,7 @@ if tenEighty === alsoTenEighty {
 
 当你定义自己的自定义结构体和类时，
 你有责任决定什么才算作两个实例相等。
-定义自己的 `==` 和 `!=` 运算符实现的过程在 <doc:AdvancedOperators#Equivalence-Operators> 中有描述。
+定义自己的 `==` 和 `!=` 运算符实现的过程在 <doc:AdvancedOperators#等价运算符> 中有描述。
 
 <!--
   - test: `classesDontGetEqualityByDefault`

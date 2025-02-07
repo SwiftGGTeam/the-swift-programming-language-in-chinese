@@ -8,7 +8,7 @@ Swift 的 *词法结构* 描述了哪些字符序列构成了语言中的合法�
 
 ## 空白和注释
 
-空白字符有两个用途：在源文件中分隔标记，并区分前缀、后缀和中缀运算符（参见 <doc:LexicalStructure#Operators>），除此之外，空白字符会被忽略。以下字符被视为空白字符：空格 (U+0020)、换行符 (U+000A)、回车符 (U+000D)、水平制表符 (U+0009)、垂直制表符 (U+000B)、换页符 (U+000C) 和空字符 (U+0000)。
+空白字符有两个用途：在源文件中分隔标记，并区分前缀、后缀和中缀运算符（参见 <doc:LexicalStructure#运算符>），除此之外，空白字符会被忽略。以下字符被视为空白字符：空格 (U+0020)、换行符 (U+000A)、回车符 (U+000D)、水平制表符 (U+0009)、垂直制表符 (U+000B)、换页符 (U+000C) 和空字符 (U+0000)。
 
 <!--
   Whitespace characters are listed roughly from
@@ -117,7 +117,7 @@ https://github.com/apple/swift-markdown/issues/93
 
 ## 关键字和标点符号
 
-以下关键字是保留字，不能用作标识符，除非用反引号将它们转义，如上文 <doc:LexicalStructure#Identifiers> 中所述。除了 `inout`、`var` 和 `let` 之外，其他关键字可以作为函数声明或函数调用中的参数名称，而无需使用反引号进行转义。当成员名称与关键字相同时，引用该成员时不需要使用反引号进行转义，除非在引用成员与使用关键字之间存在歧义——例如，`self`、`Type` 和 `Protocol` 在显式成员表达式中具有特殊含义，因此在这种情况下必须用反引号将它们转义。
+以下关键字是保留字，不能用作标识符，除非用反引号将它们转义，如上文 <doc:LexicalStructure#标识符> 中所述。除了 `inout`、`var` 和 `let` 之外，其他关键字可以作为函数声明或函数调用中的参数名称，而无需使用反引号进行转义。当成员名称与关键字相同时，引用该成员时不需要使用反引号进行转义，除非在引用成员与使用关键字之间存在歧义——例如，`self`、`Type` 和 `Protocol` 在显式成员表达式中具有特殊含义，因此在这种情况下必须用反引号将它们转义。
 
 <!--
   - test: `keywords-without-backticks`
@@ -298,7 +298,7 @@ true             // 布尔字面量
 
 为了提高可读性，数字之间允许使用下划线 (`_`)，但它们会被忽略，因此不会影响字面量的值。整数字面量可以以前导零 (`0`) 开头，但这些零同样会被忽略，不会影响字面量的进制或值。
 
-除非另有说明，否则整数字面量的默认推断类型是 Swift 标准库类型 `Int`。Swift 标准库还定义了用于表示各种大小的有符号和无符号整数的类型，详细内容请参阅 <doc:TheBasics#Integers>。
+除非另有说明，否则整数字面量的默认推断类型是 Swift 标准库类型 `Int`。Swift 标准库还定义了用于表示各种大小的有符号和无符号整数的类型，详细内容请参阅 <doc:TheBasics#整数>。
 
 <!--
   TR: The prose assumes underscores only belong between digits.
@@ -791,7 +791,7 @@ Swift 标准库定义了许多运算符供你使用，其中许多运算符在 <
   C++ typically needs whitespace to resolve the ambiguity.
 -->
 
-要了解如何定义新的自定义操作符，请参阅 <doc:AdvancedOperators#Custom-Operators> 和 <doc:Declarations#Operator-Declaration>。要了解如何重载现有的操作符，请参阅 <doc:AdvancedOperators#Operator-Methods>。
+要了解如何定义新的自定义操作符，请参阅 <doc:AdvancedOperators#自定义运算符> 和 <doc:Declarations#操作符声明>。要了解如何重载现有的操作符，请参阅 <doc:AdvancedOperators#Operator-Methods>。
 
 <!--
   NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a

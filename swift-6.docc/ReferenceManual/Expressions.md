@@ -31,9 +31,9 @@ Swift 中存在四种表达式：前缀表达式，中缀表达式，基本表�
 &<#表达式#>
 ```
 
-输入输出表达式也可以用于将非指针实参传入到需要指针的上下文中，如 <doc:Functions#In-Out-Parameters>.
+输入输出表达式也可以用于将非指针实参传入到需要指针的上下文中，如 <doc:Functions#输入输出参数>.
 
-In-out 表达式也可以用于将非指针实参传入到需要指针的上下文中，如 <doc:Expressions#Implicit-Conversion-to-a-Pointer-Type>.
+In-out 表达式也可以用于将非指针实参传入到需要指针的上下文中，如 <doc:Expressions#隐式转换为指针类型>.
 
 > Grammar of an in-out expression:
 >
@@ -184,7 +184,7 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
 
 如果条件为真，那么对第一个表达式进行求值并返回结果。否则，对第二个表达式进行求值并返回结果。未使用的表达式不会进行求值。
 
-关于使用三元条件运算符的例子，请参阅 <doc:BasicOperators#Ternary-Conditional-Operator>.
+关于使用三元条件运算符的例子，请参阅 <doc:BasicOperators#三元运算符>.
 
 > Grammar of a conditional operator:
 >
@@ -227,7 +227,7 @@ f(x as Any)
 `as!` 运算符执行强制类型转换，返回目标类型的非可选值。如果转换失败，则会导致运行时错误。表达式 `x as! T` 效果等同于 `(x as? T)!`。
 
 关于类型转换的更多内容和例子，请参阅 <doc:TypeCasting>.
-要查看使用类型转换运算符的示例，请参阅 <doc:TypeCasting#Type-Casting-Operators>.
+要查看使用类型转换运算符的示例，请参阅 <doc:TypeCasting#类型转换运算符>.
 
 > Grammar of a type-casting operator:
 >
@@ -465,7 +465,7 @@ let number = if someCondition { 10 as Double } else { 12.34 }
 }
 ```
 
-闭包的参数声明形式跟函数一样，请参阅 <doc:Declarations#Function-Declaration>.
+闭包的参数声明形式跟函数一样，请参阅 <doc:Declarations#函数声明>.
 
 在闭包表达式中写入 `throws` 或 `async` 将显式地将闭包标记为丢掷或异步的。
 
@@ -501,11 +501,11 @@ myFunction { return $0 + $1 }
 myFunction { $0 + $1 }
 ```
 
-关于如何将闭包作为参数来传递的内容，请参阅 <doc:Expressions#Function-Call-Expression>.
+关于如何将闭包作为参数来传递的内容，请参阅 <doc:Expressions#函数调用表达式>.
 
 使用闭包表达式时，可以不必将其存储在一个变量或常量中，例如作为函数调用的一部分来立即使用一个闭包。在上面的例子中，传入 `myFunction` 的闭包表达式就是这种立即使用类型的闭包。因此，一个闭包是否逃逸与其使用时的上下文相关。一个会被立即调用或者作为函数的非逃逸参数传递的闭包表达式是非逃逸的，否则，这个闭包表达式是逃逸的。
 
-关于逃逸闭包的内容，请参阅<doc:Closures#Escaping-Closures>.
+关于逃逸闭包的内容，请参阅<doc:Closures#逃逸闭包>.
 
 #### 捕获列表
 
@@ -564,9 +564,9 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-关于闭包表达式的更多信息和例子，请参阅 <doc:Closures#Closure-Expressions>.
+关于闭包表达式的更多信息和例子，请参阅 <doc:Closures#闭包表达式>.
 
-关于捕获列表的更多信息和例子，请参阅 <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closures>.
+关于捕获列表的更多信息和例子，请参阅 <doc:AutomaticReferenceCounting#闭包引起的循环强引用>.
 
 > Grammar of a closure expression:
 >
@@ -609,7 +609,7 @@ x = .anotherValue
 var someOptional: MyEnumeration? = .someValue
 ```
 
-隐式成员表达式可以跟在后缀运算符或者其他在<doc:Expressions#Postfix-Expressions>里介绍的语法后面。这被称为 链式隐式成员表达式。尽管链式后缀表达式大多都是相同类型，但其实只需要整个链式成员表达式可以转换为上下文的类型就行了。更具体的，如果隐式类型是可选的，则可以使用非可选类型的值，如果隐式类型是类类型，则可以使用其子类的值。例如：
+隐式成员表达式可以跟在后缀运算符或者其他在<doc:Expressions#后缀表达式>里介绍的语法后面。这被称为 链式隐式成员表达式。尽管链式后缀表达式大多都是相同类型，但其实只需要整个链式成员表达式可以转换为上下文的类型就行了。更具体的，如果隐式类型是可选的，则可以使用非可选类型的值，如果隐式类型是类类型，则可以使用其子类的值。例如：
 
 ```swift
 class SomeClass {
@@ -1102,10 +1102,10 @@ someFunction { return $0 + 100 }  // 歧义
 someFunction { return $0 } secondClosure: { return $0 }  // 打印 "10 20"
 ```
 
-在上面的例子中，Swift 5.3 中被标记为“歧义”的函数调用会打印”- 120“并产生一个编辑器警告。未来版本的 Swift 会打印”110 -“。
+在上面的例子中，Swift 5.3 中被标记为"歧义"的函数调用会打印"- 120"并产生一个编辑器警告。未来版本的 Swift 会打印"110 -"。
 
 
-如 <doc:Declarations#Methods-with-Special-Names>所述，通过声明几种方法中的一种，类、结构体或枚举类型可以为函数调用语法启用语法糖。
+如 <doc:Declarations#具有特殊名称的方法>所述，通过声明几种方法中的一种，类、结构体或枚举类型可以为函数调用语法启用语法糖。
 
 #### 指针类型的隐式转换
 
@@ -1251,7 +1251,7 @@ let d = instance.overloadedMethod(x:y:)  // Still ambiguous
 let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 ```
 
-如果点号（`.`）出现在行首，它会被视为显式成员表达式的一部分，而不是隐式成员表达式的一部分。例如如下代码所展示的被分为多行的链式方法调用：
+如果点号（`.`）出现在行首，它会被视为显式成员表达式的一部分，而不是 <doc:Expressions#隐式成员表达式> 的一部分。例如如下代码所展示的被分为多行的链式方法调用：
 
 ```swift
 let x = [10, 3, 20, 15, 4]
@@ -1314,7 +1314,7 @@ let numbers = [10, 20, 33, 43, 50]
 
 要获取下标表达式的值，可将索引表达式作为下标表达式的参数来调用下标 getter。下标 setter 的调用方式与之一样。
 
-关于下标的声明，请参阅 <doc:Declarations#Protocol-Subscript-Declaration>.
+关于下标的声明，请参阅 <doc:Declarations#协议下标声明>.
 
 > Grammar of a subscript expression:
 >

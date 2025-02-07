@@ -371,7 +371,7 @@ constantString += " and another Highlander"
 
 ## 字符串是值类型
 
-在 Swift 中 `String` 类型是值类型。如果你创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。在前述任一情况下，都会对已有字符串值创建新副本，并对该新副本而非原始字符串进行传递或赋值操作。值类型在<doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>中进行了详细描述。
+在 Swift 中 `String` 类型是值类型。如果你创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。在前述任一情况下，都会对已有字符串值创建新副本，并对该新副本而非原始字符串进行传递或赋值操作。值类型在<doc:ClassesAndStructures#结构体和枚举是值类型>中进行了详细描述。
 
 Swift 默认拷贝 `String` 的行为保证了在函数/方法向你传递的 `String` 所属权属于你，无论该值来自于哪里。你可以确信传递的 `String` 不会被修改，除非你自己去修改它。
 
@@ -407,7 +407,7 @@ for character in "Dog!🐶" {
   ```
 -->
 
-`for`-`in` 循环在 <doc:ControlFlow#For-In-Loops>中进行了详细描述。
+`for`-`in` 循环在 <doc:ControlFlow#For-In-循环>中进行了详细描述。
 
 另外, 当您有一个只包含一个字符的字符串字面量时，通过明确给出 `Character` 这种类型的标注，就能够将其转化为一个独立存在的 `Character` 类型的常量或者变量。
 
@@ -997,7 +997,7 @@ Swift 提供了三种方式来比较文本值：字符串字符相等、前缀�
 
 ### 字符串和字符相等
 
-字符串/字符可以用等于操作符（`==`）和不等于操作符（`!=`），详细描述在 <doc:BasicOperators#Comparison-Operators>:
+字符串/字符可以用等于操作符（`==`）和不等于操作符（`!=`），详细描述在 <doc:BasicOperators#比较运算符>:
 
 ```swift
 let quotation = "We're a lot alike, you and I."
@@ -1268,13 +1268,13 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 -->
 
 > 注意:
-> `hasPrefix(*:)` 和 `hasSuffix(*:)` 方法都是在每个字符串中逐字符比较其可扩展的字符群集是否标准相等，详细描述在 <doc:StringsAndCharacters#String-and-Character-Equality>.
+> `hasPrefix(*:)` 和 `hasSuffix(*:)` 方法都是在每个字符串中逐字符比较其可扩展的字符群集是否标准相等，详细描述在 <doc:StringsAndCharacters#字符串和字符相等>.
 
 ## 字符串的 Unicode 表示形式
 
 当一个 Unicode 字符串被写进文本文件或者其他储存时，字符串中的 Unicode 标量会用 Unicode 定义的几种 `编码格式`（encoding forms）编码。每一个字符串中的小块编码都被称 `代码单元`（code units）。这些包括 UTF-8 编码格式（编码字符串为 8 位的代码单元），UTF-16 编码格式（编码字符串位 16 位的代码单元），以及 UTF-32 编码格式（编码字符串32位的代码单元）。
 
-Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式。你可以利用 `for-in` 来对字符串进行遍历，从而以 Unicode 可扩展的字符群集的方式访问每一个 `Character` 值。该过程在 <doc:StringsAndCharacters#Working-with-Characters>中进行了描述。
+Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式。你可以利用 `for-in` 来对字符串进行遍历，从而以 Unicode 可扩展的字符群集的方式访问每一个 `Character` 值。该过程在 <doc:StringsAndCharacters#使用字符>中进行了描述。
 
 另外，能够以其他三种 Unicode 兼容的方式访问字符串的值：
 

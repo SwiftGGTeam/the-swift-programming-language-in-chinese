@@ -127,7 +127,7 @@ numberOfLegs["bird"] = 2
 
 上面的示例定义了一个名为 `numberOfLegs` 的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs` 字典的类型推断为 `[String: Int]`。创建字典后，此示例使用下标赋值将 `String` 类型的键 `bird` 和 `Int` 类型的值 `2` 添加到字典中。
 
-更多关于 `Dictionary` 下标的信息请参考 <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
+更多关于 `Dictionary` 下标的信息请参考 <doc:CollectionTypes#访问和修改字典>.
 
 >注意:
 >Swift 的 `Dictionary` 类型的下标接受并返回_可选_类型的值。对于上面的 `numberOfLegs` 字典通过下标返回的是一个 `Int?` 或者说“可选的 int”。`Dictionary` 类型之所以如此实现下标，是因为不是每个键都有对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为 nil 即可。
@@ -136,7 +136,7 @@ numberOfLegs["bird"] = 2
 
 下标可以接受任意数量的入参，并且这些入参可以是任何类型。下标的返回值也可以是任意类型。
 
-与函数一样，下标可以接受不同数量的参数，并且为这些参数提供默认值，如 <doc:Functions#Variadic-Parameters> 和 <doc:Functions#Default-Parameter-Values>中所述。但是，与函数不同的是，下标不能使用 in-out 参数。
+与函数一样，下标可以接受不同数量的参数，并且为这些参数提供默认值，如 <doc:Functions#可变参数> 和 <doc:Functions#默认参数值>中所述。但是，与函数不同的是，下标不能使用 in-out 参数。
 
 <!--
   - test: `subscripts-can-have-default-arguments`
@@ -211,7 +211,7 @@ struct Matrix {
   ```
 -->
 
-`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考<doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>。
+`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考<doc:CollectionTypes#使用默认值创建数组>。
 
 你可以通过传入合适的 `row` 和 `column` 数值来构造一个新的 `Matrix` 实例:
 

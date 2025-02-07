@@ -7,7 +7,7 @@
 闭包可以捕获和存储其所在上下文中任意常量和变量的引用。这个过程可以看作是将这些常量和变量 **包含** 在闭包的作用域内。 Swift 会为你管理在捕获过程中涉及到的所有内存操作。
 
 > 注意: 如果你不熟悉捕获（capturing）这个概念也不用担心。
-> 在 <doc:Closures#Capturing-Values> 章节有它更详细的介绍。
+> 在 <doc:Closures#值捕获> 章节有它更详细的介绍。
 
 在 <doc:Functions> 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采用如下三种形式之一：
 
@@ -24,7 +24,7 @@ Swift 中的闭包表达式风格简洁明了，通过一系列优化，使得�
 
 ## 闭包表达式
 
-在 <doc:Functions#Nested-Functions> 中介绍的嵌套函数，提供了一种便捷的方式，可以在较大的函数内部命名和定义自包含的代码块。然而，有时我们需要更简洁的函数式结构，而不必完整地声明函数名称。这在处理那些接受函数作为参数的函数或方法时特别有用。
+在 <doc:Functions#嵌套函数> 中介绍的嵌套函数，提供了一种便捷的方式，可以在较大的函数内部命名和定义自包含的代码块。然而，有时我们需要更简洁的函数式结构，而不必完整地声明函数名称。这在处理那些接受函数作为参数的函数或方法时特别有用。
 
 **闭包表达式** 是一种以简短、集中的语法编写内联闭包的方法。在保证不丢失它语法清晰和意图的同时，闭包表达式提供了几种优化的语法简写形式。下面的闭包表达式通过对 `sorted(by:)` 这一示例的多次迭代来展示这个过程，每次迭代都使用了更加简洁的方式描述了相同功能。
 
@@ -222,7 +222,7 @@ reversedNames = names.sorted(by: >)
   ```
 -->
 
-更多关于运算符方法的内容请查看 <doc:AdvancedOperators#Operator-Methods>.
+更多关于运算符方法的内容请查看 <doc:AdvancedOperators#运算符方法>.
 
 ## 尾随闭包
 
@@ -268,7 +268,7 @@ someFunctionThatTakesAClosure() {
   ```
 -->
 
-上面 <doc:Closures#Closure-Expression-Syntax> 部分的字符串排序闭包可以写在 `sorted(by:)` 方法的括号之外作为尾随闭包：
+上面 <doc:Closures#闭包表达式语法> 部分的字符串排序闭包可以写在 `sorted(by:)` 方法的括号之外作为尾随闭包：
 
 ```swift
 reversedNames = names.sorted() { $0 > $1 }
@@ -477,7 +477,7 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
   ```
 -->
 
-`makeIncrementer` 的返回类型为 `() -> Int`。这意味着它返回一个 **函数**，而不是一个简单的值。它返回的函数没有参数，每次调用它时都返回一个 `Int` 值。要了解函数如何返回其他函数，请参阅  <doc:Functions#Function-Types-as-Return-Types> 。
+`makeIncrementer` 的返回类型为 `() -> Int`。这意味着它返回一个 **函数**，而不是一个简单的值。它返回的函数没有参数，每次调用它时都返回一个 `Int` 值。要了解函数如何返回其他函数，请参阅  <doc:Functions#函数类型作为返回类型> 。
 
 `makeIncrementer(forIncrement:)` 函数定义了一个名为 `runningTotal` 的整数变量，用于存储即将返回的增量器的当前累计总和。这个变量初始化为 `0`。
 
@@ -598,7 +598,7 @@ incrementByTen()
   ```
 -->
 
-> 注意: 如果将闭包赋值给类实例的属性，并且闭包通过引用实例或其成员来捕获该实例，则将在闭包和实例之间创建一个强循环引用。Swift 使用 **捕获列表** 来打破这些强循环引用。有关更多信息，请参阅 <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures>.
+> 注意: 如果将闭包赋值给类实例的属性，并且闭包通过引用实例或其成员来捕获该实例，则将在闭包和实例之间创建一个强循环引用。Swift 使用 **捕获列表** 来打破这些强循环引用。有关更多信息，请参阅 <doc:AutomaticReferenceCounting#闭包的强引用循环>.
 
 ## 闭包是引用类型
 
@@ -752,7 +752,7 @@ class SomeOtherClass {
   ```
 -->
 
-如果 `self` 是结构体或枚举的实例，则始终可以隐式引用 `self`。但是转义闭包无法捕获其对 `self` 的可变引用。结构体和枚举不允许共享可变性，如 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types> 中所述。
+如果 `self` 是结构体或枚举的实例，则始终可以隐式引用 `self`。但是转义闭包无法捕获其对 `self` 的可变引用。结构体和枚举不允许共享可变性，如 <doc:ClassesAndStructures#结构体和枚举是值类型> 中所述。
 
 ```swift
 struct SomeStruct {
@@ -945,7 +945,7 @@ serve(customer: customersInLine.remove(at: 0))
 
 > 注意: 过度使用自动闭包可能会使您的代码难以理解。上下文和函数名称应明确表示计算正在被推迟。
 
-如果您想要允许一个自动闭包可以逃逸，请同时使用 `@autoclosure` 和 `@escaping` 属性。`@escaping` 属性在上面的 <doc:Closures#Escaping-Closures> 中进行了描述。
+如果您想要允许一个自动闭包可以逃逸，请同时使用 `@autoclosure` 和 `@escaping` 属性。`@escaping` 属性在上面的 <doc:Closures#逃逸闭包> 中进行了描述。
 
 ```swift
 // customersInLine 是 ["Barry", "Daniella"]
