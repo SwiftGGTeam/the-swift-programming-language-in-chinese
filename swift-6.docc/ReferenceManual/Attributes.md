@@ -13,7 +13,7 @@
 
 有些声明特性接受参数，这些参数指定有关特性的更多信息以及它如何适用于特定声明。这些*特性参数*被括号括起来，其格式由它们所属的特性定义。
 
-附加宏和属性包装器也使用特性语法。有关宏如何展开的信息，参见 <doc:Expressions#Macro-Expansion-Expression>。有关属性包装器的信息，参见 <doc:Attributes#propertyWrapper>。
+附加宏和属性包装器也使用特性语法。有关宏如何展开的信息，参见 <doc:Expressions#宏展开表达式>。有关属性包装器的信息，参见 <doc:Attributes#属性包装器>。
 
 ## 声明特性
 
@@ -767,7 +767,7 @@ protocol ProvidesMain {
   ```
 -->
 
-编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，详见 <doc:Declarations#Top-Level-Code>。
+编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，详见 <doc:Declarations#顶级代码>。
 
 <!--
   - test: `no-at-main-in-top-level-code`
@@ -824,7 +824,7 @@ protocol ProvidesMain {
 > 已弃用:
 > 此特性已弃用；请改用 <doc:Attributes#main> 特性。在 Swift 6 中，使用此特性将会导致错误。
 
-将此特性应用于一个类，以指示它是应用程序委托。使用此特性等同于调用 `NSApplicationMain(_:_:)` 函数。
+将此特性应用于一个类，以指示它是应用程序委托。使用此特性等同于调用 `NSApplicationMain` 函数。
 
 如果你不使用此特性，请提供一个在顶层调用 `NSApplicationMain(_:_:)` 函数的 `main.swift` 文件，如下所示：
 
@@ -838,7 +838,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
   which is correct behavior if you call a non-returning function like this.
 -->
 
-你编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，见 <doc:Declarations#Top-Level-Code> 中的讨论。
+你编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，见 <doc:Declarations#顶级代码> 中的讨论。
 
 ### NSCopying
 
@@ -1138,7 +1138,7 @@ s.$x.wrapper  // WrapperWithProjection 类型的值
 
 ### resultBuilder
 
-将此特性应用于类、结构体或枚举，以将该类型用作结果构造器。*结果构造器*是一种逐步构建嵌套数据结构的类型。你可以使用结果构造器来实现一种用于以自然、声明式方式创建嵌套数据结构的领域特定语言（DSL）。有关如何使用 `resultBuilder` 特性的示例，见 <doc:AdvancedOperators#Result-Builders>。
+将此特性应用于类、结构体或枚举，以将该类型用作结果构造器。*结果构造器*是一种逐步构建嵌套数据结构的类型。你可以使用结果构造器来实现一种用于以自然、声明式方式创建嵌套数据结构的领域特定语言（DSL）。有关如何使用 `resultBuilder` 特性的示例，见 <doc:AdvancedOperators#结果构建器>。
 
 #### 结果构造方法
 
@@ -1350,7 +1350,7 @@ struct ArrayBuilder {
 
 - 一个分支语句变成了一系列对 `buildEither(first:)` 和 `buildEither(second:)` 方法的嵌套调用。语句的条件和分支情况被映射到二叉树的叶子节点上，该语句成为了对 `buildEither` 方法的嵌套调用，遵循从根节点到该叶节点的路径。
 
-  例如，如果你编写一个包含三个分支的 switch 语句，编译器将使用一个具有三个叶节点的二叉树。同样，因为从根节点到第二个 case 分支的路径是“第二个子节点”，然后是“第一个子节点”，所以该 case 分支变成了像 `buildEither(first: buildEither(second: ... ))` 这样的嵌套调用。以下声明是等效的：
+  例如，如果你编写一个包含三个分支的 switch 语句，编译器将使用一个具有三个叶节点的二叉树。同样，因为从根节点到第二个 case 分支的路径是"第二个子节点"，然后是"第一个子节点"，所以该 case 分支变成了像 `buildEither(first: buildEither(second: ... ))` 这样的嵌套调用。以下声明是等效的：
 
   ```swift
   let someNumber = 19
@@ -1779,7 +1779,7 @@ struct ArrayBuilder {
 
 如果你不使用此特性，请提供一个包含顶层代码的 `main.swift` 文件，该代码调用 [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 函数。例如，如果你的应用使用自定义的 `UIApplication` 子类作为其主类，请调用 `UIApplicationMain(_:_:_:_:)` 函数，而不是使用此特性。
 
-编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，详见 <doc:Declarations#Top-Level-Code>。
+编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，详见 <doc:Declarations#顶级代码>。
 
 ### unchecked
 
@@ -1833,7 +1833,7 @@ Interface Builder 特性是声明特性，供 Interface Builder 与 Xcode 同步
 
 ### autoclosure
 
-使用此特性可以通过将表达式自动包装在一个无参数的闭包中来延迟对表达式的求值。你可以在函数或方法声明中将其应用于参数的类型，该参数的类型为不接受参数且返回与表达式类型相同的值的函数类型。关于如何使用 `autoclosure` 特性的示例，请参见 <doc:Closures#Autoclosures> 和 <doc:Types#Function-Type>。
+使用此特性可以通过将表达式自动包装在一个无参数的闭包中来延迟对表达式的求值。你可以在函数或方法声明中将其应用于参数的类型，该参数的类型为不接受参数且返回与表达式类型相同的值的函数类型。关于如何使用 `autoclosure` 特性的示例，请参见 <doc:Closures#自动闭包> 和 <doc:Types#函数类型>。
 
 ### convention
 
@@ -1854,7 +1854,7 @@ Interface Builder 特性是声明特性，供 Interface Builder 与 Xcode 同步
 
 ### escaping
 
-将此特性应用于函数或方法声明中的参数类型，以指示参数的值可以存储以供后续执行。这隐含着该值可以超出这次调用的生命周期。具有 `escaping` 类型特性的函数类型参数需要对属性或方法显式使用 `self.`。有关如何使用 `escaping` 特性的示例，见 <doc:Closures#Escaping-Closures>。
+将此特性应用于函数或方法声明中的参数类型，以指示参数的值可以存储以供后续执行。这隐含着该值可以超出这次调用的生命周期。具有 `escaping` 类型特性的函数类型参数需要对属性或方法显式使用 `self.`。有关如何使用 `escaping` 特性的示例，见 <doc:Closures#逃逸闭包>。
 
 ### Sendable
 
@@ -1872,7 +1872,7 @@ Interface Builder 特性是声明特性，供 Interface Builder 与 Xcode 同步
 
 ### unknown
 
-将此特性应用于 switch case，以指示在代码编译时不期望与任何已知的枚举 case 匹配。有关如何使用 `unknown` 特性的示例，见 <doc:Statements#Switching-Over-Future-Enumeration-Cases>。
+将此特性应用于 switch case，以指示在代码编译时不期望与任何已知的枚举 case 匹配。有关如何使用 `unknown` 特性的示例，见 <doc:Statements#切换未来的枚举情况>。
 
 > 特性的语法:
 >

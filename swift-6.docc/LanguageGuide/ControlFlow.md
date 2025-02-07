@@ -140,7 +140,7 @@ print("\(base) to the power of \(power) is \(answer)")
 
 这个例子计算 `base` 这个数的 `power` 次幂（本例中，计算 `3` 的 `10` 次幂），从 `1`（也就是 `3` 的 `0` 次幂）开始做 `3` 的乘法，使用 `1` 到 `10` 的闭区间循环来进行 10 次。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 `_` 来替代循环中的变量能够忽略当前值，并且不提供循环遍历时对值的访问。
 
-在某些情况下，你可能不想使用包括两个端点的闭区间。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅 <doc:BasicOperators#Range-Operators>。
+在某些情况下，你可能不想使用包括两个端点的闭区间。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅 <doc:BasicOperators#区间运算符>。
 
 ```swift
 let minutes = 60
@@ -654,7 +654,7 @@ let freezeWarning: String? = if temperatureInCelsius <= 0 {
 }
 ```
 
-在上面的代码中，`if` 表达式的一个分支有一个字符串值，另一个分支有一个 `nil` 值。`nil` 值可以用作任何可选类型的值，因此你必须明确声明 `freezeWarning` 是一个可选字符串，如<doc:TheBasics#Type-Annotations>中所述。
+在上面的代码中，`if` 表达式的一个分支有一个字符串值，另一个分支有一个 `nil` 值。`nil` 值可以用作任何可选类型的值，因此你必须明确声明 `freezeWarning` 是一个可选字符串，如<doc:TheBasics#类型注解>中所述。
 
 提供类型信息的另一种方法是为 `nil` 提供显式类型，而不是为 `freezeWarning` 提供显式类型：
 
@@ -765,7 +765,7 @@ print(message)
 与 C 和 Objective-C 中的 `switch` 语句不同，在 Swift 中，当匹配的 `case` 分支中的代码执行完毕后，程序会终止 `switch` 语句，而不会继续执行下一个 `case` 分支。这也就是说，不需要在 `case` 分支中显式地使用 `break` 语句。这使得 `switch` 语句更安全、更易用，也避免了漏写 `break` 语句导致多个 `case` 被执行的错误。
 
 > 注意: 
-> 虽然在 Swift 中 `break` 不是必须的，但你依然可以在 `case` 分支中的代码执行完毕前使用 break 跳出，详情请参见<doc:ControlFlow#Break-in-a-Switch-Statement>。
+> 虽然在 Swift 中 `break` 不是必须的，但你依然可以在 `case` 分支中的代码执行完毕前使用 break 跳出，详情请参见<doc:ControlFlow#Switch-语句中的-breakBreak-in-a-Switch-Statement>。
 
 每一个 `case` 分支都*必须*包含至少一条语句。像下面这样书写代码是不合法的，因为第一个 `case` 分支是空的：
 
@@ -831,10 +831,10 @@ default:
   ```
 -->
 
-为了可读性，复合匹配可以写成多行形式，详情请参考 <doc:ControlFlow#Compound-Cases>。
+为了可读性，复合匹配可以写成多行形式，详情请参考 <doc:ControlFlow#复合型-CasesCompound-Cases>。
 
 > 注意:
-> 如果想要显式贯穿 case 分支，请使用 `fallthrough` 关键字，详情请参考 <doc:ControlFlow#Fallthrough>。
+> 如果想要显式贯穿 case 分支，请使用 `fallthrough` 关键字，详情请参考 <doc:ControlFlow#贯穿Fallthrough>。
 
 #### 区间匹配
 
@@ -1115,7 +1115,7 @@ default:
 
 我们将会在下面讨论 `continue` ， `break` 和 `fallthrough` 语句。
 `return` 语句将会在 <doc:Functions> 章节讨论，
-`throw` 语句会在 <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions> 章节讨论。
+`throw` 语句会在 <doc:ErrorHandling#用throwing函数传递错误> 章节讨论。
 
 ### Continue
 
@@ -1600,7 +1600,7 @@ if score < 10 {
   ```
 -->
 
-如果你的应用程序停止运行（例如发生了运行时错误或崩溃），则延迟的代码不会执行。但是，延迟代码会在抛出错误之后执行。有关将 `defer` 与错误处理结合使用的信息，请参阅 <doc:ErrorHandling#Specifying-Cleanup-Actions>。
+如果你的应用程序停止运行（例如发生了运行时错误或崩溃），则延迟的代码不会执行。但是，延迟代码会在抛出错误之后执行。有关将 `defer` 与错误处理结合使用的信息，请参阅 <doc:ErrorHandling#指定清理操作>。
 
 ## 检测 API 可用性
 
@@ -1632,7 +1632,7 @@ if #available(iOS 10, macOS 10.12, *) {
 
 以上可用性条件指定，`if` 语句的代码块仅仅在 iOS 10 或 macOS 10.12 及更高版本才运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，`if` 语句的代码块将会运行。
 
-在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是 `iOS`，`macOS`，`watchOS`，`tvOS`，和 `visionOS` ---请访问 <doc:Attributes#Declaration-Attributes> 来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
+在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是 `iOS`，`macOS`，`watchOS`，`tvOS`，和 `visionOS` ---请访问 <doc:Attributes#声明特性> 来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
 
 ```swift
 if #available(<#platform name#> <#version#>, <#...#>, *) {

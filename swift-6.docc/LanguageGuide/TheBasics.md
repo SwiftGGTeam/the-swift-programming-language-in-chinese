@@ -73,7 +73,7 @@ if environment == "development" {
   ```
 -->
 
-在本例中，登录尝试的最大次数是常数，其值取决于环境。在开发环境中，其值为 100；在其他环境中，其值为 10。`if` 语句的两个分支都将 `maximumNumberOfLoginAttempts` 初始化为某个值，从而保证该常量一定有一个值。有关 Swift 如何在以这种方式设置初始值时检查代码的详情，请参阅 <doc:Declarations#Constant-Declaration>。
+在本例中，登录尝试的最大次数是常数，其值取决于环境。在开发环境中，其值为 100；在其他环境中，其值为 10。`if` 语句的两个分支都将 `maximumNumberOfLoginAttempts` 初始化为某个值，从而保证该常量一定有一个值。有关 Swift 如何在以这种方式设置初始值时检查代码的详情，请参阅 <doc:Declarations#常量声明>。
 
 你可以在一行中声明多个常量或多个变量，中间用逗号隔开：
 
@@ -235,7 +235,7 @@ print(friendlyWelcome)
   ```
 -->
 
-`print(_:separator:terminator:)` 函数是一个全局函数，用于将一个或多个值打印到适当的输出端。例如，在 Xcode 中，`print(_:separator:termininator:)` 函数将在 Xcode 的 “控制台” 窗格中打印输出。参数 `separator`（分隔符） 和 `terminator`（结束符） 有默认值，因此在调用此函数时可以省略。默认情况下，该函数通过添加换行符来结束打印行。如果要打印一个值且不换行，可以传递一个空字符串作为结束符，例如 `print(someValue,termininator:"")`。有关带默认值参数的信息，请参阅 <doc:Functions#Default-Parameter-Values>。
+`print(_:separator:terminator:)` 函数是一个全局函数，用于将一个或多个值打印到适当的输出端。例如，在 Xcode 中，`print(_:separator:termininator:)` 函数将在 Xcode 的 “控制台” 窗格中打印输出。参数 `separator`（分隔符） 和 `terminator`（结束符） 有默认值，因此在调用此函数时可以省略。默认情况下，该函数通过添加换行符来结束打印行。如果要打印一个值且不换行，可以传递一个空字符串作为结束符，例如 `print(someValue,termininator:"")`。有关带默认值参数的信息，请参阅 <doc:Functions#默认参数值>。
 
 <!--
   - test: `printingWithoutNewline`
@@ -274,7 +274,7 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
   ```
 -->
 
-> 备注: 在 <doc:StringsAndCharacters#String-Interpolation> 中描述了所有字符串插值选项。
+> 备注: 在 <doc:StringsAndCharacters#字符串插值> 中描述了所有字符串插值选项。
 
 ## 注释
 
@@ -948,7 +948,7 @@ print("The status message is \(http200Status.description)")
   ```
 -->
 
-元组作为函数的返回值特别有用。一个试图检索网页的函数可能会返回 `(Int, String)` 元组类型来描述网页检索的成功或失败。在函数中返回包含两个不同值（每个值的类型都不同）的元组，比只能返回单一类型的单个值提供了更多关于其结果的有用信息。更多信息，请参阅 <doc:Functions#Functions-with-Multiple-Return-Values>。
+元组作为函数的返回值特别有用。一个试图检索网页的函数可能会返回 `(Int, String)` 元组类型来描述网页检索的成功或失败。在函数中返回包含两个不同值（每个值的类型都不同）的元组，比只能返回单一类型的单个值提供了更多关于其结果的有用信息。更多信息，请参阅 <doc:Functions#多重返回值函数>。
 
 > 备注: 元组适用于简单的相关值组。它们不适合创建复杂的数据结构。如果你的数据结构可能会变得复杂，请将其创建为类或结构体，而不是元组。更多信息，请参阅 <doc:ClassesAndStructures>。
 
@@ -1200,7 +1200,7 @@ if let firstNumber = Int("4") {
   using the && operator instead of a comma.
 -->
 
-在 `if` 语句中使用可选绑定创建的常量和变量只能在 `if` 语句的正文中使用。与此相反，用 `guard` 语句创建的常量和变量仅在 `guard` 语句后的代码行中可用，如 <doc:ControlFlow#Early-Exit> 中所述。
+在 `if` 语句中使用可选绑定创建的常量和变量只能在 `if` 语句的正文中使用。与此相反，用 `guard` 语句创建的常量和变量仅在 `guard` 语句后的代码行中可用，如 <doc:ControlFlow#提前退出> 中所述。
 
 ### 提供后备值
 
@@ -1224,7 +1224,7 @@ print(greeting)
    ```
 -->
 
-关于使用 `??` 提供后备值的更多信息，请参阅 <doc:BasicOperators#Nil-Coalescing-Operator>。
+关于使用 `??` 提供后备值的更多信息，请参阅 <doc:BasicOperators#空合并运算符>。
 
 ### 强制解包
 
@@ -1257,7 +1257,7 @@ guard let number = convertedNumber else {
 
 这类可选被定义为*隐式解包可选*。在编写隐式解包可选时，需要在可选类型后面加上感叹号（`String!`）而不是问号（`String?`）。要注意不是在使用可选时在其名称后加上感叹号，而是在声明可选时在其类型后加上感叹号。
 
-当首次定义可选后，可选的值立即被确认存在，并且可以确保在此后的每一个时间点都存在值时，隐式解包可选就非常有用了。在 Swift 中，隐式解包可选的主要用途是在类初始化过程中，如 <doc:AutomaticReferenceCounting#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties> 中所述。
+当首次定义可选后，可选的值立即被确认存在，并且可以确保在此后的每一个时间点都存在值时，隐式解包可选就非常有用了。在 Swift 中，隐式解包可选的主要用途是在类初始化过程中，如 <doc:AutomaticReferenceCounting#无主引用和隐式解包可选属性> 中所述。
 
 当变量有可能在稍后阶段变为 `nil` 时，不要使用隐式解包可选。如果需要在变量的生命周期内检查变量是否为 `nil`，请务必使用普通的可选类型。
 

@@ -36,7 +36,7 @@ Swift 为代码中的实体提供了六种不同的**访问级别**。这些访�
 
 open 是最高（限制最少）的访问级别，而 private 是最低（限制最多）的访问级别。
 
-open 仅适用于类及类的成员，它与 public 的不同之处在于 open 允许模块外的代码进行继承和重写，如下文 <doc:AccessControl#Subclassing> 中所述。将类显式指定为 open 表明你已考虑到其他模块的代码将该类用作父类的影响，并为此相应地设计了类的代码。
+open 仅适用于类及类的成员，它与 public 的不同之处在于 open 允许模块外的代码进行继承和重写，如下文 <doc:AccessControl#子类> 中所述。将类显式指定为 open 表明你已考虑到其他模块的代码将该类用作父类的影响，并为此相应地设计了类的代码。
 
 ### 访问级别的指导原则
 
@@ -103,7 +103,7 @@ private func somePrivateFunction() {}
   ```
 -->
 
-除非专门指定，否则默认的访问级别是 `internal`，如在 <doc:AccessControl#Default-Access-Levels> 中所述。这意味着在不使用修饰符显式指定访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 的访问级别仍然是 `internal`：
+除非专门指定，否则默认的访问级别是 `internal`，如在 <doc:AccessControl#默认访问级别> 中所述。这意味着在不使用修饰符显式指定访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 的访问级别仍然是 `internal`：
 
 ```swift
 class SomeInternalClass {}              // 隐式指定为 internal
@@ -279,7 +279,7 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
   ```
 -->
 
-该函数的返回类型是一个元组类型，由上面 <doc:AccessControl#Custom-Types> 中定义的两个自定义类组成。其中一个类被定义为 `internal`，另一个类被定义为 `private`。因此，这个元组类型的访问级别是 `private`（组成元组的类型中最严格的访问级别）。
+该函数的返回类型是一个元组类型，由上面 <doc:AccessControl#自定义类型> 中定义的两个自定义类组成。其中一个类被定义为 `internal`，另一个类被定义为 `private`。因此，这个元组类型的访问级别是 `private`（组成元组的类型中最严格的访问级别）。
 
 因为函数的返回类型是 `private`，所以你必须在函数声明中使用 `private` 修饰符指定函数的访问级别，这样才能使函数声明有效：
 
@@ -785,13 +785,13 @@ public struct TrackedString {
 
 ## 构造器
 
-自定义构造器的访问级别可以低于或等于它所初始化的类型。唯一的例外是必要构造器（如 <doc:Initialization#Required-Initializers> 中定义的）。必要构造器必须具有与其所属类相同的访问级别。
+自定义构造器的访问级别可以低于或等于它所初始化的类型。唯一的例外是必要构造器（如 <doc:Initialization#必要构造器> 中定义的）。必要构造器必须具有与其所属类相同的访问级别。
 
 与函数和方法的参数一样，构造器的参数类型的访问级别不能比构造器自身的访问级别更严格。
 
 ### 默认构造器
 
-如 <doc:Initialization#Default-Initializers> 中所述，Swift 会为结构体和类自动生成一个不带参数的**默认构造器**，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
+如 <doc:Initialization#默认构造器> 中所述，Swift 会为结构体和类自动生成一个不带参数的**默认构造器**，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
 
 默认构造器的访问级别与它所初始化的类型相同，除非该类型被定义为 `public`。对于 `public` 类型，默认构造器的访问级别将为 `internal`。如果你想让 `public` 类型在另一个模块中可以通过无参数构造器进行初始化，则必须在类型定义中显式提供一个 `public` 访问级别的无参数构造器。
 

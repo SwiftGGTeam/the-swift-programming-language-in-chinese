@@ -147,7 +147,7 @@ extension Collection where Element: SomeProtocol {
 
 重载泛型函数或构造器，泛型形参子句中的类型形参必须有不同的约束或要求。当调用重载的泛型函数或构造器时，编译器会使用这些约束来决定调用哪个重载的函数或构造器。
 
-更多关于泛型 `where` 从句的内容和关于泛型函数声明的例子，参阅 <doc:Generics#Generic-Where-Clauses>.
+更多关于泛型 `where` 从句的内容和关于泛型函数声明的例子，参阅 <doc:Generics#泛型-Where-语句>.
 
 > 泛型形参子句的语法格式：
 >
@@ -207,7 +207,7 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```
 -->
 
-正如在<doc:GenericParametersAndArguments#Generic-Parameter-Clause>中提到的，在指定泛型函数或构造器的类型实参时，不能使用泛型实参子句。
+正如在<doc:GenericParametersAndArguments#泛型形参子句>中提到的，在指定泛型函数或构造器的类型实参时，不能使用泛型实参子句。
 
 > 泛型实参的语法格式：
 >

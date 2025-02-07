@@ -150,7 +150,7 @@ reference3 = nil
 
 然而，可能会出现这样的情况：一个类的实例 *永远* 不会到达它有零个强引用的时刻。如果两个类实例彼此持有强引用，使得每个实例都使对方保持活跃，就可能发生这种情况。这被称为 *强引用循环* 。
 
-你可以通过将类之间的某些关系定义为弱引用或无主引用，而不是强引用，来解决强引用循环。这个过程在<doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-Between-Class-Instances>中描述。然而，在学习如何解决强引用循环之前，了解这种循环是如何产生的是很有用的。
+你可以通过将类之间的某些关系定义为弱引用或无主引用，而不是强引用，来解决强引用循环。这个过程在<doc:AutomaticReferenceCounting#解决类实例之间的强引用循环>中描述。然而，在学习如何解决强引用循环之前，了解这种循环是如何产生的是很有用的。
 
 这里有一个例子，展示了如何意外创建强引用循环。这个例子定义了两个名为 `Person` 和 `Apartment` 的类，用于模拟一个公寓楼及其居民:
 
@@ -770,9 +770,9 @@ class City {
 
 为了建立两个类之间的相互依赖关系，`City` 的初始化器接受一个 `Country` 实例，并将这个实例存储在其 `country` 属性中。
 
-`City` 的初始化器是在 `Country` 的初始化器内部调用的。然而，`Country` 的初始化器在新的 `Country` 实例完全初始化之前，不能将 `self` 传递给 `City` 初始化器，如<doc:Initialization#Two-Phase-Initialization>中所述。
+`City` 的初始化器是在 `Country` 的初始化器内部调用的。然而，`Country` 的初始化器在新的 `Country` 实例完全初始化之前，不能将 `self` 传递给 `City` 初始化器，如<doc:Initialization#两段式构造过程>中所述。
 
-为了应对这个要求，你将 `Country` 的 `capitalCity` 属性声明为隐式解包可选属性，通过在其类型注解末尾加上感叹号(`City!`)来表示。这意味着 `capitalCity` 属性有一个默认值 `nil`，像任何其他可选类型一样，但可以在不需要解包其值的情况下访问，如<doc:TheBasics#Implicitly-Unwrapped-Optionals>中所述。
+为了应对这个要求，你将 `Country` 的 `capitalCity` 属性声明为隐式解包可选属性，通过在其类型注解末尾加上感叹号(`City!`)来表示。这意味着 `capitalCity` 属性有一个默认值 `nil`，像任何其他可选类型一样，但可以在不需要解包其值的情况下访问，如<doc:TheBasics#隐式解包可选>中所述。
 
 因为 `capitalCity` 有一个默认的 `nil` 值，一旦 `Country` 实例在其初始化器中设置了 `name` 属性，新的 `Country` 实例就被认为是完全初始化的。这意味着 `Country` 初始化器可以在 `name` 属性被设置后，立即开始引用和传递隐式的 `self` 属性。因此，当 `Country` 初始化器设置自己的 `capitalCity` 属性时，`Country` 初始化器可以将 `self` 作为参数之一传递给 `City` 初始化器。
 
@@ -926,7 +926,7 @@ print(paragraph!.asHTML())
 
 ![](closureReferenceCycle01)
 
-实例的 `asHTML` 属性持有对其闭包的强引用。然而，因为闭包在其主体内引用了 `self`(作为引用 `self.name` 和 `self.text` 的方式)，闭包 *捕获* 了 self，这意味着它持有对 `HTMLElement` 实例的强引用。两者之间创建了一个强引用循环。(关于在闭包中捕获值的更多信息，请参见<doc:Closures#Capturing-Values>。)
+实例的 `asHTML` 属性持有对其闭包的强引用。然而，因为闭包在其主体内引用了 `self`(作为引用 `self.name` 和 `self.text` 的方式)，闭包 *捕获* 了 self，这意味着它持有对 `HTMLElement` 实例的强引用。两者之间创建了一个强引用循环。(关于在闭包中捕获值的更多信息，请参见<doc:Closures#值捕获>。)
 
 > 注意：即使闭包多次引用 `self`，它也只捕获对 `HTMLElement` 实例的一个强引用。
 
@@ -1018,7 +1018,7 @@ lazy var someClosure = {
 
 > 注意：如果被捕获的引用永远不会变为 `nil`，它应该始终被捕获为无主引用，而不是弱引用。
 
-无主引用是解决<doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures> 中 `HTMLElement` 示例强引用循环的适当捕获方法。以下是如何编写 `HTMLElement` 类以避免循环:
+无主引用是解决<doc:AutomaticReferenceCounting#闭包的强引用循环> 中 `HTMLElement` 示例强引用循环的适当捕获方法。以下是如何编写 `HTMLElement` 类以避免循环:
 
 ```swift
 class HTMLElement {
@@ -1118,7 +1118,7 @@ paragraph = nil
   ```
 -->
 
-关于捕获列表的更多信息，请参见<doc:Expressions#Capture-Lists>。
+关于捕获列表的更多信息，请参见<doc:Expressions#捕获列表>。
 
 <!--
 This source file is part of the Swift.org open source project

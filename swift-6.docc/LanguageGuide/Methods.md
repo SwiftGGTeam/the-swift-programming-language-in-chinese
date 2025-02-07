@@ -98,7 +98,7 @@ counter.reset()
   ```
 -->
 
-函数参数可以同时拥有一个参数名称（在函数体内使用）和一个参数标签（在调用函数时使用），参见<doc:Functions#Function-Argument-Labels-and-Parameter-Names>。
+函数参数可以同时拥有一个参数名称（在函数体内使用）和一个参数标签（在调用函数时使用），参见<doc:Functions#函数参数标签和参数名称>。
 方法参数也是如此，因为方法只是与某种类型关联的函数。
 
 ### self 属性
@@ -224,7 +224,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 这个方法直接修改其调用的点，而不是返回一个新的点。为了使该方法能够修改其属性，`mutating` 关键字被添加到它的定义中。
 
 请注意，你不能在结构体类型的常量上调用 mutating 方法，因为其属性不能被改变，即使它们是可变属性，
-参见：<doc:Properties#Stored-Properties-of-Constant-Structure-Instances>
+参见：<doc:Properties#常量结构体实例的存储属性>
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)

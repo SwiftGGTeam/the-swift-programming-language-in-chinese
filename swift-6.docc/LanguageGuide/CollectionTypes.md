@@ -475,7 +475,7 @@ for (index, value) in shoppingList.enumerated() {
   ```
 -->
 
-有关 `for`-`in` 循环的更多信息，请参阅 <doc:ControlFlow#For-In-Loops>.
+有关 `for`-`in` 循环的更多信息，请参阅 <doc:ControlFlow#For-In-循环>.
 
 ## 集合
 
@@ -720,7 +720,7 @@ for genre in favoriteGenres {
   ```
 -->
 
-有关 `for`-`in` 循环的更多信息，请参阅 <doc:ControlFlow#For-In-Loops>.
+有关 `for`-`in` 循环的更多信息，请参阅 <doc:ControlFlow#For-In-循环>.
 
 Swift 的 `Set` 类型没有定义的顺序。要按特定顺序遍历集合中的值，可以使用 `sorted()` 方法，该方法返回集合的元素作为一个数组，并按 `<` 运算符排序。
 
@@ -1166,7 +1166,7 @@ for (airportCode, airportName) in airports {
   ```
 -->
 
-有关 `for`-`in` 循环的更多信息，请参阅 <doc:ControlFlow#For-In-Loops>.
+有关 `for`-`in` 循环的更多信息，请参阅 <doc:ControlFlow#For-In-循环>.
 
 您还可以通过访问字典的 `keys` 和 `values` 属性，获取字典的键或值的可遍历集合。
 

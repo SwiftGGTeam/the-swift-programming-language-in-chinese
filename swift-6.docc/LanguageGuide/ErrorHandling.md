@@ -553,7 +553,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 
 - 当错误是代码单元（如库）的实现细节，而不是代码接口的一部分时。由于错误只来自于库，而不是来自于其他依赖库或库的客户端，因此您可以列出所有可能出现的错误的详尽列表。而且，由于这些错误是库的实现细节，因此可以全部在库内部处理。
 
-- 在只传递由通用参数描述的错误的代码中，例如函数接收一个闭包参数并传递来自该闭包的任何错误。有关传播特定错误类型与使用 rethrows 的比较，请参阅 <doc:Declarations#Rethrowing-Functions-and-Methods>。
+- 在只传递由通用参数描述的错误的代码中，例如函数接收一个闭包参数并传递来自该闭包的任何错误。有关传播特定错误类型与使用 rethrows 的比较，请参阅 <doc:Declarations#再抛出函数和方法>。
 
 例如，思考一下如何实现汇总评分并使用以下错误类型的代码：
 
@@ -702,7 +702,7 @@ func processFile(filename: String) throws {
 
 上面的示例使用 `defer` 语句确保 `open(_:)` 函数有相应的 `close(_:)` 调用。
 
-即使不涉及错误处理代码，您也可以使用 `defer` 语句。有关详细信息，请参阅 <doc:ControlFlow#Deferred-Actions>。
+即使不涉及错误处理代码，您也可以使用 `defer` 语句。有关详细信息，请参阅 <doc:ControlFlow#延迟执行的操作Deferred-Actions>。
 
 <!--
 This source file is part of the Swift.org open source project

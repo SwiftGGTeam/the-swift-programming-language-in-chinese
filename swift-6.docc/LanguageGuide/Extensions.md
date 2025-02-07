@@ -13,7 +13,7 @@ Swift 中的扩展可以：
  - 定义和使用新的嵌套类型
  - 使已经存在的类型遵循一个协议
 
-在 Swift 中，你甚至可以扩展协议以提供其需要的实现，或者添加额外功能给遵循的类型所使用。你可以从 <doc:Protocols#Protocol-Extensions> 获取更多细节。
+在 Swift 中，你甚至可以扩展协议以提供其需要的实现，或者添加额外功能给遵循的类型所使用。你可以从 <doc:Protocols#协议扩展> 获取更多细节。
 
 > 注意:
 > 扩展可以给一个类型添加新的功能，但是不能重写已经存在的功能。
@@ -107,7 +107,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
   ```
 -->
 
-这种遵循协议的方式在 <doc:Protocols#Adding-Protocol-Conformance-with-an-Extension> 中有描述。
+这种遵循协议的方式在 <doc:Protocols#在扩展里添加协议遵循> 中有描述。
 
 扩展可以使用在现有泛型类型上，就像 <doc:Generics#Extending-a-Generic-Type> 中描述的一样。你还可以使用扩展给泛型类型有条件地添加功能，就像 <doc:Generics#Extensions-with-a-Generic-Where-Clause> 中描述的一样。
 
@@ -201,7 +201,7 @@ print("A marathon is \(aMarathon) meters long")
 
 扩展可以为一个类添加新的便利构造器（convenience initializer），但是它们不能为一个类添加新的指定构造器（designated initializer）或析构器（deinitializer）。指定构造器和析构器必须始终由类的原始实现提供。
 
-如果你使用扩展为一个值类型添加构造器，并且该值类型提供了所有存储属性的默认值，且没有定义任何自定义构造器，你就可以在扩展的构造器中调用该值类型的默认构造器和成员构造器。如果你已经将构造器写在该值类型的原始实现中，则不适用于这种情况，正如 <doc:Initialization#Initializer-Delegation-for-Value-Types> 中所描述的那样。
+如果你使用扩展为一个值类型添加构造器，并且该值类型提供了所有存储属性的默认值，且没有定义任何自定义构造器，你就可以在扩展的构造器中调用该值类型的默认构造器和成员构造器。如果你已经将构造器写在该值类型的原始实现中，则不适用于这种情况，正如 <doc:Initialization#值类型的构造器代理> 中所描述的那样。
 
 如果你使用扩展为另一个模块中声明的结构体添加构造器，那么在调用定义模块中的构造器之前，新的构造器是不能访问 `self` 的。
 
@@ -237,7 +237,7 @@ struct Rect {
   ```
 -->
 
-因为 `Rect` 结构体为所有属性都提供了默认值，它会自动获得默认构造器和成员构造器，如 <doc:Initialization#Default-Initializers> 中所述。这些构造器可用于创建新的 `Rect` 实例:
+因为 `Rect` 结构体为所有属性都提供了默认值，它会自动获得默认构造器和成员构造器，如 <doc:Initialization#默认构造器> 中所述。这些构造器可用于创建新的 `Rect` 实例:
 
 ```swift
 let defaultRect = Rect()

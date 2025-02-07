@@ -269,7 +269,7 @@ print(opaqueJoinedTriangles.draw())
   ```
 -->
 
-在这个例子中，`opaqueJoinedTriangles` 的值与前面章节<doc:OpaqueTypes#The-Problem-That-Opaque-Types-Solve>中所举的泛型例子里的 `joinedTriangles` 的值相同。但是，与那个例子不同的是，`flip(_:)` 和 `join(_:_:)` 将泛型形状操作所返回的底层类型包装在不透明返回类型中，使得这些类型不再可见。这两个函数是泛型函数，因为它们依赖的类型是泛型类型，函数的类型参数传递出了 `FlippedShape` 和 `JoinedShape` 所需的类型信息。
+在这个例子中，`opaqueJoinedTriangles` 的值与前面章节<doc:OpaqueTypes#不透明类型所解决的问题>中所举的泛型例子里的 `joinedTriangles` 的值相同。但是，与那个例子不同的是，`flip(_:)` 和 `join(_:_:)` 将泛型形状操作所返回的底层类型包装在不透明返回类型中，使得这些类型不再可见。这两个函数是泛型函数，因为它们依赖的类型是泛型类型，函数的类型参数传递出了 `FlippedShape` 和 `JoinedShape` 所需的类型信息。
 
 如果一个返回不透明类型的函数从多处返回值，则所有可能的返回值必须具有相同的类型。对于一个泛型函数，它可以使用函数的泛型参数作为其返回类型，但这个返回类型仍然必须是相同的某个单一类型。例如，下面是一个*不合法的*形状翻转函数版本，它包含了正方形的一个特例：
 
@@ -469,7 +469,7 @@ if let downcastTriangle = vertical.shapes[0] as? Triangle {
 // 打印输出 "5"
 ```
 
-要了解更多信息请参考<doc:TypeCasting#Downcasting>。
+要了解更多信息请参考<doc:TypeCasting#向下转型>。
 
 ## 不透明类型与封装协议类型之间的区别
 

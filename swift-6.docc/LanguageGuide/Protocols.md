@@ -304,7 +304,7 @@ print("And another one: \(generator.random())")
 
 ## 变值方法要求
 
-有时需要在方法中改变（或 **变值（mutate）** ）方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在 <doc:Methods#Modifying-Value-Types-from-Within-Instance-Methods> 章节中有详细描述。
+有时需要在方法中改变（或 **变值（mutate）** ）方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在 <doc:Methods#从实例方法内部修改值类型> 章节中有详细描述。
 
 如果你在协议中定义了一个实例方法，该方法会改变遵循该协议的类型的实例，那么在定义协议时需要在方法前加 `mutating` 关键字。这使得结构体和枚举能够遵循此协议并满足此方法要求。
 
@@ -437,7 +437,7 @@ class SomeClass: SomeProtocol {
 
 使用 `required` 修饰符可以确保所有子类也必须提供此构造器实现，从而也能遵循协议。
 
-关于 `required` 构造器的更多内容，参考 <doc:Initialization#Required-Initializers>。
+关于 `required` 构造器的更多内容，参考 <doc:Initialization#必要构造器>。
 
 <!--
   - test: `protocolInitializerRequirementsRequireTheRequiredModifierOnTheImplementingClass`
@@ -485,7 +485,7 @@ class SomeClass: SomeProtocol {
   ```
 -->
 
-> 注意: 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，参见 <doc:Inheritance#Preventing-Overrides>。
+> 注意: 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，参见 <doc:Inheritance#防止重写>。
 
 <!--
   - test: `finalClassesDoNotNeedTheRequiredModifierForProtocolInitializerRequirements`
@@ -549,7 +549,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 ### 可失败构造器要求
 
-协议还可以为遵循协议的类型定义可失败构造器要求，详见 <doc:Initialization#Failable-Initializers>。
+协议还可以为遵循协议的类型定义可失败构造器要求，详见 <doc:Initialization#可失败构造器>。
 
 遵循协议的类型可以通过可失败构造器（`init?`）或非可失败构造器（`init`）来满足协议中定义的可失败构造器要求。协议中定义的非可失败构造器要求可以通过非可失败构造器（`init`）或隐式解包可失败构造器（`init!`）来满足。
 
@@ -706,7 +706,7 @@ class DiceGame {
 
 `DiceGame.Delegate` 协议可用于跟踪骰子游戏的进度。由于 `DiceGame.Delegate` 协议总是在骰子游戏的上下文中使用，因此它被嵌套在 `DiceGame` 类内部。协议可以嵌套在类型声明（如结构体和类）内部，只要外部声明不是泛型。关于嵌套类型的更多信息，参见 <doc:NestedTypes>。
 
-为了防止强引用循环，代理被声明为弱引用。关于弱引用的更多信息，参见 <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-Between-Class-Instances>。将协议标记为 class-only 允许 `DiceGame` 类声明其代理必须使用弱引用。一个 class-only 协议通过继承自 `AnyObject` 来标记，如 <doc:Protocols#Class-Only-Protocols> 中所述。
+为了防止强引用循环，代理被声明为弱引用。关于弱引用的更多信息，参见 <doc:AutomaticReferenceCounting#类实例之间的强引用循环>。将协议标记为 class-only 允许 `DiceGame` 类声明其代理必须使用弱引用。一个 class-only 协议通过继承自 `AnyObject` 来标记，如 <doc:Protocols#类专属的协议> 中所述。
 
 `DiceGame.Delegate` 提供了三个方法来跟踪游戏的进度。这三个方法被整合到上面的 `play(rounds:)` 方法的游戏逻辑中。当新游戏开始、新回合开始或游戏结束时，`DiceGame` 类会调用它的代理方法。
 
@@ -862,7 +862,7 @@ print(game.textualDescription)
 
 ### 有条件地遵循协议
 
-泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采用协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，参见 <doc:Generics#Generic-Where-Clauses>。
+泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采用协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，参见 <doc:Generics#泛型-Where-语句>。
 
 下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable` 协议的元素时，就遵循 `TextRepresentable` 协议。
 
@@ -1116,7 +1116,7 @@ for level in levels.sorted() {
 
 ## 协议类型的集合
 
-协议类型可以在数组或者字典这样的集合中使用，在 <doc:Protocols#Protocols-as-Types> 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
+协议类型可以在数组或者字典这样的集合中使用，在 <doc:Protocols#协议作为类型> 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
 
 ```swift
 let things: [TextRepresentable] = [game, d12, simonTheHamster]
@@ -1289,7 +1289,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 
 在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型遵循。如果尝试让结构体或枚举类型遵循 `SomeClassOnlyProtocol`，则会导致编译时错误。
 
-> 注意: 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该使用类类型专属协议。关于引用语义和值语义的更多内容，参见 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types> 和 <doc:ClassesAndStructures#Classes-Are-Reference-Types>。
+> 注意: 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该使用类类型专属协议。关于引用语义和值语义的更多内容，参见 <doc:ClassesAndStructures#结构体和枚举是值类型> 和 <doc:ClassesAndStructures#类是引用类型>。
 
 <!--
   - test: `anyobject-doesn't-have-to-be-first`
@@ -1664,7 +1664,7 @@ class Counter {
 
 这里使用了 **两** 层可选链式调用。首先，由于 `dataSource` 可能为 `nil`，因此在 `dataSource` 后边加上了 `?`，以此表明只在 `dataSource` 非空时才去调用 `increment(forCount:)` 方法。其次，即使 `dataSource` **确实**存在 ，也无法保证其是否实现了 `increment(forCount:)` 方法，因为这个方法是可选的。在这里，`increment(forCount:)` 可能没有被实现的可能性，也通过可选链被处理了。只有当 `increment(forCount:)` 存在时——也就是说，如果它不是 `nil` ——才会调用 `increment(forCount:)`。这就是为什么 `increment(forCount:)` 也在名称后面写有一个问号。
 
-调用 `increment(forCount:)` 方法在上述两种情形下都有可能失败，所以返回值为 `Int?` **可选** 类型，即使在 `CounterDataSource` 协议中，`increment(forCount:)` 的返回值类型是非可选 `Int`。另外，即使这里使用了两层可选链式调用，最后的返回结果依旧是单层的可选类型。关于使用多层可选链式调用的更多信息，参见 <doc:OptionalChaining#Linking-Multiple-Levels-of-Chaining>。
+调用 `increment(forCount:)` 方法在上述两种情形下都有可能失败，所以返回值为 `Int?` **可选** 类型，即使在 `CounterDataSource` 协议中，`increment(forCount:)` 的返回值类型是非可选 `Int`。另外，即使这里使用了两层可选链式调用，最后的返回结果依旧是单层的可选类型。关于使用多层可选链式调用的更多信息，参见 <doc:OptionalChaining#连接多层可选链式调用>。
 
 在调用 `increment(forCount:)` 方法后，可选 `Int` 型的返回值通过可选绑定解包并赋值给常量 `amount`。如果可选值确实包含一个数值，也就是说，数据源和方法都存在，并且数据源方法返回了一个有效值，就会将解包后的 `amount` 加到 `count` 上，增量操作就完成了。
 
@@ -1908,7 +1908,7 @@ extension PrettyTextRepresentable  {
 
 ### 为协议扩展添加限制条件
 
-在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，更多和泛型 where 子句的内容，参见 <doc:Generics#Generic-Where-Clauses>。
+在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，更多和泛型 where 子句的内容，参见 <doc:Generics#泛型-Where-语句>。
 
 例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵循 `Equatable` 协议（Swift 标准库的一部分）， 你可以使用 `==` 和 `!=` 操作符来检查两个元素的等价性和非等价性。
 

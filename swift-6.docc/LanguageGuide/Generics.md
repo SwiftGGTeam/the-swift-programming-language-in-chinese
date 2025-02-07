@@ -30,7 +30,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
   ```
 -->
 
-这个函数使用输入输出参数（inout）来交换 `a` 和 `b` 的值，具体请参考 <doc:Functions#In-Out-Parameters>.
+这个函数使用输入输出参数（inout）来交换 `a` 和 `b` 的值，具体请参考 <doc:Functions#In-Out-参数>.
 
 `swapTwoInts(_:_:)` 函数将 `b` 的原始值换给了 `a`，将 `a` 的原始值换给了 `b`，你可以调用这个函数来交换两个 `Int` 类型变量：
 
@@ -415,7 +415,7 @@ if let topItem = stackOfStrings.topItem {
 然而，有时对可以与泛型函数和泛型类型一起使用的类型强制执行某些*类型约束*是有用的。
 类型约束指定类型参数必须继承自特定的类，或者遵循特定协议或协议组合。
 
-例如, Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 <doc:CollectionTypes#Dictionaries> 中，字典键的类型必须是*可哈希的（hashable）*。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
+例如, Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 <doc:CollectionTypes#字典> 中，字典键的类型必须是*可哈希的（hashable）*。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
 
 这个要求通过对字典键类型的类型约束来强制执行，该约束指定键类型必须遵循Swift标准库中定义的 `Hashable` 协议。Swift的所有基本类型（如 `String`、`Int`、`Double` 和`Bool`）默认都是可哈希的。
 如何让自定义类型遵循 `Hashable` 协议，可以查看文档 [遵循 Hashable 协议](https://developer.apple.com/documentation/swift/hashable#2849490).
@@ -648,7 +648,7 @@ protocol Container {
 
 为此，`Container` 协议声明了一个关联类型 `Item`，写作 `associatedtype Item`。协议没有定义 `Item` 是什么，这个信息留给遵循协议的类型来提供。尽管如此，`Item` 别名提供了一种方式来引用 `Container` 中元素的类型，并将之用于 `append(_:)` 方法和下标，从而保证任何 `Container` 的行为都能如预期。
 
-以下是上文中非泛型的 IntStack<doc:Generics#Generic-Types>，通过遵循 Container 协议，修改后的版本：
+以下是上文中非泛型的 IntStack<doc:Generics#泛型类型>，通过遵循 Container 协议，修改后的版本：
 
 ```swift
 struct IntStack: Container {
@@ -765,9 +765,9 @@ struct Stack<Element>: Container {
 
 ### 扩展现有类型来指定关联类型
 
-在<doc:Protocols#Adding-Protocol-Conformance-with-an-Extension>中描述了如何利用扩展让一个已存在的类型遵循一个协议，这包括使用了关联类型协议
+在<doc:Protocols#在扩展里添加协议遵循>中描述了如何利用扩展让一个已存在的类型遵循一个协议，这包括使用了关联类型协议
 
-Swift 的 `Array` 类型已经提供 `append(_:)` 方法，`count` 属性，以及带有 `Int` 索引的下标来检索其元素。这三个功能都遵循 `Container` 协议的要求，也就意味着你只需声明 `Array` 遵循 `Container` 协议，就可以扩展 `Array`，使其遵循 `Container` 协议。你可以通过一个空扩展来实现这点，正如<doc:Protocols#Declaring-Protocol-Adoption-with-an-Extension>中的描述
+Swift 的 `Array` 类型已经提供 `append(_:)` 方法，`count` 属性，以及带有 `Int` 索引的下标来检索其元素。这三个功能都遵循 `Container` 协议的要求，也就意味着你只需声明 `Array` 遵循 `Container` 协议，就可以扩展 `Array`，使其遵循 `Container` 协议。你可以通过一个空扩展来实现这点，正如<doc:Protocols#使用合成实现来遵循协议>中的描述
 
 ```swift
 extension Array: Container {}

@@ -53,7 +53,7 @@
 简单来说，存储属性是作为特定类或结构实例的一部分所存储的常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义）
 也可以是*常量存储属性*（用关键字 `let` 定义）。
 
-可以在定义存储属性的时候指定默认值，请参考 <doc:Initialization#Default-Property-Values> 一节。还可以在构造过程中设置和修改存储属性的初始值，甚至修改常量存储属性的值，请参考 <doc:Initialization#Assigning-Constant-Properties-During-Initialization> 一节。
+可以在定义存储属性的时候指定默认值，请参考 <doc:Initialization#默认属性值> 一节。还可以在构造过程中设置和修改存储属性的初始值，甚至修改常量存储属性的值，请参考 <doc:Initialization#构造过程中常量属性的赋值> 一节。
 
 下面的例子定义了一个名为 `FixedLengthRange`的结构体，该结构体用于描述整数的区间，且这个区间值在被创建后不能被修改。
 
@@ -426,7 +426,7 @@ struct CompactRect {
   ```
 -->
 
-省略 getter 中的 `return` 遵循与函数省略 `return` 相同的规则，详见 <doc:Functions#Functions-With-an-Implicit-Return>。
+省略 getter 中的 `return` 遵循与函数省略 `return` 相同的规则，详见 <doc:Functions#隐式返回的函数>。
 
 ### 只读计算属性
 
@@ -526,7 +526,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 - 继承的存储属性
 - 继承的计算属性
 
-对于继承的属性，可以通过在子类中重写该属性来添加属性观察器。对于自定义的计算属性，应使用属性的 setter 来观察和响应值的变化，而不是试图创建一个观察器。重写属性的相关内容详见 <doc:Inheritance#Overriding>。
+对于继承的属性，可以通过在子类中重写该属性来添加属性观察器。对于自定义的计算属性，应使用属性的 setter 来观察和响应值的变化，而不是试图创建一个观察器。重写属性的相关内容详见 <doc:Inheritance#重写>。
 
 <!--
   - test: `lazyPropertiesCanHaveObservers`
@@ -601,7 +601,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 > 注意: 
 > 父类属性的 `willSet` 和 `didSet` 观察器会在子类初始化器中设置属性时调用，此时父类的初始化器已经被调用。而在父类初始化器被调用之前，给子类的属性赋值时不会调用子类属性的观察器。
 >
-> 有关初始化器代理的更多信息，请参见 <doc:Initialization#Initializer-Delegation-for-Value-Types> 和 <doc:Initialization#Initializer-Delegation-for-Class-Types>。
+> 有关初始化器代理的更多信息，请参见 <doc:Initialization#值类型的构造器代理> 和 <doc:Initialization#类类型的构造器代理>。
 
 <!--
   - test: `observersDuringInitialization`
@@ -696,7 +696,7 @@ stepCounter.totalSteps = 896
 `didSet` 观察器在 `totalSteps` 的值更新后被调用。它将 `totalSteps` 的新值与旧值进行比较。如果步数总数增加了，则会打印一条消息，指示增加了多少步数。`didSet` 观察器没有为旧值提供自定义参数名称，使用的是默认名称 `oldValue`。
 
 > 注意: 
-> 如果将一个具有观察器的属性作为 in-out 参数传递给函数，那么 `willSet` 和 `didSet` 观察器总是会被调用。这是因为 in-out 参数的复制-写回内存模型：在函数结束时，值总是会被写回属性。关于 in-out 参数行为的详细讨论，请参见 <doc:Declarations#In-Out-Parameters>。
+> 如果将一个具有观察器的属性作为 in-out 参数传递给函数，那么 `willSet` 和 `didSet` 观察器总是会被调用。这是因为 in-out 参数的复制-写回内存模型：在函数结束时，值总是会被写回属性。关于 in-out 参数行为的详细讨论，请参见 <doc:Declarations#In-Out-参数>。
 
 <!--
   - test: `observersCalledAfterInout`
@@ -1355,7 +1355,7 @@ struct SizedRectangle {
 -->
 
 > 注意: 
-> 全局常量和变量总是以类似于 <doc:Properties#Lazy-Stored-Properties> 的方式被延迟计算。与延迟存储属性不同，全局常量和变量不需要用 `lazy` 修饰符标记。
+> 全局常量和变量总是以类似于 <doc:Properties#延时加载存储属性> 的方式被延迟计算。与延迟存储属性不同，全局常量和变量不需要用 `lazy` 修饰符标记。
 >
 > 局部常量和变量从不延迟计算。
 

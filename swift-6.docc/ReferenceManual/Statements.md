@@ -42,8 +42,8 @@ Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/th
 
 循环语句会根据特定的循环条件来重复执行代码块。Swift 提供三种类型的循环语句：`for-in` 语句、`while` 语句和 `repeat-while` 语句。
 
-通过 break 语句和 continue 语句可以改变循环语句的控制流。有关这两条语句，可参阅 <doc:Statements#Break-Statement> 和
-<doc:Statements#Continue-Statement> 。
+通过 break 语句和 continue 语句可以改变循环语句的控制流。有关这两条语句，可参阅 <doc:Statements#Break-语句> 和
+<doc:Statements#Continue-语句> 。
 
 > 循环语句的语法：
 >
@@ -91,7 +91,7 @@ while <#condition#> {
 
 由于会在执行循环体中的语句前判断条件的值，因此循环体中的语句可能会被执行若干次，也可能一次也不会被执行。
 
-条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 <doc:TheBasics#Optional-Binding>。
+条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 <doc:TheBasics#可选绑定>。
 
 > while 语句的语法：
 >
@@ -135,7 +135,7 @@ repeat {
 
 分支语句会根据一个或者多个条件来执行指定部分的代码。分支语句中的条件将会决定程序如何分支以及执行哪部分代码。Swift 提供三种类型的分支语句：`if` 语句、 `guard` 语句和 `switch` 语句。
 
-`if` 语句和 `switch` 语句中的控制流可以用 `break` 语句改变，关于`break`的用法，请参阅 <doc:Statements#Break-Statement> 。
+`if` 语句和 `switch` 语句中的控制流可以用 `break` 语句改变，关于`break`的用法，请参阅 <doc:Statements#Break-语句> 。
 
 > 分支语句的语法：
 >
@@ -179,7 +179,7 @@ if <#condition 1#> {
 }
 ```
 
-if 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 <doc:TheBasics#Optional-Binding>.
+if 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 <doc:TheBasics#可选绑定>.
 
 > if 语句的语法:
 >
@@ -198,7 +198,7 @@ guard <#condition#> else {
 }
 ```
 
-语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件也可以是一条可选绑定，请参阅 <doc:TheBasics#Optional-Binding>。
+语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件也可以是一条可选绑定，请参阅 <doc:TheBasics#可选绑定>。
 
 在 `guard` 语句中进行可选绑定的任何常量或者变量，其可用范围从声明开始直到作用域结束。
 
@@ -209,7 +209,7 @@ guard <#condition#> else {
 - `continue`
 - `throw`
 
-关于控制转移语句，请参阅 <doc:Statements#Control-Transfer-Statements> 。关于返回类型是 `Never` 的函数，请参阅<doc:Declarations#Functions-that-Never-Return>。
+关于控制转移语句，请参阅 <doc:Statements#控制转移语句> 。关于返回类型是 `Never` 的函数，请参阅<doc:Declarations#永远不返回的函数>。
 
 > guard 语句的语法：
 >
@@ -237,7 +237,7 @@ default:
 
 `switch` 语句会先计算 *控制表达式* 的值，然后与每一个 `case` 的模式进行匹配。如果匹配成功，程序将会执行对应的 `case` 中的语句。另外，每一个 `case` 的作用域都不能为空，也就是说在每一个 `case` 的冒号（`:`）后面必须至少有一条语句。如果你不想在匹配到的 `case` 中执行代码，只需在该 `case` 中写一条 `break` 语句即可。
 
-可以用作控制表达式的值是十分灵活的。除了标量类型外，如 `Int`、`Character`，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类型的实例和可选类型。控制表达式的值还可以用来匹配枚举类型中的成员值或是检查该值是否包含在指定的 `Range` 中。关于如何在 `switch` 语句中使用这些类型，请参阅 <doc:ControlFlow#Switch> 中的 <doc:ControlFlow>。
+可以用作控制表达式的值是十分灵活的。除了标量类型外，如 `Int`、`Character`，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类型的实例和可选类型。控制表达式的值还可以用来匹配枚举类型中的成员值或是检查该值是否包含在指定的 `Range` 中。关于如何在 `switch` 语句中使用这些类型，请参阅 <doc:ControlFlow#Switch语句> 中的 <doc:ControlFlow>。
 
 每个 case 的模式后面可以有一个 `where` 子句。`where` 子句由 `where` 关键字紧跟一个提供额外条件的表达式组成。因此，当且仅当控制表达式匹配一个 `case` 的模式且 `where` 子句的表达式为真时，`case` 中的语句才会被执行。在下面的例子中，控制表达式只会匹配包含两个相等元素的元组，例如 `(1, 1)`：
 
@@ -312,7 +312,7 @@ case let (x, y) where x == y:
 let representation: Mirror.AncestorRepresentation = .generated
 switch representation {
 case .customized:
-    print("Use the nearest ancestor’s implementation.")
+    print("Use the nearest ancestor's implementation.")
 case .generated:
     print("Generate a default mirror for all ancestor classes.")
 case .suppressed:
@@ -330,7 +330,7 @@ case .suppressed:
   -> let representation: Mirror.AncestorRepresentation = .generated
   -> switch representation {
      case .customized:
-         print("Use the nearest ancestor’s implementation.")
+         print("Use the nearest ancestor's implementation.")
      case .generated:
          print("Generate a default mirror for all ancestor classes.")
      case .suppressed:
@@ -344,7 +344,7 @@ case .suppressed:
 
 #### 不存在隐式落入
 
-当匹配到的 case 中的代码执行完毕后，switch 语句会直接退出，而不会继续执行下一个 case 。这就意味着，如果你想执行下一个 case，需要显式地在当前 case 中使用 fallthrough 语句。关于 fallthrough 语句的更多信息，请参阅<doc:Statements#Fallthrough-Statement> 。
+当匹配到的 case 中的代码执行完毕后，switch 语句会直接退出，而不会继续执行下一个 case 。这就意味着，如果你想执行下一个 case，需要显式地在当前 case 中使用 fallthrough 语句。关于 fallthrough 语句的更多信息，请参阅<doc:Statements#Fallthrough-语句> 。
 
 > switch 语句的语法：
 >
@@ -375,11 +375,11 @@ case .suppressed:
 
 ## 带标签的语句
 
-你可以在循环语句、if 语句、switch 语句或 do 语句前加上*语句标签*，它由标签名称跟一个冒号(`:`)组成。使用语句标签配合 `break` 和 `continue` 语句，以明确你希望如何在循环语句或 switch 语句中改变控制流程，关于`break` 和 `continue` 语句，请参阅<doc:Statements#Break-Statement> 和<doc:Statements#Continue-Statement> 。
+你可以在循环语句、if 语句、switch 语句或 do 语句前加上*语句标签*，它由标签名称跟一个冒号(`:`)组成。使用语句标签配合 `break` 和 `continue` 语句，以明确你希望如何在循环语句或 switch 语句中改变控制流程，关于`break` 和 `continue` 语句，请参阅<doc:Statements#Break-语句> 和<doc:Statements#Continue-语句> 。
 
 标签的作用域在该标签所标记的语句内。可以嵌套使用带标签的语句，但标签名称必须是唯一的。
 
-关于使用带标签的语句的例子，请参阅 <doc:ControlFlow> 中的 <doc:ControlFlow#Labeled-Statements> 。
+关于使用带标签的语句的例子，请参阅 <doc:ControlFlow> 中的 <doc:ControlFlow#带标签的语句> 。
 
 <!--
   - test: `backtick-identifier-is-legal-label`
@@ -434,7 +434,7 @@ break <#label name#>
 
 在这两种情况下，程序控制会被转移到包围的循环或 switch 语句后面的第一行代码（如果有的话）。
 
-关于使用 break 语句的例子，请参阅<doc:ControlFlow>中的 <doc:ControlFlow#Break> 和 <doc:ControlFlow#Labeled-Statements>。
+关于使用 break 语句的例子，请参阅<doc:ControlFlow>中的 <doc:ControlFlow#Break语句> 和 <doc:ControlFlow#带标签的语句>。
 
 > break 语句的语法：
 >
@@ -457,7 +457,7 @@ continue <#label name#>
 
 在 `for` 语句中，`continue` 语句执行后，增量表达式还是会被计算，这是因为每次循环体执行完毕后，增量表达式都会被计算。
 
-关于使用 `continue` 语句的例子，请参阅<doc:ControlFlow>中的<doc:ControlFlow#Continue> 和 <doc:ControlFlow#Labeled-Statements>
+关于使用 `continue` 语句的例子，请参阅<doc:ControlFlow>中的<doc:ControlFlow#Continue语句> 和 <doc:ControlFlow#带标签的语句>
 
 > continue 语句的语法：
 >
@@ -469,7 +469,7 @@ continue <#label name#>
 
 `fallthrough` 语句可出现在 `switch` 语句中的任意 `case` 中，但不能出现在最后一个 `case` 中。同时，`fallthrough` 语句也不能把控制权转移到使用了值绑定的 `case`。
 
-关于在 `switch` 语句中使用 `fallthrough` 语句的例子，请参阅<doc:ControlFlow>中的<doc:ControlFlow#Control-Transfer-Statements>。
+关于在 `switch` 语句中使用 `fallthrough` 语句的例子，请参阅<doc:ControlFlow>中的<doc:ControlFlow#控制转移语句>。
 
 > fallthrough 语句的语法：
 >
@@ -489,7 +489,7 @@ return <#expression#>
 当 `return` 语句后面带表达式时，表达式的值将会返回给调用函数或方法。如果表达式的值的类型与函数或者方法声明的返回类型不匹配，Swift 则会在返回表达式的值之前将表达式的值的类型转换为返回类型。
 
 > 注意： 
-> 正如 <doc:Declarations#Failable-Initializers>中所描述的， return 语句的一种特殊形式`return nil`可以在可失败的构造器中使用，以表示构造失败。
+> 正如 <doc:Declarations#可失败构造器>中所描述的， return 语句的一种特殊形式`return nil`可以在可失败的构造器中使用，以表示构造失败。
 
 <!--
   TODO: Discuss how the conversion takes place and what is allowed to be converted
@@ -516,7 +516,7 @@ throw <#expression#>
 
  *表达式* 的值必须具有符合`Error`协议的类型。如果包含 `throw` 语句的 `do` 语句或函数声明了它抛出的错误类型，则该表达式的值必须是该类型的实例。
 
-关于如何使用 `throw` 语句的例子，请参阅<doc:ErrorHandling>中的 <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions>
+关于如何使用 `throw` 语句的例子，请参阅<doc:ErrorHandling>中的 <doc:ErrorHandling#使用-Throwing-函数传递错误>
 
 > throw 语句的语法：
 >
@@ -655,7 +655,7 @@ do throws(<#type#>) {
 
 - 如果 `do` 代码块包含的代码抛出超过一种类型的错误，并且没有全面的错误处理，则 Swift 推断该 `do` 语句抛出 `any Error`。
 
-有关处理具有显式类型的错误的更多信息，可参阅 <doc:ErrorHandling#Specifying-the-Error-Type>.
+有关处理具有显式类型的错误的更多信息，可参阅 <doc:ErrorHandling#指定错误类型>.
 
 如果 `do` 代码块中的任何语句抛出了错误，程序会跳转到第一个能模式匹配该错误的 `catch` 子句。如果没有任何子句匹配，错误会传递到外层作作用域。如果错误在最顶层依旧没有被处理，程序执行会因为运行时错误而停止。
 
@@ -671,7 +671,7 @@ do throws(<#type#>) {
 为了确保错误已经被处理，可以让 `catch` 子句使用匹配所有错误的模式，如通配符模式（`_`）。如果一个 `catch` 子句不指定一种具体模式，`catch` 子句会匹配任何错误，并绑定到名为 `error` 的局部常量。有关在 `catch` 子句中使用模式的更多信息，
 可参阅 <doc:Patterns>.
 
-关于如何在 `do` 语句中使用一系列 `catch` 子句的例子，请参阅<doc:ErrorHandling#Handling-Errors>.
+关于如何在 `do` 语句中使用一系列 `catch` 子句的例子，请参阅<doc:ErrorHandling#处理错误>.
 
 > do 语句的语法：
 >
@@ -889,7 +889,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 
 > 注意： 即使没有被编译，上面编译配置中的每个语句仍然会被解析。然而，唯一的例外是编译配置语句中包含 `swift()` 或 `compiler()` 条件：这时仅当编译器版本和语言版本匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
 
-关于在条件编译块中如何包装显式成员表达式，请参见<doc:Expressions#Explicit-Member-Expression>。
+关于在条件编译块中如何包装显式成员表达式，请参见<doc:Expressions#显式成员表达式>。
 
 > 条件编译代码块的语法：
 >
@@ -950,7 +950,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 #sourceLocation()
 ```
 
-第一种的行控制语句会改变该语句之后的代码中的字面量表达式 `#line`、 `#file`、`#fileID` 和 `#filePath` 所表示的值，从行控制语句里行号的代码开始。*行号*是一个大于 0 的整形字面量，会改变 `#line` 表达式的值。*file path*会更改 `#file`、`#fileID` 和 `#filePath` 的值，并且是一个字符串字面量。指定的字符串成为 `#filePath` 的值，字符串的最后一个路径组件用于 `#fileID` 的值。关于 `#file`、 `#fileID` 和 `#filePath`，可参阅<doc:Expressions#Literal-Expression>.
+第一种的行控制语句会改变该语句之后的代码中的字面量表达式 `#line`、 `#file`、`#fileID` 和 `#filePath` 所表示的值，从行控制语句里行号的代码开始。*行号*是一个大于 0 的整形字面量，会改变 `#line` 表达式的值。*file path*会更改 `#file`、`#fileID` 和 `#filePath` 的值，并且是一个字符串字面量。指定的字符串成为 `#filePath` 的值，字符串的最后一个路径组件用于 `#fileID` 的值。关于 `#file`、 `#fileID` 和 `#filePath`，可参阅<doc:Expressions#字面量表达式>。
 
 行控制语句的第二种形式是 `#sourceLocation()`，会将源代码的定位信息重置回默认的行号和文件名。
 
@@ -986,7 +986,7 @@ if #available(<#platform name#> <#version#>, <#...#>, *) {
 
 可用性条件使用一系列逗号分隔的平台名称和版本。使用 `iOS`，`macOS`，`watchOS`，`tvOS`，`visionOS` 作为平台名称，并写上相应的版本号。`*` 参数是必须写的，用于处理未来的潜在平台。可用性条件确保了运行时的平台不低于条件中指定的平台版本时才执行代码块。
 
-与布尔类型的条件不同，不能用逻辑运算符 `&&` 和 `||` 组合可用性条件。不要使用 `!` 来表示平台不可以用，可以使用“不可用性条件”，其形式如下：
+与布尔类型的条件不同，不能用逻辑运算符 `&&` 和 `||` 组合可用性条件。不要使用 `!` 来表示平台不可以用，可以使用"不可用性条件"，其形式如下：
 
 ```swift
 if #unavailable(<#platform name#> <#version#>, <#...#>) {
