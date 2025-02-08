@@ -248,21 +248,28 @@ including important milestones.
   }
   ```
 
-  If you can guarantee that your code uses a potentially unsafe symbol in a safe way, 
-  You can wrap it in a function and call that function 
+  If you can guarantee that your code uses a potentially unsafe symbol in a safe manner, 
+  You can wrap it in a synchronous function and call that function 
   from an asynchronous context.
 
   ```swift
-  // Using a wrapper ensures the mutex is locked
-  // and unlocked on the same thread.
-  func modifyProtectedData() -> Int {
-      var mutex = pthread_mutex_t()
-      
-      mutex.lock()
-      count += 1
-      mutex.unlock()
-      
-      return count
+
+  // Provide a synchronous wrapper around methods with a noasync declaration.
+  extension pthread_mutex_t {
+    mutating func withLock(_ op: () -> ()) {
+      self.lock()
+      op()
+      self.unlock()
+    }
+  }
+
+  func downloadAndStore(key: Int,
+                      dataStore: MyKeyedStorage,
+                      dataLock: inout pthread_mutex_t) async {
+    // Safely call the wrapper in an asynchronous context.
+    dataLock.withLock {
+      dataStore[key] = downloadContent()
+    }
   }
   ```
 
