@@ -274,8 +274,9 @@ including important milestones.
   ```
 
   You can use noasync availability with most declarations; 
-  however, you can't use it when declaring destructors.
-  The system must be able to call destructors from any context.
+  however, you can't use it when declaring deinitializers.
+  Swift must be able to call a class's deinitializers from any context, 
+  both synchronous and asynchronous.
 
 - The `message` argument provides a textual message that the compiler displays
   when emitting a warning or error about the use of a deprecated, obsoleted, 
