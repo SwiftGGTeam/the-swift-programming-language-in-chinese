@@ -219,25 +219,25 @@ including important milestones.
   using elements like thread-local storage, locks, mutexes, or semaphores
   across suspension points can lead to incorrect results.
 
-  To avoid any errors, add an `@available(*, noasync)` attribute to the symbol's declaration:
+  To avoid this problem, add an `@available(*, noasync)` attribute to the symbol's declaration:
 
   ```swift
   extension pthread_mutex_t {
-    
+
     @available(*, noasync)
     mutating func lock() {
         pthread_mutex_lock(&self)
     }
-    
+
     @available(*, noasync)
     mutating func unlock() {
         pthread_mutex_unlock(&self)
     }
   }
   ```
- 
-  This attribute tells the compiler to raise a build error 
-  when someone uses the symbol in an asynchronous context. 
+
+  This attribute raises a compile-time error
+  when someone uses the symbol in an asynchronous context.
   You can also use the `message` argument to provide additional information
   about the symbol.
 
@@ -248,17 +248,17 @@ including important milestones.
   }
   ```
 
-  If you can guarantee that your code uses a potentially unsafe symbol in a safe manner, 
-  you can wrap it in a synchronous function and call that function 
+  If you can guarantee that your code uses a potentially unsafe symbol in a safe manner,
+  you can wrap it in a synchronous function and call that function
   from an asynchronous context.
 
   ```swift
 
   // Provide a synchronous wrapper around methods with a noasync declaration.
   extension pthread_mutex_t {
-    mutating func withLock(_ op: () -> ()) {
+    mutating func withLock(_ operation: () -> ()) {
       self.lock()
-      op()
+      operation()
       self.unlock()
     }
   }
@@ -273,13 +273,13 @@ including important milestones.
   }
   ```
 
-  You can use noasync availability with most declarations; 
+  You can use noasync availability with most declarations;
   however, you can't use it when declaring deinitializers.
-  Swift must be able to call a class's deinitializers from any context, 
+  Swift must be able to call a class's deinitializers from any context,
   both synchronous and asynchronous.
 
 - The `message` argument provides a textual message that the compiler displays
-  when emitting a warning or error about the use of a deprecated, obsoleted, 
+  when emitting a warning or error about the use of a deprecated, obsoleted,
   or noasync declaration.
   It has the following form:
 
