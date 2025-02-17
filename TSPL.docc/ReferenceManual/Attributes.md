@@ -237,7 +237,7 @@ including important milestones.
   ```
  
   This attribute tells the compiler to raise a build error 
-  when the symbol is used in an asynchronous context. 
+  when someone uses the symbol in an asynchronous context. 
   You can also use the `message` argument to provide additional information
   about the symbol.
 
@@ -249,7 +249,7 @@ including important milestones.
   ```
 
   If you can guarantee that your code uses a potentially unsafe symbol in a safe manner, 
-  You can wrap it in a synchronous function and call that function 
+  you can wrap it in a synchronous function and call that function 
   from an asynchronous context.
 
   ```swift
