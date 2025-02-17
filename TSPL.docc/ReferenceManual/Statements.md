@@ -1012,12 +1012,13 @@ conditions listed in the table below.
 | `targetEnvironment()` | `simulator`, `macCatalyst` |
 
 <!--
-  For the full list in the compiler, see the values of
+  The lists above match <https://www.swift.org/platform-support/>
+  and include only platforms with *official* support.
+  For the full list of operating systems and architectures,
+  including those with unofficial or experimental support,
+  see the values of
   SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
   in the file lib/Basic/LangOptions.cpp.
-  Some of the OSes and architectures are listed there
-  because there's experimental work to port Swift to them.
-  We won't list them here until they're officially supported.
   The compiler also accepts pretty much any string --
   for example "#if os(toaster)" compiles just fine,
   but Swift doesn't actually support running on a toaster oven --
