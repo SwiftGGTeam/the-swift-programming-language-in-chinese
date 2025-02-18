@@ -210,8 +210,80 @@ including important milestones.
   obsoleted: <#version number#>
   ```
   The *version number* consists of one to three positive integers, separated by periods.
+
+- The `noasync` argument indicates that
+  the declared symbol can't be used directly
+  in an asynchronous context.
+
+  Because Swift concurrency can resume on a different thread
+  after a potential suspension point,
+  using elements like thread-local storage, locks, mutexes, or semaphores
+  across suspension points can lead to incorrect results.
+
+  To avoid this problem,
+  add an `@available(*, noasync)` attribute to the symbol's declaration:
+
+  ```swift
+  extension pthread_mutex_t {
+
+    @available(*, noasync)
+    mutating func lock() {
+        pthread_mutex_lock(&self)
+    }
+
+    @available(*, noasync)
+    mutating func unlock() {
+        pthread_mutex_unlock(&self)
+    }
+  }
+  ```
+
+  This attribute raises a compile-time error
+  when someone uses the symbol in an asynchronous context.
+  You can also use the `message` argument to provide additional information
+  about the symbol.
+
+  ```swift
+  @available(*, noasync, message: "Migrate locks to Swift concurrency.")
+  mutating func lock() {
+    pthread_mutex_lock(&self)
+  }
+  ```
+
+  If you can guarantee that your code
+  uses a potentially unsafe symbol in a safe manner,
+  you can wrap it in a synchronous function and call that function
+  from an asynchronous context.
+
+  ```swift
+
+  // Provide a synchronous wrapper around methods with a noasync declaration.
+  extension pthread_mutex_t {
+    mutating func withLock(_ operation: () -> ()) {
+      self.lock()
+      operation()
+      self.unlock()
+    }
+  }
+
+  func downloadAndStore(key: Int,
+                      dataStore: MyKeyedStorage,
+                      dataLock: inout pthread_mutex_t) async {
+    // Safely call the wrapper in an asynchronous context.
+    dataLock.withLock {
+      dataStore[key] = downloadContent()
+    }
+  }
+  ```
+
+  You can use the `noasync` argument on most declarations;
+  however, you can't use it when declaring deinitializers.
+  Swift must be able to call a class's deinitializers from any context,
+  both synchronous and asynchronous.
+
 - The `message` argument provides a textual message that the compiler displays
-  when emitting a warning or error about the use of a deprecated or obsoleted declaration.
+  when emitting a warning or error about the use
+  of a declaration marked `deprecated`, `obsoleted`, or `noasync`.
   It has the following form:
 
   ```swift
