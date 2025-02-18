@@ -276,14 +276,14 @@ including important milestones.
   }
   ```
 
-  You can use noasync availability with most declarations;
+  You can use the `noasync` argument on most declarations;
   however, you can't use it when declaring deinitializers.
   Swift must be able to call a class's deinitializers from any context,
   both synchronous and asynchronous.
 
 - The `message` argument provides a textual message that the compiler displays
-  when emitting a warning or error about the use of a deprecated, obsoleted,
-  or noasync declaration.
+  when emitting a warning or error about the use
+  of a declaration marked `deprecated`, `obsoleted`, or `noasync`.
   It has the following form:
 
   ```swift
