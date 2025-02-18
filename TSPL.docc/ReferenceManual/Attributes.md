@@ -211,7 +211,8 @@ including important milestones.
   ```
   The *version number* consists of one to three positive integers, separated by periods.
 
-- The `noasync` argument indicates that the declared symbol can't be used directly
+- The `noasync` argument indicates that
+  the declared symbol can't be used directly
   in an asynchronous context.
 
   Because Swift concurrency can resume on a different thread
@@ -219,7 +220,8 @@ including important milestones.
   using elements like thread-local storage, locks, mutexes, or semaphores
   across suspension points can lead to incorrect results.
 
-  To avoid this problem, add an `@available(*, noasync)` attribute to the symbol's declaration:
+  To avoid this problem,
+  add an `@available(*, noasync)` attribute to the symbol's declaration:
 
   ```swift
   extension pthread_mutex_t {
@@ -248,7 +250,8 @@ including important milestones.
   }
   ```
 
-  If you can guarantee that your code uses a potentially unsafe symbol in a safe manner,
+  If you can guarantee that your code
+  uses a potentially unsafe symbol in a safe manner,
   you can wrap it in a synchronous function and call that function
   from an asynchronous context.
 
