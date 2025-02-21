@@ -706,7 +706,7 @@ var chapterRedirects = ""
 
 for case let (stableID, _, docc) in headings {
     if docc == "" { continue }
-    headingRedirects += 
+    headingRedirects +=
         """
             "#\(stableID)": "\(docc)",\n
         """
@@ -720,7 +720,7 @@ for case let (part, filename, docc) in chapters {
 }
 
 for case let (part, filename, docc) in chapters {
-    let html = 
+    let html =
     """
     <html>
     <head>
