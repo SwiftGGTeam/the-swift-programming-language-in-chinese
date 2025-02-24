@@ -291,9 +291,16 @@ like `T` and `MyTypeParameter`,
 to indicate that they're a placeholder for a *type*, not a value.
 
 > Note:
-> If you don't need to name a type parameter or give it any constraints,
+> If you don't need to name a type parameter
+> and its generic type constraints are simple,
 > there's an alternate, lightweight syntax you can use instead,
 > as described in <doc:OpaqueTypes#Opaque-Parameter-Types>.
+<!--
+Comparison between this syntax and the lightweight syntax
+is in the Opaque Types chapter, not here ---
+the reader hasn't learned about constraints yet,
+so it wouldn't make sense to list what is/isn't supported.
+-->
 
 ## Generic Types
 

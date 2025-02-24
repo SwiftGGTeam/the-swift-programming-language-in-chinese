@@ -945,8 +945,8 @@ func drawTwiceSome(_ shape: some Shape) -> String {
 ```
 
 The `drawTwiceGeneric(_:)` function
-uses a generic type parameter named `SomeShape`,
-and explicitly includes the protocol conformance requirement.
+declares a generic type parameter named `SomeShape`,
+with a constraint that requires `SomeShape` to conform to the `Shape` protocol.
 The `drawTwiceSome(_:)` function
 uses the type `some Shape` for its argument.
 This creates a new, unnamed, generic type parameter for the function
@@ -973,10 +973,14 @@ but there's no constraint that requires them to be the same type.
 When you call `combine(shape:with)`,
 you can pass two different shapes ---
 in this case, one triangle and one trapezoid.
-If you need to write a function
-that has multiple generic parameters
-and constrain them to be are all the same type,
-use the usual generic syntax instead.
+
+Unlike the syntax for named generic type parameters,
+described in <docc:Generics> chapter,
+this lightweight syntax can't include
+a generic `where` clause or any same-type (`==`) constraints.
+In addition,
+using the lightweight syntax for very complex constraints
+can be hard to read.
 
 <!--
 This source file is part of the Swift.org open source project
