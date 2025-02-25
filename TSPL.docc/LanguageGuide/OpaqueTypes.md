@@ -949,7 +949,7 @@ declares a generic type parameter named `SomeShape`,
 with a constraint that requires `SomeShape` to conform to the `Shape` protocol.
 The `drawTwiceSome(_:)` function
 uses the type `some Shape` for its argument.
-This creates a new, unnamed, generic type parameter for the function
+This creates a new, unnamed generic type parameter for the function
 with a constraint that requires the type to conform to the `Shape` protocol.
 Because the generic type doesn't have a name,
 you can't refer to that type elsewhere in the function.
