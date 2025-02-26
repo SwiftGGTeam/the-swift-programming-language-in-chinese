@@ -752,11 +752,14 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   ```
 -->
 
-## Protocols That Don't Have Requirements
+## Protocols That Have Semantic Requirements
 
-All of the example protocols above have some requirements,
+All of the example protocols above require some methods or properties,
 but a protocol doesn't have to include any requirements.
-You can use a protocol to mark types that satisfy *semantic* requirements,
+You can also use a protocol to mark types
+that satisfy some *semantic* requirements ---
+requirements about how values of those types behave
+and about operations that they support ---
 not just requirements that you express in code.
 <!--
 Avoiding the term "marker protocol",
@@ -765,25 +768,30 @@ which more specifically refers to @_marker on a protocol.
 The Swift standard library defines several protocols
 that don't have any required methods or properties:
 
-- [`Copyable`][] for values that can be copied.
-- [`Sendable`][] for values that can be shared across concurrency contexts.
-- [`BitwiseCopyable`][] for values that con be copied, bit-by-bit.
+- [`Sendable`][] for values that can be shared across concurrency domains,
+  as discussed in <doc:Concurrency#Sendable-Types>.
+- [`Copyable`][] for values that Swift can copy
+  when you pass them to a function,
+  as discussed in <doc:Declarations#Borrowing-and-Consuming-Parameters>.
+- [`BitwiseCopyable`][] for values that can be copied, bit-by-bit.
 
+[`BitwiseCopyable`]: https://developer.apple.com/documentation/swift/bitwisecopyable
 [`Copyable`]: https://developer.apple.com/documentation/swift/copyable
 [`Sendable`]: https://developer.apple.com/documentation/swift/sendable
-[`BitwiseCopyable`]: https://developer.apple.com/documentation/swift/bitwisecopyable
 
 <!--
 These link definitions are also used in the section below,
 Implicit Conformance to a Protocol.
 -->
 
-For more information about the semantic requirements,
-see the protocols' documentation.
+For information about these protocols' requirements,
+see the overview in their documentation.
 
-You use the same syntax as usual to adopt these protocols.
-The only difference is that
-there's no code to implement the protocol's requirements.
+You use the same syntax to adopt these protocols
+as you do to adopt other protocols.
+The only difference is that you don't include
+method or property declarations that implement the protocol's requirements.
+For example:
 
 ```swift
 struct MyStruct: Copyable {
@@ -1423,24 +1431,24 @@ for level in levels.sorted() {
 
 ## Implicit Conformance to a Protocol
 
-Some protocols are so common that you would write them on almost every type.
+Some protocols are so common that you would write them
+almost every time you declare a new type.
 For the following protocols,
 Swift automatically infers the conformance
-when you define a type that implements the protocol's requirements:
+when you define a type that implements the protocol's requirements,
+so you don't have to write them yourself:
 
-- `Codable`
-- `Copyable`
-- `Sendable`
-- `BitwiseCopyable`
+- [`Copyable`][]
+- [`Sendable`][]
+- [`BitwiseCopyable`][]
 
-[`Codable`]: https://developer.apple.com/documentation/swift/codable
 <!--
-The remaining definitions for the links in this list
-are in the section above, Protocols That Don't Have Requirements.
+The definitions for the links in this list
+are in the section above, Protocols That Have Semantic Requirements.
 -->
 
 You can still write the conformance explicitly,
-but it doesn't have any effect.
+but it doesn't change how your code behaves.
 To suppress an implicit conformance,
 write a tilde (`~`) before the protocol name in the conformance list:
 
@@ -1506,6 +1514,12 @@ the unavailable extension in this example
 suppresses the implicit conformance to `Sendable`
 and also prevents any extensions elsewhere in your code
 from adding `Sendable` conformance to the type.
+
+> Note:
+> In addition to the protocols discussed above,
+> distributed actors implicitly conform to the [`Codable`][] protocol.
+
+[`Codable`]: https://developer.apple.com/documentation/swift/codable
 
 ## Collections of Protocol Types
 
