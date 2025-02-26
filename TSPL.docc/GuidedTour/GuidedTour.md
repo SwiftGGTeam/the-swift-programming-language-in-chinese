@@ -1624,7 +1624,7 @@ or it responds with a description of what went wrong.
   The server response is a simple way to essentially re-implement Optional
   while sidestepping the fact that I'm doing so.
 
-  "Out of cheese" is a reference to a Terry Pratchet book,
+  "Out of cheese" is a reference to a Terry Pratchett book,
   which features a computer named Hex.
   Hex's other error messages include:
 
