@@ -1826,7 +1826,8 @@ see <doc:Concurrency>.
 Sometimes you need to work outside of the bounds of safety ---
 for example, because of limitations of the language or standard library ---
 so Swift also provides unsafe versions of some APIs.
-When you use types or methods whose name includes the word "unsafe",
+When you use types or methods whose name includes words like
+"unsafe", "unchecked", or "unmanaged",
 you take on the responsibility for safety.
 
 Safe code in Swift can still encounter errors and unexpected failures,
