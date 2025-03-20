@@ -802,7 +802,7 @@ You can call a function that uses typed throws
 from within a regular throwing function:
 
 ```swift
-func someThrowingFunction() -> throws {
+func someThrowingFunction() throws {
     let ratings = [1, 2, 3, 2, 2, 1]
     try summarize(ratings)
 }
@@ -814,7 +814,7 @@ You could also write the error type explicitly as `throws(any Error)`;
 the code below is equivalent to the code above:
 
 ```swift
-func someThrowingFunction() -> throws(any Error) {
+func someThrowingFunction() throws(any Error) {
     let ratings = [1, 2, 3, 2, 2, 1]
     try summarize(ratings)
 }
