@@ -864,7 +864,8 @@ that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
 Opaque types appear as the return type of a function or subscript,
-or the type of a property.
+as the type of a parameter to a function, subscript, or initializer,
+or as the type of a property.
 Opaque types can't appear as part of a tuple type or a generic type,
 such as the element type of an array or the wrapped type of an optional.
 
@@ -908,6 +909,42 @@ The return type can include types
 that are part of the function's generic type parameters.
 For example, a function `someFunction<T>()`
 could return a value of type `T` or `Dictionary<String, T>`.
+
+Writing an opaque type for a parameter
+is syntactic sugar for using a generic type,
+without specifying a name for the generic type parameter.
+The implicit generic type parameter has a constraint
+that requires it to conform to the protocol named in the opaque type.
+If you write multiple opaque types,
+each one makes its own generic type parameter.
+For example, the following declarations are equivalent:
+
+```swift
+func someFunction(x: some MyProtocol, y: some MyProtocol) { }
+func someFunction<T1: MyProtocol, T2: MyProtocol>(x: T1, y: T2) { }
+```
+
+In the second declaration,
+because the generic type parameters `T1` and `T2` have names,
+you can refer use these types elsewhere in the code.
+In contrast,
+the generic type parameters in the first declaration
+don't have names and can't be referenced in other code.
+
+You can't use an opaque type in the type of a variadic parameter.
+
+You can't use an opaque type
+as a parameter to a function type being returned,
+or as a parameter in a parameter type that's a function type.
+In these positions,
+the function's caller would have to construct a value
+of that unknown type.
+
+```swift
+protocol MyProtocol { }
+func badFunction() -> (some MyProtocol) -> Void { }  // Error
+func anotherBadFunction(callback: (some MyProtocol) -> Void) { }  // Error
+```
 
 > Grammar of an opaque type:
 >
