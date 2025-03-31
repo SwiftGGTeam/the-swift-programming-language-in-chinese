@@ -2,6 +2,14 @@
 
 Review the recent changes to this book.
 
+**2025-03-31**
+
+- Updated for Swift 6.1.
+- Added the <doc:OpaqueTypes#Opaque-Parameter-Types> section
+  with information about using `some` as a lightweight syntax for generics.
+- Added information about the `noasync` argument
+  to the <doc:Attributes#available> section.
+
 **2024-09-23**
 
 - Updated for Swift 6.

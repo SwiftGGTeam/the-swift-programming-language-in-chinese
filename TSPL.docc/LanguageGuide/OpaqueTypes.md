@@ -975,7 +975,7 @@ you can pass two different shapes ---
 in this case, one triangle and one trapezoid.
 
 Unlike the syntax for named generic type parameters,
-described in <docc:Generics> chapter,
+described in <doc:Generics> chapter,
 this lightweight syntax can't include
 a generic `where` clause or any same-type (`==`) constraints.
 In addition,
