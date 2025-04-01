@@ -31,8 +31,10 @@ when multiple pieces of code try to access
 some piece of shared mutable state —
 this is known as a *data race*.
 When you use the language-level support for concurrency,
-Swift detects data races at compile time.
-<!-- XXX in some cases, it has to detect them at run time -->
+Swift detects and prevents data races,
+and most data races produce a compile-time error.
+Some data races can't be detected until your code is running;
+these data races terminate code execution.
 
 <!-- XXX OUTLINE
 Summarize the safety guarantees we make for concurrent code.
