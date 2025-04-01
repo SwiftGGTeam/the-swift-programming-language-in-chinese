@@ -9,17 +9,6 @@
 # See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 
 # Prepares a version of the book suitable for publication on swift.org.
-#
-# To use top-of-tree DocC, clone the following repositories:
-#
-#     https://github.com/apple/swift-docc
-#     https://github.com/apple/swift-docc-render
-#
-# Then set environment variables to paths in their working directories,
-# like the following, before running this script:
-#
-#     PATH=~/git/DocC/.build/arm64-apple-macosx/debug:$PATH
-#     DOCC_HTML_DIR=~/git/DocC-Renderer/dist/
 
 set -eux
 
@@ -36,7 +25,7 @@ cd "$(git rev-parse --show-toplevel)"
 # The published version of the book gets the swift.org header.
 cp -n TSPL.docc/header-publish.html TSPL.docc/header.html
 
-docc convert \
+xcrun docc convert \
     --experimental-enable-custom-templates \
     --hosting-base-path swift-book \
     --output-path "$output" \
@@ -52,3 +41,6 @@ cp -r bin/redirects/LanguageGuide "$output"
 cp -r bin/redirects/ReferenceManual "$output"
 cp -r bin/redirects/RevisionHistory "$output"
 cp -r bin/redirects/index.html "$output"
+
+# Add a redirect page from swift.org/swift-book/documentation/.
+cp -r bin/redirects/documentation/index.html "$output/documentation/"

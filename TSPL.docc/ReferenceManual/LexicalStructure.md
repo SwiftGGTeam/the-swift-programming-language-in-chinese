@@ -107,8 +107,8 @@ The backticks aren't considered part of the identifier;
 The paragraph above produces a link-resolution warning
 because of a known issue with ` in code voice.
 
-https://github.com/apple/swift-book/issues/71
-https://github.com/apple/swift-markdown/issues/93
+https://github.com/swiftlang/swift-book/issues/71
+https://github.com/swiftlang/swift-markdown/issues/93
 -->
 
 Inside a closure with no explicit parameter names,
@@ -133,8 +133,8 @@ The formal grammar below for 'identifier'
 produces a link-resolution warning
 because of a known issue with ` in code voice.
 
-https://github.com/apple/swift-book/issues/71
-https://github.com/apple/swift-markdown/issues/93
+https://github.com/swiftlang/swift-book/issues/71
+https://github.com/swiftlang/swift-markdown/issues/93
 -->
 
 > Grammar of an identifier:
@@ -247,7 +247,9 @@ so they must be escaped with backticks in that context.
 
 - Keywords used in declarations:
   `associatedtype`,
+  `borrowing`,
   `class`,
+  `consuming`,
   `deinit`,
   `enum`,
   `extension`,
@@ -258,10 +260,11 @@ so they must be escaped with backticks in that context.
   `inout`,
   `internal`,
   `let`,
+  `nonisolated`,
   `open`,
   `operator`,
-  `private`,
   `precedencegroup`,
+  `private`,
   `protocol`,
   `public`,
   `rethrows`,
@@ -291,8 +294,8 @@ so they must be escaped with backticks in that context.
   `in`,
   `repeat`,
   `return`,
-  `throw`,
   `switch`,
+  `throw`,
   `where`,
   and `while`.
 - Keywords used in expressions and types:
@@ -370,6 +373,7 @@ so they must be escaped with backticks in that context.
 
 - Keywords reserved in particular contexts:
   `associativity`,
+  `async`,
   `convenience`,
   `didSet`,
   `dynamic`,
@@ -967,7 +971,7 @@ and `/\d/` matches a single digit.
   of the supported syntax here.
   (Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET)
 
-  https://github.com/apple/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
+  https://github.com/swiftlang/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
 
   Regex literals and the DSL take different approaches to captures.
   The literals give you more type safety.

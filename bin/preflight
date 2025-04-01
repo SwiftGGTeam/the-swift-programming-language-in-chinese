@@ -45,7 +45,7 @@ xpath -q -n -e '//link/@destination' |
 sort -u | cut -f2 -d= | grep -v '^"doc:' | sed 's/^"//; s/"$//' |
 while read url
 do
-    if curl --silent --output /dev/null --fail --head $url
+    if curl --silent --output /dev/null --location --fail --head $url
     then
         echo "     $url"
     else

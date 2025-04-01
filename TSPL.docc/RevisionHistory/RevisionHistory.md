@@ -2,6 +2,26 @@
 
 Review the recent changes to this book.
 
+**2025-03-31**
+
+- Updated for Swift 6.1.
+- Added the <doc:OpaqueTypes#Opaque-Parameter-Types> section
+  with information about using `some` as a lightweight syntax for generics.
+- Added information about the `noasync` argument
+  to the <doc:Attributes#available> section.
+
+**2024-09-23**
+
+- Updated for Swift 6.
+- Added the <doc:Attributes#preconcurrency> section
+  with information about migrating to strict concurrency checking.
+- Added the <doc:ErrorHandling#Specifying-the-Error-Type> section
+  with information about throwing errors of a specific type.
+- Updated the <doc:Expressions#Macro-Expansion-Expression> section,
+  now that any macro can be used as a default value for a parameter.
+- Added information about package-level access
+  to the <doc:AccessControl> chapter.
+
 **2024-03-05**
 
 - Updated for Swift 5.10.

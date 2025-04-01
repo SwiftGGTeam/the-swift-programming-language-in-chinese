@@ -55,7 +55,7 @@ using APIs from the [PackageDescription][] module,
 and if you use Xcode, you specify the package name
 in the Package Access Identifier build setting.
 
-[PackageDescription](https://developer.apple.com/documentation/packagedescription)
+[PackageDescription]: https://developer.apple.com/documentation/packagedescription
 
 ## Access Levels
 
@@ -195,7 +195,7 @@ private func somePrivateFunction() {}
   -> internal class SomeInternalClass {}
   -> fileprivate class SomeFilePrivateClass {}
   -> private class SomePrivateClass {}
-  ---
+
   -> open var someOpenVariable = 0
   -> public var somePublicVariable = 0
   -> internal let someInternalConstant = 0
@@ -284,18 +284,18 @@ private class SomePrivateClass {                 // explicitly private class
         fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> class SomeInternalClass {                       // implicitly internal class
         var someInternalProperty = 0                 // implicitly internal class member
         fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> fileprivate class SomeFilePrivateClass {        // explicitly file-private class
         func someFilePrivateMethod() {}              // implicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> private class SomePrivateClass {                // explicitly private class
         func somePrivateMethod() {}                  // implicitly private class member
      }
@@ -557,7 +557,7 @@ you must explicitly declare the nested type as public.
   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
-  ---
+
   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
   ```
@@ -569,12 +569,12 @@ you must explicitly declare the nested type as public.
   ```swifttest
   // these are all expected to fail, because they're private to the other file
   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
-  ---
+
   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
-  ---
+
   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
-  ---
+
   !$ error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
   !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
   !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -615,14 +615,14 @@ you must explicitly declare the nested type as public.
   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
-  ---
+
   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
-  ---
+
   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
-  ---
+
   !$ error: 'InternalEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
   !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   !!                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -701,7 +701,7 @@ internal class B: A {
   -> public class A {
         fileprivate func someMethod() {}
      }
-  ---
+
   -> internal class B: A {
         override internal func someMethod() {}
      }
@@ -734,7 +734,7 @@ internal class B: A {
   -> public class A {
         fileprivate func someMethod() {}
      }
-  ---
+
   -> internal class B: A {
         override internal func someMethod() {
            super.someMethod()
@@ -1162,7 +1162,7 @@ on any type that adopts the protocol.
         var publicProperty = 0
         func publicMethod() {}
      }
-  ---
+
   -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
         var internalProperty = 0
         func internalMethod() {}
@@ -1190,7 +1190,7 @@ on any type that adopts the protocol.
   !$ error: cannot find type 'FilePrivateProtocol' in scope
   !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
   !! ^~~~~~~~~~~~~~~~~~~
-  ---
+
   // these will fail, because PrivateProtocol isn't visible outside of its file
   -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
         var privateProperty = 0
@@ -1440,7 +1440,7 @@ extension SomeStruct: SomeProtocol {
   -> struct SomeStruct {
          private var privateVariable = 12
      }
-  ---
+
   -> extension SomeStruct: SomeProtocol {
          func doSomething() {
              print(privateVariable)
@@ -1474,19 +1474,19 @@ but a public type alias can't alias an internal, file-private, or private type.
   -> public struct PublicStruct {}
   -> internal struct InternalStruct {}
   -> private struct PrivateStruct {}
-  ---
+
   -> public typealias PublicAliasOfPublicType = PublicStruct
   -> internal typealias InternalAliasOfPublicType = PublicStruct
   -> private typealias PrivateAliasOfPublicType = PublicStruct
-  ---
+
   -> public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
   -> internal typealias InternalAliasOfInternalType = InternalStruct
   -> private typealias PrivateAliasOfInternalType = InternalStruct
-  ---
+
   -> public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
   -> internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
   -> private typealias PrivateAliasOfPrivateType = PrivateStruct
-  ---
+
   !$ error: type alias cannot be declared public because its underlying type uses an internal type
   !! public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
   !! ^                           ~~~~~~~~~~~~~~

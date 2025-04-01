@@ -714,7 +714,7 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
   ```swifttest
   -> let defaultColorName = "red"
   -> var userDefinedColorName: String?   // defaults to nil
-  ---
+
   -> var colorNameToUse = userDefinedColorName ?? defaultColorName
   /> userDefinedColorName is nil, so colorNameToUse is set to the default of \"\(colorNameToUse)\"
   </ userDefinedColorName is nil, so colorNameToUse is set to the default of "red"
@@ -939,7 +939,7 @@ for name in names[...2] {
      }
   </ Brian
   </ Jack
-  ---
+
   -> for name in names[...2] {
          print(name)
      }

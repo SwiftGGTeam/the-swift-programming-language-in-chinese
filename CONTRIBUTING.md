@@ -47,7 +47,7 @@ but don't rebase commits that are part of a pull request.
 
 ## Writing commit messages
 
-Use the Git commit message to communicate with other contributors --
+Use the Git commit message to communicate with other contributors —
 both the people working on the project now
 who are reviewing your changes,
 and people who join the project in the future

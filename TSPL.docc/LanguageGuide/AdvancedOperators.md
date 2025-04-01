@@ -701,7 +701,7 @@ extension Vector2D {
   -> struct Vector2D {
         var x = 0.0, y = 0.0
      }
-  ---
+
   -> extension Vector2D {
          static func + (left: Vector2D, right: Vector2D) -> Vector2D {
             return Vector2D(x: left.x + right.x, y: left.y + right.y)
@@ -1028,7 +1028,7 @@ let afterDoubling = +++toBeDoubled
            return vector
         }
      }
-  ---
+
   -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
   -> let afterDoubling = +++toBeDoubled
   /> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
@@ -1349,7 +1349,7 @@ print(personalGreeting.draw())
   -> func caps(@DrawingBuilder content: () -> Drawable) -> Drawable {
          return AllCaps(content: content())
      }
-  ---
+
   -> func makeGreeting(for name: String? = nil) -> Drawable {
          let greeting = draw {
              Stars(length: 3)
@@ -1369,7 +1369,7 @@ print(personalGreeting.draw())
   -> let genericGreeting = makeGreeting()
   -> print(genericGreeting.draw())
   <- ***Hello WORLD!**
-  ---
+
   -> let personalGreeting = makeGreeting(for: "Ravi Patel")
   -> print(personalGreeting.draw())
   <- ***Hello RAVI PATEL!**
@@ -1539,7 +1539,7 @@ see <doc:Attributes#resultBuilder>.
          // static func * (scale: Double, vector: Self) -> Self
          static func *** (scale: Double, vector: Vector2D) -> Vector2D
      }
-  ---
+
   -> extension Double {
          static func *** (scale: Double, vector: Vector2D) -> Vector2D {
              return Vector2D(x: scale * vector.x, y: scale * vector.y)

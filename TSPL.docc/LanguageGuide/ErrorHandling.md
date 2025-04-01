@@ -142,7 +142,7 @@ func cannotThrowErrors() -> String
   ```swifttest
   -> func canThrowErrors() throws -> String
   >> { return "foo" }
-  ---
+
   -> func cannotThrowErrors() -> String
   >> { return "foo" }
   ```
@@ -246,7 +246,7 @@ class VendingMachine {
         var price: Int
         var count: Int
      }
-  ---
+
   -> class VendingMachine {
   ->     var inventory = [
              "Candy Bar": Item(price: 12, count: 7),
@@ -254,7 +254,7 @@ class VendingMachine {
              "Pretzels": Item(price: 7, count: 11)
          ]
   ->     var coinsDeposited = 0
-  ---
+
   ->     func vend(itemNamed name: String) throws {
              guard let item = inventory[name] else {
                  throw VendingMachineError.invalidSelection
@@ -521,7 +521,7 @@ do {
              print("Couldn't buy that from the vending machine.")
          }
      }
-  ---
+
   -> do {
          try nourish(with: "Beet-Flavored Chips")
      } catch {
@@ -615,11 +615,11 @@ do {
         // ...
   >>    return 40
   -> }
-  ---
+
   -> let x = try? someThrowingFunction()
   >> print(x as Any)
   << Optional(40)
-  ---
+
   -> let y: Int?
      do {
          y = try someThrowingFunction()
@@ -698,6 +698,213 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   -> let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   ```
 -->
+
+## Specifying the Error Type
+
+All of the examples above use the most common kind of error handling,
+where the errors that your code throws
+can be values of any type that conforms to the `Error` protocol.
+This approach matches the reality that
+you don't know ahead of time every error that could happen
+while the code is running,
+especially when propagating errors thrown somewhere else.
+It also reflects the fact that errors can change over time.
+New versions of a library ---
+including libraries that your dependencies use ---
+can throw new errors,
+and the rich complexity of real-world user configurations
+can expose failure modes that weren't visible during development or testing.
+The error handling code in the examples above
+always includes a default case to handle errors
+that don't have a specific `catch` clause.
+
+Most Swift code doesn't specify the type for the errors it throws.
+However,
+you might limit code to throwing errors of only one specific type
+in the following special cases:
+
+- When running code on an embedded system
+  that doesn't support dynamic allocation of memory.
+  Throwing an instance of `any Error` or another boxed protocol type
+  requires allocating memory at runtime to store the error.
+  In contrast,
+  throwing an error of a specific type
+  lets Swift avoid heap allocation for errors.
+
+- When the errors are an implementation detail of some unit of code,
+  like a library,
+  and aren't part of the interface to that code.
+  Because the errors come from only the library,
+  and not from other dependencies or the library's clients,
+  you can make an exhaustive list of all possible failures.
+  And because these errors are an implementation detail of the library,
+  they're always handled within that library.
+
+- In code that only propagates errors described by generic parameters,
+  like a function that takes a closure argument
+  and propagates any errors from that closure.
+  For a comparison between propagating a specific error type
+  and using `rethrows`,
+  see <doc:Declarations#Rethrowing-Functions-and-Methods>.
+
+For example,
+consider code that summarizes ratings
+and uses the following error type:
+
+```swift
+enum StatisticsError: Error {
+    case noRatings
+    case invalidRating(Int)
+}
+```
+
+To specify that a function throws only `StatisticsError` values as its errors,
+you write `throws(StatisticsError)` instead of only `throws`
+when declaring the function.
+This syntax is also called *typed throws*
+because you write the error type after `throws` in the declaration.
+For example,
+the function below throws `StatisticsError` values as its errors.
+
+```swift
+func summarize(_ ratings: [Int]) throws(StatisticsError) {
+    guard !ratings.isEmpty else { throw .noRatings }
+
+    var counts = [1: 0, 2: 0, 3: 0]
+    for rating in ratings {
+        guard rating > 0 && rating <= 3 else { throw .invalidRating(rating) }
+        counts[rating]! += 1
+    }
+
+    print("*", counts[1]!, "-- **", counts[2]!, "-- ***", counts[3]!)
+}
+```
+
+In the code above,
+the `summarize(_:)` function summarizes a list of ratings
+expressed on a scale of 1 to 3.
+This function throws an instance of `StatisticsError` if the input isn't valid.
+Both places in the code above that throw an error
+omit the type of the error
+because the function's error type is already defined.
+You can use the short form, `throw .noRatings`,
+instead of writing `throw StatisticsError.noRatings`
+when throwing an error in a function like this.
+
+When you write a specific error type at the start of the function,
+Swift checks that you don't throw any other errors.
+For example,
+if you tried to use `VendingMachineError` from examples earlier in this chapter
+in the `summarize(_:)` function above,
+that code would produce an error at compile time.
+
+You can call a function that uses typed throws
+from within a regular throwing function:
+
+```swift
+func someThrowingFunction() throws {
+    let ratings = [1, 2, 3, 2, 2, 1]
+    try summarize(ratings)
+}
+```
+
+The code above doesn't specify an error type for `someThrowingFunction()`,
+so it throws `any Error`.
+You could also write the error type explicitly as `throws(any Error)`;
+the code below is equivalent to the code above:
+
+```swift
+func someThrowingFunction() throws(any Error) {
+    let ratings = [1, 2, 3, 2, 2, 1]
+    try summarize(ratings)
+}
+```
+
+In this code,
+`someThrowingFunction()` propagates any errors that `summarize(_:)` throws.
+The errors from `summarize(_:)` are always `StatisticsError` values,
+which is also a valid error for `someThrowingFunction()` to throw.
+
+Just like you can write a function that never returns
+with a return type of `Never`,
+you can write a function that never throws with `throws(Never)`:
+
+```swift
+func nonThrowingFunction() throws(Never) {
+  // ...
+}
+```
+This function can't throw because
+it's impossible to create a value of type `Never` to throw.
+
+In addition to specifying a function's error type,
+you can also write a specific error type for a `do`-`catch` statement.
+For example:
+
+```swift
+let ratings = []
+do throws(StatisticsError) {
+    try summarize(ratings)
+} catch {
+    switch error {
+    case .noRatings:
+        print("No ratings available")
+    case .invalidRating(let rating):
+        print("Invalid rating: \(rating)")
+    }
+}
+// Prints "No ratings available"
+```
+
+In this code,
+writing `do throws(StatisticsError)` indicates that
+the `do`-`catch` statement throws `StatisticsError` values as its errors.
+Like other `do`-`catch` statements,
+the `catch` clause can either handle every possible error
+or propagate unhandled errors for some surrounding scope to handle.
+This code handles all of the errors,
+using a `switch` statement with one case for each enumeration value.
+Like other `catch` clauses that don't have a pattern,
+the clause matches any error
+and binds the error to a local constant named `error`.
+Because the `do`-`catch` statement throws `StatisticsError` values,
+`error` is a value of type `StatisticsError`.
+
+The `catch` clause above uses a `switch` statement
+to match and handle each possible error.
+If you tried to add a new case to `StatisticsError`
+without updating the error-handling code,
+Swift would give you an error
+because the `switch` statement wouldn't be exhaustive anymore.
+For a library that catches all of its own errors,
+you could use this approach to ensure any new errors
+get corresponding new code to handle them.
+
+If a function or `do` block throws errors of only a single type,
+Swift infers that this code is using typed throws.
+Using this shorter syntax,
+you could write the `do`-`catch` example above as follows:
+
+```swift
+let ratings = []
+do {
+    try summarize(ratings)
+} catch {
+    switch error {
+    case .noRatings:
+        print("No ratings available")
+    case .invalidRating(let rating):
+        print("Invalid rating: \(rating)")
+    }
+}
+// Prints "No ratings available"
+```
+
+Even though the `do`-`catch` block above
+doesn't specify what type of error it throws,
+Swift infers that it throws `StatisticsError`.
+You can explicitly write `throws(any Error)`
+to avoid letting Swift infer typed throws.
 
 ## Specifying Cleanup Actions
 

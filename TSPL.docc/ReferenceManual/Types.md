@@ -249,7 +249,7 @@ For example:
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-  ---
+
   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
   >> print(type(of: f))
   << (Int, Int) -> ()
@@ -281,17 +281,17 @@ f = functionWithDifferentNumberOfArguments // Error
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-  ---
+
   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
   -> f = anotherFunction              // OK
   -> f = functionWithDifferentLabels  // OK
-  ---
+
   -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
   -> f = functionWithDifferentArgumentTypes     // Error
   !$ error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
   !! f = functionWithDifferentArgumentTypes     // Error
   !! ^
-  ---
+
   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
   -> f = functionWithDifferentNumberOfArguments // Error
   !$ error: type of expression is ambiguous without more context
@@ -347,10 +347,42 @@ that is, a function that takes an `Int` and returns
 another function that takes and returns an `Int`.
 
 Function types for functions
-that can throw or rethrow an error must be marked with the `throws` keyword.
-The `throws` keyword is part of a function's type,
-and nonthrowing functions are subtypes of throwing functions.
-As a result, you can use a nonthrowing function in the same places as a throwing one.
+that can throw or rethrow an error must include the `throws` keyword.
+You can include a type after `throws` in parentheses
+to specify the type of error that the function throws.
+The throw error type must conform to the `Error` protocol.
+Writing `throws` without specifying a type
+is the same as writing `throws(any Error)`.
+Omitting `throws` is the same as writing `throws(Never)`.
+The error type that a function throws
+can be any type that conforms to `Error`,
+including generic types, boxed protocol types, and opaque types.
+
+The type of error that a function throws is part of that function's type,
+and a subtype relationship between error types
+means the corresponding function types are also subtypes.
+For example, if you declare a custom `MyError` type,
+the relationship between some function types is as follows,
+from supertype to subtype:
+
+1. Functions that throw any error, marked `throws(any Error)`
+1. Functions that throw a specific error, marked `throws(MyError)`
+1. Functions that don't throw, marked `throws(Never)`
+
+As a result of these subtype relationships:
+
+- You can use a nonthrowing function
+  in the same places as a throwing function.
+- You can use a function that throws a concrete error type
+  in the same places as a throwing function.
+- You can use a function that throws a more specific error type
+  in the same places as a function that throws a more general error type.
+
+If you use an associated type or a generic type parameter
+as the thrown error type in a function type,
+then that associated type or generic type parameter
+is implicitly required to conform to the `Error` protocol.
+
 Throwing and rethrowing functions are described in
 <doc:Declarations#Throwing-Functions-and-Methods>
 and <doc:Declarations#Rethrowing-Functions-and-Methods>.
@@ -374,11 +406,11 @@ see <doc:Declarations#Asynchronous-Functions-and-Methods>.
   >>     }
   >>     return g
   >> }
-  ---
+
   >> let a: (Int) -> (Int) -> Int = f
   >> let r0 = a(3)(5)
   >> assert(r0 == 8)
-  ---
+
   >> let b: (Int) -> ((Int) -> Int) = f
   >> let r1 = b(3)(5)
   >> assert(r1 == 8)
@@ -476,7 +508,7 @@ see <doc:MemorySafety>.
 
 > Grammar of a function type:
 >
-> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ **`throws`**_?_ **`->`** *type*
+> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ *throws-clause*_?_ **`->`** *type*
 >
 > *function-type-argument-clause* → **`(`** **`)`** \
 > *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
@@ -484,6 +516,8 @@ see <doc:MemorySafety>.
 > *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
 > *function-type-argument* → *attributes*_?_ *parameter-modifier*_?_ *type* | *argument-label* *type-annotation* \
 > *argument-label* → *identifier*
+>
+> *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
 
 <!--
   NOTE: Functions are first-class citizens in Swift,
@@ -830,7 +864,8 @@ that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
 Opaque types appear as the return type of a function or subscript,
-or the type of a property.
+as the type of a parameter to a function, subscript, or initializer,
+or as the type of a property.
 Opaque types can't appear as part of a tuple type or a generic type,
 such as the element type of an array or the wrapped type of an optional.
 
@@ -875,6 +910,42 @@ that are part of the function's generic type parameters.
 For example, a function `someFunction<T>()`
 could return a value of type `T` or `Dictionary<String, T>`.
 
+Writing an opaque type for a parameter
+is syntactic sugar for using a generic type,
+without specifying a name for the generic type parameter.
+The implicit generic type parameter has a constraint
+that requires it to conform to the protocol named in the opaque type.
+If you write multiple opaque types,
+each one makes its own generic type parameter.
+For example, the following declarations are equivalent:
+
+```swift
+func someFunction(x: some MyProtocol, y: some MyProtocol) { }
+func someFunction<T1: MyProtocol, T2: MyProtocol>(x: T1, y: T2) { }
+```
+
+In the second declaration,
+because the generic type parameters `T1` and `T2` have names,
+you can refer use these types elsewhere in the code.
+In contrast,
+the generic type parameters in the first declaration
+don't have names and can't be referenced in other code.
+
+You can't use an opaque type in the type of a variadic parameter.
+
+You can't use an opaque type
+as a parameter to a function type being returned,
+or as a parameter in a parameter type that's a function type.
+In these positions,
+the function's caller would have to construct a value
+of that unknown type.
+
+```swift
+protocol MyProtocol { }
+func badFunction() -> (some MyProtocol) -> Void { }  // Error
+func anotherBadFunction(callback: (some MyProtocol) -> Void) { }  // Error
+```
+
 > Grammar of an opaque type:
 >
 > *opaque-type* → **`some`** *type*
@@ -903,7 +974,7 @@ of any type that satisfies the *constraint*.
 This behavior contrasts with how an opaque types work,
 where there is some specific conforming type known at compile time.
 The additional level of indirection that's used
-when working with a boxed protocol type is called :newTerm:`boxing`.
+when working with a boxed protocol type is called *boxing*.
 Boxing typically requires a separate memory allocation for storage
 and an additional level of indirection for access,
 which incurs a performance cost at runtime.
@@ -941,7 +1012,7 @@ because those types are already boxed protocol types.
 
 <!--
 Contrast P.Type with (any P.Type) and (any P).Type
-https://github.com/apple/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
+https://github.com/swiftlang/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
 -->
 
 > Grammar of a boxed protocol type:
@@ -1208,12 +1279,12 @@ print(type(of: z.f()))
   -> let x = Superclass()
   -> print(type(of: x.f()))
   <- Superclass
-  ---
+
   -> class Subclass: Superclass { }
   -> let y = Subclass()
   -> print(type(of: y.f()))
   <- Subclass
-  ---
+
   -> let z: Superclass = Subclass()
   -> print(type(of: z.f()))
   <- Subclass

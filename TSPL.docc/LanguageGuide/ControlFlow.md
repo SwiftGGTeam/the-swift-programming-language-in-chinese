@@ -1939,17 +1939,17 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
          guard let name = person["name"] else {
              return
          }
-  ---
+
          print("Hello \(name)!")
-  ---
+
          guard let location = person["location"] else {
              print("I hope the weather is nice near you.")
              return
          }
-  ---
+
          print("I hope the weather is nice in \(location).")
      }
-  ---
+
   -> greet(person: ["name": "John"])
   <- Hello John!
   <- I hope the weather is nice near you.
@@ -2159,7 +2159,7 @@ the body of the `if` executes on the minimum deployment target specified by your
 
 In its general form,
 the availability condition takes a list of platform names and versions.
-You use platform names such as `iOS`, `macOS`, `watchOS`, and `tvOS` ---
+You use platform names such as `iOS`, `macOS`, `watchOS`, `tvOS`, and `visionOS` ---
 for the full list, see <doc:Attributes#Declaration-Attributes>.
 In addition to specifying major version numbers like iOS 8 or macOS 10.10,
 you can specify minor versions numbers like iOS 11.2.6 and macOS 10.13.3.
@@ -2199,7 +2199,7 @@ func chooseBestColor() -> String {
   -> struct ColorPreference {
          var bestColor = "blue"
      }
-  ---
+
   -> func chooseBestColor() -> String {
         guard #available(macOS 10.12, *) else {
             return "gray"
@@ -2243,7 +2243,7 @@ if #unavailable(iOS 10) {
      } else {
         // Fallback code
      }
-  ---
+
   -> if #unavailable(iOS 10) {
         // Fallback code
      }

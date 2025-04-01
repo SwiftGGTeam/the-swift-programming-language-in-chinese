@@ -46,7 +46,7 @@ If there's a stable URL we can use, make the macro protocols below links.
 -->
 
 The first argument to this attribute
-indicates the macros role:
+indicates the macro's role:
 
 - term Peer macros:
   Write `peer` as the first argument to this attribute.
@@ -210,8 +210,80 @@ including important milestones.
   obsoleted: <#version number#>
   ```
   The *version number* consists of one to three positive integers, separated by periods.
+
+- The `noasync` argument indicates that
+  the declared symbol can't be used directly
+  in an asynchronous context.
+
+  Because Swift concurrency can resume on a different thread
+  after a potential suspension point,
+  using elements like thread-local storage, locks, mutexes, or semaphores
+  across suspension points can lead to incorrect results.
+
+  To avoid this problem,
+  add an `@available(*, noasync)` attribute to the symbol's declaration:
+
+  ```swift
+  extension pthread_mutex_t {
+
+    @available(*, noasync)
+    mutating func lock() {
+        pthread_mutex_lock(&self)
+    }
+
+    @available(*, noasync)
+    mutating func unlock() {
+        pthread_mutex_unlock(&self)
+    }
+  }
+  ```
+
+  This attribute raises a compile-time error
+  when someone uses the symbol in an asynchronous context.
+  You can also use the `message` argument to provide additional information
+  about the symbol.
+
+  ```swift
+  @available(*, noasync, message: "Migrate locks to Swift concurrency.")
+  mutating func lock() {
+    pthread_mutex_lock(&self)
+  }
+  ```
+
+  If you can guarantee that your code
+  uses a potentially unsafe symbol in a safe manner,
+  you can wrap it in a synchronous function and call that function
+  from an asynchronous context.
+
+  ```swift
+
+  // Provide a synchronous wrapper around methods with a noasync declaration.
+  extension pthread_mutex_t {
+    mutating func withLock(_ operation: () -> ()) {
+      self.lock()
+      operation()
+      self.unlock()
+    }
+  }
+
+  func downloadAndStore(key: Int,
+                      dataStore: MyKeyedStorage,
+                      dataLock: inout pthread_mutex_t) async {
+    // Safely call the wrapper in an asynchronous context.
+    dataLock.withLock {
+      dataStore[key] = downloadContent()
+    }
+  }
+  ```
+
+  You can use the `noasync` argument on most declarations;
+  however, you can't use it when declaring deinitializers.
+  Swift must be able to call a class's deinitializers from any context,
+  both synchronous and asynchronous.
+
 - The `message` argument provides a textual message that the compiler displays
-  when emitting a warning or error about the use of a deprecated or obsoleted declaration.
+  when emitting a warning or error about the use
+  of a declaration marked `deprecated`, `obsoleted`, or `noasync`.
   It has the following form:
 
   ```swift
@@ -244,7 +316,6 @@ including important milestones.
   }
   ```
 
-
   <!--
     - test: `renamed1`
 
@@ -266,7 +337,6 @@ including important milestones.
   typealias MyProtocol = MyRenamedProtocol
   ```
 
-
   <!--
     - test: `renamed2`
 
@@ -275,7 +345,7 @@ including important milestones.
     -> protocol MyRenamedProtocol {
            // protocol definition
        }
-    ---
+
     -> @available(*, unavailable, renamed: "MyRenamedProtocol")
        typealias MyProtocol = MyRenamedProtocol
     ```
@@ -488,16 +558,16 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
              }
          }
      }
-  ---
+
   -> let dial = TelephoneExchange()
-  ---
+
   -> // Use a dynamic method call.
   -> dial(4, 1, 1)
   <- Get Swift help on forums.swift.org
-  ---
+
   -> dial(8, 6, 7, 5, 3, 0, 9)
   <- Unrecognized number
-  ---
+
   -> // Call the underlying method directly.
   -> dial.dynamicallyCall(withArguments: [4, 1, 1])
   << Get Swift help on forums.swift.org
@@ -548,7 +618,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
                  .joined(separator: "\n")
          }
      }
-  ---
+
   -> let repeatLabels = Repeater()
   -> print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   </ a
@@ -676,12 +746,12 @@ print(dynamic == equivalent)
          }
      }
   -> let s = DynamicStruct()
-  ---
+
   // Use dynamic member lookup.
   -> let dynamic = s.someDynamicMember
   -> print(dynamic)
   <- 325
-  ---
+
   // Call the underlying subscript directly.
   -> let equivalent = s[dynamicMember: "someDynamicMember"]
   -> print(dynamic == equivalent)
@@ -715,7 +785,7 @@ print(wrapper.x)
 
   ```swifttest
   -> struct Point { var x, y: Int }
-  ---
+
   -> @dynamicMemberLookup
      struct PassthroughWrapper<Value> {
          var value: Value
@@ -723,7 +793,7 @@ print(wrapper.x)
              get { return value[keyPath: member] }
          }
      }
-  ---
+
   -> let point = Point(x: 381, y: 431)
   -> let wrapper = PassthroughWrapper(value: point)
   -> print(wrapper.x)
@@ -752,7 +822,7 @@ Or are those supported today?
 I see #error and #warning as @freestanding(declaration)
 in the stdlib already:
 
-https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
+https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Macros.swift#L102
 -->
 
 ### frozen
@@ -1304,6 +1374,60 @@ can increase your binary size and adversely affect performance.
   because of the larger symbol table slowing dyld down.
 -->
 
+### preconcurrency
+
+Apply this attribute to a declaration,
+to suppress strict concurrency checking.
+You can apply this attribute
+to the following kinds of declarations:
+
+- Imports
+- Structures, classes, and actors
+- Enumerations and enumeration cases
+- Protocols
+- Variables and constants
+- Subscripts
+- Initializers
+- Functions
+
+On an import declaration,
+this attribute reduces the strictness of concurrency checking
+for code that uses types from the imported module.
+Specifically,
+types from the imported module
+that aren't explicitly marked as nonsendable
+can be used in a context that requires sendable types.
+
+On other declarations,
+this attribute reduces the strictness of concurrency checking
+for code that uses the symbol being declared.
+When you use this symbol in a scope that has minimal concurrency checking,
+concurrency-related constraints specified by that symbol,
+such as `Sendable` requirements or global actors,
+aren't checked.
+
+You can use this attribute as follows,
+to aid in migrating code to strict concurrency checking:
+
+1. Enable strict checking.
+1. Annotate imports with the `preconcurrency` attribute
+   for modules that haven't enabled strict checking.
+1. After migrating a module to strict checking,
+   remove the `preconcurrency` attribute.
+   The compiler warns you about
+   any places where the `preconcurrency` attribute on an import
+   no longer has an effect and should be removed.
+
+For other declarations,
+add the `preconcurrency` attribute
+when you add concurrency-related constraints to the declaration,
+if you still have clients
+that haven't migrated to strict checking.
+Remove the `preconcurrency` attribute after all your clients have migrated.
+
+Declarations from Objective-C are always imported
+as if they were marked with the `preconcurrency` attribute.
+
 ### propertyWrapper
 
 Apply this attribute to a class, structure, or enumeration declaration
@@ -1442,14 +1566,14 @@ struct SomeStruct {
              self.someValue = custom
          }
      }
-  ---
+
   -> struct SomeStruct {
   ->     // Uses init()
   ->     @SomeWrapper var a: Int
-  ---
+
   ->     // Uses init(wrappedValue:)
   ->     @SomeWrapper var b = 10
-  ---
+
   ->     // Both use init(wrappedValue:custom:)
   ->     @SomeWrapper(custom: 98.7) var c = 30
   ->     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
@@ -1523,7 +1647,7 @@ s.$x.wrapper  // WrapperWithProjection value
   -> struct SomeProjection {
          var wrapper: WrapperWithProjection
   }
-  ---
+
   -> struct SomeStruct {
   ->     @WrapperWithProjection var x = 123
   -> }
@@ -1539,7 +1663,7 @@ s.$x.wrapper  // WrapperWithProjection value
 
 ### resultBuilder
 
-Apply this attribute to a class, structure, enumeration
+Apply this attribute to a class, structure, or enumeration
 to use that type as a result builder.
 A *result builder* is a type
 that builds a nested data structure step by step.
@@ -1640,11 +1764,10 @@ The additional result-building methods are as follows:
   or to perform other postprocessing on a result before returning it.
 
 - term `static func buildLimitedAvailability(_ component: Component) -> Component`:
-  Builds a partial result that propagates or erases type information
-  outside a compiler-control statement
+  Builds a partial result that erases type information.
+  You can implement this method to prevent type information
+  from propagating outside a compiler-control statement
   that performs an availability check.
-  You can use this to erase type information
-  that varies between the conditional branches.
 
 For example, the code below defines a simple result builder
 that builds an array of integers.
@@ -1728,7 +1851,6 @@ into code that calls the static methods of the result builder type:
   var manualNumber = ArrayBuilder.buildExpression(10)
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -1743,9 +1865,14 @@ into code that calls the static methods of the result builder type:
   You can define an overload of `buildExpression(_:)`
   that takes an argument of type `()` to handle assignments specifically.
 - A branch statement that checks an availability condition
-  becomes a call to the `buildLimitedAvailability(_:)` method.
+  becomes a call to the `buildLimitedAvailability(_:)` method,
+  if that method is implemented.
+  If you don't implement `buildLimitedAvailability(_:)`,
+  then branch statements that check availability
+  use the same transformations as other branch statements.
   This transformation happens before the transformation into a call to
   `buildEither(first:)`, `buildEither(second:)`, or `buildOptional(_:)`.
+
   You use the `buildLimitedAvailability(_:)` method to erase type information
   that changes depending on which branch is taken.
   For example,
@@ -1820,7 +1947,7 @@ into code that calls the static methods of the result builder type:
 
   To solve this problem,
   implement a `buildLimitedAvailability(_:)` method
-  to erase type information.
+  to erase type information by returning a type that's always available.
   For example, the code below builds an `AnyDrawable` value
   from its availability check.
 
@@ -1830,7 +1957,7 @@ into code that calls the static methods of the result builder type:
       func draw() -> String { return content.draw() }
   }
   extension DrawingBuilder {
-      static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+      static func buildLimitedAvailability(_ content: some Drawable) -> AnyDrawable {
           return AnyDrawable(content: content)
       }
   }
@@ -1891,7 +2018,6 @@ into code that calls the static methods of the result builder type:
   }
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -1908,7 +2034,7 @@ into code that calls the static methods of the result builder type:
        }
     << Building second... [32]
     << Building first... [32]
-    ---
+
     -> var manualConditional: [Int]
     -> if someNumber < 12 {
            let partialResult = ArrayBuilder.buildExpression(31)
@@ -1947,7 +2073,6 @@ into code that calls the static methods of the result builder type:
   var manualOptional = ArrayBuilder.buildOptional(partialResult)
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -1956,7 +2081,7 @@ into code that calls the static methods of the result builder type:
            if (someNumber % 2) == 1 { 20 }
        }
     << Building optional... Optional([20])
-    ---
+
     -> var partialResult: [Int]? = nil
     -> if (someNumber % 2) == 1 {
            partialResult = ArrayBuilder.buildExpression(20)
@@ -2033,7 +2158,7 @@ into code that calls the static methods of the result builder type:
           Line(elements: [Text("Second"), Text("Third")])
           Text("Last")
        }
-    ---
+
     -> let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
     -> let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
           accumulated: partialResult1,
@@ -2067,7 +2192,6 @@ into code that calls the static methods of the result builder type:
   )
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2077,7 +2201,7 @@ into code that calls the static methods of the result builder type:
            200
            300
        }
-    ---
+
     -> var manualBlock = ArrayBuilder.buildBlock(
            ArrayBuilder.buildExpression(100),
            ArrayBuilder.buildExpression(200),
@@ -2108,7 +2232,6 @@ into code that calls the static methods of the result builder type:
   let manualArray = ArrayBuilder.buildArray(temporary)
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2118,7 +2241,7 @@ into code that calls the static methods of the result builder type:
                100 + i
            }
        }
-    ---
+
     -> var temporary: [[Int]] = []
     -> for i in 5...7 {
            let partialResult = ArrayBuilder.buildExpression(100 + i)
@@ -2154,7 +2277,7 @@ into code that calls the static methods of the result builder type:
          var content: Drawable
          func draw() -> String { return content.draw() }
      }
-  ---
+
   -> @resultBuilder
      struct DrawingBuilder {
          static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
@@ -2222,11 +2345,11 @@ into code that calls the static methods of the result builder type:
          func draw() -> String { return content.draw() }
      }
   -> extension DrawingBuilder {
-         static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+         static func buildLimitedAvailability(_ content: some Drawable) -> AnyDrawable {
              return AnyDrawable(content: content)
          }
      }
-  ---
+
   -> @DrawingBuilder var typeErasedDrawing: Drawable {
          if #available(macOS 99, *) {
              FutureText("Inside.future")
