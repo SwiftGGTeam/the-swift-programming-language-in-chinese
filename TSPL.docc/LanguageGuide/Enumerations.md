@@ -479,6 +479,31 @@ case let .qrCode(productCode):
   ```
 -->
 
+When you're matching just one case of an enumeration,
+you can use the shorter `if case` syntax
+instead of writing a full switch statement.
+For example:
+
+```swift
+if case .qrCode(let productCode) = productBarcode {
+    print("QR code: \(productCode).")
+}
+```
+
+In this code,
+the condition for the `if` statement starts with `case`,
+indicating that the condition is a pattern instead of a Boolean value.
+If the pattern matches,
+the condition for the `if` is considered to be true;
+otherwise it's false.
+Just like in the switch statement earlier,
+the `productBarcode` variable is matched against
+the pattern `.qrCode(let productCode)` here.
+And like in the switch case,
+writing `let` extracts the associated value as a constant.
+
+<!-- XXX mention guards, and maybe for loops -->
+
 ## Raw Values
 
 The barcode example in <doc:Enumerations#Associated-Values>
@@ -519,6 +544,8 @@ and are set to some of the more common ASCII control characters.
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
 Each raw value must be unique within its enumeration declaration.
+
+<!-- XXX fix this note box abuse; this is important, not optional -->
 
 > Note: Raw values are *not* the same as associated values.
 > Raw values are set to prepopulated values

@@ -880,6 +880,8 @@ on the right-hand side of an assignment,
 as shown in the examples above,
 you can also use them as the value that a function or closure returns.
 
+<!-- XXX forward reference to if-case syntax? -->
+
 ### Switch
 
 A `switch` statement considers a value
@@ -1295,6 +1297,8 @@ declares a tuple of two placeholder constants that can match any value.
 Because `anotherPoint` is always a tuple of two values,
 this case matches all possible remaining values,
 and a `default` case isn't needed to make the `switch` statement exhaustive.
+
+<!-- XXX cross reference if-case syntax from here -->
 
 #### Where
 
