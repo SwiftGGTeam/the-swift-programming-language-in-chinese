@@ -1012,12 +1012,13 @@ conditions listed in the table below.
 | `targetEnvironment()` | `simulator`, `macCatalyst` |
 
 <!--
-  For the full list in the compiler, see the values of
+  The lists above match <https://www.swift.org/platform-support/>
+  and include only platforms with *official* support.
+  For the full list of operating systems and architectures,
+  including those with unofficial or experimental support,
+  see the values of
   SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
   in the file lib/Basic/LangOptions.cpp.
-  Some of the OSes and architectures are listed there
-  because there's experimental work to port Swift to them.
-  We won't list them here until they're officially supported.
   The compiler also accepts pretty much any string --
   for example "#if os(toaster)" compiles just fine,
   but Swift doesn't actually support running on a toaster oven --
@@ -1118,7 +1119,7 @@ otherwise, it returns `false`.
   >> #else
   >> #error("Can't import A")
   >> #endif
-  ---
+
   >> #if canImport(canImport_A.B)
   >> #else
   >> #error("Can't import A.B")
@@ -1316,8 +1317,8 @@ the `#warning` and `#error` statements emit a diagnostic during compilation.
 This behavior is now provided by
 the [`warning(_:)`][] and [`error(_:)`][] macros in the Swift standard library.
 
-[`warning(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/warning(_:)
-[`error(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/error(_:)
+[`warning(_:)`]: https://developer.apple.com/documentation/swift/warning(_:)
+[`error(_:)`]: https://developer.apple.com/documentation/swift/error(_:)
 
 ## Availability Condition
 

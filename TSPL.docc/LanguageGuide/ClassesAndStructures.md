@@ -439,7 +439,7 @@ print("The remembered direction is \(rememberedDirection)")
   -> var currentDirection = CompassPoint.west
   -> let rememberedDirection = currentDirection
   -> currentDirection.turnNorth()
-  ---
+
   -> print("The current direction is \(currentDirection)")
   -> print("The remembered direction is \(rememberedDirection)")
   <- The current direction is north

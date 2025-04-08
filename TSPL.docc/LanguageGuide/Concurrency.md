@@ -392,7 +392,7 @@ for try await line in handle.bytes.lines {
 
   ```swifttest
   -> import Foundation
-  ---
+
   >> func f() async throws {
   -> let handle = FileHandle.standardInput
   -> for try await line in handle.bytes.lines {
@@ -477,7 +477,7 @@ show(photos)
   -> let firstPhoto = await downloadPhoto(named: photoNames[0])
   -> let secondPhoto = await downloadPhoto(named: photoNames[1])
   -> let thirdPhoto = await downloadPhoto(named: photoNames[2])
-  ---
+
   -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
   -> show(photos)
   >> }
@@ -518,7 +518,7 @@ show(photos)
   -> async let firstPhoto = downloadPhoto(named: photoNames[0])
   -> async let secondPhoto = downloadPhoto(named: photoNames[1])
   -> async let thirdPhoto = downloadPhoto(named: photoNames[2])
-  ---
+
   -> let photos = await [firstPhoto, secondPhoto, thirdPhoto]
   -> show(photos)
   >> }
@@ -630,7 +630,7 @@ For a task group that returns a result,
 you add code that accumulates its result
 inside the closure you pass to `withTaskGroup(of:returning:body:)`.
 
-```
+```swift
 let photos = await withTaskGroup(of: Data.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
@@ -708,7 +708,7 @@ like closing network connections and deleting temporary files.
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
 [`Task.isCancelled` type]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
-```
+```swift
 let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
@@ -917,10 +917,10 @@ You have complete flexibility to manage unstructured tasks
 in whatever way your program needs,
 but you're also completely responsible for their correctness.
 To create an unstructured task that runs on the current actor,
-call the [`Task.init(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856790-init) initializer.
+call the [`Task.init(priority:operation:)`][] initializer.
 To create an unstructured task that's not part of the current actor,
 known more specifically as a *detached task*,
-call the [`Task.detached(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856786-detached) class method.
+call the [`Task.detached(priority:operation:)`][] class method.
 Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
 
@@ -934,6 +934,9 @@ let result = await handle.value
 
 For more information about managing detached tasks,
 see [`Task`](https://developer.apple.com/documentation/swift/task).
+
+[`Task.init(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(priority:operation:)-7f0zv
+[`Task.detached(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(priority:operation:)-d24l
 
 <!--
   TODO Add some conceptual guidance about
@@ -1104,8 +1107,8 @@ the code below converts measured temperatures from Fahrenheit to Celsius:
 ```swift
 extension TemperatureLogger {
     func convertFahrenheitToCelsius() {
-        measurements = measurements.map { measurement in
-            (measurement - 32) * 5 / 9
+        for i in measurements.indices {
+            measurements[i] = (measurements[i] - 32) * 5 / 9
         }
     }
 }
@@ -1183,7 +1186,6 @@ you'll get compile-time error instead of introducing a bug.
    - If a closure is ``@Sendable`` or ``@escaping``
    then it behaves like code outside of the actor
    because it could execute concurrently with other code that's part of the actor
-
 
    exercise the log actor, using its client API to mutate state
 
@@ -1286,13 +1288,13 @@ await logger.addReading(from: reading)
   -> struct TemperatureReading: Sendable {
          var measurement: Int
      }
-  ---
+
   -> extension TemperatureLogger {
          func addReading(from reading: TemperatureReading) {
              measurements.append(reading.measurement)
          }
      }
-  ---
+
   -> let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
   -> let reading = TemperatureReading(measurement: 45)
   -> await logger.addReading(from: reading)
@@ -1351,7 +1353,7 @@ a file descriptor isn't safe to send across concurrency domains.
   -> struct FileDescriptor {
   ->     let rawValue: CInt
   -> }
-  ---
+
   -> @available(*, unavailable)
   -> extension FileDescriptor: Sendable { }
   >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
@@ -1375,7 +1377,6 @@ preventing the type from being sendable.
 
   The Main Actor
   ~~~~~~~~~~~~~~
-
 
   - the main actor is kinda-sorta like the main thread
 
@@ -1412,7 +1413,6 @@ preventing the type from being sendable.
   - In the future, when we get distributed actors,
     the TemperatureSensor example
     might be a good example to expand when explaining them.
-
 
   ::
 

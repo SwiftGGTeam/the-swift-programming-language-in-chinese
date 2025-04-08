@@ -70,8 +70,12 @@ and is used throughout this guide when referring to the type of an array.
 
 ### Creating an Empty Array
 
-You can create an empty array of a certain type
-using initializer syntax:
+You can create an empty array in Swift using two approaches.
+If the context already provides type information,
+such as a function argument or an already typed variable or constant,
+you can use an empty array literal,
+which is written as `[]`
+(an empty pair of square brackets):
 
 ```swift
 var someInts: [Int] = []
@@ -89,14 +93,24 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   ```
 -->
 
-Note that the type of the `someInts` variable is inferred to be `[Int]`
-from the type of the initializer.
+Alternatively, you can create an empty array of a certain type
+using explicit initializer syntax,
+by writing the element type in square brackets
+followed by parentheses ---
+for example, `[Int]()` in the following:
 
-Alternatively, if the context already provides type information,
-such as a function argument or an already typed variable or constant,
-you can create an empty array with an empty array literal,
-which is written as `[]`
-(an empty pair of square brackets):
+```swift
+var someInts = [Int]()
+print("someInts is of type [Int] with \(someInts.count) items.")
+// Prints "someInts is of type [Int] with 0 items."
+```
+
+Both approaches produce the same result.
+However,
+an empty array literal is shorter and usually easier to read.
+
+In both cases, you can use the empty array literal (`[]`) to
+reassign an empty array to an existing variable:
 
 ```swift
 someInts.append(3)
@@ -162,7 +176,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
   -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
   /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
   </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
-  ---
+
   -> var sixDoubles = threeDoubles + anotherThreeDoubles
   /> sixDoubles is inferred as [Double], and equals \(sixDoubles)
   </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
@@ -934,7 +948,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
   -> let oddDigits: Set = [1, 3, 5, 7, 9]
   -> let evenDigits: Set = [0, 2, 4, 6, 8]
   -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-  ---
+
   >> let a =
   -> oddDigits.union(evenDigits).sorted()
   >> assert(a == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -998,7 +1012,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
   -> let houseAnimals: Set = ["🐶", "🐱"]
   -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
   -> let cityAnimals: Set = ["🐦", "🐭"]
-  ---
+
   >> let aa =
   -> houseAnimals.isSubset(of: farmAnimals)
   >> assert(aa == true)
@@ -1430,7 +1444,7 @@ for airportName in airports.values {
      }
   </ Airport code: LHR
   </ Airport code: YYZ
-  ---
+
   -> for airportName in airports.values {
         print("Airport name: \(airportName)")
      }
@@ -1458,7 +1472,7 @@ let airportNames = [String](airports.values)
   -> let airportCodes = [String](airports.keys)
   /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
   </ airportCodes is ["LHR", "YYZ"]
-  ---
+
   -> let airportNames = [String](airports.values)
   /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
   </ airportNames is ["London Heathrow", "Toronto Pearson"]

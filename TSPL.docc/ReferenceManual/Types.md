@@ -249,7 +249,7 @@ For example:
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-  ---
+
   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
   >> print(type(of: f))
   << (Int, Int) -> ()
@@ -281,17 +281,17 @@ f = functionWithDifferentNumberOfArguments // Error
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-  ---
+
   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
   -> f = anotherFunction              // OK
   -> f = functionWithDifferentLabels  // OK
-  ---
+
   -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
   -> f = functionWithDifferentArgumentTypes     // Error
   !$ error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
   !! f = functionWithDifferentArgumentTypes     // Error
   !! ^
-  ---
+
   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
   -> f = functionWithDifferentNumberOfArguments // Error
   !$ error: type of expression is ambiguous without more context
@@ -406,11 +406,11 @@ see <doc:Declarations#Asynchronous-Functions-and-Methods>.
   >>     }
   >>     return g
   >> }
-  ---
+
   >> let a: (Int) -> (Int) -> Int = f
   >> let r0 = a(3)(5)
   >> assert(r0 == 8)
-  ---
+
   >> let b: (Int) -> ((Int) -> Int) = f
   >> let r1 = b(3)(5)
   >> assert(r1 == 8)
@@ -864,7 +864,8 @@ that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
 Opaque types appear as the return type of a function or subscript,
-or the type of a property.
+as the type of a parameter to a function, subscript, or initializer,
+or as the type of a property.
 Opaque types can't appear as part of a tuple type or a generic type,
 such as the element type of an array or the wrapped type of an optional.
 
@@ -908,6 +909,42 @@ The return type can include types
 that are part of the function's generic type parameters.
 For example, a function `someFunction<T>()`
 could return a value of type `T` or `Dictionary<String, T>`.
+
+Writing an opaque type for a parameter
+is syntactic sugar for using a generic type,
+without specifying a name for the generic type parameter.
+The implicit generic type parameter has a constraint
+that requires it to conform to the protocol named in the opaque type.
+If you write multiple opaque types,
+each one makes its own generic type parameter.
+For example, the following declarations are equivalent:
+
+```swift
+func someFunction(x: some MyProtocol, y: some MyProtocol) { }
+func someFunction<T1: MyProtocol, T2: MyProtocol>(x: T1, y: T2) { }
+```
+
+In the second declaration,
+because the generic type parameters `T1` and `T2` have names,
+you can refer use these types elsewhere in the code.
+In contrast,
+the generic type parameters in the first declaration
+don't have names and can't be referenced in other code.
+
+You can't use an opaque type in the type of a variadic parameter.
+
+You can't use an opaque type
+as a parameter to a function type being returned,
+or as a parameter in a parameter type that's a function type.
+In these positions,
+the function's caller would have to construct a value
+of that unknown type.
+
+```swift
+protocol MyProtocol { }
+func badFunction() -> (some MyProtocol) -> Void { }  // Error
+func anotherBadFunction(callback: (some MyProtocol) -> Void) { }  // Error
+```
 
 > Grammar of an opaque type:
 >
@@ -975,7 +1012,7 @@ because those types are already boxed protocol types.
 
 <!--
 Contrast P.Type with (any P.Type) and (any P).Type
-https://github.com/apple/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
+https://github.com/swiftlang/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
 -->
 
 > Grammar of a boxed protocol type:
@@ -1242,12 +1279,12 @@ print(type(of: z.f()))
   -> let x = Superclass()
   -> print(type(of: x.f()))
   <- Superclass
-  ---
+
   -> class Subclass: Superclass { }
   -> let y = Subclass()
   -> print(type(of: y.f()))
   <- Subclass
-  ---
+
   -> let z: Superclass = Subclass()
   -> print(type(of: z.f()))
   <- Subclass
