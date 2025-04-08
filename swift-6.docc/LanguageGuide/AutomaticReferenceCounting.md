@@ -180,7 +180,7 @@ class Apartment {
         var apartment: Apartment?
         deinit { print("\(name) is being deinitialized") }
      }
-  ---
+
   -> class Apartment {
         let unit: String
         init(unit: String) { self.unit = unit }
@@ -347,7 +347,7 @@ class Apartment {
         var apartment: Apartment?
         deinit { print("\(name) is being deinitialized") }
      }
-  ---
+
   -> class Apartment {
         let unit: String
         init(unit: String) { self.unit = unit }
@@ -377,10 +377,10 @@ unit4A!.tenant = john
   ```swifttest
   -> var john: Person?
   -> var unit4A: Apartment?
-  ---
+
   -> john = Person(name: "John Appleseed")
   -> unit4A = Apartment(unit: "4A")
-  ---
+
   -> john!.apartment = unit4A
   -> unit4A!.tenant = john
   ```
@@ -499,7 +499,7 @@ class CreditCard {
         }
         deinit { print("\(name) is being deinitialized") }
      }
-  ---
+
   -> class CreditCard {
         let number: UInt64
         unowned let customer: Customer
@@ -625,7 +625,7 @@ class Course {
              self.courses = []
          }
      }
-  ---
+
   -> class Course {
          var name: String
          unowned var department: Department
@@ -663,7 +663,7 @@ department.courses = [intro, intermediate, advanced]
   -> let intro = Course(name: "Survey of Plants", in: department)
   -> let intermediate = Course(name: "Growing Common Herbs", in: department)
   -> let advanced = Course(name: "Caring for Tropical Plants", in: department)
-  ---
+
   -> intro.nextCourse = intermediate
   -> intermediate.nextCourse = advanced
   -> department.courses = [intro, intermediate, advanced]
@@ -699,7 +699,7 @@ department.courses = [intro, intermediate, advanced]
   >> let d = D(value: c! )
   >> print(d.a.x, d.b?.x as Any)
   << 100 Optional(100)
-  ---
+
   >> c = nil
   // Now that the C instance is deallocated, access to d.a is an error.
   // We manually nil out d.b, which is safe because d.b is an Optional and the
@@ -756,7 +756,7 @@ class City {
            self.capitalCity = City(name: capitalName, country: self)
         }
      }
-  ---
+
   -> class City {
         let name: String
         unowned let country: Country
@@ -839,10 +839,10 @@ class HTMLElement {
 
   ```swifttest
   -> class HTMLElement {
-  ---
+
         let name: String
         let text: String?
-  ---
+
         lazy var asHTML: () -> String = {
            if let text = self.text {
               return "<\(self.name)>\(text)</\(self.name)>"
@@ -850,16 +850,16 @@ class HTMLElement {
               return "<\(self.name) />"
            }
         }
-  ---
+
         init(name: String, text: String? = nil) {
            self.name = name
            self.text = text
         }
-  ---
+
         deinit {
            print("\(name) is being deinitialized")
         }
-  ---
+
      }
   ```
 -->
@@ -1052,10 +1052,10 @@ class HTMLElement {
 
   ```swifttest
   -> class HTMLElement {
-  ---
+
         let name: String
         let text: String?
-  ---
+
         lazy var asHTML: () -> String = {
               [unowned self] in
            if let text = self.text {
@@ -1064,16 +1064,16 @@ class HTMLElement {
               return "<\(self.name) />"
            }
         }
-  ---
+
         init(name: String, text: String? = nil) {
            self.name = name
            self.text = text
         }
-  ---
+
         deinit {
            print("\(name) is being deinitialized")
         }
-  ---
+
      }
   ```
 -->

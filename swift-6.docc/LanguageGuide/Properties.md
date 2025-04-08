@@ -194,13 +194,13 @@ manager.data.append("Some more data")
   >>       print("the DataImporter instance for the importer property has now been created")
   >>    }
      }
-  ---
+
   -> class DataManager {
         lazy var importer = DataImporter()
         var data: [String] = []
         // the DataManager class would provide data management functionality here
      }
-  ---
+
   -> let manager = DataManager()
   -> manager.data.append("Some data")
   -> manager.data.append("Some more data")
@@ -836,15 +836,15 @@ print(rectangle.height)
   ->     @TwelveOrLess var height: Int
   ->     @TwelveOrLess var width: Int
   -> }
-  ---
+
   -> var rectangle = SmallRectangle()
   -> print(rectangle.height)
   <- 0
-  ---
+
   -> rectangle.height = 10
   -> print(rectangle.height)
   <- 10
-  ---
+
   -> rectangle.height = 24
   -> print(rectangle.height)
   <- 12
@@ -929,12 +929,12 @@ struct SmallNumber {
   -> struct SmallNumber {
          private var maximum: Int
          private var number: Int
-  ---
+
          var wrappedValue: Int {
              get { return number }
              set { number = min(newValue, maximum) }
          }
-  ---
+
          init() {
              maximum = 12
              number = 0
@@ -984,7 +984,7 @@ print(zeroRectangle.height, zeroRectangle.width)
   ->     @SmallNumber var height: Int
   ->     @SmallNumber var width: Int
   -> }
-  ---
+
   -> var zeroRectangle = ZeroRectangle()
   -> print(zeroRectangle.height, zeroRectangle.width)
   <- 0 0
@@ -1036,7 +1036,7 @@ print(unitRectangle.height, unitRectangle.width)
   ->     @SmallNumber var height: Int = 1
   ->     @SmallNumber var width: Int = 1
   -> }
-  ---
+
   -> var unitRectangle = UnitRectangle()
   -> print(unitRectangle.height, unitRectangle.width)
   <- 1 1
@@ -1093,11 +1093,11 @@ print(narrowRectangle.height, narrowRectangle.width)
   ->     @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
   ->     @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
   -> }
-  ---
+
   -> var narrowRectangle = NarrowRectangle()
   -> print(narrowRectangle.height, narrowRectangle.width)
   <- 2 3
-  ---
+
   -> narrowRectangle.height = 100
   -> narrowRectangle.width = 100
   -> print(narrowRectangle.height, narrowRectangle.width)
@@ -1160,11 +1160,11 @@ print(mixedRectangle.height)
   ->     @SmallNumber var height: Int = 1
   ->     @SmallNumber(maximum: 9) var width: Int = 2
   -> }
-  ---
+
   -> var mixedRectangle = MixedRectangle()
   -> print(mixedRectangle.height)
   <- 1
-  ---
+
   -> mixedRectangle.height = 20
   -> print(mixedRectangle.height)
   <- 12
@@ -1225,7 +1225,7 @@ print(someStructure.$someNumber)
   -> struct SmallNumber {
          private var number: Int
          private(set) var projectedValue: Bool
-  ---
+
          var wrappedValue: Int {
              get { return number }
              set {
@@ -1238,7 +1238,7 @@ print(someStructure.$someNumber)
                  }
              }
          }
-  ---
+
          init() {
              self.number = 0
              self.projectedValue = false
@@ -1295,11 +1295,11 @@ struct SizedRectangle {
   -> enum Size {
          case small, large
      }
-  ---
+
   -> struct SizedRectangle {
   ->     @SmallNumber var height: Int
   ->     @SmallNumber var width: Int
-  ---
+
          mutating func resize(to size: Size) -> Bool {
              switch size {
                  case .small:
@@ -1379,11 +1379,11 @@ func someFunction() {
   ```swifttest
   -> func someFunction() {
   ->     @SmallNumber var myNumber: Int = 0
-  ---
+
          myNumber = 10
          // now myNumber is 10
   >>     print(myNumber)
-  ---
+
          myNumber = 24
          // now myNumber is 12
   >>     print(myNumber)

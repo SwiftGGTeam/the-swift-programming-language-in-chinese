@@ -41,7 +41,7 @@ print(smallTriangle.draw())
   -> protocol Shape {
          func draw() -> String
      }
-  ---
+
   -> struct Triangle: Shape {
         var size: Int
         func draw() -> String {
@@ -201,7 +201,7 @@ print(trapezoid.draw())
              return result.joined(separator: "\n")
          }
      }
-  ---
+
   -> func makeTrapezoid() -> some Shape {
          let top = Triangle(size: 2)
          let middle = Square(size: 2)
@@ -257,7 +257,7 @@ print(opaqueJoinedTriangles.draw())
   -> func join<T: Shape, U: Shape>(_ top: T, _ bottom: U) -> some Shape {
          JoinedShape(top: top, bottom: bottom)
      }
-  ---
+
   -> let opaqueJoinedTriangles = join(smallTriangle, flip(smallTriangle))
   -> print(opaqueJoinedTriangles.draw())
   </ *
@@ -380,7 +380,7 @@ func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
 
 ## 封装协议类型
 
-封装协议类型有时也被称为*存在类型（existential type）*，这个术语源于这样的一个表达：“存在一个类型 *T*，使得 *T* 遵循该协议”。要创建一个封装协议类型，在协议名称前加上 `any`。下面是一个示例：
+封装协议类型有时也被称为*存在类型（existential type）*，这个术语源于这样的一个表达："存在一个类型 *T*，使得 *T* 遵循该协议"。要创建一个封装协议类型，在协议名称前加上 `any`。下面是一个示例：
 
 ```swift
 struct VerticalShapes: Shape {
@@ -566,7 +566,7 @@ protoFlippedTriangle == sameThing  // 错误
 
 将封装协议类型用作函数的返回类型，给你带来了返回任何遵循该协议的类型的灵活性。然而，这种灵活性的代价是，某些操作无法在返回的值上执行。上面的示例显示了 `==` 运算符不可用的情况 —— 它依赖于特定的类型信息，而使用封装协议类型时这些信息无法保留。
 
-这种方法的另一个问题是形状变换无法嵌套。翻转三角形的结果是一个类型为 `Shape` 的值，而 `protoFlip(_:)` 函数的参数是某种遵循 `Shape` 协议的类型。然而，封装协议类型的值并不遵循该协议。因此，`protoFlip(_:)` 返回的值并不遵循 `Shape` 协议。这意味着像 `protoFlip(protoFlip(smallTriangle))` 这样试图嵌套多次变换的代码是不合法的，因为翻转后的形状不是 `protoFlip(_:)` 的合法参数。（译者注：在此例中，封装协议类型的函数返回值允许该返回值是任何遵循 `Shape` 协议的类型，但这个封装本身并不保留原始类型的信息，即“存在某种遵循 `Shape` 协议的类型，但具体是什么类型你不知道”。这种类型信息在被封装后是被抹除的。因此，虽然 `any Shape` 可以持有一个遵循 `Shape` 协议的值，但 `any Shape` 本身并不遵循 `Shape` 协议。）
+这种方法的另一个问题是形状变换无法嵌套。翻转三角形的结果是一个类型为 `Shape` 的值，而 `protoFlip(_:)` 函数的参数是某种遵循 `Shape` 协议的类型。然而，封装协议类型的值并不遵循该协议。因此，`protoFlip(_:)` 返回的值并不遵循 `Shape` 协议。这意味着像 `protoFlip(protoFlip(smallTriangle))` 这样试图嵌套多次变换的代码是不合法的，因为翻转后的形状不是 `protoFlip(_:)` 的合法参数。（译者注：在此例中，封装协议类型的函数返回值允许该返回值是任何遵循 `Shape` 协议的类型，但这个封装本身并不保留原始类型的信息，即"存在某种遵循 `Shape` 协议的类型，但具体是什么类型你不知道"。这种类型信息在被封装后是被抹除的。因此，虽然 `any Shape` 可以持有一个遵循 `Shape` 协议的值，但 `any Shape` 本身并不遵循 `Shape` 协议。）
 
 相比之下，不透明类型保留了底层类型的身份信息。Swift 可以推断出关联的类型，这使得你可以在封装协议类型不能用作返回值的地方使用不透明返回值。例如，下面是一个来自<doc:Generics>的 `Container` 协议的版本：
 
@@ -614,7 +614,7 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
   -> func makeProtocolContainer<T>(item: T) -> Container {
          return [item]
      }
-  ---
+
   // Error: Not enough information to infer C.
   -> func makeProtocolContainer<T, C: Container>(item: T) -> C {
          return [item]
@@ -691,6 +691,64 @@ print(type(of: twelve))
       return AnyP(p: result)
   }
 -->
+
+## 不透明参数类型
+
+除了使用 `some` 来返回不透明类型外，
+你也可以在函数、下标或构造器的参数类型中使用 `some`。
+然而，当你在参数类型中使用 `some` 时，
+它仅仅是泛型的简写语法，而不是不透明类型。
+例如，
+下面的两个函数是等价的：
+
+```swift
+func drawTwiceGeneric<SomeShape: Shape>(_ shape: SomeShape) -> String {
+    let drawn = shape.draw()
+    return drawn + "\n" + drawn
+}
+
+func drawTwiceSome(_ shape: some Shape) -> String {
+    let drawn = shape.draw()
+    return drawn + "\n" + drawn
+}
+```
+
+`drawTwiceGeneric(_:)` 函数
+声明了一个名为 `SomeShape` 的泛型类型参数，
+并带有要求 `SomeShape` 遵循 `Shape` 协议的约束。
+`drawTwiceSome(_:)` 函数
+使用 `some Shape` 类型作为其参数类型。
+这为函数创建了一个新的、未命名的泛型类型参数，
+并带有要求该类型遵循 `Shape` 协议的约束。
+因为这个泛型类型没有名字，
+所以你无法在函数的其他地方引用该类型。
+
+如果你在多个参数的类型前都写了 `some`，
+每个泛型类型都是独立的。
+例如：
+
+```swift
+func combine(shape s1: some Shape, with s2: some Shape) -> String {
+    return s1.draw() + "\n" + s2.draw()
+}
+
+combine(smallTriangle, trapezoid)
+```
+
+在 `combine(shape:with:)` 函数中，
+第一个和第二个参数的类型
+都必须遵循 `Shape` 协议，
+但是没有约束要求它们是相同的类型。
+当你调用 `combine(shape:with:)` 时，
+你可以传入两个不同的形状 ——
+在这个例子中，是一个三角形和一个梯形。
+
+与 <doc:Generics> 章节中描述的命名泛型类型参数的语法不同，
+这种轻量级语法不能包含
+泛型 `where` 子句或任何同类型（`==`）约束。
+In addition,
+对于非常复杂的约束，使用这种轻量级语法
+可能会难以阅读。
 
 <!--
 This source file is part of the Swift.org open source project

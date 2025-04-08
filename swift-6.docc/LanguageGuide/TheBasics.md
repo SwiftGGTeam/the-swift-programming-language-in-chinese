@@ -1179,7 +1179,7 @@ if let firstNumber = Int("4") {
         print("\(firstNumber) < \(secondNumber) < 100")
      }
   <- 4 < 42 < 100
-  ---
+
   -> if let firstNumber = Int("4") {
          if let secondNumber = Int("42") {
              if firstNumber < secondNumber && secondNumber < 100 {
@@ -1277,7 +1277,7 @@ let implicitString: String = assumedString // 隐式解包
   ```swifttest
   -> let possibleString: String? = "An optional string."
   -> let forcedString: String = possibleString! // requires an exclamation point
-  ---
+
   -> let assumedString: String! = "An implicitly unwrapped optional string."
   -> let implicitString: String = assumedString // no need for an exclamation point
   ```
@@ -1436,7 +1436,7 @@ do {
          // ...
      }
   >> func eatASandwich() {}
-  ---
+
   -> do {
          try makeASandwich()
          eatASandwich()

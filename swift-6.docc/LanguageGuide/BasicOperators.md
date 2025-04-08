@@ -600,7 +600,7 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
   ```swifttest
   -> let defaultColorName = "red"
   -> var userDefinedColorName: String?   // 默认为 nil
-  ---
+
   -> var colorNameToUse = userDefinedColorName ?? defaultColorName
   /> userDefinedColorName 为空，所以 colorNameToUse 为默认值 \"\(colorNameToUse)\"
   </ userDefinedColorName 为空，所以 colorNameToUse 为默认值 "red"
@@ -785,7 +785,7 @@ for name in names[...2] { print(name) }
      }
   </ Brian
   </ Jack
-  ---
+
   -> for name in names[...2] {
          print(name)
      }

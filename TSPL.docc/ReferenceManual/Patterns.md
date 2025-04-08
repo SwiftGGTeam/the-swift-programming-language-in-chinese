@@ -328,7 +328,7 @@ if case let x? = someOptional {
         print(x)
      }
   << 42
-  ---
+
   -> // Match using an optional pattern.
   -> if case let x? = someOptional {
         print(x)

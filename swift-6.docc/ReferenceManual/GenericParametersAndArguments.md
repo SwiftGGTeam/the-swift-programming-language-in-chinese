@@ -130,7 +130,7 @@ extension Collection where Element: SomeProtocol {
   ```swifttest
   >> protocol SomeProtocol { }
   >> extension Bool: SomeProtocol { }
-  ---
+
   >> extension Collection where Element: SomeProtocol {
   >>     func returnTrue() -> Bool where Element == Bool {
   >>         return true

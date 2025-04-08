@@ -1477,17 +1477,17 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
          guard let name = person["name"] else {
              return
          }
-  ---
+
          print("Hello \(name)!")
-  ---
+
          guard let location = person["location"] else {
              print("I hope the weather is nice near you.")
              return
          }
-  ---
+
          print("I hope the weather is nice in \(location).")
      }
-  ---
+
   -> greet(person: ["name": "John"])
   <- Hello John!
   <- I hope the weather is nice near you.
@@ -1667,7 +1667,7 @@ func chooseBestColor() -> String {
   -> struct ColorPreference {
          var bestColor = "blue"
      }
-  ---
+
   -> func chooseBestColor() -> String {
         guard #available(macOS 10.12, *) else {
             return "gray"
@@ -1703,7 +1703,7 @@ if #unavailable(iOS 10) {
      } else {
         // Fallback code
      }
-  ---
+
   -> if #unavailable(iOS 10) {
         // Fallback code
      }

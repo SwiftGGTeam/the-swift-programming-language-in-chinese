@@ -243,7 +243,7 @@ for try await line in handle.bytes.lines {
 
   ```swifttest
   -> import Foundation
-  ---
+
   >> func f() async throws {
   -> let handle = FileHandle.standardInput
   -> for try await line in handle.bytes.lines {
@@ -311,7 +311,7 @@ show(photos)
   -> let firstPhoto = await downloadPhoto(named: photoNames[0])
   -> let secondPhoto = await downloadPhoto(named: photoNames[1])
   -> let thirdPhoto = await downloadPhoto(named: photoNames[2])
-  ---
+
   -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
   -> show(photos)
   >> }
@@ -344,7 +344,7 @@ show(photos)
   -> async let firstPhoto = downloadPhoto(named: photoNames[0])
   -> async let secondPhoto = downloadPhoto(named: photoNames[1])
   -> async let thirdPhoto = downloadPhoto(named: photoNames[2])
-  ---
+
   -> let photos = await [firstPhoto, secondPhoto, thirdPhoto]
   -> show(photos)
   >> }
@@ -400,7 +400,7 @@ await withTaskGroup(of: Data.self) { group in
 
 在上面的代码中，每张照片都会被下载然后展示出来，所以任务组没有返回值。对于需要返回结果的任务组，你可以在传递给 `withTaskGroup(of:returning:body:)` 的闭包中，编写聚合任务结果的逻辑。
 
-```
+```swift
 let photos = await withTaskGroup(of: Data.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
@@ -451,7 +451,7 @@ Swift 中的并发使用的是「协作取消」模型：每个任务都应当�
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
 [`Task.isCancelled` type]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
-```
+```swift
 let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
@@ -627,7 +627,7 @@ task.cancel()  // 输出 "Canceled!"
 
 ### 非结构化并发
 
-除了像前文所述那样以结构化的方式编写并发逻辑，Swift 也支持非结构化并发。不像从属于某个任务组的任务，一项*非结构化*的任务没有父任务。管理非结构化任务时，你将拥有最大的灵活性，可以按任意方式组织他们。但是，你也将需要对他们的正确性承担全部责任。要在当前 actor 上创建一项非结构化的任务，你可调用 [`Task.init(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856790-init) 这个构造器。要创建一项不属于当前 actor 的非结构化任务 —— 也被称作为*分离 (detached)* 任务 —— ，请调用 [`Task.detached(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856786-detached)  这个类方法。这两项操作都会返回 task 实例，便于你管理他们。比如，你可以等待他们的返回结果，也可以取消他们：
+除了像前文所述那样以结构化的方式编写并发逻辑，Swift 也支持非结构化并发。不像从属于某个任务组的任务，一项*非结构化*的任务没有父任务。管理非结构化任务时，你将拥有最大的灵活性，可以按任意方式组织他们。但是，你也将需要对他们的正确性承担全部责任。要在当前 actor 上创建一项非结构化的任务，你可调用 [`Task.init(priority:operation:)`][] 这个构造器。要创建一项不属于当前 actor 的非结构化任务 —— 也被称作为*分离 (detached)* 任务 —— ，请调用 [`Task.detached(priority:operation:)`][]  这个类方法。这两项操作都会返回 task 实例，便于你管理他们。比如，你可以等待他们的返回结果，也可以取消他们：
 
 ```swift
 let newPhoto = // ... some photo data ...
@@ -638,6 +638,8 @@ let result = await handle.value
 ```
 
 要了解更多有关如何管理分离任务的信息，请查看 [`Task`](https://developer.apple.com/documentation/swift/task).
+[`Task.init(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(priority:operation:)-7f0zv
+[`Task.detached(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(priority:operation:)-d24l
 
 <!--
   TODO Add some conceptual guidance about
@@ -741,8 +743,8 @@ Swift 并发模型的以下几个特点共同降低了使用者对共享可变�
 ```swift
 extension TemperatureLogger {
     func convertFahrenheitToCelsius() {
-        measurements = measurements.map { measurement in
-            (measurement - 32) * 5 / 9
+        for i in measurements.indices {
+            measurements[i] = (measurements[i] - 32) * 5 / 9
         }
     }
 }
@@ -863,13 +865,13 @@ await logger.addReading(from: reading)
   -> struct TemperatureReading: Sendable {
          var measurement: Int
      }
-  ---
+
   -> extension TemperatureLogger {
          func addReading(from reading: TemperatureReading) {
              measurements.append(reading.measurement)
          }
      }
-  ---
+
   -> let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
   -> let reading = TemperatureReading(measurement: 45)
   -> await logger.addReading(from: reading)
@@ -918,7 +920,7 @@ https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.sw
   -> struct FileDescriptor {
   ->     let rawValue: CInt
   -> }
-  ---
+
   -> @available(*, unavailable)
   -> extension FileDescriptor: Sendable { }
   >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)

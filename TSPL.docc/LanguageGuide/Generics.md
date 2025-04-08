@@ -100,7 +100,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         a = b
         b = temporaryA
      }
-  ---
+
   -> func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         let temporaryA = a
         a = b
@@ -237,7 +237,7 @@ swapTwoValues(&someString, &anotherString)
   -> swapTwoValues(&someInt, &anotherInt)
   /> someInt is now \(someInt), and anotherInt is now \(anotherInt)
   </ someInt is now 107, and anotherInt is now 3
-  ---
+
   -> var someString = "hello"
   -> var anotherString = "world"
   -> swapTwoValues(&someString, &anotherString)
@@ -286,9 +286,21 @@ However, when there isn't a meaningful relationship between them,
 it's traditional to name them using single letters such as `T`, `U`, and `V`,
 such as `T` in the `swapTwoValues(_:_:)` function above.
 
-> Note: Always give type parameters upper camel case names
-> (such as `T` and `MyTypeParameter`)
-> to indicate that they're a placeholder for a *type*, not a value.
+Use upper camel case names for type parameters,
+like `T` and `MyTypeParameter`,
+to indicate that they're a placeholder for a *type*, not a value.
+
+> Note:
+> If you don't need to name a type parameter
+> and its generic type constraints are simple,
+> there's an alternate, lightweight syntax you can use instead,
+> as described in <doc:OpaqueTypes#Opaque-Parameter-Types>.
+<!--
+Comparison between this syntax and the lightweight syntax
+is in the Opaque Types chapter, not here ---
+the reader hasn't learned about constraints yet,
+so it wouldn't make sense to list what is/isn't supported.
+-->
 
 ## Generic Types
 
@@ -1276,19 +1288,19 @@ func allItemsMatch<C1: Container, C2: Container>
   -> func allItemsMatch<C1: Container, C2: Container>
            (_ someContainer: C1, _ anotherContainer: C2) -> Bool
            where C1.Item == C2.Item, C1.Item: Equatable {
-  ---
+
         // Check that both containers contain the same number of items.
         if someContainer.count != anotherContainer.count {
            return false
         }
-  ---
+
         // Check each pair of items to see if they're equivalent.
         for i in 0..<someContainer.count {
            if someContainer[i] != anotherContainer[i] {
               return false
            }
         }
-  ---
+
         // All items match, so return true.
         return true
      }
@@ -1370,9 +1382,9 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
   -> stackOfStrings.push("uno")
   -> stackOfStrings.push("dos")
   -> stackOfStrings.push("tres")
-  ---
+
   -> var arrayOfStrings = ["uno", "dos", "tres"]
-  ---
+
   -> if allItemsMatch(stackOfStrings, arrayOfStrings) {
         print("All items match.")
      } else {
@@ -1757,7 +1769,7 @@ protocol Container {
         mutating func append(_ item: Item)
         var count: Int { get }
         subscript(i: Int) -> Item { get }
-  ---
+
         associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
         func makeIterator() -> Iterator
      }

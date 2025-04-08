@@ -604,7 +604,7 @@ let sunsetDirection = CompassPoint.west.rawValue
   -> let earthsOrder = Planet.earth.rawValue
   /> earthsOrder is \(earthsOrder)
   </ earthsOrder is 3
-  ---
+
   -> let sunsetDirection = CompassPoint.west.rawValue
   /> sunsetDirection is \"\(sunsetDirection)\"
   </ sunsetDirection is "west"
@@ -817,7 +817,7 @@ print(evaluate(product))
                  return evaluate(left) * evaluate(right)
          }
      }
-  ---
+
   -> print(evaluate(product))
   <- 18
   ```

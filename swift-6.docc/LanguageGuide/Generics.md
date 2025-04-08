@@ -79,7 +79,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         a = b
         b = temporaryA
      }
-  ---
+
   -> func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         let temporaryA = a
         a = b
@@ -181,7 +181,7 @@ swapTwoValues(&someString, &anotherString)
   -> swapTwoValues(&someInt, &anotherInt)
   /> someInt is now \(someInt), and anotherInt is now \(anotherInt)
   </ someInt is now 107, and anotherInt is now 3
-  ---
+
   -> var someString = "hello"
   -> var anotherString = "world"
   -> swapTwoValues(&someString, &anotherString)
@@ -204,7 +204,18 @@ swapTwoValues(&someString, &anotherString)
 
 大多情况下，类型参数具有描述性的名称，例如字典 `Dictionary<Key, Value>` 中的 `Key` 和 `Value` 及数组 `Array<Element>` 中的 `Element`，这能告诉阅读代码的人这些类型参数与泛型类型或函数之间的关系。然而，当它们之间没有有意义的关系时，通常使用单个字符来表示，例如 `T`、`U`、`V`，例如上面演示函数 `swapTwoValues(_:_:)` 中的 `T`。
 
-> 注意: 请始终使用大写字母开头的驼峰命名法（例如 `T` 和 `MyTypeParameter`）来为类型参数命名，以表明它们是占位*类型*，而不是一个值。
+请使用大写字母开头的驼峰命名法来为类型参数命名，例如 `T` 和 `MyTypeParameter`，以表明它们是占位*类型*，而不是一个值。
+
+> 注意:
+> 如果你不需要为类型参数命名，并且其泛型约束很简单，
+> 那么你可以使用另一种轻量级语法替代，
+> 正如 <doc:OpaqueTypes#不透明参数类型> 中所述。
+<!--
+Comparison between this syntax and the lightweight syntax
+is in the Opaque Types chapter, not here ---
+the reader hasn't learned about constraints yet,
+so it wouldn't make sense to list what is/isn't supported.
+-->
 
 ## 泛型类型
 
@@ -212,7 +223,7 @@ swapTwoValues(&someString, &anotherString)
 
 本节将向你展示如何编写一个名为 `Stack`（栈）的泛型集合类型。栈是值的有序集合，和数组类似，但比数组有更严格的操作限制。数组允许在其中任意位置插入或是删除元素。而栈只允许在集合的末端添加新的元素（称之为*入栈*）。类似的，栈也只能从末端移除元素（称之为*出栈*）。
 
-> 注意: 栈的概念已被 `UINavigationController` 类用来构造视图控制器的导航结构。你通过调用 `UINavigationController` 的 `pushViewController(_:animated:)` 方法来添加新的视图控制器到导航栈，通过 `popViewControllerAnimated(_:)` 方法来从导航栈中移除视图控制器。每当你需要一个严格的“后进先出”方式来管理集合，栈都是最实用的模型。
+> 注意: 栈的概念已被 `UINavigationController` 类用来构造视图控制器的导航结构。你通过调用 `UINavigationController` 的 `pushViewController(_:animated:)` 方法来添加新的视图控制器到导航栈，通过 `popViewControllerAnimated(_:)` 方法来从导航栈中移除视图控制器。每当你需要一个严格的"后进先出"方式来管理集合，栈都是最实用的模型。
 
 下图展示了入栈（push）和出栈（pop）的行为：
 
@@ -337,7 +348,7 @@ stackOfStrings.push("cuatro")
 
 ```swift
 let fromTheTop = stackOfStrings.pop()
-// fromTheTop 的值为 “cuatro”，现在栈中还有 3 个字符串
+// fromTheTop 的值为 "cuatro"，现在栈中还有 3 个字符串
 ```
 
 <!--
@@ -532,7 +543,7 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
   ```
 -->
 
-上面所写的函数无法通过编译。问题出在相等性判定上，即 "`if value == valueToFind`"。不是所有的 Swift 类型都可以用等式符（`==`）进行比较。例如，如果你自定义类或结构体来描述复杂的数据模型，对于这个类或结构体而言，Swift 无法明确知道“相等”意味着什么。正因如此，无法保证这段代码适用于*每一个*可能的类型 `T`，当你试图编译这部分代码时就会出现相应的错误。
+上面所写的函数无法通过编译。问题出在相等性判定上，即 "`if value == valueToFind`"。不是所有的 Swift 类型都可以用等式符（`==`）进行比较。例如，如果你自定义类或结构体来描述复杂的数据模型，对于这个类或结构体而言，Swift 无法明确知道"相等"意味着什么。正因如此，无法保证这段代码适用于*每一个*可能的类型 `T`，当你试图编译这部分代码时就会出现相应的错误。
 
 不过，Swift 并不会让我们对所有这类问题无从下手。Swift 标准库中定义了一个 `Equatable` 协议，该协议要求任何遵循该协议的类型必须实现等式符（`==`）及不等符（`!=`），从而能对该类型的任意两个值进行比较。所有的 Swift 标准类型自动支持 `Equatable` 协议。
 
@@ -572,7 +583,7 @@ func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
   ```
 -->
 
-`findIndex(of:in:)` 类型参数写做 `T: Equatable`，表示“任何遵循 `Equatable` 协议的类型 `T`”。
+`findIndex(of:in:)` 类型参数写做 `T: Equatable`，表示"任何遵循 `Equatable` 协议的类型 `T`"。
 
 `findIndex(of:in:)` 函数现在可以成功编译了，并且适用于任何遵循 `Equatable` 的类型，如 `Double` 或 `String`：
 
@@ -959,19 +970,19 @@ func allItemsMatch<C1: Container, C2: Container>
   -> func allItemsMatch<C1: Container, C2: Container>
            (_ someContainer: C1, _ anotherContainer: C2) -> Bool
            where C1.Item == C2.Item, C1.Item: Equatable {
-  ---
+
         // Check that both containers contain the same number of items.
         if someContainer.count != anotherContainer.count {
            return false
         }
-  ---
+
         // Check each pair of items to see if they're equivalent.
         for i in 0..<someContainer.count {
            if someContainer[i] != anotherContainer[i] {
               return false
            }
         }
-  ---
+
         // All items match, so return true.
         return true
      }
@@ -1032,9 +1043,9 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
   -> stackOfStrings.push("uno")
   -> stackOfStrings.push("dos")
   -> stackOfStrings.push("tres")
-  ---
+
   -> var arrayOfStrings = ["uno", "dos", "tres"]
-  ---
+
   -> if allItemsMatch(stackOfStrings, arrayOfStrings) {
         print("All items match.")
      } else {
@@ -1340,7 +1351,7 @@ protocol Container {
         mutating func append(_ item: Item)
         var count: Int { get }
         subscript(i: Int) -> Item { get }
-  ---
+
         associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
         func makeIterator() -> Iterator
      }

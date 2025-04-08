@@ -68,7 +68,7 @@ class Song: MediaItem {
            super.init(name: name)
         }
      }
-  ---
+
   -> class Song: MediaItem {
         var artist: String
         init(name: String, artist: String) {
@@ -139,7 +139,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
   ```swifttest
   -> var movieCount = 0
   -> var songCount = 0
-  ---
+
   -> for item in library {
         if item is Movie {
            movieCount += 1
@@ -147,7 +147,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
            songCount += 1
         }
      }
-  ---
+
   -> print("Media library contains \(movieCount) movies and \(songCount) songs")
   <- Media library contains 2 movies and 3 songs
   ```
@@ -198,7 +198,7 @@ for item in library {
            print("Song: \(song.name), by \(song.artist)")
         }
      }
-  ---
+
   </ Movie: Casablanca, dir. Michael Curtiz
   </ Song: Blue Suede Shoes, by Elvis Presley
   </ Movie: Citizen Kane, dir. Orson Welles
@@ -258,7 +258,7 @@ things.append({ (name: String) -> String in "Hello, \(name)" })
 
   ```swifttest
   -> var things: [Any] = []
-  ---
+
   -> things.append(0)
   -> things.append(0.0)
   -> things.append(42)
@@ -339,7 +339,7 @@ for thing in things {
               print("something else")
         }
      }
-  ---
+
   </ zero as an Int
   </ zero as a Double
   </ an integer value of 42
