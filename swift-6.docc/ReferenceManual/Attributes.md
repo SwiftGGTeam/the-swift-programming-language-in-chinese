@@ -108,7 +108,62 @@ TODO TR: Is there any more detail about this case?
   obsoleted: <#version number#>
   ```
    *version number* 由一个到三个正整数组成，数字之间用句点分隔。
-- `message` 参数提供了一个文本消息，当编译器发出关于使用已弃用或已废除声明的警告或错误时，会显示该消息。它具有以下形式：
+- `noasync` 参数表示所声明的符号不能直接在异步上下文中使用。
+
+  由于 Swift 并发在潜在的挂起点之后可能会在不同的线程上恢复，因此在挂起点之间使用诸如线程局部存储、锁、互斥锁或信号量之类的元素可能会导致不正确的结果。
+
+  为了避免这个问题，请将 `@available(*, noasync)` 特性添加到符号的声明中：
+
+  ```swift
+  extension pthread_mutex_t {
+
+    @available(*, noasync)
+    mutating func lock() {
+        pthread_mutex_lock(&self)
+    }
+
+    @available(*, noasync)
+    mutating func unlock() {
+        pthread_mutex_unlock(&self)
+    }
+  }
+  ```
+
+  当有人在异步上下文中使用该符号时，此特性会引发编译时错误。你还可以使用 `message` 参数提供有关该符号的附加信息。
+
+  ```swift
+  @available(*, noasync, message: "将锁迁移到 Swift 并发。")
+  mutating func lock() {
+    pthread_mutex_lock(&self)
+  }
+  ```
+
+  如果你能保证你的代码以安全的方式使用潜在不安全的符号，你可以将其包装在一个同步函数中，并从异步上下文调用该函数。
+
+  ```swift
+
+  // 为带有 noasync 声明的方法提供同步包装器。
+  extension pthread_mutex_t {
+    mutating func withLock(_ operation: () -> ()) {
+      self.lock()
+      operation()
+      self.unlock()
+    }
+  }
+
+  func downloadAndStore(key: Int,
+                      dataStore: MyKeyedStorage,
+                      dataLock: inout pthread_mutex_t) async {
+    // 在异步上下文中安全地调用包装器。
+    dataLock.withLock {
+      dataStore[key] = downloadContent()
+    }
+  }
+  ```
+
+  你可以在大多数声明中使用 `noasync` 参数；但是，你不能在声明反初始化器时使用它。Swift 必须能够从任何上下文（同步和异步）调用类的反初始化器。
+
+- `message` 参数提供了一个文本消息，当编译器发出关于使用标记为 `deprecated`、`obsoleted` 或 `noasync` 的声明的警告或错误时，会显示该消息。它具有以下形式：
 
   ```swift
   message: <#message#>
@@ -161,7 +216,7 @@ TODO TR: Is there any more detail about this case?
     -> protocol MyRenamedProtocol {
            // protocol definition
        }
-    ---
+  
     -> @available(*, unavailable, renamed: "MyRenamedProtocol")
        typealias MyProtocol = MyRenamedProtocol
     ```
@@ -313,16 +368,16 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
              }
          }
      }
-  ---
+
   -> let dial = TelephoneExchange()
-  ---
+
   -> // Use a dynamic method call.
   -> dial(4, 1, 1)
   <- Get Swift help on forums.swift.org
-  ---
+
   -> dial(8, 6, 7, 5, 3, 0, 9)
   <- Unrecognized number
-  ---
+
   -> // Call the underlying method directly.
   -> dial.dynamicallyCall(withArguments: [4, 1, 1])
   << Get Swift help on forums.swift.org
@@ -368,7 +423,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
                  .joined(separator: "\n")
          }
      }
-  ---
+
   -> let repeatLabels = Repeater()
   -> print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   </ a
@@ -459,12 +514,12 @@ print(dynamic == equivalent)
          }
      }
   -> let s = DynamicStruct()
-  ---
+
   // Use dynamic member lookup.
   -> let dynamic = s.someDynamicMember
   -> print(dynamic)
   <- 325
-  ---
+
   // Call the underlying subscript directly.
   -> let equivalent = s[dynamicMember: "someDynamicMember"]
   -> print(dynamic == equivalent)
@@ -495,7 +550,7 @@ print(wrapper.x)
 
   ```swifttest
   -> struct Point { var x, y: Int }
-  ---
+
   -> @dynamicMemberLookup
      struct PassthroughWrapper<Value> {
          var value: Value
@@ -503,7 +558,7 @@ print(wrapper.x)
              get { return value[keyPath: member] }
          }
      }
-  ---
+
   -> let point = Point(x: 381, y: 431)
   -> let wrapper = PassthroughWrapper(value: point)
   -> print(wrapper.x)
@@ -531,7 +586,7 @@ Or are those supported today?
 I see #error and #warning as @freestanding(declaration)
 in the stdlib already:
 
-https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
+https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Macros.swift#L102
 -->
 
 ### frozen
@@ -1052,14 +1107,14 @@ struct SomeStruct {
              self.someValue = custom
          }
      }
-  ---
+
   -> struct SomeStruct {
   ->     // Uses init()
   ->     @SomeWrapper var a: Int
-  ---
+
   ->     // Uses init(wrappedValue:)
   ->     @SomeWrapper var b = 10
-  ---
+
   ->     // Both use init(wrappedValue:custom:)
   ->     @SomeWrapper(custom: 98.7) var c = 30
   ->     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
@@ -1122,7 +1177,7 @@ s.$x.wrapper  // WrapperWithProjection 类型的值
   -> struct SomeProjection {
          var wrapper: WrapperWithProjection
   }
-  ---
+
   -> struct SomeStruct {
   ->     @WrapperWithProjection var x = 123
   -> }
@@ -1396,7 +1451,7 @@ struct ArrayBuilder {
        }
     << Building second... [32]
     << Building first... [32]
-    ---
+  
     -> var manualConditional: [Int]
     -> if someNumber < 12 {
            let partialResult = ArrayBuilder.buildExpression(31)
@@ -1438,7 +1493,7 @@ struct ArrayBuilder {
            if (someNumber % 2) == 1 { 20 }
        }
     << Building optional... Optional([20])
-    ---
+  
     -> var partialResult: [Int]? = nil
     -> if (someNumber % 2) == 1 {
            partialResult = ArrayBuilder.buildExpression(20)
@@ -1506,7 +1561,7 @@ struct ArrayBuilder {
           Line(elements: [Text("Second"), Text("Third")])
           Text("Last")
        }
-    ---
+  
     -> let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
     -> let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
           accumulated: partialResult1,
@@ -1545,7 +1600,7 @@ struct ArrayBuilder {
            200
            300
        }
-    ---
+  
     -> var manualBlock = ArrayBuilder.buildBlock(
            ArrayBuilder.buildExpression(100),
            ArrayBuilder.buildExpression(200),
@@ -1581,7 +1636,7 @@ struct ArrayBuilder {
                100 + i
            }
        }
-    ---
+  
     -> var temporary: [[Int]] = []
     -> for i in 5...7 {
            let partialResult = ArrayBuilder.buildExpression(100 + i)
@@ -1615,7 +1670,7 @@ struct ArrayBuilder {
          var content: Drawable
          func draw() -> String { return content.draw() }
      }
-  ---
+
   -> @resultBuilder
      struct DrawingBuilder {
          static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
@@ -1687,7 +1742,7 @@ struct ArrayBuilder {
              return AnyDrawable(content: content)
          }
      }
-  ---
+
   -> @DrawingBuilder var typeErasedDrawing: Drawable {
          if #available(macOS 99, *) {
              FutureText("Inside.future")

@@ -298,8 +298,24 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 有关隐式解包可选类型的更多信息，请参阅 <doc:TheBasics#隐式解析可选类型>。
 
+为参数编写不透明类型是使用泛型类型的一种语法糖，并且没有为泛型类型参数指定名称。这个隐式的泛型类型参数有一个约束，要求它遵循不透明类型中指定的协议。如果你编写了多个不透明类型，每一个都会创建自己的泛型类型参数。例如，下面的声明是等价的：
+
+```swift
+func someFunction(x: some MyProtocol, y: some MyProtocol) { }
+func someFunction<T1: MyProtocol, T2: MyProtocol>(x: T1, y: T2) { }
+```
+
+在第二个声明中，因为泛型类型参数 T1 和 T2 有名称，你可以在代码的其他地方引用这些类型。相反，第一个声明中的泛型类型参数没有名称，也不能在其他代码中引用。你不能在可变参数的类型中使用不透明类型。你也不能使用不透明类型作为正在返回的函数类型的参数，或者作为参数类型是函数类型的参数。在这些位置，函数的调用者将不得不构造一个该未知类型的值。
+
+```swift
+protocol MyProtocol { }
+func badFunction() -> (some MyProtocol) -> Void { }  // Error
+func anotherBadFunction(callback: (some MyProtocol) -> Void) { }  // Error
+```
+
 > 隐式解包可选类型的语法:
-> > *implicitly-unwrapped-optional-type* → *type* **`!`**  
+>
+> *implicitly-unwrapped-optional-type* → *type* **`!`**  
 
 ## 协议组合类型
 

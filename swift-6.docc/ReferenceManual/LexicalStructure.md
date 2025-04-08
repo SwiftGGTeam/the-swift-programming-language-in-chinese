@@ -10,6 +10,7 @@ Swift 的 *词法结构* 描述了哪些字符序列构成了语言中的合法�
 
 空白字符有两个用途：在源文件中分隔标记，并区分前缀、后缀和中缀运算符（参见 <doc:LexicalStructure#运算符>），除此之外，空白字符会被忽略。以下字符被视为空白字符：空格 (U+0020)、换行符 (U+000A)、回车符 (U+000D)、水平制表符 (U+0009)、垂直制表符 (U+000B)、换页符 (U+000C) 和空字符 (U+0000)。
 
+
 <!--
   Whitespace characters are listed roughly from
   most salient/common to least,
@@ -59,8 +60,8 @@ Swift 的 *词法结构* 描述了哪些字符序列构成了语言中的合法�
 The paragraph above produces a link-resolution warning
 because of a known issue with ` in code voice.
 
-https://github.com/apple/swift-book/issues/71
-https://github.com/apple/swift-markdown/issues/93
+https://github.com/swiftlang/swift-book/issues/71
+https://github.com/swiftlang/swift-markdown/issues/93
 -->
 
 在没有显式参数名称的闭包中，参数会被隐式命名为 `$0`、`$1`、`$2` 等。这些名称在闭包的范围内是合法的标识符。
@@ -78,8 +79,8 @@ The formal grammar below for 'identifier'
 produces a link-resolution warning
 because of a known issue with ` in code voice.
 
-https://github.com/apple/swift-book/issues/71
-https://github.com/apple/swift-markdown/issues/93
+https://github.com/swiftlang/swift-book/issues/71
+https://github.com/swiftlang/swift-markdown/issues/93
 -->
 
 > 标识符的语法:
@@ -631,7 +632,7 @@ let textB = "Hello world"
   of the supported syntax here.
   (Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET)
 
-  https://github.com/apple/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
+  https://github.com/swiftlang/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
 
   Regex literals and the DSL take different approaches to captures.
   The literals give you more type safety.

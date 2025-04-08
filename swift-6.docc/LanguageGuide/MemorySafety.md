@@ -32,7 +32,7 @@ print("We're number \(one)!")
   ```swifttest
   // A write access to the memory where one is stored.
   -> var one = 1
-  ---
+
   // A read access from the memory where one is stored.
   -> print("We're number \(one)!")
   << We're number 1!
@@ -107,7 +107,7 @@ print(myNumber)
   -> func oneMore(than number: Int) -> Int {
          return number + 1
      }
-  ---
+
   -> var myNumber = 1
   -> myNumber = oneMore(than: myNumber)
   -> print(myNumber)
@@ -143,11 +143,11 @@ increment(&stepSize)
 
   ```swifttest
   -> var stepSize = 1
-  ---
+
   -> func increment(_ number: inout Int) {
          number += stepSize
      }
-  ---
+
   -> increment(&stepSize)
   // Error: conflicting accesses to stepSize
   xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
@@ -183,7 +183,7 @@ stepSize = copyOfStepSize
   // Make an explicit copy.
   -> var copyOfStepSize = stepSize
   -> increment(&copyOfStepSize)
-  ---
+
   // Update the original.
   -> stepSize = copyOfStepSize
   /> stepSize is now \(stepSize)
@@ -319,7 +319,7 @@ oscar.shareHealth(with: &maria)  // OK
              balance(&teammate.health, &health)
          }
      }
-  ---
+
   -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
   -> var maria = Player(name: "Maria", health: 5, energy: 10)
   -> oscar.shareHealth(with: &maria)  // OK

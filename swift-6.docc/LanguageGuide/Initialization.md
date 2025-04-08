@@ -472,7 +472,7 @@ var item = ShoppingListItem()
   ```swifttest
   -> struct S { var int: Int; var string: String }
   -> let s = S(int: 42, string: "hello")
-  ---
+
   -> struct SS { var int = 10; var string: String }
   -> let ss = SS(int: 42, string: "hello")
   ```
@@ -530,7 +530,7 @@ print(zeroByZero.width, zeroByZero.height)
   -> let zeroByTwo = Size(height: 2.0)
   -> print(zeroByTwo.width, zeroByTwo.height)
   <- 0.0 2.0
-  ---
+
   -> let zeroByZero = Size()
   -> print(zeroByZero.width, zeroByZero.height)
   <- 0.0 0.0
@@ -1413,15 +1413,15 @@ if valueChanged == nil {
   ```swifttest
   -> let wholeNumber: Double = 12345.0
   -> let pi = 3.14159
-  ---
+
   -> if let valueMaintained = Int(exactly: wholeNumber) {
          print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
      }
   <- 12345.0 conversion to Int maintains value of 12345
-  ---
+
   -> let valueChanged = Int(exactly: pi)
   // valueChanged is of type Int?, not Int
-  ---
+
   -> if valueChanged == nil {
          print("\(pi) conversion to Int doesn't maintain value")
      }
@@ -1474,7 +1474,7 @@ if let giraffe = someCreature {
   ```swifttest
   -> let someCreature = Animal(species: "Giraffe")
   // someCreature is of type Animal?, not Animal
-  ---
+
   -> if let giraffe = someCreature {
         print("An animal was initialized with a species of \(giraffe.species)")
      }
@@ -1500,7 +1500,7 @@ if anonymousCreature == nil {
   ```swifttest
   -> let anonymousCreature = Animal(species: "")
   // anonymousCreature is of type Animal?, not Animal
-  ---
+
   -> if anonymousCreature == nil {
         print("The anonymous creature couldn't be initialized")
      }
@@ -1584,7 +1584,7 @@ if unknownUnit == nil {
         print("This is a defined temperature unit, so initialization succeeded.")
      }
   <- This is a defined temperature unit, so initialization succeeded.
-  ---
+
   -> let unknownUnit = TemperatureUnit(symbol: "X")
   -> if unknownUnit == nil {
         print("This isn't a defined temperature unit, so initialization failed.")
@@ -1624,13 +1624,13 @@ if unknownUnit == nil {
   -> enum TemperatureUnit: Character {
         case kelvin = "K", celsius = "C", fahrenheit = "F"
      }
-  ---
+
   -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
   -> if fahrenheitUnit != nil {
         print("This is a defined temperature unit, so initialization succeeded.")
      }
   <- This is a defined temperature unit, so initialization succeeded.
-  ---
+
   -> let unknownUnit = TemperatureUnit(rawValue: "X")
   -> if unknownUnit == nil {
         print("This isn't a defined temperature unit, so initialization failed.")
@@ -1731,7 +1731,7 @@ class CartItem: Product {
         }
      }
   >> let p = Product(name: "")
-  ---
+
   -> class CartItem: Product {
         let quantity: Int
         init?(name: String, quantity: Int) {
@@ -1936,7 +1936,7 @@ class UntitledDocument: Document {
   ```
 -->
 
-在这个例子中，如果在调用父类的可失败构造器 `init(name:)` 时传入的是空字符串，那么强制解包操作会引发运行时错误。不过，因为这里是通过字符串常量来调用它，构造器不会失败，所以在这个例子中并不会发生运行时错误。
+在这个例子中，如果在调用父类的可失败构造器 `init(name:)` 时传入的是空字符串，那么强制解包操作会引发运行时错误。不过，因为这里是通过字符串字面量来调用它，构造器不会失败，所以在这个例子中并不会发生运行时错误。
 
 ### init! 可失败构造器
 

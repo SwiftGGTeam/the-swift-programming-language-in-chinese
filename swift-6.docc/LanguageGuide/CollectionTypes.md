@@ -43,7 +43,7 @@ Swift 数组的类型完整写作 `Array<Element>`，其中 `Element` 是数组�
 
 ### 创建空数组
 
-您可以使用构造器语法创建某种类型的空数组：
+在 Swift 中，你可以使用两种方法来创建空数组。如果上下文已经提供了类型信息，例如一个函数参数，或者一个已经明确类型的变量或常量，那么你可以使用一个空数组字面量，它写作 `[]`（一对空的方括号）：
 
 ```swift
 var someInts: [Int] = []
@@ -61,9 +61,17 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   ```
 -->
 
-请注意，`someInts` 变量的类型根据初始化器的类型推断为 `[Int]`。
+或者，你可以使用显式的初始化器语法来创建某种特定类型的空数组，即在方括号中写入元素类型，后面再跟上一对圆括号——例如下面代码中的 `[Int]()`：
 
-或者，如果上下文已经提供了类型信息，例如函数参数或已经定义类型的变量或常量，你可以使用空数组字面量 `[]`（一对空的方括号）来创建一个空数组：
+```swift
+var someInts = [Int]()
+print("someInts is of type [Int] with \(someInts.count) items.")
+// 打印输出 "someInts is of type [Int] with 0 items."
+```
+
+这两种方法效果相同。不过，空数组字面量写法更短，通常也更易读。
+
+无论使用哪种初始化方法，你都可以使用空数组字面量 (`[]`)将一个空数组重新赋值给一个已存在的变量：
 
 ```swift
 someInts.append(3)
@@ -122,7 +130,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
   -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
   /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
   </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
-  ---
+
   -> var sixDoubles = threeDoubles + anotherThreeDoubles
   /> sixDoubles is inferred as [Double], and equals \(sixDoubles)
   </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
@@ -783,7 +791,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
   -> let oddDigits: Set = [1, 3, 5, 7, 9]
   -> let evenDigits: Set = [0, 2, 4, 6, 8]
   -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-  ---
+
   >> let a =
   -> oddDigits.union(evenDigits).sorted()
   >> assert(a == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -840,7 +848,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
   -> let houseAnimals: Set = ["🐶", "🐱"]
   -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
   -> let cityAnimals: Set = ["🐦", "🐭"]
-  ---
+
   >> let aa =
   -> houseAnimals.isSubset(of: farmAnimals)
   >> assert(aa == true)
@@ -1193,7 +1201,7 @@ for airportName in airports.values {
      }
   </ Airport code: LHR
   </ Airport code: YYZ
-  ---
+
   -> for airportName in airports.values {
         print("Airport name: \(airportName)")
      }
@@ -1219,7 +1227,7 @@ let airportNames = [String](airports.values)
   -> let airportCodes = [String](airports.keys)
   /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
   </ airportCodes is ["LHR", "YYZ"]
-  ---
+
   -> let airportNames = [String](airports.values)
   /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
   </ airportNames is ["London Heathrow", "Toronto Pearson"]

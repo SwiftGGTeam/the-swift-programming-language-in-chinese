@@ -86,7 +86,7 @@ func cannotThrowErrors() -> String
   ```swifttest
   -> func canThrowErrors() throws -> String
   >> { return "foo" }
-  ---
+
   -> func cannotThrowErrors() -> String
   >> { return "foo" }
   ```
@@ -183,7 +183,7 @@ class VendingMachine {
         var price: Int
         var count: Int
      }
-  ---
+
   -> class VendingMachine {
   ->     var inventory = [
              "Candy Bar": Item(price: 12, count: 7),
@@ -191,7 +191,7 @@ class VendingMachine {
              "Pretzels": Item(price: 7, count: 11)
          ]
   ->     var coinsDeposited = 0
-  ---
+
   ->     func vend(itemNamed name: String) throws {
              guard let item = inventory[name] else {
                  throw VendingMachineError.invalidSelection
@@ -401,7 +401,7 @@ do {
              print("Couldn't buy that from the vending machine.")
          }
      }
-  ---
+
   -> do {
          try nourish(with: "Beet-Flavored Chips")
      } catch {
@@ -478,11 +478,11 @@ do {
         // ...
   >>    return 40
   -> }
-  ---
+
   -> let x = try? someThrowingFunction()
   >> print(x as Any)
   << Optional(40)
-  ---
+
   -> let y: Int?
      do {
          y = try someThrowingFunction()
@@ -587,7 +587,7 @@ func summarize(_ ratings: [Int]) throws(StatisticsError) {
 您可以在普通的throwing函数中调用使用指定类型抛错的函数：
 
 ```swift
-func someThrowingFunction() -> throws {
+func someThrowingFunction() throws {
     let ratings = [1, 2, 3, 2, 2, 1]
     try summarize(ratings)
 }
@@ -596,7 +596,7 @@ func someThrowingFunction() -> throws {
 上面的代码没有为 `someThrowingFunction()` 指定错误类型，因此它抛出了 `any Error`。您也可以将错误类型写为 `throws(any Error)`; 下面的代码等同于上面的代码：
 
 ```swift
-func someThrowingFunction() -> throws(any Error) {
+func someThrowingFunction() throws(any Error) {
     let ratings = [1, 2, 3, 2, 2, 1]
     try summarize(ratings)
 }

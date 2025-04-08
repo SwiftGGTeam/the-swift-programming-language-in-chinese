@@ -138,7 +138,7 @@ public macro OptionSet<RawType>() =
 
 对于独立宏，你可以编写 `@freestanding` 属性来指定其角色：
 
-```
+```swift
 @freestanding(expression)
 public macro line<T: ExpressibleByIntegerLiteral>() -> T =
         /* ... 宏实现的位置 ... */
@@ -187,7 +187,7 @@ public macro OptionSet<RawType>() =
 
 为了阐述具体的步骤，用以下代码来举例：
 
-```
+```swift
 let magicNumber = #fourCharacterCode("ABCD")
 ```
 
@@ -225,7 +225,7 @@ Swift 能通过限制实现宏的代码，帮助宏的作者避免意外读取�
 
 这个 AST 对应于如下的 Swift 代码：
 
-```
+```swift
 let magicNumber = 1145258561 as UInt32
 ```
 
@@ -307,7 +307,7 @@ targets: [
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/apple/swift-syntax", from: "509.0.0")
+    .package(url: "https://github.com/swiftlang/swift-syntax", from: "509.0.0")
 ],
 ```
 
@@ -377,7 +377,7 @@ struct MyProjectMacros: CompilerPlugin {
 <!--
 The return-a-string APIs come from here
 
-https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
+https://github.com/swiftlang/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
 -->
 
 

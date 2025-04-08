@@ -57,12 +57,12 @@ struct BlackjackCard {
 
   ```swifttest
   -> struct BlackjackCard {
-  ---
+
         // nested Suit enumeration
         enum Suit: Character {
            case spades = "♠", hearts = "♡", diamonds = "♢", clubs = "♣"
         }
-  ---
+
         // nested Rank enumeration
         enum Rank: Int {
            case two = 2, three, four, five, six, seven, eight, nine, ten
@@ -81,7 +81,7 @@ struct BlackjackCard {
               }
            }
         }
-  ---
+
         // BlackjackCard properties and methods
         let rank: Rank, suit: Suit
         var description: String {
