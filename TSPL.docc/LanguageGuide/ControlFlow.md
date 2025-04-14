@@ -880,8 +880,6 @@ on the right-hand side of an assignment,
 as shown in the examples above,
 you can also use them as the value that a function or closure returns.
 
-<!-- XXX forward reference to if-case syntax? -->
-
 ### Switch
 
 A `switch` statement considers a value
@@ -1298,8 +1296,6 @@ Because `anotherPoint` is always a tuple of two values,
 this case matches all possible remaining values,
 and a `default` case isn't needed to make the `switch` statement exhaustive.
 
-<!-- XXX cross reference if-case syntax from here -->
-
 #### Where
 
 A `switch` case can use a `where` clause to check for additional conditions.
@@ -1443,6 +1439,35 @@ Both patterns include a binding for `distance`
 and `distance` is an integer in both patterns ---
 which means that the code in the body of the `case`
 can always access a value for `distance`.
+
+## Patterns
+
+XXX OUTLINE:
+
+- Each switch case takes a *pattern*
+  that describes what values that case handles
+- You can also use patterns with if and for
+- The for-case syntax is useful when you want to iterate
+  over only certain elements in a collection
+- Because patterns can bind values,
+  they're also useful for working with enumerations that have associated values
+  XREF <doc:Enumerations#Associated-Values>
+
+```swift
+let somePoint = (12, 100)
+if case (let x, 100) = somePoint {
+    print("Found a point with x of \(x)")
+}
+
+let points = [(10, 0), (30, 100), (-20, 0)]
+for case (let x, let y) in points {
+    guard y == 0 else { continue }
+    print("Found a point on the x-axis at \(x)")
+}
+for case (let x, let y) in points where y == 0  {
+    print("Found a point on the x-axis at \(x)")
+}
+```
 
 ## Control Transfer Statements
 
