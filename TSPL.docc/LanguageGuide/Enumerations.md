@@ -482,7 +482,7 @@ case let .qrCode(productCode):
 When you're matching just one case of an enumeration ---
 for example,
 to extract its associated value ---
-there's a shorter syntax you can use
+you can use an `if`-`case` statement
 instead of writing a full switch statement.
 Here's what it looks like:
 
@@ -492,21 +492,13 @@ if case .qrCode(let productCode) = productBarcode {
 }
 ```
 
-In this code,
-the condition for the `if` statement starts with `case`,
-indicating that the condition is a pattern instead of a Boolean value.
-If the pattern matches,
-the condition for the `if` is considered to be true,
-and the code in the body of the `if` statement runs.
-The patterns you can write after `if case`
-are the same as the patterns you can write in a switch case.
 Just like in the switch statement earlier,
 the `productBarcode` variable is matched against
 the pattern `.qrCode(let productCode)` here.
 And like in the switch case,
 writing `let` extracts the associated value as a constant.
-
-<!-- XXX mention guards, and maybe for loops -->
+For more information about `if`-`case` statements,
+see <doc:ControlFlow#Patterns>.
 
 ## Raw Values
 

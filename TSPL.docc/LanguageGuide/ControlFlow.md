@@ -1442,32 +1442,75 @@ can always access a value for `distance`.
 
 ## Patterns
 
-XXX OUTLINE:
-
-- Each switch case takes a *pattern*
-  that describes what values that case handles
-- You can also use patterns with if and for
-- The for-case syntax is useful when you want to iterate
-  over only certain elements in a collection
-- Because patterns can bind values,
-  they're also useful for working with enumerations that have associated values
-  XREF <doc:Enumerations#Associated-Values>
+In the previous examples, each switch case includes a pattern
+that indicates what values match that case.
+You can also use a pattern as the condition for an `if` statement.
+Here's what that looks like:
 
 ```swift
 let somePoint = (12, 100)
 if case (let x, 100) = somePoint {
-    print("Found a point with x of \(x)")
+    print("Found a point on the y=100 line, at \(x)")
 }
-
-let points = [(10, 0), (30, 100), (-20, 0)]
-for case (let x, let y) in points {
-    guard y == 0 else { continue }
-    print("Found a point on the x-axis at \(x)")
-}
-for case (let x, let y) in points where y == 0  {
-    print("Found a point on the x-axis at \(x)")
-}
+// Prints "Found a point on the y=100 line, at 12"
 ```
+
+In this code,
+the condition for the `if` statement starts with `case`,
+indicating that the condition is a pattern instead of a Boolean value.
+If the pattern matches,
+the condition for the `if` is considered to be true,
+and the code in the body of the `if` statement runs.
+The patterns you can write after `if case`
+are the same as the patterns you can write in a switch case.
+
+You can also use a pattern in a `for`-`in` loop,
+to give names to parts of the value using a value binding:
+
+```swift
+let points = [(10, 0), (30, 100), (-20, 0)]
+
+for case let (x, y) in points {
+    if y == 0 {
+        print("Found a point on the x-axis at \(x)")
+    }
+}
+// Prints "Found a point on the x-axis at 10"
+// Prints "Found a point on the x-axis at -20"
+```
+
+The `for`-`in` loop above iterates over an array of tuples,
+binding the first and second elements of the tuples
+to the `x` and `y` constants.
+The statements inside the loop can use those constants,
+like the `if` statement that checks whether the point lies on the x-axis.
+
+A `for`-`case`-`in` loop can also include a `where` clause,
+to check for an additional condition.
+The statements inside the loop run
+only when `where` clause matches the current element.
+For example,
+the `for`-`case`-`in` loop below is the same as the `for`-`in` loop above.
+
+```swift
+for case let (x, y) in points where y == 0  {
+    print("Found a point on the x-axis at \(x)")
+}
+// Prints "Found a point on the x-axis at 10"
+// Prints "Found a point on the x-axis at -20"
+```
+
+In this code,
+the condition is integrated into the `for`-`case`-`in` loop as part of the pattern.
+The statements in the `for`-`case`-`in` loop run only for points on the x-axis.
+This code produces the same result as the `for`-`in` loop above,
+but is a more compact way to iterate
+over only certain elements in a collection.
+
+Because patterns can bind values,
+`if`-`case` statements and `for`-`case`-`in` loops
+are useful for working with enumerations that have associated values,
+as described in <doc:Enumerations#Associated-Values>.
 
 ## Control Transfer Statements
 
@@ -2011,6 +2054,8 @@ It lets you write the code that's typically executed
 without wrapping it in an `else` block,
 and it lets you keep the code that handles a violated requirement
 next to the requirement.
+
+<!-- XXX show guard-case syntax for completeness? -->
 
 ## Deferred Actions
 
