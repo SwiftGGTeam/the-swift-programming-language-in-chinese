@@ -160,7 +160,8 @@ to mark the possible suspension point.
 This is like writing `try` when calling a throwing function,
 to mark the possible change to the program's flow if there's an error.
 Inside an asynchronous method,
-the flow of execution is suspended *only* when you call another asynchronous method ---
+the flow of execution is suspended
+*only* when you call another asynchronous method ---
 suspension is never implicit or preemptive ---
 which means every possible suspension point is marked with `await`.
 Marking all of the possible suspension points in your code
@@ -277,6 +278,11 @@ func generateSlideshow(forGallery gallery: String) async {
     }
 }
 ```
+
+<!--
+XXX TR: Do we need to mention this?
+How common is it for developers to need to insert manual yields?
+-->
 
 Assuming the code that renders video is synchronous,
 it doesn't contain any suspension points.
@@ -418,7 +424,7 @@ at the beginning of each iteration,
 when it's waiting for the next element to be available.
 
 <!--
-  FIXME TR: Where does the 'try' above come from?
+XXX TR: Where does the 'try' above come from?
 -->
 
 In the same way that you can use your own types in a `for`-`in` loop
@@ -503,6 +509,7 @@ To call an asynchronous function
 and let it run in parallel with code around it,
 write `async` in front of `let` when you define a constant,
 and then write `await` each time you use the constant.
+<!-- XXX TR: Is this still true? -->
 
 ```swift
 async let firstPhoto = downloadPhoto(named: photoNames[0])
@@ -559,6 +566,8 @@ Here's how you can think about the differences between these two approaches:
   until an asynchronous function has returned.
 
 You can also mix both of these approaches in the same code.
+
+## XXX nonisolated and @concurrent here?
 
 ## Tasks and Task Groups
 
@@ -1500,9 +1509,8 @@ XXX OUTLINE XXX
     Can you use isolation domains, to prove that access doesn't overlap?
     Can you include synchronization in the data type (probably an advanced/interop approach)
 
-* TODO: When to add `nonisolated`
-
 * TODO: When to mark stuff as `Sendable`
+  Or is this already covered in the section above?
 
 <!--
 This source file is part of the Swift.org open source project
