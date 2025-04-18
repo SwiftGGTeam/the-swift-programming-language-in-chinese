@@ -109,7 +109,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 
 这种遵循协议的方式在 <doc:Protocols#在扩展里添加协议遵循> 中有描述。
 
-扩展可以使用在现有泛型类型上，就像 <doc:Generics#Extending-a-Generic-Type> 中描述的一样。你还可以使用扩展给泛型类型有条件地添加功能，就像 <doc:Generics#Extensions-with-a-Generic-Where-Clause> 中描述的一样。
+扩展可以使用在现有泛型类型上，就像 <doc:Generics#泛型扩展> 中描述的一样。你还可以使用扩展给泛型类型有条件地添加功能，就像 <doc:Generics#具有泛型-Where-子句的扩展> 中描述的一样。
 
 > 注意: 对一个现有的类型，如果你定义了一个扩展来添加新的功能，那么这个类型的所有实例都可以使用这个新功能，包括那些在扩展定义之前就存在的实例。
 

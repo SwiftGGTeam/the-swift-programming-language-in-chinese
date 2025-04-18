@@ -2,7 +2,7 @@
 
 在另一个类型的作用域内定义类型。
 
-枚举常被创建以支持特定类或结构的功能。同样的，为了在更复杂类型的上下文中使用而定义纯工具性结构，以及通常与特定类型结合使用的协议，也显得十分便利。为了实现这一点，Swift 允许你定义 *嵌套类型*，即在支持的类型定义中嵌套枚举、结构和协议等辅助类型。
+枚举常被创建以支持特定类或结构的功能。同样的，为了在更复杂类型的上下文中使用而定义的纯工具性结构体，以及通常与特定类型结合使用的协议，也显得十分便利。为了实现这一点，Swift 允许你定义 *嵌套类型*，即在支持的类型定义中嵌套枚举、结构和协议等辅助类型。
 
 要在一个类型中嵌套另一个类型，只需将其定义写在外部类型的大括号内。类型可以根据需要嵌套到任意层次。
 
@@ -112,7 +112,7 @@ struct BlackjackCard {
 
 `BlackjackCard` 结构本身有两个属性 —— `rank` 和 `suit`。它还定义了一个名为 `description` 的计算属性，该属性使用 `rank` 和 `suit` 中存储的值来构建牌的名称和数值的描述。`description` 属性使用可选绑定来检查是否存在第二个值，如果有，则为第二个值插入额外的描述信息。
 
-由于 `BlackjackCard` 是一个没有自定义初始化器的结构体，它具有一个隐式的成员逐一初始化器，正如在 [[doc:Initialization#Memberwise-Initializers-for-Structure-Types](doc:Initialization#Memberwise-Initializers-for-Structure-Types)]中所描述的那样。你可以使用这个初始化器来初始化一个名为 `theAceOfSpades` 的新常量：
+由于 `BlackjackCard` 是一个没有自定义初始化器的结构体，它具有一个隐式的成员逐一初始化器，正如在 <doc:Initialization#结构体类型的成员逐一构造器> 中所描述的那样。你可以使用这个初始化器来初始化一个名为 `theAceOfSpades` 的新常量：
 
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)

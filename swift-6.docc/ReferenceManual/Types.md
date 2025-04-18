@@ -22,7 +22,21 @@
 本章讨论了 Swift 语言本身定义的类型，并描述了 Swift 的类型推断行为。
 
 > 类型的语法:
-> > *type* → *function-type* \ > *type* → *array-type* \ > *type* → *dictionary-type* \ > *type* → *type-identifier* \ > *type* → *tuple-type* \ > *type* → *optional-type* \ > *type* → *implicitly-unwrapped-optional-type* \ > *type* → *protocol-composition-type* \ > *type* → *opaque-type* \ > *type* → *boxed-protocol-type* \ > *type* → *metatype-type* \ > *type* → *any-type* \ > *type* → *self-type* \ > *type* → **`(`** *type* **`)`**
+>
+> *type* → *function-type* \
+> *type* → *array-type* \
+> *type* → *dictionary-type* \
+> *type* → *type-identifier* \
+> *type* → *tuple-type* \
+> *type* → *optional-type* \
+> *type* → *implicitly-unwrapped-optional-type* \
+> *type* → *protocol-composition-type* \
+> *type* → *opaque-type* \
+> *type* → *boxed-protocol-type* \
+> *type* → *metatype-type* \
+> *type* → *any-type* \
+> *type* → *self-type* \
+> *type* → **`(`** *type* **`)`**
 
 ## 类型注解
 
@@ -40,7 +54,8 @@ func someFunction(a: Int) { /* ... */ }
 类型注解可以在类型之前包含一个可选的类型属性列表。
 
 > 类型注解的语法:
-> > *type-annotation* → **`:`** *attributes*_?_ *type*
+>
+> *type-annotation* → **`:`** *attributes*_?_ *type*
 
 ## 类型标识符
 
@@ -74,6 +89,8 @@ someTuple = (left: 5, right: 5)  // 错误: 名称不匹配
 ```
 
 除了 Void 是空元组类型 () 的类型别名外，所有元组类型都包含两个或更多类型。
+
+## 函数类型
 
 函数类型表示函数、方法或闭包的类型，由一个参数类型和返回类型组成，用箭头(->)分隔:
 
@@ -162,13 +179,17 @@ func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void
 如果你需要避免这个限制，可以将其中一个参数标记为逃逸的，或者使用 `withoutActuallyEscaping(_:do:)` 函数临时将其中一个非逃逸函数参数转换为逃逸函数。有关避免内存访问冲突的信息，请参阅 <doc:MemorySafety>。
 
 > 函数类型的语法:
-> > *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ *throws-clause*_?_ **`->`** *type*
-> > *function-type-argument-clause* → **`(`** **`)`** \
+>
+> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ *throws-clause*_?_ **`->`** *type*
+>
+> *function-type-argument-clause* → **`(`** **`)`** \
 > *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
-> > *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
+>
+> *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
 > *function-type-argument* → *attributes*_?_ *parameter-modifier*_?_ *type* | *argument-label* *type-annotation* \
 > *argument-label* → *identifier*
-> > *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
+>
+> *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
 
 func polymorphicF<T>(a: Int) -> T { return a } 是一个泛型函数，可以返回任何类型的值。而 monomorphicF(a: Int) -> Int { return a } 是一个单态函数，只能返回 Int 类型的值。
 
@@ -208,7 +229,8 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 有关 Swift 标准库 `Array` 类型的详细讨论，请参阅 <doc:CollectionTypes#数组>。
 
 > 数组类型的语法:
-> > *array-type* → **`[`** *type* **`]`**
+>
+> *array-type* → **`[`** *type* **`]`**
 
 ## 字典类型
 
@@ -236,9 +258,8 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 有关 Swift 标准库 `Dictionary` 类型的详细讨论，请参阅 <doc:CollectionTypes#字典>。
 
 > 字典类型的语法:
-> > *dictionary-type* → **`[`** *type* **`:`** *type* **`]`**
-
-## 可选类型
+>
+> *dictionary-type* → **`[`** *type* **`:`** *type* **`]`**
 
 ## 可选类型
 
@@ -267,7 +288,8 @@ optionalInteger! // 42
 有关更多信息和示例说明如何使用可选类型，请参阅 <doc:TheBasics#可选项>。
 
 > 可选类型的语法:
-> > *optional-type* → *type* **`?`**
+>
+> *optional-type* → *type* **`?`**
 
 ## 隐式解包可选类型
 
@@ -296,7 +318,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 使用可选链来有条件地对隐式解包可选表达式执行操作。如果值为 `nil`，则不执行任何操作，因此也不会产生运行时错误。
 
-有关隐式解包可选类型的更多信息，请参阅 <doc:TheBasics#隐式解析可选类型>。
+有关隐式解包可选类型的更多信息，请参阅 <doc:TheBasics#隐式解包可选>。
 
 为参数编写不透明类型是使用泛型类型的一种语法糖，并且没有为泛型类型参数指定名称。这个隐式的泛型类型参数有一个约束，要求它遵循不透明类型中指定的协议。如果你编写了多个不透明类型，每一个都会创建自己的泛型类型参数。例如，下面的声明是等价的：
 
@@ -417,7 +439,8 @@ let anotherInstance = metatype.init(string: "some string")
   ```swifttest -> class AnotherSubClass: SomeBaseClass { let string: String required init(string: String) { self.string = string } override class func printClassName() { print("AnotherSubClass") } } -> let metatype: AnotherSubClass.Type = AnotherSubClass.self -> let anotherInstance = metatype.init(string: "some string") ``` -->
 
 > 元类型语法:
-> > *metatype-type* → *type* **`.`** **`Type`** | *type* **`.`** **`Protocol`**  
+>
+> *metatype-type* → *type* **`.`** **`Type`** | *type* **`.`** **`Protocol`**  
 
 ## Any 类型
 
@@ -461,7 +484,8 @@ if let first = mixed.first as? String {
 有关更多信息，请参阅 <doc:Protocols#类专属协议> 和 [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject)。
 
 > Any 类型语法:
-> > *any-type* → **`Any`**
+>
+> *any-type* → **`Any`**
 
 ## Self 类型  
 
@@ -500,7 +524,10 @@ if let first = mixed.first as? String {
 `Self` 类型指的是与 Swift 标准库中的 `type(of:)` 函数相同的类型。写 `Self.someStaticMember` 来访问当前类型的成员与写 `type(of: self).someStaticMember` 是一样的。
 
 > Self 类型的语法:
-> > *self-type* → **`Self`**
+> 
+> *self-type* → **`Self`**
+
+## 类型继承子句
 
 *类型继承子句* 用于指定命名类型继承自哪个类以及符合哪些协议。类型继承子句以冒号 (:) 开头，后跟一系列类型标识符。
 
@@ -511,8 +538,11 @@ if let first = mixed.first as? String {
 对于为枚举案例分配原始值的枚举定义，类型继承子句可以是指定这些原始值类型的单个命名类型。有关使用类型继承子句指定其原始值类型的枚举定义示例，请参阅 <doc:Enumerations#原始值>。
 
 > 类型继承子句的语法:
-> > *type-inheritance-clause* → **`:`** *type-inheritance-list* 
-> > *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+>
+> *type-inheritance-clause* → **`:`** *type-inheritance-list* 
+> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+
+## 类型推断
 
 Swift 广泛使用 *类型推断*，允许你在代码中省略许多变量和表达式的类型或部分类型。
 
