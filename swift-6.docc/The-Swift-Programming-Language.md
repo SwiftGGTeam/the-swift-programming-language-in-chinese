@@ -12,6 +12,10 @@
 
 ## Topics
 
+### SwiftGG 翻译组
+- <doc:AboutSwiftGG>
+- <doc:ReleaseNote>
+
 ### 欢迎来到 Swift
 
 - <doc:AboutSwift>
