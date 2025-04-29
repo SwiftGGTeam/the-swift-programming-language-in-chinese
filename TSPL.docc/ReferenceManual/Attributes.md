@@ -997,6 +997,23 @@ Applying this attribute also implies the `objc` attribute.
   which we will want to link to, once it's written.
 -->
 
+### globalActor
+
+Apply this attribute to an actor, structure, enumeration, or final class.
+That type must define a static property named `shared`,
+which provides a shared instance of an actor.
+
+◊ that actor manages/serializes access to the some global state
+
+XXX SE: global actors extend the notion of actor isolation outside of a single actor type, so that global state (and the functions that access it) can benefit from actor isolation, even if the state and functions are scattered across many different types, functions and modules. Global actors make it possible to safely work with global variables in a concurrent program, as well as modeling other global program constraints such as code that must only execute on the "main thread" or "UI thread".
+
+Global actors implicitly conform to the [`GlobalActor`][] protocol.
+
+[`GlobalActor`]: https://developer.apple.com/documentation/swift/globalactor
+
+The main actor is a global actor provided by the standard library,
+as discussed in <doc:Concurrency#The-Main-Actor>.
+
 ### inlinable
 
 Apply this attribute to a

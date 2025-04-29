@@ -509,7 +509,10 @@ To call an asynchronous function
 and let it run in parallel with code around it,
 write `async` in front of `let` when you define a constant,
 and then write `await` each time you use the constant.
-<!-- XXX TR: Is this still true? -->
+<!--
+XXX TR: Is this still true?
+Do we need a forward reference to main actor?
+-->
 
 ```swift
 async let firstPhoto = downloadPhoto(named: photoNames[0])
@@ -566,8 +569,6 @@ Here's how you can think about the differences between these two approaches:
   until an asynchronous function has returned.
 
 You can also mix both of these approaches in the same code.
-
-## XXX nonisolated and @concurrent here?
 
 ## Tasks and Task Groups
 
@@ -935,6 +936,7 @@ but you're also completely responsible for their correctness.
 To create an unstructured task that runs on the current actor,
 call the [`Task.init(priority:operation:)`][] initializer.
 To create an unstructured task that's not part of the current actor,
+<!-- XXX Using "actor" before defining it -->
 known more specifically as a *detached task*,
 call the [`Task.detached(priority:operation:)`][] class method.
 Both of these operations return a task that you can interact with ---
@@ -961,7 +963,55 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
 -->
 
+## The Main Actor
+
+[`MainActor`][]
+[`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
+
+> Note:
+> The main actor is related to, but not the same as, the main thread:
+> Only code running on the main thread
+> can interact with the main actor's protected state.
+> Because of this close relationship,
+> you might see these terms used interchangeably,
+> even though they refer to different things.
+
+XXX OUTLINE:
+
+- By default, your code runs on the main actor.
+  This includes both synchronous code and concurrent code.
+  FIXME: What's the upcoming feature you enable that makes that happen?
+
+- Concurrency typically means moving work *off of* the main actor,
+  in a way that's still safe
+
+- use the main actor when you have shared mutable state,
+  but that state isn't neatly wrapped up in a single type
+  -OR-
+  start out by putting all your code on the main actor
+  then profile and move long-running computations to background tasks
+
+- you can write the attribute on a function,
+  which makes calls to the function always run on the main actor
+
+- you can write the attribute on a type,
+  which makes calls to all of the type's methods run on the main actor
+
+- in apps, UI work belongs on the main actor
+
+- some property wrappers like `@EnvironmentObject` from SwiftUI
+  imply `@MainActor` on a type.
+  Check for a `wrappedValue` that's marked `@MainActor`.
+  If you mark the property of a type with one of these implicit-main-actor properties,
+  that has the same effect as marking the type with `@MainActor`
+  you can wait for each child of a task
+
 ## Actors
+
+XXX OUTLINE:
+
+- transition from main actor to actors,
+  describing the latter as a generalization of the former
 
 You can use tasks to break up your program into isolated, concurrent pieces.
 Tasks are isolated from each other,
@@ -1385,28 +1435,6 @@ the `FileDescriptor` is a structure
 that meets the criteria to be implicitly sendable.
 However, the extension makes its conformance to `Sendable` unavailable,
 preventing the type from being sendable.
-
-## The Main Actor
-
-XXX OUTLINE:
-
-- the main actor is kinda-sorta like the main thread
-
-- use it when you have shared mutable state,
-  but that state isn't neatly wrapped up in a single type
-
-- you can put it on a function,
-  which makes calls to the function always run on the main actor
-
-- you can put it on a type,
-  which makes calls to all of the type's methods run on the main actor
-
-- some property wrappers like `@EnvironmentObject` from SwiftUI
-  imply `@MainActor` on a type.
-  Check for a `wrappedValue` that's marked `@MainActor`.
-  If you mark the property of a type with one of these implicit-main-actor properties,
-  that has the same effect as marking the type with `@MainActor`
-  you can wait for each child of a task
 
 <!--
   LEFTOVER OUTLINE BITS
