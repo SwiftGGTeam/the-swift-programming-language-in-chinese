@@ -965,8 +965,54 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
 
 ## The Main Actor
 
-[`MainActor`][]
+The discussion of concurrency in the previous sections
+discusses ways to letting operations resume later
+and letting work run in parallel.
+However,
+some operations like updating the user interface in an app
+need to be performed one at a time.
+You can use the *main actor* to serialize this kind of work,
+which is a shared instance of [`MainActor`][].
+To run a function on the main actor,
+you mark it with the `@MainActor` attribute:
+
 [`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
+
+```swift
+@MainActor
+func show(_ photo: Photo {
+    // ... add a new view to the user interface ...
+}
+```
+
+In the code above,
+the `show(_:)` function runs only on the main actor.
+XXX this prevents UI problems when it shows the photo
+
+XXX likewise for a type
+
+```swift
+@MainActor
+struct PhotoGallery
+    var photos: [Photo]
+    // ... more UI code ...
+}
+```
+
+XXX likewise for the PhotoGallery struct's `photos` property
+XXX If you're using SwiftUI,
+    you probably won't actually write either of these things
+    -- the `SwiftUI.View` protocol is already `@MainActor`
+    so your views inherit that.
+
+XXX also also for closures
+XXX TR: Should we show a detached task here or just plain Task{} syntax?
+
+```swift
+Task.detached { @MainActor in
+    ...
+}
+```
 
 > Note:
 > The main actor is related to, but not the same as, the main thread:
@@ -990,12 +1036,6 @@ XXX OUTLINE:
   -OR-
   start out by putting all your code on the main actor
   then profile and move long-running computations to background tasks
-
-- you can write the attribute on a function,
-  which makes calls to the function always run on the main actor
-
-- you can write the attribute on a type,
-  which makes calls to all of the type's methods run on the main actor
 
 - in apps, UI work belongs on the main actor
 
