@@ -752,15 +752,13 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   ```
 -->
 
-## Protocols That Have Semantic Requirements
+## Protocols That Have Only Semantic Requirements
 
 All of the example protocols above require some methods or properties,
-but a protocol doesn't have to include any requirements.
-You can also use a protocol to mark types
-that satisfy some *semantic* requirements ---
-requirements about how values of those types behave
-and about operations that they support ---
-not just requirements that you express in code.
+but a protocol declaration doesn't have to include any requirements.
+You can also use a protocol to describe *semantic* requirements ---
+that is, requirements about how values of those types behave
+and about operations that they support.
 <!--
 Avoiding the term "marker protocol",
 which more specifically refers to @_marker on a protocol.
