@@ -725,6 +725,8 @@ like closing network connections and deleting temporary files.
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
 [`Task.isCancelled` type]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
+<!-- XXX is the Optional<Data>.self still needed? -->
+
 ```swift
 let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
@@ -965,48 +967,87 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
 
 ## The Main Actor
 
-The discussion of concurrency in the previous sections
-discusses ways to letting operations resume later
-and letting work run in parallel.
-However,
-some operations like updating the user interface in an app
-need to be performed one at a time.
-You can use the *main actor* to serialize this kind of work,
+The previous sections discuss approaches for dividing up concurrent work:
+letting operations resume later and letting work run in parallel.
+Sometimes, after divided-up work finishes,
+you also need to join its execution back together.
+<!-- XXX Better terminology?  fanout & rejoin?  split & merge? -->
+For example,
+when an app updates its user interface,
+changes need to be performed one at a time,
+with each update completing before the next one begins,
+to prevent data races.
+To serialize concurrent work like this,
+you can use the *main actor*,
 which is a shared instance of [`MainActor`][].
-To run a function on the main actor,
-you mark it with the `@MainActor` attribute:
+There are several ways to run work on the main actor.
 
 [`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
 
+To ensure a function always runs on the main actor,
+you mark it with the `@MainActor` attribute:
+
 ```swift
 @MainActor
-func show(_ photo: Photo {
-    // ... add a new view to the user interface ...
+func show(_: Data) {
+    // ... UI code to display the photo ...
 }
 ```
 
 In the code above,
-the `show(_:)` function runs only on the main actor.
-XXX this prevents UI problems when it shows the photo
-
-XXX likewise for a type
+the `@MainActor` attribute on the `show(_:)` function
+ensures that this function runs only on the main actor.
+Within other code that's running on the main actor,
+you can call `show(_:)` as a synchronous function.
+However,
+to call `show(_:)` from code that isn't running on the main actor,
+you have to include `await` and call it as an asynchronous function
+because switching to the main actor requires a suspension point.
+For example:
 
 ```swift
-@MainActor
-struct PhotoGallery
-    var photos: [Photo]
-    // ... more UI code ...
+func downloadAndShowPhoto(named name: String) async {
+    let photo = await downloadPhoto(named: name)
+    await show(photo)
 }
 ```
 
-XXX likewise for the PhotoGallery struct's `photos` property
-XXX If you're using SwiftUI,
-    you probably won't actually write either of these things
-    -- the `SwiftUI.View` protocol is already `@MainActor`
-    so your views inherit that.
+In the code above,
+both `downloadPhoto(named:)` and `show(_:)` could suspend
+when you call the function.
+The code above also shows a common pattern:
+Perform long-running and CPU-intensive work in the background,
+and then switch to the main actor to update the UI.
+Because the `downloadAndShowPhoto(named:)` function isn't on the main actor,
+the work in `downloadPhoto(named:)` also doesn't run on the main actor.
+Only the work in `show(_:)` to update the UI runs on the main actor,
+because that function is marked with the `@MainActor` attribute.
+
+You can also write `@MainActor` on a structure, class, or enumeration
+to require all of its methods to run on the main actor
+and all code that accesses its properties:
+
+```swift
+@MainActor
+struct PhotoGallery {
+    var photosNames: [String]
+    // ... other UI code ...
+}
+```
+
+XXX In practice, you won't actually write either of these things much
+    Frameworks can write `@MainActor` on base classes and protocols,
+    and your types inherit that.
+    (For example the `View` protocol in SwiftUI.)
+
+Many data structures don't need
+all their state to be isolated to the main thread,
+only certain properties.
+XXX example
 
 XXX also also for closures
 XXX TR: Should we show a detached task here or just plain Task{} syntax?
+XXX Should this come earlier -- is it more common?
 
 ```swift
 Task.detached { @MainActor in
