@@ -1014,8 +1014,14 @@ There are several ways to run work on the main actor.
 To ensure a function always runs on the main actor,
 you mark it with the `@MainActor` attribute:
 
+<!--
+Non-breaking space before @MainActor in the listing below
+is a workaround for a DocC issue.
+rdar://150705674
+-->
+
 ```swift
-@MainActor
+ @MainActor
 func show(_: Data) {
     // ... UI code to display the photo ...
 }
@@ -1047,14 +1053,14 @@ Perform long-running and CPU-intensive work in the background,
 and then switch to the main actor to update the UI.
 Because the `downloadAndShowPhoto(named:)` function isn't on the main actor,
 the work in `downloadPhoto(named:)` also doesn't run on the main actor.
+Only the work in `show(_:)` to update the UI runs on the main actor,
+because that function is marked with the `@MainActor` attribute.
 <!-- TODO
 When updating for SE-0461,
 this is a good place to note
 that downloadPhoto(named:) runs
 on whatever actor you were on when you called it.
 -->
-Only the work in `show(_:)` to update the UI runs on the main actor,
-because that function is marked with the `@MainActor` attribute.
 
 To require that a closure must run on the main actor,
 you write `@MainActor` before the capture list and before `in`,
@@ -1081,8 +1087,14 @@ You can also write `@MainActor` on a structure, class, or enumeration
 to require all of its methods and all access to its properties
 to run on the main actor:
 
+<!--
+Non-breaking space before @MainActor in the listing below
+is a workaround for a DocC issue.
+rdar://150705674
+-->
+
 ```swift
-@MainActor
+ @MainActor
 struct PhotoGallery {
     var photoNames: [String]
     func drawUI() { /* ... other UI code ... */ }
@@ -1103,8 +1115,14 @@ are typically already marked `@MainActor`,
 so you don't usually write `@MainActor` on your own types in that case.
 Here's a simplified example:
 
+<!--
+Non-breaking space before @MainActor in the listing below
+is a workaround for a DocC issue.
+rdar://150705674
+-->
+
 ```swift
-@MainActor
+ @MainActor
 protocol View { /* ... */ }
 
 // Implicitly @MainActor
