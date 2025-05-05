@@ -1157,6 +1157,12 @@ so it needs to be isolated to the main actor.
 The `photoNames` property doesn't directly create the UI,
 but it does store state that the `drawUI()` function uses to draw the UI,
 so this property also needs to be accessed only on the main actor.
+In contrast,
+changes to the `hasCachedPhotos` property
+don't interact with the UI,
+and the `cachePhotos()` method doesn't access any state
+that requires running it on the main actor.
+So these aren't marked with `@MainActor`.
 
 As with the earlier examples,
 if you're using a framework to build your UI,
