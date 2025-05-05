@@ -968,11 +968,6 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
 ## The Main Actor
 
 The previous sections discuss approaches for dividing up concurrent work.
-You can use tasks to break up your program into isolated, concurrent pieces.
-Tasks are isolated from each other,
-which is what makes it safe for them to run at the same time,
-but sometimes you need to share some information between tasks.
-
 In some cases,
 after divided-up work finishes,
 you also need to join execution back together
