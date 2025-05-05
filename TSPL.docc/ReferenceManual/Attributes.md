@@ -1003,16 +1003,22 @@ Apply this attribute to an actor, structure, enumeration, or final class.
 That type must define a static property named `shared`,
 which provides a shared instance of an actor.
 
-◊ that actor manages/serializes access to the some global state
-
-XXX SE: global actors extend the notion of actor isolation outside of a single actor type, so that global state (and the functions that access it) can benefit from actor isolation, even if the state and functions are scattered across many different types, functions and modules. Global actors make it possible to safely work with global variables in a concurrent program, as well as modeling other global program constraints such as code that must only execute on the "main thread" or "UI thread".
+A global actor generalizes the concept of actor isolation
+to state that's spread out in several different places in code ---
+such as multiple types, files, and modules ---
+and makes it possible to safely assess global variables from concurrent code.
+The actor that the global actor provides
+as the value of its `shared` property
+serializes access to all this state.
+You can also use a global actor to model constraints in concurrent code
+like code that all needs to execute on the same thread.
 
 Global actors implicitly conform to the [`GlobalActor`][] protocol.
-
-[`GlobalActor`]: https://developer.apple.com/documentation/swift/globalactor
-
 The main actor is a global actor provided by the standard library,
 as discussed in <doc:Concurrency#The-Main-Actor>.
+Most code can use the main actor instead of defining a new global actor.
+
+[`GlobalActor`]: https://developer.apple.com/documentation/swift/globalactor
 
 ### inlinable
 
