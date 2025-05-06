@@ -604,7 +604,6 @@ Any attempt to subclass a final class is reported as a compile-time error.
   when overriding methods that use optionals / unchecked optionals.
 
   TODO: Overriding Type Methods
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
 <!--

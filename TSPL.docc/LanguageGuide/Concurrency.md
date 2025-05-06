@@ -904,7 +904,6 @@ which could create a race condition.
   .. _Concurrency_TaskPriority:
 
   Setting Task Priority
-  ~~~~~~~~~~~~~~~~~~~~~
 
   - priority values defined by ``Task.Priority`` enum
 
@@ -1381,7 +1380,6 @@ you'll get compile-time error instead of introducing a bug.
    .. _Concurrency_ActorIsolation:
 
    Actor Isolation
-   ~~~~~~~~~~~~~~~
 
    TODO outline impact from SE-0313 Control Over Actor Isolation
    about the 'isolated' and 'nonisolated' keywords
