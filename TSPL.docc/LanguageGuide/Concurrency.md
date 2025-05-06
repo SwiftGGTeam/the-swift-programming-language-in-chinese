@@ -1008,14 +1008,8 @@ There are several ways to run work on the main actor.
 To ensure a function always runs on the main actor,
 you mark it with the `@MainActor` attribute:
 
-<!--
-Non-breaking space before @MainActor in the listing below
-is a workaround for a DocC issue.
-rdar://150705674
--->
-
 ```swift
- @MainActor
+@MainActor
 func show(_: Data) {
     // ... UI code to display the photo ...
 }
@@ -1081,14 +1075,8 @@ You can also write `@MainActor` on a structure, class, or enumeration
 to require all of its methods and all access to its properties
 to run on the main actor:
 
-<!--
-Non-breaking space before @MainActor in the listing below
-is a workaround for a DocC issue.
-rdar://150705674
--->
-
 ```swift
- @MainActor
+@MainActor
 struct PhotoGallery {
     var photoNames: [String]
     func drawUI() { /* ... other UI code ... */ }
@@ -1109,14 +1097,8 @@ are typically already marked `@MainActor`,
 so you don't usually write `@MainActor` on your own types in that case.
 Here's a simplified example:
 
-<!--
-Non-breaking space before @MainActor in the listing below
-is a workaround for a DocC issue.
-rdar://150705674
--->
-
 ```swift
- @MainActor
+@MainActor
 protocol View { /* ... */ }
 
 // Implicitly @MainActor
