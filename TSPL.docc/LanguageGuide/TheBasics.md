@@ -30,14 +30,14 @@ checks whether a value is missing before using the value,
 and non-optional values are guaranteed to never be missing.
 
 Swift is a safe language,
-which means it helps you find and fix several categories of bugs
+which means it makes it easier for you find and fix several categories of bugs
 as early as possible during the development process,
 and lets you guarantee that certain kinds of bugs can't happen.
-Type safety helps you to be clear about
+Type safety enables you to be clear about
 the types of values your code works with.
 If part of your code requires a `String`,
 type safety prevents you from passing it an `Int` by mistake.
-Data safety helps you work with only valid data,
+Data safety ensures that you work with valid data only,
 not uninitialized memory or deinitialized objects,
 and ensures that you work with that data in safe ways ---
 even in programs that run multiple pieces of code at the same time.
@@ -573,9 +573,9 @@ Swift provides two signed floating-point number types:
 Every value in a Swift program has a type.
 Every place you store a value ---
 including constants, variables, and properties ---
-also has a type,
-which you might write explicitly using a type annotation
-or which might inferred from an initial value.
+also has a type.
+You might write the type explicitly using a type annotation,
+or Swift might infer the type from an initial value.
 Every place in your code where you provide a value,
 that value's type must match the place you use it.
 For example,
@@ -587,7 +587,7 @@ A type safe language encourages you to be clear about
 the types of values your code works with.
 Values of one type are never implicitly converted to another type.
 However, some types can be explicitly converted.
-When building code
+When building code,
 Swift checks the code for type safety
 and flags any mismatched types as errors.
 
@@ -1799,9 +1799,9 @@ if let definiteString = assumedString {
 ## Data Safety
 
 In addition to the checks that prevent type mismatches,
-which are described above in <doc:TheBasics#Type-Safety-and-Type-Inference>,
+described above in <doc:TheBasics#Type-Safety-and-Type-Inference>,
 Swift also protects code against working with invalid memory.
-This is known as *data safety* or *memory safety*
+This protection is known as *data safety* or *memory safety*
 and includes the following requirements:
 
 - Values are set before being read;
@@ -1826,18 +1826,21 @@ see <doc:Concurrency>.
 Sometimes you need to work outside of the bounds of safety ---
 for example, because of limitations of the language or standard library ---
 so Swift also provides unsafe versions of some APIs.
-When you use types or methods whose name includes words like
+When you use types or methods whose name includes words such as
 "unsafe", "unchecked", or "unmanaged",
 you take on the responsibility for safety.
 
 Safe code in Swift can still encounter errors and unexpected failures,
 which might stop the program's execution.
-Safety makes no guarantee about whether your code runs to completion.
+Safety doesn't ensure that your code runs to completion.
 Swift provides several ways to indicate and recover from errors,
 discussed in <doc:TheBasics#Error-Handling>
 and <doc:TheBasics#Assertions-and-Preconditions> below.
 However, in some cases,
 the *only* safe way to handle an error is to stop execution.
+If you need to guarantee that a service never unexpected stops,
+incorporate fault tolerance into its overall architecture,
+so it can recover from any of its components stopping unexpectedly.
 
 ## Error Handling
 
