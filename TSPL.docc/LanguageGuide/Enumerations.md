@@ -495,7 +495,7 @@ if case .qrCode(let productCode) = productBarcode {
 Just like in the switch statement earlier,
 the `productBarcode` variable is matched against
 the pattern `.qrCode(let productCode)` here.
-And like in the switch case,
+And as in the switch case,
 writing `let` extracts the associated value as a constant.
 For more information about `if`-`case` statements,
 see <doc:ControlFlow#Patterns>.
@@ -546,7 +546,7 @@ to give an enumeration an additional value,
 it's important to understand the difference between them.
 You pick the raw value for an enumeration case
 when you define that enumeration case in your code,
-like the three ASCII codes above.
+such as the three ASCII codes above.
 The raw value for a particular enumeration case is always the same.
 In contrast,
 you pick associated values when you create a new constant or variable

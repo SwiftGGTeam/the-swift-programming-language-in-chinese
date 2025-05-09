@@ -1484,9 +1484,9 @@ The `for`-`in` loop above iterates over an array of tuples,
 binding the first and second elements of the tuples
 to the `x` and `y` constants.
 The statements inside the loop can use those constants,
-like the `if` statement that checks whether the point lies on the x-axis.
+such as the `if` statement that checks whether the point lies on the x-axis.
 A more concise way to write this code
-is to combine the value bindings and condition,
+is to combine the value bindings and condition
 using a `for`-`case`-`in` loop.
 The code below has the same behavior as the `for`-`in` loop above:
 
@@ -2073,8 +2073,6 @@ It lets you write the code that's typically executed
 without wrapping it in an `else` block,
 and it lets you keep the code that handles a violated requirement
 next to the requirement.
-
-<!-- XXX show guard-case syntax for completeness? -->
 
 ## Deferred Actions
 
