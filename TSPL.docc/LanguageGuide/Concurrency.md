@@ -36,11 +36,6 @@ and most data races produce a compile-time error.
 Some data races can't be detected until your code is running;
 these data races terminate code execution.
 
-<!-- XXX OUTLINE
-Summarize the safety guarantees we make for concurrent code.
-Forward reference the new section below
--->
-
 > Note: If you've written concurrent code before,
 > you might be used to working with threads.
 > The concurrency model in Swift is built on top of threads,
@@ -977,8 +972,8 @@ changes need to be performed one at a time,
 with each update completing before the next one begins,
 to prevent data races.
 UI updates can also come from many places in your code,
-so it wouldn't work very well to
-try grouping all UI-related code on a single type.
+so grouping all UI-related code on a single type
+doesn't work very well.
 <!-- XXX TR: Other examples of non-UI non-main-actor work? -->
 To serialize concurrent work like this,
 you can use the *main actor*,
@@ -989,7 +984,7 @@ which is a shared instance of [`MainActor`][].
 Before you start using concurrency in your code,
 everything runs on the main actor.
 As you identify long-running or resource-intensive code,
-you can move this work off the main actor,
+you can move this work off the main actor
 in a way that's still safe and correct.
 
 > Note:
@@ -1002,11 +997,11 @@ in a way that's still safe and correct.
 > Because of this connection,
 > you might see these two terms used interchangeably.
 > Your code interacts with the main actor;
-> the main thread is an lower level implementation detail.
+> the main thread is a lower-level implementation detail.
 
 There are several ways to run work on the main actor.
 To ensure a function always runs on the main actor,
-you mark it with the `@MainActor` attribute:
+mark it with the `@MainActor` attribute:
 
 ```swift
 @MainActor
@@ -1035,7 +1030,7 @@ func downloadAndShowPhoto(named name: String) async {
 
 In the code above,
 both the `downloadPhoto(named:)` and `show(_:)` functions
-could suspend when you call them.
+might suspend when you call them.
 This code also shows a common pattern:
 Perform long-running and CPU-intensive work in the background,
 and then switch to the main actor to update the UI.
@@ -1050,7 +1045,7 @@ that downloadPhoto(named:) runs
 on whatever actor you were on when you called it.
 -->
 
-To require that a closure must run on the main actor,
+To ensure that a closure runs on the main actor,
 you write `@MainActor` before the capture list and before `in`,
 at the start of the closure.
 
@@ -1072,7 +1067,7 @@ XXX more explanation of the difference?
 -->
 
 You can also write `@MainActor` on a structure, class, or enumeration
-to require all of its methods and all access to its properties
+to ensure all of its methods and all access to its properties
 to run on the main actor:
 
 ```swift

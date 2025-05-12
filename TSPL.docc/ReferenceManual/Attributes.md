@@ -1000,7 +1000,7 @@ Applying this attribute also implies the `objc` attribute.
 ### globalActor
 
 Apply this attribute to an actor, structure, enumeration, or final class.
-That type must define a static property named `shared`,
+The type must define a static property named `shared`,
 which provides a shared instance of an actor.
 
 A global actor generalizes the concept of actor isolation
