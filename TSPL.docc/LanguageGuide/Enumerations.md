@@ -479,6 +479,27 @@ case let .qrCode(productCode):
   ```
 -->
 
+When you're matching just one case of an enumeration ---
+for example,
+to extract its associated value ---
+you can use an `if`-`case` statement
+instead of writing a full switch statement.
+Here's what it looks like:
+
+```swift
+if case .qrCode(let productCode) = productBarcode {
+    print("QR code: \(productCode).")
+}
+```
+
+Just like in the switch statement earlier,
+the `productBarcode` variable is matched against
+the pattern `.qrCode(let productCode)` here.
+And as in the switch case,
+writing `let` extracts the associated value as a constant.
+For more information about `if`-`case` statements,
+see <doc:ControlFlow#Patterns>.
+
 ## Raw Values
 
 The barcode example in <doc:Enumerations#Associated-Values>
@@ -520,14 +541,17 @@ Raw values can be
 strings, characters, or any of the integer or floating-point number types.
 Each raw value must be unique within its enumeration declaration.
 
-> Note: Raw values are *not* the same as associated values.
-> Raw values are set to prepopulated values
-> when you first define the enumeration in your code,
-> like the three ASCII codes above.
-> The raw value for a particular enumeration case is always the same.
-> Associated values are set when you create a new constant or variable
-> based on one of the enumeration's cases,
-> and can be different each time you do so.
+Although you can use both raw values and associated values
+to give an enumeration an additional value,
+it's important to understand the difference between them.
+You pick the raw value for an enumeration case
+when you define that enumeration case in your code,
+such as the three ASCII codes above.
+The raw value for a particular enumeration case is always the same.
+In contrast,
+you pick associated values when you create a new constant or variable
+using one of the enumeration's cases,
+and you can pick a different value each time you do so.
 
 ### Implicitly Assigned Raw Values
 
