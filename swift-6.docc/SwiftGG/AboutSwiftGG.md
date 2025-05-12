@@ -69,7 +69,7 @@ SwiftGG翻译组欢迎所有对Swift技术感兴趣、具有良好英文阅读�
 
 - **SwiftGG官网**：[swiftgg.team](https://swiftgg.team)
 - **GitHub**：[SwiftGGTeam](https://github.com/SwiftGGTeam)
-- **邮箱**：hello@swiftgg.team
+- **邮箱**：hello@xreality.zone
 - **X(Twitter)**：[@SwiftSIQI](https://x.com/swiftsiqi)
 
 加入SwiftGG翻译组，与我们一起为中文Swift开发者提供更优质的学习资源！
