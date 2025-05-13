@@ -1810,7 +1810,7 @@ and includes the following requirements:
 - Arrays and buffers are accessed only at valid indexes.
   The protection against out-of-bounds access
   is also known as *bounds safety*.
-- Memory is accessed only during the value’s lifetime,
+- Memory is accessed only during the value’s lifetime.
   The protection against use-after-free errors
   is also known as *lifetime safety*.
 - Access to memory overlaps only in provably safe ways.
