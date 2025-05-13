@@ -37,7 +37,7 @@ Type safety enables you to be clear about
 the types of values your code works with.
 If part of your code requires a `String`,
 type safety prevents you from passing it an `Int` by mistake.
-Data safety ensures that you work with valid data only,
+Memory safety ensures that you work with valid data only,
 not uninitialized memory or deinitialized objects,
 and ensures that you work with that data in safe ways ---
 even in programs that run multiple pieces of code at the same time.
@@ -1796,22 +1796,26 @@ if let definiteString = assumedString {
   ```
 -->
 
-## Data Safety
+## Memory Safety
 
 In addition to the checks that prevent type mismatches,
 described above in <doc:TheBasics#Type-Safety-and-Type-Inference>,
 Swift also protects code against working with invalid memory.
-This protection is known as *data safety* or *memory safety*
+This protection is known as *memory safety*
 and includes the following requirements:
 
-- Values are set before being read;
-  code doesn't interact with uninitialized regions of memory.
-- Arrays and buffers are accessed only at valid indexes,
-  never out of bounds.
+- Values are set before being read.
+  The protection against interacting with uninitialized regions of memory
+  is also known as *definite initialization*.
+- Arrays and buffers are accessed only at valid indexes.
+  The protection against out-of-bounds access
+  is also known as *bounds safety*.
 - Memory is accessed only during the value’s lifetime,
-  preventing use-after-free errors.
-- Access to memory overlaps only in provably safe ways;
-  concurrent code doesn't create possible data races.
+  The protection against use-after-free errors
+  is also known as *lifetime safety*.
+- Access to memory overlaps only in provably safe ways.
+  The protection against possible data races in concurrent code
+  is also known as *thread safety*.
 
 If you've worked in languages that don't provide these guarantees,
 you may be familiar with some of the errors and bugs
@@ -1820,7 +1824,7 @@ If you haven't encountered these issues, that's ok;
 safe code in Swift avoids these problems.
 For information about how Swift ensures you set initial values,
 see <doc:Initialization>,
-and for information about how Swift checks data safety in concurrent code,
+and for information about how Swift checks memory safety in concurrent code,
 see <doc:Concurrency>.
 
 Sometimes you need to work outside of the bounds of safety ---
