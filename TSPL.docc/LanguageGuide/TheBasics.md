@@ -1824,8 +1824,10 @@ If you haven't encountered these issues, that's ok;
 safe code in Swift avoids these problems.
 For information about how Swift ensures you set initial values,
 see <doc:Initialization>,
-and for information about how Swift checks memory safety in concurrent code,
-see <doc:Concurrency>.
+for information about how Swift checks memory safety in concurrent code,
+see <doc:Concurrency>,
+and for information about how Swift checks overlapping accesses to memory,
+see <doc:MemorySafety>.
 
 Sometimes you need to work outside of the bounds of safety ---
 for example, because of limitations of the language or standard library ---
