@@ -1957,22 +1957,16 @@ is a sequence of integers.
 
 ## Implicit Constraints
 
-In addition to the constraints you write explicitly,
-many places in your generic code
-also include implicit constraints
-that require types to conform to some very common protocols
-like [`Copyable`][].
-<!-- When SE-0446 is implemented, add Escapable above -->
-For information on when a protocol is implied,
-see the reference for that protocol.
-
-[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
-
-These constraints are implicit because
-almost all types in Swift conform to these protocols,
-so you specify only the exceptions.
+In addition to constraints you write explicitly,
+many places in your generic code also implicitly require
+conformance to some very common protocols like [`Copyable`][].
+<!-- When SE-0446 is implemented, add Escapable above. -->
+These generic constraints that you don't have to write
+are known as *implicit constraints*.
 For example, both of the following function declarations
 require `MyType` to be copyable:
+
+[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
 
 ```swift
 function someFunction<MyType> { ... }
@@ -1988,8 +1982,12 @@ types also implicitly conform to these common protocols.
 For more information,
 see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
+Because most types in Swift conform to these protocols,
+writing them almost everywhere would be repetitive.
+Instead, by marking only the exceptions,
+your call out the places that omit a common constraint.
 To suppress an implicit constraint,
-you write the protocol name with a tilde (`~`) in front of it.
+write the protocol name with a tilde (`~`) in front of it.
 You can read `~Copyable` as "maybe copyable" ---
 this suppressed constraint allows
 both copyable and noncopyable types in this position.
@@ -2023,6 +2021,10 @@ Noncopyable values like `y`
 must be passed as in-out, borrowing, or consuming parameters ---
 for more information,
 see <doc:Declarations#Borrowing-and-Consuming-Parameters>.
+
+For details about when generic code
+includes an implicit constraint to a given protocol,
+see the reference for that protocol.
 
 <!--
   TODO: Generic Enumerations
