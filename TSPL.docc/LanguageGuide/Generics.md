@@ -19,7 +19,7 @@ or indeed an array for any other type that can be created in Swift.
 Similarly, you can create a dictionary to store values of any specified type,
 and there are no limitations on what that type can be.
 
-## The Problem That Generics Solve
+## The Problem that Generics Solve
 
 Here's a standard, nongeneric function called `swapTwoInts(_:_:)`,
 which swaps two `Int` values:
@@ -1958,9 +1958,9 @@ is a sequence of integers.
 ## Implicit Constraints
 
 In addition to the constraints you write explicitly,
-many places in your code
-also implicitly include an constraint
-that types conform to some very common protocols
+many places in your generic code
+also include implicit constraints
+that require types to conform to some very common protocols
 like [`Copyable`][].
 <!-- When SE-0446 is implemented, add Escapable above -->
 For information on when a protocol is implied,
@@ -1968,7 +1968,7 @@ see the reference for that protocol.
 
 [`Copyable`]: https://developer.apple.com/documentation/swift/copyable
 
-This constraint is implicit because
+These constraints are implicit because
 almost all types in Swift conform to these protocols,
 so you specify only the exceptions.
 For example, both of the following function declarations
@@ -1984,7 +1984,7 @@ require the generic type parameter `MyType` to be copyable.
 In the first version, the constraint is implicit;
 the second version lists the explicitly.
 In most code,
-types also implicitly conform to these common protocol.
+types also implicitly conform to these common protocols.
 For more information,
 see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 

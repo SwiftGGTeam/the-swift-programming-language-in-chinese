@@ -752,7 +752,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   ```
 -->
 
-## Protocols That Have Only Semantic Requirements
+## Protocols that Have Only Semantic Requirements
 
 All of the example protocols above require some methods or properties,
 but a protocol declaration doesn't have to include any requirements.
@@ -799,10 +799,10 @@ struct MyStruct: Copyable {
 extension MyStruct: BitwiseCopyable { }
 ```
 
-The code above defines a new structure
+The code above defines a new structure.
 Because `Copyable` has only semantic requirements,
 there isn't any code in the structure declaration to adopt the protocol.
-Likewise, because `BitwiseCopyable` has only semantic requirements,
+Similarly, because `BitwiseCopyable` has only semantic requirements,
 the extension that adopts that protocol has an empty body.
 
 You usually don't need to write conformance to these protocols ---
@@ -1469,7 +1469,7 @@ XXX SE-0390 uses the same example but ~Copyable -- is that better?
 The code above shows part of a wrapper around POSIX file descriptors.
 The `FileDescriptor` structure
 satisfies all of the requirements of the `Sendable` protocol,
-which would normally make it sendable.
+which normally makes it sendable.
 However,
 writing `~Sendable` suppresses this implicit conformance.
 Even though file descriptors use integers
