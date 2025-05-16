@@ -1069,6 +1069,8 @@ if you want more specific control,
 you can apply the `borrowing` or `consuming` parameter modifier.
 In this case,
 use `copy` to explicitly mark copy operations.
+In addition,
+values of a noncopyable type must be passed as either borrowing or consuming.
 
 Regardless of whether you use the default rules,
 Swift guarantees that object lifetime and

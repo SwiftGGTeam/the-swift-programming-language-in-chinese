@@ -752,6 +752,65 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   ```
 -->
 
+## Protocols that Have Only Semantic Requirements
+
+All of the example protocols above require some methods or properties,
+but a protocol declaration doesn't have to include any requirements.
+You can also use a protocol to describe *semantic* requirements ---
+that is, requirements about how values of those types behave
+and about operations that they support.
+<!--
+Avoiding the term "marker protocol",
+which more specifically refers to @_marker on a protocol.
+-->
+The Swift standard library defines several protocols
+that don't have any required methods or properties:
+
+- [`Sendable`][] for values that can be shared across concurrency domains,
+  as discussed in <doc:Concurrency#Sendable-Types>.
+- [`Copyable`][] for values that Swift can copy
+  when you pass them to a function,
+  as discussed in <doc:Declarations#Borrowing-and-Consuming-Parameters>.
+- [`BitwiseCopyable`][] for values that can be copied, bit-by-bit.
+
+[`BitwiseCopyable`]: https://developer.apple.com/documentation/swift/bitwisecopyable
+[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
+[`Sendable`]: https://developer.apple.com/documentation/swift/sendable
+
+<!--
+These link definitions are also used in the section below,
+Implicit Conformance to a Protocol.
+-->
+
+For information about these protocols' requirements,
+see the overview in their documentation.
+
+You use the same syntax to adopt these protocols
+as you do to adopt other protocols.
+The only difference is that you don't include
+method or property declarations that implement the protocol's requirements.
+For example:
+
+```swift
+struct MyStruct: Copyable {
+    var counter = 12
+}
+
+extension MyStruct: BitwiseCopyable { }
+```
+
+The code above defines a new structure.
+Because `Copyable` has only semantic requirements,
+there isn't any code in the structure declaration to adopt the protocol.
+Similarly, because `BitwiseCopyable` has only semantic requirements,
+the extension that adopts that protocol has an empty body.
+
+You usually don't need to write conformance to these protocols ---
+instead, Swift implicitly adds the conformance for you,
+as described in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
+
+<!-- TODO: Mention why you might define your own empty protocols. -->
+
 ## Protocols as Types
 
 Protocols don't actually implement any functionality themselves.
@@ -1367,6 +1426,96 @@ for level in levels.sorted() {
   !!                 ^
   ```
 -->
+
+## Implicit Conformance to a Protocol
+
+Some protocols are so common that you would write them
+almost every time you declare a new type.
+For the following protocols,
+Swift automatically infers the conformance
+when you define a type that implements the protocol's requirements,
+so you don't have to write them yourself:
+
+- [`Copyable`][]
+- [`Sendable`][]
+- [`BitwiseCopyable`][]
+
+<!--
+The definitions for the links in this list
+are in the section above, Protocols That Have Semantic Requirements.
+-->
+
+You can still write the conformance explicitly,
+but it doesn't change how your code behaves.
+To suppress an implicit conformance,
+write a tilde (`~`) before the protocol name in the conformance list:
+
+```swift
+struct FileDescriptor: ~Sendable {
+    let rawValue: Int
+}
+```
+
+<!--
+The example above is based on a Swift System API.
+https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+
+See also this PR that adds Sendable conformance to FileDescriptor:
+https://github.com/apple/swift-system/pull/112
+-->
+
+The code above shows part of a wrapper around POSIX file descriptors.
+The `FileDescriptor` structure
+satisfies all of the requirements of the `Sendable` protocol,
+which normally makes it sendable.
+However,
+writing `~Sendable` suppresses this implicit conformance.
+Even though file descriptors use integers
+to identify and interact with open files,
+and integer values are sendable,
+making it nonsendable can help avoid certain kinds of bugs.
+
+Another way to suppress implicit conformance
+is with an extension that you mark as unavailable:
+
+```swift
+@available(*, unavailable)
+extension FileDescriptor Sendable { }
+```
+
+<!--
+  - test: `suppressing-implied-sendable-conformance`
+
+  -> struct FileDescriptor {
+  ->     let rawValue: CInt
+  -> }
+
+  -> @available(*, unavailable)
+  -> extension FileDescriptor: Sendable { }
+  >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !$ warning: conformance of 'FileDescriptor' to 'Sendable' is unavailable; this is an error in Swift 6
+  !! let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !! ^
+  !$ note: conformance of 'FileDescriptor' to 'Sendable' has been explicitly marked unavailable here
+  !! extension FileDescriptor: Sendable { }
+  !! ^
+-->
+
+When you write `~Sendable` in one place in your code,
+as in the previous example,
+code elsewhere in your program can still
+extend the `FileDescriptor` type to add `Sendable` conformance.
+In contrast,
+the unavailable extension in this example
+suppresses the implicit conformance to `Sendable`
+and also prevents any extensions elsewhere in your code
+from adding `Sendable` conformance to the type.
+
+> Note:
+> In addition to the protocols discussed above,
+> distributed actors implicitly conform to the [`Codable`][] protocol.
+
+[`Codable`]: https://developer.apple.com/documentation/swift/codable
 
 ## Collections of Protocol Types
 

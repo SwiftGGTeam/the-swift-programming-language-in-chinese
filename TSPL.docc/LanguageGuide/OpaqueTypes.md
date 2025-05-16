@@ -23,7 +23,7 @@ Boxed protocol types don't preserve type identity ---
 the value's specific type isn't known until runtime,
 and it can change over time as different values are stored.
 
-## The Problem That Opaque Types Solve
+## The Problem that Opaque Types Solve
 
 For example,
 suppose you're writing a module that draws ASCII art shapes.

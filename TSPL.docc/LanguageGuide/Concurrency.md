@@ -1324,52 +1324,25 @@ struct TemperatureReading {
 -->
 
 To explicitly mark a type as not being sendable,
-overriding an implicit conformance to the `Sendable` protocol,
-use an extension:
+write `~Sendable` after the type:
 
 ```swift
-struct FileDescriptor {
-    let rawValue: CInt
+struct FileDescriptor: ~Sendable {
+    let rawValue: Int
 }
-
-@available(*, unavailable)
-extension FileDescriptor: Sendable { }
 ```
 
 <!--
-The example above is abbreviated from a Swift System API.
+The example above is based on a Swift System API.
 https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+
+See also this PR that adds Sendable conformance to FileDescriptor:
+https://github.com/apple/swift-system/pull/112
 -->
 
-The code above shows part of a wrapper around POSIX file descriptors.
-Even though interface for file descriptors uses integers
-to identify and interact with open files,
-and integer values are sendable,
-a file descriptor isn't safe to send across concurrency domains.
-
-<!--
-  - test: `suppressing-implied-sendable-conformance`
-
-  -> struct FileDescriptor {
-  ->     let rawValue: CInt
-  -> }
-
-  -> @available(*, unavailable)
-  -> extension FileDescriptor: Sendable { }
-  >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
-  !$ warning: conformance of 'FileDescriptor' to 'Sendable' is unavailable; this is an error in Swift 6
-  !! let nonsendable: Sendable = FileDescriptor(rawValue: 10)
-  !! ^
-  !$ note: conformance of 'FileDescriptor' to 'Sendable' has been explicitly marked unavailable here
-  !! extension FileDescriptor: Sendable { }
-  !! ^
--->
-
-In the code above,
-the `FileDescriptor` is a structure
-that meets the criteria to be implicitly sendable.
-However, the extension makes its conformance to `Sendable` unavailable,
-preventing the type from being sendable.
+For more information about
+suppressing an implicit conformance to a protocol,
+see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
 <!--
   OUTLINE
