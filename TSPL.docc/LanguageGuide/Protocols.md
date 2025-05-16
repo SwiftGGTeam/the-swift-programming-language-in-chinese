@@ -809,7 +809,7 @@ You usually don't need to write conformance to these protocols ---
 instead, Swift implicitly adds the conformance for you,
 as described in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
-<!-- XXX TR: Mention why you might define your own empty protocols? -->
+<!-- TODO: Mention why you might define your own empty protocols. -->
 
 ## Protocols as Types
 
@@ -1462,8 +1462,6 @@ https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.sw
 
 See also this PR that adds Sendable conformance to FileDescriptor:
 https://github.com/apple/swift-system/pull/112
-
-XXX SE-0390 uses the same example but ~Copyable -- is that better?
 -->
 
 The code above shows part of a wrapper around POSIX file descriptors.
