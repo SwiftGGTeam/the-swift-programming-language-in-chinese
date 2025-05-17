@@ -837,10 +837,6 @@ or a structure's stored instance properties.
 These changes are allowed on nonfrozen types,
 but they break ABI compatibility for frozen types.
 
-> Note: When the compiler isn't in library evolution mode,
-> all structures and enumerations are implicitly frozen,
-> and this attribute is ignored.
-
 <!--
   - test: `can-use-frozen-without-evolution`
 
