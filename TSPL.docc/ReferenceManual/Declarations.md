@@ -3507,7 +3507,7 @@ That said, if you provide a setter clause, you must also provide a getter clause
 
 The *setter name* and enclosing parentheses are optional.
 If you provide a setter name, it's used as the name of the parameter to the setter.
-If you don't provide a setter name, the default parameter name to the setter is `value`.
+If you don't provide a setter name, the default parameter name to the setter is `newValue`.
 The type of the parameter to the setter is the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it's declared,
