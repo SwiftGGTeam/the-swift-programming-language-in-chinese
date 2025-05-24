@@ -504,10 +504,6 @@ To call an asynchronous function
 and let it run in parallel with code around it,
 write `async` in front of `let` when you define a constant,
 and then write `await` each time you use the constant.
-<!--
-XXX TR: Is this still true?
-Do we need a forward reference to main actor?
--->
 
 ```swift
 async let firstPhoto = downloadPhoto(named: photoNames[0])
@@ -929,12 +925,18 @@ an *unstructured task* doesn't have a parent task.
 You have complete flexibility to manage unstructured tasks
 in whatever way your program needs,
 but you're also completely responsible for their correctness.
-To create an unstructured task that runs on the current actor,
+
+To create an unstructured task
+that runs similarly to the surrounding code,
 call the [`Task.init(priority:operation:)`][] initializer.
-To create an unstructured task that's not part of the current actor,
-<!-- XXX Using "actor" before defining it -->
+The new task defaults to running with
+the same actor isolation, priority, and task-local state as the current task.
+To create an unstructured task
+that's more independent from the surrounding code,
 known more specifically as a *detached task*,
-call the [`Task.detached(priority:operation:)`][] class method.
+call the [`Task.detached(priority:operation:)`][] static method.
+The new task defaults to running as a nonisolated function
+and doesn't inherit the current task's priority or task-local state.
 Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
 
@@ -959,27 +961,50 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
 -->
 
+## Isolation
+
+The previous sections discuss approaches for splitting dividing up concurrent work.
+That work may involve making changes to shared data, such as an app's UI.
+If different parts of your code could modify the same data at the same time,
+that would create a *data race*,
+and your program would not behave correctly.
+
+Swift protects you from data races in your code.
+Whenever you read or modify a piece of data,
+Swift ensures that no other code is modifying it concurrently.
+This guarantee is called *data isolation*.
+There are three main ways to isolate data:
+
+1. Immutable data is always isolated.
+   No other code could modify a constant
+   at the same time you're reading it,
+   because code can't modify a constant.
+
+2. Data that's referenced by only the current task
+   is always isolated.
+   A local variable is safe to read and write
+   because no other code outside the task
+   has a reference to that memory.
+   (If you capture the variable in a closure,
+   Swift ensures that the closure isn't used concurrently.)
+
+3. Data that's protected by an actor
+   is isolated if the code accessing that data is isolated to the actor.
+   If the current function is isolated to an actor,
+   it's safe to read and write data that's protected by that actor
+   because any other code that's isolated to that same actor
+   must wait its turn before running.
+
 ## The Main Actor
 
-The previous sections discuss approaches for dividing up concurrent work.
-In some cases,
-after divided-up work finishes,
-you also need to join execution back together
-to do some synchronous work model.
-For example,
-when an app updates its user interface,
-changes need to be performed one at a time,
-with each update completing before the next one begins,
-to prevent data races.
-UI updates can also come from many places in your code,
-so grouping all UI-related code on a single type
-doesn't work very well.
-<!-- XXX TR: Other examples of non-UI non-main-actor work? -->
-To serialize concurrent work like this,
-you can use the *main actor*,
-which is a shared instance of [`MainActor`][].
-
-[`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
+An *actor* is an object that protects access to mutable data
+by forcing code to take turns accessing that data.
+The most important actor in many programs is the main actor.
+In an app,
+the main actor protects all of the data that's used to show the UI.
+The main actor takes turns rendering the UI,
+handling UI events,
+and running code that you write that needs to query or update the UI.
 
 Before you start using concurrency in your code,
 everything runs on the main actor.
@@ -1348,6 +1373,28 @@ In the future,
 if you try to add concurrent code to this function,
 introducing a possible suspension point,
 you'll get compile-time error instead of introducing a bug.
+
+
+## Global Actors
+
+The main actor is a global singleton instance of the [`MainActor`][] type.
+An actor can normally have multiple instances,
+each providing independent isolation.
+This is why all the isolated data of the actor
+must be declared as instance properties of the actor.
+However, because `MainActor` is singleton,
+the type alone is sufficient to identify the actor.
+This allows main actor isolation
+to be declared with just an attribute,
+which gives you much more flexibility to
+organize your program as you like.
+
+[`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
+
+You can define your own singleton global actors
+using the `@globalActor` attribute,
+as described in <doc:Attributes#globalActor>.
+
 
 <!--
   OUTLINE
