@@ -35,6 +35,8 @@ Swift detects and prevents data races,
 and most data races produce a compile-time error.
 Some data races can't be detected until your code is running;
 these data races terminate code execution.
+You use actors and isolation to protect against data races,
+as described in this chapter.
 
 > Note: If you've written concurrent code before,
 > you might be used to working with threads.
@@ -931,10 +933,11 @@ To create an unstructured task
 that's more independent from the surrounding code,
 known more specifically as a *detached task*,
 call the [`Task.detached(priority:operation:)`][] static method.
-The new task defaults to running as a nonisolated function
+The new task defaults to running without any actor isolation
 and doesn't inherit the current task's priority or task-local state.
 Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
+<!-- TODO: In SE-0461 terms, Task.detached runs as an @concurrent function. -->
 
 ```swift
 let newPhoto = // ... some photo data ...
