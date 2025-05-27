@@ -28,7 +28,7 @@ you don't know ahead of time what code will run at the same time,
 and you might not always know the order that code will run.
 A common problem in concurrent code happens
 when multiple pieces of code try to access
-some piece of shared mutable state —
+some piece of shared mutable state ---
 this is known as a *data race*.
 When you use the language-level support for concurrency,
 Swift detects and prevents data races,
@@ -985,8 +985,8 @@ There are three main ways to isolate data:
    if you capture the variable in a closure,
    Swift ensures that the closure isn't used concurrently.
 
-3. Data that's protected by an actor
-   is isolated if the code accessing that data is isolated to the actor.
+3. Data that's protected by an actor is isolated
+   if the code accessing that data is also isolated to the actor.
    If the current function is isolated to an actor,
    it's safe to read and write data that's protected by that actor
    because any other code that's isolated to that same actor
