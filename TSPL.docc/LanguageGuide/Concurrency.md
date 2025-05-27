@@ -994,6 +994,9 @@ There are three main ways to isolate data:
 
 ## The Main Actor
 
+An actor is an object that protects access to mutable data
+by forcing code to take turns accessing that data.
+The most important actor in many programs is the *main actor*.
 In an app,
 the main actor protects all of the data that's used to show the UI.
 The main actor takes turns rendering the UI,
