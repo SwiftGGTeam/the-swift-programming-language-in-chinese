@@ -418,10 +418,6 @@ A `for`-`await`-`in` loop potentially suspends execution
 at the beginning of each iteration,
 when it's waiting for the next element to be available.
 
-<!--
-XXX TR: Where does the 'try' above come from?
--->
-
 In the same way that you can use your own types in a `for`-`in` loop
 by adding conformance to the [`Sequence`][] protocol,
 you can use your own types in a `for`-`await`-`in` loop
@@ -963,30 +959,28 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
 
 ## Isolation
 
-The previous sections discuss approaches for splitting dividing up concurrent work.
-That work may involve making changes to shared data, such as an app's UI.
-If different parts of your code could modify the same data at the same time,
-that would create a *data race*,
-and your program would not behave correctly.
-
-Swift protects you from data races in your code.
+The previous sections discuss approaches for splitting up concurrent work.
+That work can involve changing shared data, such as an app's UI.
+If different parts of your code can modify the same data at the same time,
+that risks creating a data race.
+Swift protects you from data races in your code:
 Whenever you read or modify a piece of data,
 Swift ensures that no other code is modifying it concurrently.
 This guarantee is called *data isolation*.
 There are three main ways to isolate data:
 
 1. Immutable data is always isolated.
-   No other code could modify a constant
-   at the same time you're reading it,
-   because code can't modify a constant.
+   Because you can't modify a constant,
+   there's no risk of other code modifying a constant
+   at the same time you're reading it.
 
-2. Data that's referenced by only the current task
-   is always isolated.
+2. Data that's referenced by only the current task is always isolated.
    A local variable is safe to read and write
-   because no other code outside the task
-   has a reference to that memory.
-   (If you capture the variable in a closure,
-   Swift ensures that the closure isn't used concurrently.)
+   because no code outside the task has a reference to that memory,
+   so no other code can modify that data.
+   In addition,
+   if you capture the variable in a closure,
+   Swift ensures that the closure isn't used concurrently.
 
 3. Data that's protected by an actor
    is isolated if the code accessing that data is isolated to the actor.
@@ -997,9 +991,6 @@ There are three main ways to isolate data:
 
 ## The Main Actor
 
-An *actor* is an object that protects access to mutable data
-by forcing code to take turns accessing that data.
-The most important actor in many programs is the main actor.
 In an app,
 the main actor protects all of the data that's used to show the UI.
 The main actor takes turns rendering the UI,
@@ -1023,6 +1014,23 @@ in a way that's still safe and correct.
 > you might see these two terms used interchangeably.
 > Your code interacts with the main actor;
 > the main thread is a lower-level implementation detail.
+
+<!--
+TODO: Discuss the SE-0478 syntax for 'using @MainActor'
+
+When you're writing UI code,
+you often want all of it to be isolated to the main actor.
+To do this, you can write `using @MainActor`
+at the top of a Swift file to apply that attribute by default
+to all the code in the file.
+If there's a specific function or property
+that you want to exclude from `using @MainActor`,
+you can use the `nonisolated` modifier on that declaration
+to override the default.
+Modules can be configured to be built using `using @MainActor` by default.
+This can be overridden on a per-file basis
+by writing `using nonisolated` at the top of a file.
+-->
 
 There are several ways to run work on the main actor.
 To ensure a function always runs on the main actor,
@@ -1379,15 +1387,15 @@ you'll get compile-time error instead of introducing a bug.
 
 The main actor is a global singleton instance of the [`MainActor`][] type.
 An actor can normally have multiple instances,
-each providing independent isolation.
-This is why all the isolated data of the actor
-must be declared as instance properties of the actor.
-However, because `MainActor` is singleton,
-the type alone is sufficient to identify the actor.
-This allows main actor isolation
-to be declared with just an attribute,
-which gives you much more flexibility to
-organize your program as you like.
+each of which provides independent isolation.
+This is why you declare all of an actor's isolated data
+as instance properties of that actor.
+However, because `MainActor` is singleton ---
+there is only ever a single instance of this type ---
+the type alone is sufficient to identify the actor,
+allowing you to mark main-actor isolation using just an attribute.
+This approach gives you more flexibility to organize your code
+in the way that works best for you.
 
 [`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
 
