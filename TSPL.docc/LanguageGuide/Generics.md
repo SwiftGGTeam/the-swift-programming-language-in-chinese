@@ -1985,10 +1985,9 @@ function someFunction<MyType> { ... }
 function someFunction<MyType: Copyable> { ... }
 ```
 
-Both declarations of `someFunction()` in the code above
-require the generic type parameter `MyType` to be copyable.
-In the first version, the constraint is implicit;
-the second version lists the explicitly.
+In the code above,
+the first declaration has an implicit constraint,
+and the second version lists the conformance explicitly.
 In most code,
 types also implicitly conform to these common protocols.
 For more information,
