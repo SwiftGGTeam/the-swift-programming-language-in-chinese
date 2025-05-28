@@ -157,7 +157,7 @@ to mark the possible suspension point.
 This is like writing `try` when calling a throwing function,
 to mark the possible change to the program's flow if there's an error.
 Inside an asynchronous method,
-the flow of execution is suspended
+the flow of execution can be suspended
 *only* when you call another asynchronous method ---
 suspension is never implicit or preemptive ---
 which means every possible suspension point is marked with `await`.
@@ -684,15 +684,12 @@ like closing network connections and deleting temporary files.
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
 [`Task.isCancelled` type]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
-<!-- XXX is the Optional<Data>.self still needed? -->
-
 ```swift
-let photos = await withTaskGroup(of: Optional<Data>.self) { group in
+let photos = await withTaskGroup { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
         let added = group.addTaskUnlessCancelled {
-            guard !Task.isCancelled else { return nil }
-            return await downloadPhoto(named: name)
+            Task.isCancelled ? nil : await downloadPhoto(named: name)
         }
         guard added else { break }
     }
