@@ -1087,16 +1087,9 @@ Task { @MainActor in
 }
 ```
 
-<!-- XXX TR: Should we show a detached task here instead? -->
-
 The code above is similar to
 `downloadAndShowPhoto(named:)` from the previous code listing,
 but the code in this example doesn't wait for the UI update.
-<!--
-XXX more explanation of the difference?
-    Or why you'd use Task to do this kind of thing?
--->
-
 You can also write `@MainActor` on a structure, class, or enumeration
 to ensure all of its methods and all access to its properties
 to run on the main actor:
@@ -1139,8 +1132,6 @@ are also implicitly marked `@MainActor`.
 You'd see the same behavior if `View` were a base class
 and `PhotoGalleryView` were a subclass ---
 the subclass would be implicitly marked `@MainActor`.
-
-<!-- XXX TR: Is there a parallel non-UI example, like for server code? -->
 
 In the examples above,
 `PhotoGallery` protects the entire structure on the main actor.
