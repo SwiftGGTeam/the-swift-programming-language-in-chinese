@@ -18,21 +18,25 @@ with each core carrying out one of the tasks.
 A program that uses parallel and asynchronous code
 carries out multiple operations at a time,
 and it suspends operations that are waiting for an external system.
+The rest of this chapter uses the term *concurrency*
+to refer to this common combination of asynchronous and parallel code.
 
 The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
-Swift lets you express your intent
-in a way that enables some compile-time checking ---
-for example, you can use actors to safely access mutable state.
-However, adding concurrency to slow or buggy code
-isn't a guarantee that it will become fast or correct.
-In fact, adding concurrency might even make your code harder to debug.
-However, using Swift's language-level support for concurrency
-in code that needs to be concurrent
-means Swift can help you catch problems at compile time.
-
-The rest of this chapter uses the term *concurrency*
-to refer to this common combination of asynchronous and parallel code.
+When you write concurrent code,
+you don't know ahead of time what code will run at the same time,
+and you might not always know the order that code will run.
+A common problem in concurrent code happens
+when multiple pieces of code try to access
+some piece of shared mutable state ---
+this is known as a *data race*.
+When you use the language-level support for concurrency,
+Swift detects and prevents data races,
+and most data races produce a compile-time error.
+Some data races can't be detected until your code is running;
+these data races terminate code execution.
+You use actors and isolation to protect against data races,
+as described in this chapter.
 
 > Note: If you've written concurrent code before,
 > you might be used to working with threads.
@@ -153,7 +157,8 @@ to mark the possible suspension point.
 This is like writing `try` when calling a throwing function,
 to mark the possible change to the program's flow if there's an error.
 Inside an asynchronous method,
-the flow of execution is suspended *only* when you call another asynchronous method ---
+the flow of execution can be suspended
+*only* when you call another asynchronous method ---
 suspension is never implicit or preemptive ---
 which means every possible suspension point is marked with `await`.
 Marking all of the possible suspension points in your code
@@ -255,31 +260,6 @@ only certain places in your program can call asynchronous functions or methods:
 
   - Code at the top level that forms an implicit main function.
 -->
-
-You can explicitly insert a suspension point
-by calling the [`Task.yield()`][] method.
-
-[`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
-
-```swift
-func generateSlideshow(forGallery gallery: String) async {
-    let photos = await listPhotos(inGallery: gallery)
-    for photo in photos {
-        // ... render a few seconds of video for this photo ...
-        await Task.yield()
-    }
-}
-```
-
-Assuming the code that renders video is synchronous,
-it doesn't contain any suspension points.
-The work to render video could also take a long time.
-However,
-you can periodically call `Task.yield()`
-to explicitly add suspension points.
-Structuring long-running code this way
-lets Swift balance between making progress on this task,
-and letting other tasks in your program make progress on their work.
 
 The [`Task.sleep(for:tolerance:clock:)`][] method
 is useful when writing simple code
@@ -409,10 +389,6 @@ writing `await` indicates a possible suspension point.
 A `for`-`await`-`in` loop potentially suspends execution
 at the beginning of each iteration,
 when it's waiting for the next element to be available.
-
-<!--
-  FIXME TR: Where does the 'try' above come from?
--->
 
 In the same way that you can use your own types in a `for`-`in` loop
 by adding conformance to the [`Sequence`][] protocol,
@@ -709,12 +685,11 @@ like closing network connections and deleting temporary files.
 [`Task.isCancelled` type]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
 ```swift
-let photos = await withTaskGroup(of: Optional<Data>.self) { group in
+let photos = await withTaskGroup { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
         let added = group.addTaskUnlessCancelled {
-            guard !Task.isCancelled else { return nil }
-            return await downloadPhoto(named: name)
+            Task.isCancelled ? nil : await downloadPhoto(named: name)
         }
         guard added else { break }
     }
@@ -885,7 +860,6 @@ which could create a race condition.
   .. _Concurrency_TaskPriority:
 
   Setting Task Priority
-  ~~~~~~~~~~~~~~~~~~~~~
 
   - priority values defined by ``Task.Priority`` enum
 
@@ -904,6 +878,31 @@ which could create a race condition.
   - In addition, or instead of, setting a low priority,
   you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
   This is a sort of cooperative multitasking for long-running work.
+
+You can explicitly insert a suspension point
+by calling the [`Task.yield()`][] method.
+
+[`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
+
+```swift
+func generateSlideshow(forGallery gallery: String) async {
+    let photos = await listPhotos(inGallery: gallery)
+    for photo in photos {
+        // ... render a few seconds of video for this photo ...
+        await Task.yield()
+    }
+}
+```
+
+Assuming the code that renders video is synchronous,
+it doesn't contain any suspension points.
+The work to render video could also take a long time.
+However,
+you can periodically call `Task.yield()`
+to explicitly add suspension points.
+Structuring long-running code this way
+lets Swift balance between making progress on this task,
+and letting other tasks in your program make progress on their work.
 -->
 
 ### Unstructured Concurrency
@@ -916,13 +915,21 @@ an *unstructured task* doesn't have a parent task.
 You have complete flexibility to manage unstructured tasks
 in whatever way your program needs,
 but you're also completely responsible for their correctness.
-To create an unstructured task that runs on the current actor,
+
+To create an unstructured task
+that runs similarly to the surrounding code,
 call the [`Task.init(priority:operation:)`][] initializer.
-To create an unstructured task that's not part of the current actor,
+The new task defaults to running with
+the same actor isolation, priority, and task-local state as the current task.
+To create an unstructured task
+that's more independent from the surrounding code,
 known more specifically as a *detached task*,
-call the [`Task.detached(priority:operation:)`][] class method.
+call the [`Task.detached(priority:operation:)`][] static method.
+The new task defaults to running without any actor isolation
+and doesn't inherit the current task's priority or task-local state.
 Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
+<!-- TODO: In SE-0461 terms, Task.detached runs as an @concurrent function. -->
 
 ```swift
 let newPhoto = // ... some photo data ...
@@ -945,12 +952,229 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
 -->
 
+## Isolation
+
+The previous sections discuss approaches for splitting up concurrent work.
+That work can involve changing shared data, such as an app's UI.
+If different parts of your code can modify the same data at the same time,
+that risks creating a data race.
+Swift protects you from data races in your code:
+Whenever you read or modify a piece of data,
+Swift ensures that no other code is modifying it concurrently.
+This guarantee is called *data isolation*.
+There are three main ways to isolate data:
+
+1. Immutable data is always isolated.
+   Because you can't modify a constant,
+   there's no risk of other code modifying a constant
+   at the same time you're reading it.
+
+2. Data that's referenced by only the current task is always isolated.
+   A local variable is safe to read and write
+   because no code outside the task has a reference to that memory,
+   so no other code can modify that data.
+   In addition,
+   if you capture the variable in a closure,
+   Swift ensures that the closure isn't used concurrently.
+
+3. Data that's protected by an actor is isolated
+   if the code accessing that data is also isolated to the actor.
+   If the current function is isolated to an actor,
+   it's safe to read and write data that's protected by that actor
+   because any other code that's isolated to that same actor
+   must wait its turn before running.
+
+## The Main Actor
+
+An actor is an object that protects access to mutable data
+by forcing code to take turns accessing that data.
+The most important actor in many programs is the *main actor*.
+In an app,
+the main actor protects all of the data that's used to show the UI.
+The main actor takes turns rendering the UI,
+handling UI events,
+and running code that you write that needs to query or update the UI.
+
+Before you start using concurrency in your code,
+everything runs on the main actor.
+As you identify long-running or resource-intensive code,
+you can move this work off the main actor
+in a way that's still safe and correct.
+
+> Note:
+> The main actor is closely related to the main thread,
+> but they're not the same thing.
+> The main actor has private mutable state,
+> and the main thread serializes access to that state.
+> When you run code on the main actor,
+> Swift executes that code on the main thread.
+> Because of this connection,
+> you might see these two terms used interchangeably.
+> Your code interacts with the main actor;
+> the main thread is a lower-level implementation detail.
+
+<!--
+TODO: Discuss the SE-0478 syntax for 'using @MainActor'
+
+When you're writing UI code,
+you often want all of it to be isolated to the main actor.
+To do this, you can write `using @MainActor`
+at the top of a Swift file to apply that attribute by default
+to all the code in the file.
+If there's a specific function or property
+that you want to exclude from `using @MainActor`,
+you can use the `nonisolated` modifier on that declaration
+to override the default.
+Modules can be configured to be built using `using @MainActor` by default.
+This can be overridden on a per-file basis
+by writing `using nonisolated` at the top of a file.
+-->
+
+There are several ways to run work on the main actor.
+To ensure a function always runs on the main actor,
+mark it with the `@MainActor` attribute:
+
+```swift
+@MainActor
+func show(_: Data) {
+    // ... UI code to display the photo ...
+}
+```
+
+In the code above,
+the `@MainActor` attribute on the `show(_:)` function
+requires this function to run only on the main actor.
+Within other code that's running on the main actor,
+you can call `show(_:)` as a synchronous function.
+However,
+to call `show(_:)` from code that isn't running on the main actor,
+you have to include `await` and call it as an asynchronous function
+because switching to the main actor introduces a potential suspension point.
+For example:
+
+```swift
+func downloadAndShowPhoto(named name: String) async {
+    let photo = await downloadPhoto(named: name)
+    await show(photo)
+}
+```
+
+In the code above,
+both the `downloadPhoto(named:)` and `show(_:)` functions
+might suspend when you call them.
+This code also shows a common pattern:
+Perform long-running and CPU-intensive work in the background,
+and then switch to the main actor to update the UI.
+Because the `downloadAndShowPhoto(named:)` function isn't on the main actor,
+the work in `downloadPhoto(named:)` also doesn't run on the main actor.
+Only the work in `show(_:)` to update the UI runs on the main actor,
+because that function is marked with the `@MainActor` attribute.
+<!-- TODO
+When updating for SE-0461,
+this is a good place to note
+that downloadPhoto(named:) runs
+on whatever actor you were on when you called it.
+-->
+
+To ensure that a closure runs on the main actor,
+you write `@MainActor` before the capture list and before `in`,
+at the start of the closure.
+
+```swift
+let photo = await downloadPhoto(named: "Trees at Sunrise")
+Task { @MainActor in
+    show(photo)
+}
+```
+
+The code above is similar to
+`downloadAndShowPhoto(named:)` from the previous code listing,
+but the code in this example doesn't wait for the UI update.
+You can also write `@MainActor` on a structure, class, or enumeration
+to ensure all of its methods and all access to its properties
+to run on the main actor:
+
+```swift
+@MainActor
+struct PhotoGallery {
+    var photoNames: [String]
+    func drawUI() { /* ... other UI code ... */ }
+}
+```
+
+The `PhotoGallery` structure in the code above
+draws the photos on screen,
+using the names from its `photoNames` property
+to determine which photos to display.
+Because `photoNames` effects the UI,
+code that changes it needs to run on the main actor
+to serialize that access.
+
+When you're building on top of a framework,
+that framework's protocols and base classes
+are typically already marked `@MainActor`,
+so you don't usually write `@MainActor` on your own types in that case.
+Here's a simplified example:
+
+```swift
+@MainActor
+protocol View { /* ... */ }
+
+// Implicitly @MainActor
+struct PhotoGalleryView: View { /* ... */ }
+```
+
+In the code above,
+a framework like SwiftUI defines the `View` protocol.
+By writing `@MainActor` on the protocol declaration,
+types like `PhotoGalleryView` that conform to the protocol
+are also implicitly marked `@MainActor`.
+You'd see the same behavior if `View` were a base class
+and `PhotoGalleryView` were a subclass ---
+the subclass would be implicitly marked `@MainActor`.
+
+In the examples above,
+`PhotoGallery` protects the entire structure on the main actor.
+For more fine-grained control,
+you can write `@MainActor` on just the properties or methods
+that need to be accessed or run on the main thread:
+
+```swift
+struct PhotoGallery {
+    @MainActor var photoNames: [String]
+    var hasCachedPhotos = false
+
+    @MainActor func drawUI() { /* ... UI code ... */ }
+    func cachePhotos() { /* ... networking code ... */ }
+}
+```
+
+In the version of `PhotoGallery` above,
+the `drawUI()` method draws the gallery's pictures on screen,
+so it needs to be isolated to the main actor.
+The `photoNames` property doesn't directly create the UI,
+but it does store state that the `drawUI()` function uses to draw the UI,
+so this property also needs to be accessed only on the main actor.
+In contrast,
+changes to the `hasCachedPhotos` property
+don't interact with the UI,
+and the `cachePhotos()` method doesn't access any state
+that requires running it on the main actor.
+So these aren't marked with `@MainActor`.
+
+As with the earlier examples,
+if you're using a framework to build your UI,
+the property wrappers from that framework
+probably already mark your UI state properties as `@MainActor`.
+When defining a property wrapper,
+if its `wrappedValue` property is marked `@MainActor`,
+then any property you apply that property wrapper to
+is also implicitly marked `@MainActor`.
+
 ## Actors
 
-You can use tasks to break up your program into isolated, concurrent pieces.
-Tasks are isolated from each other,
-which is what makes it safe for them to run at the same time,
-but sometimes you need to share some information between tasks.
+Swift provides the main actor for you ---
+you can also define your own actors.
 Actors let you safely share information between concurrent code.
 
 Like classes, actors are reference types,
@@ -1091,6 +1315,9 @@ work together to make it easier to reason about shared mutable state:
 
 - Code in between possible suspension points runs sequentially,
   without the possibility of interruption from other concurrent code.
+  However,
+  multiple pieces of concurrent code can run at the same time,
+  so other code could be running simultaneously.
 
 - Code that interacts with an actor's local state
   runs only on that actor.
@@ -1136,10 +1363,35 @@ that temporarily makes the data model inconsistent,
 and makes it easier for anyone reading the code
 to recognize that no other code can run
 before data consistency is restored by completing the work.
+It's important that Swift doesn't switch from this code
+to run code from another part of the program
+during that period of time.
 In the future,
 if you try to add concurrent code to this function,
 introducing a possible suspension point,
 you'll get compile-time error instead of introducing a bug.
+
+
+## Global Actors
+
+The main actor is a global singleton instance of the [`MainActor`][] type.
+An actor can normally have multiple instances,
+each of which provides independent isolation.
+This is why you declare all of an actor's isolated data
+as instance properties of that actor.
+However, because `MainActor` is singleton ---
+there is only ever a single instance of this type ---
+the type alone is sufficient to identify the actor,
+allowing you to mark main-actor isolation using just an attribute.
+This approach gives you more flexibility to organize your code
+in the way that works best for you.
+
+[`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
+
+You can define your own singleton global actors
+using the `@globalActor` attribute,
+as described in <doc:Attributes#globalActor>.
+
 
 <!--
   OUTLINE
@@ -1149,7 +1401,6 @@ you'll get compile-time error instead of introducing a bug.
    .. _Concurrency_ActorIsolation:
 
    Actor Isolation
-   ~~~~~~~~~~~~~~~
 
    TODO outline impact from SE-0313 Control Over Actor Isolation
    about the 'isolated' and 'nonisolated' keywords
@@ -1167,13 +1418,6 @@ you'll get compile-time error instead of introducing a bug.
    as is reading the value of an actor's property
 
    - you can't write to a property directly from outside the actor
-
-   TODO: Either define "data race" or use a different term;
-   the chapter on exclusive ownership talks about "conflicting access",
-   which is related, but different.
-   Konrad defines "data race" as concurrent access to shared state,
-   noting that our current design doesn't prevent all race conditions
-   because suspension points allow for interleaving.
 
    - The same actor method can be called multiple times, overlapping itself.
    This is sometimes referred to as *reentrant code*.
@@ -1343,32 +1587,6 @@ https://github.com/apple/swift-system/pull/112
 For more information about
 suppressing an implicit conformance to a protocol,
 see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
-
-<!--
-  OUTLINE
-  .. _Concurrency_MainActor:
-
-  The Main Actor
-  ~~~~~~~~~~~~~~
-
-  - the main actor is kinda-sorta like the main thread
-
-  - use it when you have shared mutable state,
-  but that state isn't neatly wrapped up in a single type
-
-  - you can put it on a function,
-  which makes calls to the function always run on the main actor
-
-  - you can put it on a type,
-  which makes calls to all of the type's methods run on the main actor
-
-  - some property wrappers like ``@EnvironmentObject`` from SwiftUI
-  imply ``@MainActor`` on a type.
-  Check for a ``wrappedValue`` that's marked ``@MainActor``.
-  If you mark the property of a type with one of these implicit-main-actor properties,
-  that has the same effect as marking the type with ``@MainActor``
-  you can wait for each child of a task
--->
 
 <!--
   LEFTOVER OUTLINE BITS
