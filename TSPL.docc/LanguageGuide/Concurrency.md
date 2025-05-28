@@ -261,36 +261,6 @@ only certain places in your program can call asynchronous functions or methods:
   - Code at the top level that forms an implicit main function.
 -->
 
-You can explicitly insert a suspension point
-by calling the [`Task.yield()`][] method.
-
-[`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
-
-```swift
-func generateSlideshow(forGallery gallery: String) async {
-    let photos = await listPhotos(inGallery: gallery)
-    for photo in photos {
-        // ... render a few seconds of video for this photo ...
-        await Task.yield()
-    }
-}
-```
-
-<!--
-XXX TR: Do we need to mention this?
-How common is it for developers to need to insert manual yields?
--->
-
-Assuming the code that renders video is synchronous,
-it doesn't contain any suspension points.
-The work to render video could also take a long time.
-However,
-you can periodically call `Task.yield()`
-to explicitly add suspension points.
-Structuring long-running code this way
-lets Swift balance between making progress on this task,
-and letting other tasks in your program make progress on their work.
-
 The [`Task.sleep(for:tolerance:clock:)`][] method
 is useful when writing simple code
 to learn how concurrency works.
@@ -911,6 +881,31 @@ which could create a race condition.
   - In addition, or instead of, setting a low priority,
   you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
   This is a sort of cooperative multitasking for long-running work.
+
+You can explicitly insert a suspension point
+by calling the [`Task.yield()`][] method.
+
+[`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
+
+```swift
+func generateSlideshow(forGallery gallery: String) async {
+    let photos = await listPhotos(inGallery: gallery)
+    for photo in photos {
+        // ... render a few seconds of video for this photo ...
+        await Task.yield()
+    }
+}
+```
+
+Assuming the code that renders video is synchronous,
+it doesn't contain any suspension points.
+The work to render video could also take a long time.
+However,
+you can periodically call `Task.yield()`
+to explicitly add suspension points.
+Structuring long-running code this way
+lets Swift balance between making progress on this task,
+and letting other tasks in your program make progress on their work.
 -->
 
 ### Unstructured Concurrency
