@@ -350,7 +350,7 @@ print(opaqueJoinedTriangles.draw())
 
 The value of `opaqueJoinedTriangles` in this example
 is the same as `joinedTriangles` in the generics example
-in the <doc:OpaqueTypes#The-Problem-That-Opaque-Types-Solve> section earlier in this chapter.
+in the <doc:OpaqueTypes#The-Problem-that-Opaque-Types-Solve> section earlier in this chapter.
 However, unlike the value in that example,
 `flip(_:)` and `join(_:_:)` wrap the underlying types
 that the generic shape operations return
