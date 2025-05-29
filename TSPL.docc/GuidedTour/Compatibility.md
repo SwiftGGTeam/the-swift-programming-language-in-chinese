@@ -2,17 +2,17 @@
 
 Learn what functionality is available in older language modes.
 
-This book describes Swift 6.1,
-the default version of Swift that's included in Xcode 16.3.
-You can use the Swift 6.1 compiler to build code
-that's written in Swift 6.1, Swift 5, Swift 4.2, or Swift 4.
+This book describes Swift 6.2,
+the default version of Swift that's included in Xcode 26.
+You can use the Swift 6.2 compiler to build code
+that's written in Swift 6.2, Swift 5, Swift 4.2, or Swift 4.
 
-When you use the Swift 6.1 compiler
+When you use the Swift 6.2 compiler
 to build code that uses the Swift 5 language mode,
-you can use the new features from Swift 6.1 ---
+you can use the new features from Swift 6.2 ---
 they're enabled either by default or by an upcoming feature flag.
 However, to enable strict concurrency checking,
-you need to upgrade to the Swift 6.1 language mode.
+you need to upgrade to the Swift 6.2 language mode.
 
 In addition,
 when you use Xcode 15.3 to build Swift 4 and Swift 4.2 code,
@@ -35,7 +35,7 @@ that provides the corresponding concurrency types.
 On Apple platforms, set a deployment target
 of at least iOS 13, macOS 10.15, tvOS 13, watchOS 6, or visionOS 1.
 
-A target written in Swift 6.1 can depend on
+A target written in Swift 6.2 can depend on
 a target that's written in Swift 5, Swift 4.2 or Swift 4,
 and vice versa.
 This means, if you have a large project
