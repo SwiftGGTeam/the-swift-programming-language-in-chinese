@@ -5,7 +5,8 @@ Review the recent changes to this book.
 **2025-06-09**
 
 - Updated for Swift 6.2.
-- Added the <doc:TheBasics#Memory-Safety> section to <doc:TheBasics>.
+- Added the <doc:TheBasics#Memory-Safety> section
+  with information about issues that Swift helps you prevent.
 - Added the <doc:ControlFlow#Patterns> section
   with information about the `if case` syntax.
 - Added information about the main actor, isolation, and global actors
