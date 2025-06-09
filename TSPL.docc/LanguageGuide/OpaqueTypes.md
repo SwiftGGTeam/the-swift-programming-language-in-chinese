@@ -921,7 +921,6 @@ which means that the type of `twelve` is also inferred to be `Int`.
   }
 -->
 
-
 ## Opaque Parameter Types
 
 In addition to writing `some` to return an opaque type,
@@ -981,6 +980,12 @@ a generic `where` clause or any same-type (`==`) constraints.
 In addition,
 using the lightweight syntax for very complex constraints
 can be hard to read.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -2,6 +2,23 @@
 
 Review the recent changes to this book.
 
+**2025-06-09**
+
+- Updated for Swift 6.2.
+- Added the <doc:TheBasics#Memory-Safety> section
+  with information about issues that Swift helps you prevent.
+- Added the <doc:ControlFlow#Patterns> section
+  with information about the `if case` syntax.
+- Added information about the main actor, isolation, and global actors
+  to the <doc:Concurrency> chapter.
+- Added the <doc:Protocols#Implicit-Conformance-to-a-Protocol> section
+  with information information about conforming to common protocols,
+  without writing the conformance explicitly,
+  and suppressing implicit conformance.
+- Added the <doc:Generics#Implicit-Constraints> section
+  with information about generic constraints
+  that require conformance to common protocols.
+
 **2025-03-31**
 
 - Updated for Swift 6.1.
@@ -857,6 +874,12 @@ Review the recent changes to this book.
 - Updated to `..<` rather than `..`
   for the <doc:BasicOperators#Half-Open-Range-Operator>.
 - Added an example of <doc:Generics#Extending-a-Generic-Type>.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
