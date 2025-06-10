@@ -1568,12 +1568,15 @@ struct TemperatureReading {
 -->
 
 To explicitly mark a type as not being sendable,
-write `~Sendable` after the type:
+write an unavailable conformance to `Sendable`:
 
 ```swift
-struct FileDescriptor: ~Sendable {
+struct FileDescriptor {
     let rawValue: Int
 }
+
+@available(*, unavailable)
+extension FileDescriptor: Sendable {}
 ```
 
 <!--
@@ -1583,10 +1586,6 @@ https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.sw
 See also this PR that adds Sendable conformance to FileDescriptor:
 https://github.com/apple/swift-system/pull/112
 -->
-
-For more information about
-suppressing an implicit conformance to a protocol,
-see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
 <!--
   LEFTOVER OUTLINE BITS
