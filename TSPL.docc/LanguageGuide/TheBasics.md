@@ -545,9 +545,7 @@ which has the same size as the current platform's native word size:
 
 *Floating-point numbers* are numbers with a fractional component,
 such as `3.14159`, `0.1`, and `-273.15`.
-
-Floating-point types can represent a much wider range of values than integer types,
-and can store numbers that are much larger or smaller than can be stored in an `Int`.
+<!-- XXX need a better comparison; fixed-point also has fractions -->
 Swift provides two signed floating-point number types:
 
 - `Double` represents a 64-bit floating-point number.
@@ -567,6 +565,58 @@ Swift provides two signed floating-point number types:
 <!--
   TODO: mention infinity, -infinity etc.
 -->
+
+## Choosing a Numeric Type
+
+XXX Should this just be part of the floating-point numbers section,
+framed as a discussion of when they're appropriate?
+
+XXX OUTLINE
+
+- Numeric types fall into two main families: counts and measurements
+- Counting numbers are exact, even if they include a fractional part,
+  and the spacing between numbers that you can represent is always the same.
+- Measurements have an inherent inaccuracy or error,
+  the smallest steps in between numbers you can represent
+  changes depending on the size of the number.
+- For example,
+  adding `0.1 + 0.1` doesn't exactly equal `0.2` ---
+  it's `0.20000000000000001` as a `Double`
+  and `Float` it's `0.200000003`.
+  Likewise,
+  some numbers can’t be represented exactly as a `Double`
+  --- the number 0.42 becomes `0.41999999999999998`.
+- For currency, consider `Decimal` from Foundation
+- A single measurement type can accommodate
+  both very small and very large numbers.
+- All numeric types have a largest and smallest possible value.
+  In most code,
+  `Int` or `Double` is sufficient,
+  but you may need to consider the range and resolution.
+  You may also need to use smaller numeric types such as `UInt8`,
+  for compatibility with other systems
+  or to reduce the memory impact of a very large collection of numbers.
+- If you need it,
+  you can look for a library that provides arbitrary-precision or bignum types.
+  For example <https://github.com/apple/swift-numerics>
+  lets you work with complex numbers.
+- If you need to do math with currency other than addition and subtraction,
+  consider the rounding behavior.
+  For example, to calculate 10% off of a $9.41 order,
+  the result is a $0.941 discount.
+  But you typically need to calculate the final bill in whole cents.
+  It's important to make sure your code rounds correctly,
+  and at the right point in the calculation.
+- NOTE:
+  This difference is sometimes referred to as
+  *business* and *scientific* computing,
+  from the early days of computers
+  when working with these kinds of numbers required
+  different computer hardware, software, and programming languages.
+  There were business computers that did accounting
+  and mostly used Cobol on base-10 (or BCD) fixed-point numbers,
+  and there were scientific computers that did measuring
+  and mostly used Fortran on base-2 floating-point numbers.
 
 ## Type Safety and Type Inference
 
