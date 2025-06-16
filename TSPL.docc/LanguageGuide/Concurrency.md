@@ -1587,6 +1587,10 @@ See also this PR that adds Sendable conformance to FileDescriptor:
 https://github.com/apple/swift-system/pull/112
 -->
 
+You can also use an unavailable conformance
+to suppress implicit conformance to a protocol,
+as discussed in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
+
 <!--
   LEFTOVER OUTLINE BITS
 
