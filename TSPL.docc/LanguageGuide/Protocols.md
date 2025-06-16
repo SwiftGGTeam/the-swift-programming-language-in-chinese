@@ -1480,7 +1480,7 @@ is with an extension that you mark as unavailable:
 
 ```swift
 @available(*, unavailable)
-extension FileDescriptor Sendable { }
+extension FileDescriptor: Sendable { }
 ```
 
 <!--
