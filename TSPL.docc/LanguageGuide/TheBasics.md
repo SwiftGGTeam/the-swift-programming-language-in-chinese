@@ -618,6 +618,14 @@ XXX OUTLINE
   and there were scientific computers that did measuring
   and mostly used Fortran on base-2 floating-point numbers.
 
+XXX TO ADD
+
+- Be careful about truncation and rounding when converting.
+- If the numeric size is important,
+  specify it explicitly ---
+  `Int32` or `Int64` instead of `Int` ---
+  to avoid having the data type change when you build on different platforms.
+
 ## Type Safety and Type Inference
 
 Every value in a Swift program has a type.
