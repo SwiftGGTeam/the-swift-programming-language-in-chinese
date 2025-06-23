@@ -31,7 +31,7 @@ or by assigning a default property value as part of the property's definition.
 These actions are described in the following sections.
 
 > Note: When you assign a default value to a stored property,
-> or set its initial value within an initializer,
+> or set its value within an initializer,
 > the value of that property is set directly,
 > without calling any property observers.
 

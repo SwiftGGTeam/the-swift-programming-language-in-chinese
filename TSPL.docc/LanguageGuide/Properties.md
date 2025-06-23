@@ -736,8 +736,8 @@ the new value that you assign replaces the one that was just set.
 > Note: The `willSet` and `didSet` observers of superclass properties
 > are called when a property is set in a subclass initializer,
 > after the superclass initializer has been called.
-> They aren't called while a class is setting its own properties,
-> before the superclass initializer has been called.
+> They aren't called while a class is setting its own properties
+> in the body of the initializer.
 >
 > For more information about initializer delegation,
 > see <doc:Initialization#Initializer-Delegation-for-Value-Types>
