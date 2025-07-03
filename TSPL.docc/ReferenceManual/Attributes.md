@@ -97,7 +97,7 @@ indicates the macro's role:
   on an extension, a type alias, or a type that's nested inside a function,
   or use an extension macro to add an extension that has a peer macro.
 
-The peer, member, and accessor macro roles require a `names:` argument,
+The peer and member macro roles require a `names:` argument,
 listing the names of the symbols that the macro generates.
 The extension macro role also requires a `names:` argument
 if the macro adds declarations inside the extension.
