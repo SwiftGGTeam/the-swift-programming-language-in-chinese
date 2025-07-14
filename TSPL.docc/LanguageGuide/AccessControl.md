@@ -169,60 +169,28 @@ and compile that product module with testing enabled.
 ## Access Control Syntax
 
 Define the access level for an entity by placing
-one of the `open`, `public`, `internal`, `fileprivate`, or `private` modifiers
+one of the modifiers listed in <doc:AccessControl#Access-Levels>,
+such as `public` or `private`,
 at the beginning of the entity's declaration.
+For example:
 
 ```swift
-open class SomeOpenClass {}
 public class SomePublicClass {}
-internal class SomeInternalClass {}
-fileprivate class SomeFilePrivateClass {}
-private class SomePrivateClass {}
-
-open var someOpenVariable = 0
-public var somePublicVariable = 0
-internal let someInternalConstant = 0
-fileprivate func someFilePrivateFunction() {}
+internal struct SomeInternalStruct() {}
 private func somePrivateFunction() {}
 ```
 
-<!--
-  - test: `accessControlSyntax`
-
-  ```swifttest
-  -> open class SomeOpenClass {}
-  -> public class SomePublicClass {}
-  -> internal class SomeInternalClass {}
-  -> fileprivate class SomeFilePrivateClass {}
-  -> private class SomePrivateClass {}
-
-  -> open var someOpenVariable = 0
-  -> public var somePublicVariable = 0
-  -> internal let someInternalConstant = 0
-  -> fileprivate func someFilePrivateFunction() {}
-  -> private func somePrivateFunction() {}
-  ```
--->
-
-Unless otherwise specified, the default access level is internal,
+The code above declares `SomePublicClass` as public,
+`SomeInternalStruct` as internal,
+and `somePrivateFunction()` as private.
+If you don't write an explicit access level,
+the default access level modifier is `internal`,
 as described in <doc:AccessControl#Default-Access-Levels>.
-This means that `SomeInternalClass` and `someInternalConstant` can be written
-without an explicit access-level modifier,
-and will still have an access level of internal:
+For example, in the code below, `SomeInternalStruct` is implicitly internal:
 
 ```swift
-class SomeInternalClass {}              // implicitly internal
-let someInternalConstant = 0            // implicitly internal
+struct SomeInternalStruct() {}
 ```
-
-<!--
-  - test: `accessControlDefaulted`
-
-  ```swifttest
-  -> class SomeInternalClass {}              // implicitly internal
-  -> let someInternalConstant = 0            // implicitly internal
-  ```
--->
 
 ## Custom Types
 
