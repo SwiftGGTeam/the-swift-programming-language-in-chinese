@@ -185,7 +185,7 @@ The code above declares `SomePublicClass` as public,
 and `somePrivateFunction()` as private.
 If you don't write an explicit access level,
 the default access level modifier is `internal`,
-as described in  <doc:AccessControl#Default-Access-Levels>.
+as described in <doc:AccessControl#Default-Access-Levels>.
 For example, in the code below, `SomeInternalStruct` is implicitly internal:
 
 ```swift
