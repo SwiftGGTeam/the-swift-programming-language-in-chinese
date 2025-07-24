@@ -210,7 +210,8 @@ see <doc:Generics#Generic-Where-Clauses>.
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
 > *generic-parameter* → *type-name* \
 > *generic-parameter* → *type-name* **`:`** *type-identifier* \
-> *generic-parameter* → *type-name* **`:`** *protocol-composition-type*
+> *generic-parameter* → *type-name* **`:`** *protocol-composition-type* \
+> *generic-parameter* → **`let`** *type-name* **`:`** *type* \
 >
 > *generic-where-clause* → **`where`** *requirement-list* \
 > *requirement-list* → *requirement* | *requirement* **`,`** *requirement-list* \
@@ -218,7 +219,8 @@ see <doc:Generics#Generic-Where-Clauses>.
 >
 > *conformance-requirement* → *type-identifier* **`:`** *type-identifier* \
 > *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type* \
-> *same-type-requirement* → *type-identifier* **`==`** *type*
+> *same-type-requirement* → *type-identifier* **`==`** *type* \
+> *same-type-requirement* → *type-identifier* **`==`** **`-`**_?_ *integer-literal*
 
 <!--
   NOTE: A conformance requirement can only have one type after the colon,
@@ -288,7 +290,7 @@ of a generic function or initializer.
 >
 > *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
-> *generic-argument* → *type*
+> *generic-argument* → *type* | **`-``**_?_ *integer-literal*
 
 > Beta Software:
 >
