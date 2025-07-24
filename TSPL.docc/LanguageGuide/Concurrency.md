@@ -555,7 +555,7 @@ Each task in a given task group has the same parent task,
 and each task can have child tasks.
 Because of the explicit relationship between tasks and task groups,
 this approach is called *structured concurrency*.
-The explicit parent-child relationships between tasks have several advantages:
+The explicit parent-child relationship between tasks has several advantages:
 
 - In a parent task,
   you can't forget to wait for its child tasks to complete.
