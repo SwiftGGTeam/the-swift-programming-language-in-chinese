@@ -220,7 +220,7 @@ see <doc:Generics#Generic-Where-Clauses>.
 > *conformance-requirement* → *type-identifier* **`:`** *type-identifier* \
 > *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type* \
 > *same-type-requirement* → *type-identifier* **`==`** *type* \
-> *same-type-requirement* → *type-identifier* **`==`** **`-`**_?_ *integer-literal*
+> *same-type-requirement* → *type-identifier* **`==`** *signed-integer-literal*
 
 <!--
   NOTE: A conformance requirement can only have one type after the colon,
@@ -290,7 +290,7 @@ of a generic function or initializer.
 >
 > *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
-> *generic-argument* → *type* | **`-``**_?_ *integer-literal*
+> *generic-argument* → *type* | *signed-integer-literal*
 
 > Beta Software:
 >

@@ -500,7 +500,7 @@ in the declaration `let x: Int8 = 42`.
 >
 > *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
-> *numeric-literal* → **`-`**_?_ *integer-literal* | **`-`**_?_ *floating-point-literal* \
+> *numeric-literal* → *signed-integer-literal* | *signed-floating-point-literal* \
 > *boolean-literal* → **`true`** | **`false`** \
 > *nil-literal* → **`nil`**
 
@@ -552,6 +552,7 @@ as described in <doc:TheBasics#Integers>.
 
 > Grammar of an integer literal:
 >
+> *signed-integer-literal* → **`-`**_?_ *integer-literal*
 > *integer-literal* → *binary-literal* \
 > *integer-literal* → *octal-literal* \
 > *integer-literal* → *decimal-literal* \
@@ -626,6 +627,7 @@ which represents a 32-bit floating-point number.
 
 > Grammar of a floating-point literal:
 >
+> *signed-floating-point-literal* → > **`-`**_?_ *floating-point-literal*
 > *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
 > *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
 >
