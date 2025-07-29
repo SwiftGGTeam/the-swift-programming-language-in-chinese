@@ -555,7 +555,7 @@ Each task in a given task group has the same parent task,
 and each task can have child tasks.
 Because of the explicit relationship between tasks and task groups,
 this approach is called *structured concurrency*.
-The explicit parent-child relationships between tasks has several advantages:
+The explicit parent-child relationship between tasks has several advantages:
 
 - In a parent task,
   you can't forget to wait for its child tasks to complete.
@@ -590,7 +590,7 @@ The code above creates a new task group,
 and then creates child tasks
 to download each photo in the gallery.
 Swift runs as many of these tasks concurrently as conditions allow.
-As soon a child task finishes downloading a photo,
+As soon as a child task finishes downloading a photo,
 that photo is displayed.
 There's no guarantee about the order that child tasks complete,
 so the photos from this gallery can be shown in any order.
@@ -669,7 +669,7 @@ Downloading pictures could take a long time
 if the pictures are large or the network is slow.
 To let the user stop this work,
 without waiting for all of the tasks to complete,
-the tasks need check for cancellation and stop running if they are canceled.
+the tasks need to check for cancellation and stop running if they are canceled.
 There are two ways a task can do this:
 by calling the [`Task.checkCancellation()`][] type method,
 or by reading the [`Task.isCancelled`][`Task.isCancelled` type] type property.
@@ -1092,7 +1092,7 @@ The code above is similar to
 but the code in this example doesn't wait for the UI update.
 You can also write `@MainActor` on a structure, class, or enumeration
 to ensure all of its methods and all access to its properties
-to run on the main actor:
+run on the main actor:
 
 ```swift
 @MainActor
@@ -1106,7 +1106,7 @@ The `PhotoGallery` structure in the code above
 draws the photos on screen,
 using the names from its `photoNames` property
 to determine which photos to display.
-Because `photoNames` effects the UI,
+Because `photoNames` affects the UI,
 code that changes it needs to run on the main actor
 to serialize that access.
 
@@ -1369,7 +1369,7 @@ during that period of time.
 In the future,
 if you try to add concurrent code to this function,
 introducing a possible suspension point,
-you'll get compile-time error instead of introducing a bug.
+you'll get a compile-time error instead of introducing a bug.
 
 
 ## Global Actors
@@ -1379,7 +1379,7 @@ An actor can normally have multiple instances,
 each of which provides independent isolation.
 This is why you declare all of an actor's isolated data
 as instance properties of that actor.
-However, because `MainActor` is singleton ---
+However, because `MainActor` is a singleton ---
 there is only ever a single instance of this type ---
 the type alone is sufficient to identify the actor,
 allowing you to mark main-actor isolation using just an attribute.
