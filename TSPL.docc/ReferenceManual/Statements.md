@@ -1005,7 +1005,7 @@ conditions listed in the table below.
 | Platform condition | Valid arguments |
 | ------------------ | --------------- |
 | `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `visionOS`, `Linux`, `Windows` |
-| `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
+| `arch()` | `arm`, `arm64`, `i386`, `wasm32`, `x86_64`, |
 | `swift()` | `>=` or `<` followed by a version number |
 | `compiler()` | `>=` or `<` followed by a version number |
 | `canImport()` | A module name |
@@ -1255,7 +1255,7 @@ see <doc:Expressions#Explicit-Member-Expression>.
 > *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
 >
 > *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
-> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
+> *architecture* → **`arm`** | **`arm64`** | **`i386`** | **`wasm32`** | **`x86_64`** \
 > *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
 > *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
 > *environment* → **`simulator`** | **`macCatalyst`**
