@@ -485,6 +485,16 @@ for example, an 8-bit unsigned integer is of type `UInt8`,
 and a 32-bit signed integer is of type `Int32`.
 Like all types in Swift, these integer types have capitalized names.
 
+Integer types behave like most arithmetic you do by hand:
+integers represent exact numbers,
+and integer math produces results without approximating.
+This makes integers suitable for counting
+and other calculations where all of your numbers are exact ---
+think of operations like
+finding the longest line in a text file
+or adding up prices on a receipt.
+XXX fixed-point math
+
 ### Integer Bounds
 
 You can access the minimum and maximum values of each integer type
@@ -543,14 +553,34 @@ which has the same size as the current platform's native word size:
 
 ## Floating-Point Numbers
 
-*Floating-point numbers* are numbers with a fractional component,
+*Floating-point numbers* have a fractional component,
 such as `3.14159`, `0.1`, and `-273.15`.
-<!-- XXX need a better comparison; fixed-point also has fractions -->
-Swift provides two signed floating-point number types:
+Swift provides a variety of floating-point types ---
+the most commonly one is `Double`, which uses 64 bits.
 
-- `Double` represents a 64-bit floating-point number.
-- `Float` represents a 32-bit floating-point number.
+Before using a floating-point number,
+consider the data you're storing.
+Just because it contains a decimal point,
+that doesn't make floating-point numbers the right choice.
 
+Unlike integers,
+floating-point numbers make a different design tradeoff:
+they let you work with both very small and very large numbers,
+but don't exactly represent every value in their range.
+For example,
+adding `0.1 + 0.1` doesn't exactly equal `0.2` ---
+it's `0.20000000000000001` as a `Double`
+and `Float` it's `0.200000003`.
+Likewise,
+some numbers can’t be represented exactly as a `Double`
+--- the number 0.42 is stored as `0.41999999999999998`.
+
+XXX
+Internally,
+floating-point numbers store their value as a significant and exponent,
+similar to writing a number like `1.278 * 10^3` in scientific notation.
+
+<!-- XXX anything to keep from this note?  Why describe decimal digits? -->
 > Note: `Double` has a precision of at least 15 decimal digits,
 > whereas the precision of `Float` can be as little as 6 decimal digits.
 > The appropriate floating-point type to use depends on the nature and range of
@@ -563,7 +593,7 @@ Swift provides two signed floating-point number types:
 -->
 
 <!--
-  TODO: mention infinity, -infinity etc.
+  TODO: mention infinity, -infinity, NaN etc.
 -->
 
 ## Choosing a Numeric Type
@@ -579,13 +609,6 @@ XXX OUTLINE
 - Measurements have an inherent inaccuracy or error,
   the smallest steps in between numbers you can represent
   changes depending on the size of the number.
-- For example,
-  adding `0.1 + 0.1` doesn't exactly equal `0.2` ---
-  it's `0.20000000000000001` as a `Double`
-  and `Float` it's `0.200000003`.
-  Likewise,
-  some numbers can’t be represented exactly as a `Double`
-  --- the number 0.42 becomes `0.41999999999999998`.
 - For currency, consider `Decimal` from Foundation
 - A single measurement type can accommodate
   both very small and very large numbers.
