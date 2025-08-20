@@ -619,6 +619,10 @@ XXX OUTLINE
   You may also need to use smaller numeric types such as `UInt8`,
   for compatibility with other systems
   or to reduce the memory impact of a very large collection of numbers.
+- Floating point numbers include special values
+  like +0, -0, +infinity, -infinity, and NaN.
+  If you don't need these,
+  that suggests you might not want a floating point number.
 - If you need it,
   you can look for a library that provides arbitrary-precision or bignum types.
   For example <https://github.com/apple/swift-numerics>
