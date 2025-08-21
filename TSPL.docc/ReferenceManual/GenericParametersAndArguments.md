@@ -99,6 +99,43 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
+### Integer Generic Parameters
+
+An *integer generic parameter* is a special kind of generic parameter
+that acts as a placeholder for an integer value rather than a type.
+It has the following form:
+
+```swift
+let <#type parameter#>: <#type>
+```
+
+The *type* must be the `Int` type from the Swift standard library,
+or a type alias or generic type that resolves to `Int`.
+
+Integer generic parameters of types become static members of that type,
+with the same visibility as the type itself.
+
+The value you provide for an integer generic parameter
+must be either a literal integer
+or as a reference to an integer generic parameter
+from the enclosing generic context.
+For example:
+
+```swift
+struct SomeStruct<let x: Int> { }
+let a: SomeStruct<2>  // OK: integer literal
+
+struct AnotherStruct<let x: Int, T, each U> {
+    let b: SomeStruct<x> // OK: another integer generic parameter
+
+    static let c = 42
+    let d: SomeStruct<c> // Error: constant
+
+    let e: IntParam<T> // Error: type generic parameter
+    let f: IntParam<U> // Error: pack generic parameter
+}
+```
+
 ### Generic Where Clauses
 
 You can specify additional requirements on type parameters and their associated types
@@ -124,12 +161,17 @@ specifies that `S` conforms to the `Sequence` protocol
 and that the associated type `S.Iterator.Element`
 conforms to the `Equatable` protocol.
 This constraint ensures that each element of the sequence is equatable.
+Integer generic parameters can't have protocol or superclass requirements.
 
 You can also specify the requirement that two types be identical,
 using the `==` operator. For example,
 `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element`
 expresses the constraints that `S1` and `S2` conform to the `Sequence` protocol
 and that the elements of both sequences must be of the same type.
+For integer generic parameters,
+the `==` operator requires the parameters' values to be equal.
+In this case,
+both parameters must be integer generic parameters.
 
 Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
