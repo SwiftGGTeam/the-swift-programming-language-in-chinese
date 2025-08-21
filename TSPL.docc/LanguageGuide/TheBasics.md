@@ -479,8 +479,10 @@ such as `42` and `-23`.
 Integers are either *signed* (positive, zero, or negative)
 or *unsigned* (positive or zero).
 
-Swift provides signed and unsigned integers in 8, 16, 32, and 64 bit forms.
-The types that store these integers include their size and sign ---
+Swift provides a variety of integer types
+that support different sizes of numbers,
+in both signed and unsigned versions.
+These types include their size and sign in their names ---
 for example, an 8-bit unsigned integer is of type `UInt8`,
 and a 32-bit signed integer is of type `Int32`.
 Like all types in Swift, these integer types have capitalized names.
@@ -491,9 +493,9 @@ and integer math produces results without approximating.
 This makes integers suitable for counting
 and other calculations where all of your numbers are exact ---
 think of operations like
-finding the longest line in a text file
+finding the longest line in a text file,
+applying a score multiplier in a game,
 or adding up prices on a receipt.
-XXX fixed-point math
 
 ### Integer Bounds
 
@@ -562,6 +564,9 @@ Before using a floating-point number,
 consider the data you're storing.
 Just because it contains a decimal point,
 that doesn't make floating-point numbers the right choice.
+XXX
+This approach is known as *fixed-point math*
+and contrasts with floating-point math described in the section below.
 
 Unlike integers,
 floating-point numbers make a different design tradeoff:
@@ -592,14 +597,11 @@ similar to writing a number like `1.278 * 10^3` in scientific notation.
   such as when optimizing for storage size of collections?
 -->
 
-<!--
-  TODO: mention infinity, -infinity, NaN etc.
--->
-
 ## Choosing a Numeric Type
 
 XXX Should this just be part of the floating-point numbers section,
 framed as a discussion of when they're appropriate?
+
 
 XXX OUTLINE
 
