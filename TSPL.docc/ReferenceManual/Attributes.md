@@ -99,6 +99,10 @@ indicates the macro's role:
 
 The peer and member macro roles require a `names:` argument,
 listing the names of the symbols that the macro generates.
+The accessor macro role requires a `names:` argument if the
+macro generates a `willSet` or `didSet` property observer. An
+accessor macro that generates property observers can't add
+other accessors, because observers only apply to stored properties.
 The extension macro role also requires a `names:` argument
 if the macro adds declarations inside the extension.
 When a macro declaration includes the `names:` argument,
