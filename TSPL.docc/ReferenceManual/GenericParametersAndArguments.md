@@ -112,9 +112,6 @@ let <#type parameter#>: <#type>
 The *type* must be the `Int` type from the Swift standard library,
 or a type alias or generic type that resolves to `Int`.
 
-Integer generic parameters of types become static members of that type,
-with the same visibility as the type itself.
-
 The value you provide for an integer generic parameter
 must be either a literal integer
 or as a reference to an integer generic parameter
@@ -126,14 +123,42 @@ struct SomeStruct<let x: Int> { }
 let a: SomeStruct<2>  // OK: integer literal
 
 struct AnotherStruct<let x: Int, T, each U> {
-    let b: SomeStruct<x> // OK: another integer generic parameter
+    let b: SomeStruct<x>  // OK: another integer generic parameter
 
     static let c = 42
-    let d: SomeStruct<c> // Error: constant
+    let d: SomeStruct<c>  // Error: constant
 
-    let e: IntParam<T> // Error: type generic parameter
-    let f: IntParam<U> // Error: pack generic parameter
+    let e: IntParam<T>  // Error: type generic parameter
+    let f: IntParam<U>  // Error: pack generic parameter
 }
+```
+
+The value of a integer generic parameters
+is accessible as a static constant members of that type,
+with the same visibility as the type itself.
+<!-- XXX What about on a function; does z in the example below work? -->
+When used in an expression,
+these constants have type `Int`.
+
+```swift
+print(a.x)  // Prints "4"
+```
+
+The value of an integer generic parameter can be inferred
+from the types of the arguments you use
+when initializing the type or calling the function.
+
+```swift
+struct AnotherStruct<let y: Int> {
+    var s: SomeStruct<y>
+}
+func someFunction<let z: Int>(s: SomeStruct<z>) {
+    print(z)
+}
+
+let s1 = SomeStruct<12>()
+let s2 = AnotherStruct(s: s1)  // AnotherStruct.y is inferred to be 12
+someFunction(s: s1)  // Prints "12"
 ```
 
 ### Generic Where Clauses
@@ -169,9 +194,9 @@ using the `==` operator. For example,
 expresses the constraints that `S1` and `S2` conform to the `Sequence` protocol
 and that the elements of both sequences must be of the same type.
 For integer generic parameters,
-the `==` operator requires the parameters' values to be equal.
-In this case,
-both parameters must be integer generic parameters.
+the `==` operator specifies a requirement for their values.
+You can require two integer generic parameters to have the same value,
+or you can require a specific integer value for the integer generic parameter.
 
 Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
@@ -283,7 +308,9 @@ and has the following form:
 
 The *generic argument list* is a comma-separated list of type arguments.
 A *type argument* is the name of an actual concrete type that replaces
-a corresponding type parameter in the generic parameter clause of a generic type.
+a corresponding type parameter in the generic parameter clause of a generic type ---
+or, for an integer generic parameter,
+a integer value that replaces that integer generic parameter.
 The result is a specialized version of that generic type.
 The example below shows a simplified version of the Swift standard library's
 generic dictionary type.
