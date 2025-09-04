@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**2025-06-09**
+**2025-09-15**
 
 - Updated for Swift 6.2.
 - Added the <doc:TheBasics#Memory-Safety> section
