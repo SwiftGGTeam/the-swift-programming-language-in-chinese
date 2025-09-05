@@ -133,10 +133,11 @@ struct AnotherStruct<let x: Int, T, each U> {
 }
 ```
 
-The value of a integer generic parameters
+The value of an integer generic parameter on a type
 is accessible as a static constant members of that type,
 with the same visibility as the type itself.
-<!-- XXX What about on a function; does z in the example below work? -->
+The value of an integer generic parameter on a function
+is accessible as a constant from within the function.
 When used in an expression,
 these constants have type `Int`.
 
