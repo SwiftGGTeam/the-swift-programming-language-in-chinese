@@ -128,8 +128,8 @@ struct AnotherStruct<let x: Int, T, each U> {
     static let c = 42
     let d: SomeStruct<c>  // Error: constant
 
-    let e: IntParam<T>  // Error: type generic parameter
-    let f: IntParam<U>  // Error: pack generic parameter
+    let e: SomeStruct<T>  // Error: type generic parameter
+    let f: SomeStruct<U>  // Error: pack generic parameter
 }
 ```
 
