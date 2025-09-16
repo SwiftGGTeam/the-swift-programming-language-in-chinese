@@ -436,7 +436,7 @@ which indicates that the default case should match only enumeration cases
 that are added in the future.
 Swift produces a warning
 if the default case matches
-any enumeration case that's known at compiler time.
+any enumeration case that's known at compile time.
 This future warning informs you that the library author
 added a new case to the enumeration
 that doesn't have a corresponding switch case.
