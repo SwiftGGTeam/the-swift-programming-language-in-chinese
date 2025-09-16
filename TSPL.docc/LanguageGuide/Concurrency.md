@@ -918,13 +918,13 @@ but you're also completely responsible for their correctness.
 
 To create an unstructured task
 that runs similarly to the surrounding code,
-call the [`Task.init(priority:operation:)`][] initializer.
+call the [`Task.init(name:priority:operation:)`][] initializer.
 The new task defaults to running with
 the same actor isolation, priority, and task-local state as the current task.
 To create an unstructured task
 that's more independent from the surrounding code,
 known more specifically as a *detached task*,
-call the [`Task.detached(priority:operation:)`][] static method.
+call the [`Task.detached(name:priority:operation:)`][] static method.
 The new task defaults to running without any actor isolation
 and doesn't inherit the current task's priority or task-local state.
 Both of these operations return a task that you can interact with ---
@@ -942,8 +942,8 @@ let result = await handle.value
 For more information about managing detached tasks,
 see [`Task`](https://developer.apple.com/documentation/swift/task).
 
-[`Task.init(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(priority:operation:)-7f0zv
-[`Task.detached(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(priority:operation:)-d24l
+[`Task.init(name:priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(name:priority:operation:)-43wmk
+[`Task.detached(name:priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(name:priority:operation:)-795w1
 
 <!--
   TODO Add some conceptual guidance about
@@ -1624,12 +1624,6 @@ as discussed in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
   Probably don't cover unsafe continuations (SE-0300) in TSPL,
   but maybe link to them?
 -->
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
