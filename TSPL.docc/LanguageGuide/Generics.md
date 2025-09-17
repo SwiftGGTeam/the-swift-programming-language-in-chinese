@@ -1996,7 +1996,7 @@ see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 Because most types in Swift conform to these protocols,
 writing them almost everywhere would be repetitive.
 Instead, by marking only the exceptions,
-your call out the places that omit a common constraint.
+you call out the places that omit a common constraint.
 To suppress an implicit constraint,
 write the protocol name with a tilde (`~`) in front of it.
 You can read `~Copyable` as "maybe copyable" ---
