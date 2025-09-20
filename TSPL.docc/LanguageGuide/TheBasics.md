@@ -477,25 +477,46 @@ let cat = "🐱"; print(cat)
 *Integers* are whole numbers with no fractional component,
 such as `42` and `-23`.
 Integers are either *signed* (positive, zero, or negative)
-or *unsigned* (positive or zero).
-
-Swift provides a variety of integer types
-that support different sizes of numbers,
-in both signed and unsigned versions.
-These types include their size and sign in their names ---
+or *unsigned* (positive or zero),
+and their maximum and minimum value depends on their *size*
+(the number of bits used to store values).
+The integer types include their size and sign in their names ---
 for example, an 8-bit unsigned integer is of type `UInt8`,
 and a 32-bit signed integer is of type `Int32`.
 Like all types in Swift, these integer types have capitalized names.
+In most cases,
+when you don't need to specify the exact integer size,
+you use the `Int` type described below.
 
 Integer types behave like most arithmetic you do by hand:
 integers represent exact numbers,
 and integer math produces results without approximating.
 This makes integers suitable for counting
-and other calculations where all of your numbers are exact ---
-think of operations like
+and other calculations that don't have a margin of error ---
+for example,
 finding the longest line in a text file,
 applying a score multiplier in a game,
 or adding up prices on a receipt.
+
+Although integers don't have a fractional component,
+you can use integers to represent quantities with fractions
+by counting a fractional part.
+For example,
+you can represent $1.23 by storing the number `123`
+in an integer that counts cents.
+<!-- XXX Add the following?  Or split out a new section?
+
+  If you need to do math with currency other than addition and subtraction,
+  consider the rounding behavior.
+  For example, to calculate 10% off of a $9.41 order,
+  the result is a $0.941 discount.
+  But you typically need to calculate the final bill in whole cents.
+  It's important to make sure your code rounds correctly,
+  and at the right point in the calculation.
+-->
+This approach is known as *fixed-point math*,
+and contrasts with the numeric types
+described in the <doc:TheBasics#Floating-Point-Numbers> section below.
 
 ### Integer Bounds
 
@@ -557,103 +578,58 @@ which has the same size as the current platform's native word size:
 
 *Floating-point numbers* have a fractional component,
 such as `3.14159`, `0.1`, and `-273.15`.
-Swift provides a variety of floating-point types ---
-the most commonly one is `Double`, which uses 64 bits.
-
-Before using a floating-point number,
-consider the data you're storing.
-Just because it contains a decimal point,
-that doesn't make floating-point numbers the right choice.
-XXX
-This approach is known as *fixed-point math*
-and contrasts with floating-point math described in the section below.
-
 Unlike integers,
-floating-point numbers make a different design tradeoff:
-they let you work with both very small and very large numbers,
+which represent an exact count,
+floating-point numbers represent a measurement
+with some inherent margin of error.
+<!-- XXX TR: Is there a more specific/correct term than 'margin of error'? -->
+Floating-point numbers let you work with
+both very small and very large numbers,
 but don't exactly represent every value in their range.
 For example,
-adding `0.1 + 0.1` doesn't exactly equal `0.2` ---
-it's `0.20000000000000001` as a `Double`
-and `Float` it's `0.200000003`.
-Likewise,
-some numbers can’t be represented exactly as a `Double`
---- the number 0.42 is stored as `0.41999999999999998`.
+adding `0.1 + 0.1` gives you `0.20000000000000001` as a `Double`
+and `0.200000003` as a `Float`.
+The space between numbers is also variable;
+there are larger spaces between large numbers
+than between small numbers.
 
-XXX
-Internally,
-floating-point numbers store their value as a significant and exponent,
-similar to writing a number like `1.278 * 10^3` in scientific notation.
+If you need to store numbers exactly,
+even though they have a fractional component,
+and you need the same space between all possible values,
+consider using fixed-point numbers instead
+as described in <doc:TheBasics#Integers>.
+<!-- XXX TR: Any other alternatives to note?
 
-<!-- XXX anything to keep from this note?  Why describe decimal digits? -->
-> Note: `Double` has a precision of at least 15 decimal digits,
-> whereas the precision of `Float` can be as little as 6 decimal digits.
-> The appropriate floating-point type to use depends on the nature and range of
-> values you need to work with in your code.
-> In situations where either type would be appropriate, `Double` is preferred.
+Should we mention Foundation's Decimal
+as an alternative to floating point numbers?
+https://developer.apple.com/documentation/foundation/decimal
 
-<!--
-  TODO: Explicitly mention situations where Float is appropriate,
-  such as when optimizing for storage size of collections?
+Likewise, are there arbitrary-precision or bignum types we should point to?
+
+Anything from https://github.com/apple/swift-numerics
+we want to cross reference?
 -->
 
-## Choosing a Numeric Type
+Floating-point numbers can also represent special values
+including positive and negative zero,
+and positive and negative infinity.
+They also have include not-a-number (NaN) values
+to represent an invalid or undefined result,
+such as dividing zero by zero.
+If the calculations you're doing
+don't call for these special values,
+a floating-point number might not be the right data type.
 
-XXX Should this just be part of the floating-point numbers section,
-framed as a discussion of when they're appropriate?
-
-
-XXX OUTLINE
-
-- Numeric types fall into two main families: counts and measurements
-- Counting numbers are exact, even if they include a fractional part,
-  and the spacing between numbers that you can represent is always the same.
-- Measurements have an inherent inaccuracy or error,
-  the smallest steps in between numbers you can represent
-  changes depending on the size of the number.
-- For currency, consider `Decimal` from Foundation
-- A single measurement type can accommodate
-  both very small and very large numbers.
-- All numeric types have a largest and smallest possible value.
-  In most code,
-  `Int` or `Double` is sufficient,
-  but you may need to consider the range and resolution.
-  You may also need to use smaller numeric types such as `UInt8`,
-  for compatibility with other systems
-  or to reduce the memory impact of a very large collection of numbers.
-- Floating point numbers include special values
-  like +0, -0, +infinity, -infinity, and NaN.
-  If you don't need these,
-  that suggests you might not want a floating point number.
-- If you need it,
-  you can look for a library that provides arbitrary-precision or bignum types.
-  For example <https://github.com/apple/swift-numerics>
-  lets you work with complex numbers.
-- If you need to do math with currency other than addition and subtraction,
-  consider the rounding behavior.
-  For example, to calculate 10% off of a $9.41 order,
-  the result is a $0.941 discount.
-  But you typically need to calculate the final bill in whole cents.
-  It's important to make sure your code rounds correctly,
-  and at the right point in the calculation.
-- NOTE:
-  This difference is sometimes referred to as
-  *business* and *scientific* computing,
-  from the early days of computers
-  when working with these kinds of numbers required
-  different computer hardware, software, and programming languages.
-  There were business computers that did accounting
-  and mostly used Cobol on base-10 (or BCD) fixed-point numbers,
-  and there were scientific computers that did measuring
-  and mostly used Fortran on base-2 floating-point numbers.
-
-XXX TO ADD
-
-- Be careful about truncation and rounding when converting.
-- If the numeric size is important,
-  specify it explicitly ---
-  `Int32` or `Int64` instead of `Int` ---
-  to avoid having the data type change when you build on different platforms.
+Swift provides a variety of floating-point types
+that support different sizes of numbers,
+just like it has different sizes of integers.
+If you don't need to specify an exact size, use `Double`.
+Otherwise,
+use the type whose name includes the needed size,
+such as `Float16` or `Float80`.
+You can write `Float32` as `Float` because,
+prior to the widespread use of 64-bit CPU architectures,
+32-bit floating-point numbers were the most common size.
 
 ## Type Safety and Type Inference
 
