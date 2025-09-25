@@ -504,19 +504,18 @@ by counting a fractional part.
 For example,
 you can represent $1.23 by storing the number `123`
 in an integer that counts cents.
-<!-- XXX Add the following?  Or split out a new section?
+This approach is known as *fixed-point math*
+because the decimal point is at a fixed position in the number.
+In the example above,
+the number `123` is understood to have a decimal point
+before the last two digits.
 
-  If you need to do math with currency other than addition and subtraction,
-  consider the rounding behavior.
-  For example, to calculate 10% off of a $9.41 order,
-  the result is a $0.941 discount.
-  But you typically need to calculate the final bill in whole cents.
-  It's important to make sure your code rounds correctly,
-  and at the right point in the calculation.
--->
-This approach is known as *fixed-point math*,
-and contrasts with the numeric types
-described in the <doc:TheBasics#Floating-Point-Numbers> section below.
+> Note:
+> For calculations in a regulated area like finance or construction,
+> or in a domain that has an expectation of high-precision results,
+> you might need a special-purpose numeric type
+> that implements behaviors such as rounding and truncation
+> according to that area's requirements.
 
 ### Integer Bounds
 
@@ -593,33 +592,6 @@ The space between numbers is also variable;
 there are larger spaces between large numbers
 than between small numbers.
 
-If you need to store numbers exactly,
-even though they have a fractional component,
-and you need the same space between all possible values,
-consider using fixed-point numbers instead
-as described in <doc:TheBasics#Integers>.
-<!-- XXX TR: Any other alternatives to note?
-
-Should we mention Foundation's Decimal
-as an alternative to floating point numbers?
-https://developer.apple.com/documentation/foundation/decimal
-
-Likewise, are there arbitrary-precision or bignum types we should point to?
-
-Anything from https://github.com/apple/swift-numerics
-we want to cross reference?
--->
-
-Floating-point numbers can also represent special values
-including positive and negative zero,
-and positive and negative infinity.
-They also have include not-a-number (NaN) values
-to represent an invalid or undefined result,
-such as dividing zero by zero.
-If the calculations you're doing
-don't call for these special values,
-a floating-point number might not be the right data type.
-
 Swift provides a variety of floating-point types
 that support different sizes of numbers,
 just like it has different sizes of integers.
@@ -630,6 +602,34 @@ such as `Float16` or `Float80`.
 You can write `Float32` as `Float` because,
 prior to the widespread use of 64-bit CPU architectures,
 32-bit floating-point numbers were the most common size.
+<!-- XXX TR: Any guidance or examples to share
+about problem domains where you'd want a type other than Double?
+-->
+
+Floating-point numbers can also represent special values
+including positive and negative zero,
+and positive and negative infinity.
+They also have include not-a-number (NaN) values
+to represent an invalid or undefined result,
+such as dividing zero by zero.
+
+If you need to store numbers exactly,
+if you need the same space between all possible values,
+or if the calculations you're doing
+don't call for the special values listed above,
+a floating-point number might not be the right data type.
+Consider using fixed-point numbers instead
+as described in <doc:TheBasics#Integers>.
+<!-- XXX TR: Any other alternatives to note?
+Should we mention Foundation's Decimal
+as an alternative to floating point numbers?
+https://developer.apple.com/documentation/foundation/decimal
+
+Likewise, are there arbitrary-precision or bignum types we should point to?
+
+Anything from https://github.com/apple/swift-numerics
+we want to cross reference?
+-->
 
 ## Type Safety and Type Inference
 
