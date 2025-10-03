@@ -488,11 +488,10 @@ In most cases,
 when you don't need to specify the exact integer size,
 you use the `Int` type described below.
 
-Integer types behave like most arithmetic you do by hand:
-integers represent exact numbers,
-and integer math produces results without approximating.
+Integer types behave like most arithmetic you do by hand;
+integer math produces results without approximating.
 This makes integers suitable for counting
-and other calculations that don't have a margin of error ---
+and other calculations that represent exact amounts ---
 for example,
 finding the longest line in a text file,
 applying a score multiplier in a game,
@@ -542,6 +541,12 @@ The values of these properties are of the appropriate-sized number type
 (such as `UInt8` in the example above)
 and can therefore be used in expressions alongside other values of the same type.
 
+Calculations that produce out-of-bounds results,
+like a number larger that the `max` property,
+stop the program's execution instead of storing an invalid result.
+You can explicitly make the operation overflow instead,
+as described in <doc:AdvancedOperators#Overflow-Operators>.
+
 ### Int
 
 In most cases, you don't need to pick a specific size of integer to use in your code.
@@ -577,21 +582,6 @@ which has the same size as the current platform's native word size:
 
 *Floating-point numbers* have a fractional component,
 such as `3.14159`, `0.1`, and `-273.15`.
-Unlike integers,
-which represent an exact count,
-floating-point numbers represent a measurement
-with some inherent margin of error.
-<!-- XXX TR: Is there a more specific/correct term than 'margin of error'? -->
-Floating-point numbers let you work with
-both very small and very large numbers,
-but don't exactly represent every value in their range.
-For example,
-adding `0.1 + 0.1` gives you `0.20000000000000001` as a `Double`
-and `0.200000003` as a `Float`.
-The space between numbers is also variable;
-there are larger spaces between large numbers
-than between small numbers.
-
 Swift provides a variety of floating-point types
 that support different sizes of numbers,
 just like it has different sizes of integers.
@@ -599,37 +589,54 @@ If you don't need to specify an exact size, use `Double`.
 Otherwise,
 use the type whose name includes the needed size,
 such as `Float16` or `Float80`.
-You can write `Float32` as `Float` because,
-prior to the widespread use of 64-bit CPU architectures,
-32-bit floating-point numbers were the most common size.
-<!-- XXX TR: Any guidance or examples to share
-about problem domains where you'd want a type other than Double?
+Following common terminology for floating-point math,
+`Float` uses 32 bits and `Double` uses 64 bits.
+You can also write these types as `Float32` or `Float64`.
+For example,
+graphics code often uses `Float` to match the GPU's fastest data type.
+Some floating-point types are only supported by certain platforms,
+but `Float` and `Double` are available on all platforms.
+
+Floating-point numbers let you work with
+both very small and very large numbers,
+but can't represent every possible value in that range.
+Unlike integer calculations,
+which always produce an exact result,
+floating-point math rounds results to the nearest representable number.
+For example,
+when storing the number 10,000 as a `Float`,
+the next largest number you can represent is 10,000.001 ----
+values between these two numbers round to one or the other.
+The space between numbers is also variable;
+there are larger spaces between large numbers
+than between small numbers.
+For example,
+the next `Float` value after 0.001 is 0.0010000002,
+which is smaller than the spacing after 10,000.
+
+<!---
+var n: Float = 10_000
+print(n + n.ulp)
+n = 0.001
+print(n + n.ulp)
 -->
 
-Floating-point numbers can also represent special values
-including positive and negative zero,
-and positive and negative infinity.
+Floating-point numbers have values for
+negative zero, infinity, and negative infinity,
+which represent overflow and underflow in calculations.
 They also have include not-a-number (NaN) values
 to represent an invalid or undefined result,
 such as dividing zero by zero.
+This behavior is different from integers,
+which stop the program if they can't represent the result.
 
-If you need to store numbers exactly,
-if you need the same space between all possible values,
+If you need the same spacing between all possible values,
 or if the calculations you're doing
-don't call for the special values listed above,
+require exact results
+and don't call for the special values listed above,
 a floating-point number might not be the right data type.
 Consider using fixed-point numbers instead
 as described in <doc:TheBasics#Integers>.
-<!-- XXX TR: Any other alternatives to note?
-Should we mention Foundation's Decimal
-as an alternative to floating point numbers?
-https://developer.apple.com/documentation/foundation/decimal
-
-Likewise, are there arbitrary-precision or bignum types we should point to?
-
-Anything from https://github.com/apple/swift-numerics
-we want to cross reference?
--->
 
 ## Type Safety and Type Inference
 
