@@ -147,6 +147,18 @@ you should generally try to avoid them.
 Deeply nested headings often indicate
 that there’s a better way to organize the content.
 
+## isolation
+
+Use the phrase “is isolated” to describe values and types
+that are isolated to a global actor.
+For example, in the following code,
+`MyType` and `m` are isolated to the main actor.
+
+```
+@MainActor struct MyType { ... }
+let m: MyType
+```
+
 ## macro names
 
 In the guide,
@@ -221,6 +233,25 @@ and the identity of that agent is irrelevant.
 This is the preferred wording when describing the semantics of `await`.
 If context has already made that clear and repeating “potential” becomes wordy,
 you can shorten it to just “suspension point”.
+
+## protocol conformance
+
+The first time you describe conformance to a protocol,
+specify that protocol by name.
+If this phrasing gets wordy in a longer discussion,
+it’s ok to use an English name for the protocol after that.
+For example:
+
+> The code listing above passes `someValue`  to `f()`,
+> which is safe because `SomeType` conforms to the `Sendable` protocol.
+> Values you pass `f()` must be sendable, so the method can […]
+
+Pay attention to possible ambiguity around `Sendable`:
+Types can conform to `Sendable`,
+not have a conformance to `Sendable`,
+or have an unavailable conformance to `Sendable`.
+Without context, writing “nonsendable”
+is ambiguous between the second and third case.
 
 ## punctuation before a code listing
 
