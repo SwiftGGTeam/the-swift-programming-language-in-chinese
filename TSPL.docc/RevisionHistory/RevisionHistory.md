@@ -12,7 +12,7 @@ Review the recent changes to this book.
 - Added information about the main actor, isolation, and global actors
   to the <doc:Concurrency> chapter.
 - Added the <doc:Protocols#Implicit-Conformance-to-a-Protocol> section
-  with information information about conforming to common protocols,
+  with information about conforming to common protocols,
   without writing the conformance explicitly,
   and suppressing implicit conformance.
 - Added the <doc:Generics#Implicit-Constraints> section
