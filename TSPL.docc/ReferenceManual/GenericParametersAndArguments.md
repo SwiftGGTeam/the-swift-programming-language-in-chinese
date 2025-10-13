@@ -125,10 +125,10 @@ struct AnotherStruct<let x: Int, T, each U> {
     let b: SomeStruct<x>  // OK: another integer generic parameter
 
     static let c = 42
-    let d: SomeStruct<c>  // Error: constant
+    let d: SomeStruct<c>  // Error: Can't use a constant.
 
-    let e: SomeStruct<T>  // Error: type generic parameter
-    let f: SomeStruct<U>  // Error: pack generic parameter
+    let e: SomeStruct<T>  // Error: Can't use a generic type parameter.
+    let f: SomeStruct<U>  // Error: Can't use a parameter pack.
 }
 ```
 
