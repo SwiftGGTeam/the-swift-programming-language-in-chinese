@@ -310,7 +310,7 @@ The *generic argument list* is a comma-separated list of type arguments.
 A *type argument* is the name of an actual concrete type that replaces
 a corresponding type parameter in the generic parameter clause of a generic type ---
 or, for an integer generic parameter,
-a integer value that replaces that integer generic parameter.
+an integer value that replaces that integer generic parameter.
 The result is a specialized version of that generic type.
 The example below shows a simplified version of the Swift standard library's
 generic dictionary type.
