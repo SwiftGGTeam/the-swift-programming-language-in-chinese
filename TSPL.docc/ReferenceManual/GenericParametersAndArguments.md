@@ -101,8 +101,8 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
 
 ### Integer Generic Parameters
 
-An *integer generic parameter* is a special kind of generic parameter
-that acts as a placeholder for an integer value rather than a type.
+An *integer generic parameter*
+acts as a placeholder for an integer value rather than a type.
 It has the following form:
 
 ```swift
@@ -113,9 +113,8 @@ The *type* must be the `Int` type from the Swift standard library,
 or a type alias or generic type that resolves to `Int`.
 
 The value you provide for an integer generic parameter
-must be either a literal integer
-or as a reference to an integer generic parameter
-from the enclosing generic context.
+must be either an integer literal
+or another integer generic parameter from the enclosing generic context.
 For example:
 
 ```swift
@@ -134,7 +133,7 @@ struct AnotherStruct<let x: Int, T, each U> {
 ```
 
 The value of an integer generic parameter on a type
-is accessible as a static constant members of that type,
+is accessible as a static constant member of that type,
 with the same visibility as the type itself.
 The value of an integer generic parameter on a function
 is accessible as a constant from within the function.
@@ -158,7 +157,7 @@ func someFunction<let z: Int>(s: SomeStruct<z>) {
 }
 
 let s1 = SomeStruct<12>()
-let s2 = AnotherStruct(s: s1)  // AnotherStruct.y is inferred to be 12
+let s2 = AnotherStruct(s: s1)  // AnotherStruct.y is inferred to be 12.
 someFunction(s: s1)  // Prints "12"
 ```
 
