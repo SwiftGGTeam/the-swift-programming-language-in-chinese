@@ -99,6 +99,68 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
+### Integer Generic Parameters
+
+An *integer generic parameter*
+acts as a placeholder for an integer value rather than a type.
+It has the following form:
+
+```swift
+let <#type parameter#>: <#type>
+```
+
+The *type* must be the `Int` type from the Swift standard library,
+or a type alias or generic type that resolves to `Int`.
+
+The value you provide for an integer generic parameter
+must be either an integer literal
+or another integer generic parameter from the enclosing generic context.
+For example:
+
+```swift
+struct SomeStruct<let x: Int> { }
+let a: SomeStruct<2>  // OK: integer literal
+
+struct AnotherStruct<let x: Int, T, each U> {
+    let b: SomeStruct<x>  // OK: another integer generic parameter
+
+    static let c = 42
+    let d: SomeStruct<c>  // Error: Can't use a constant.
+
+    let e: SomeStruct<T>  // Error: Can't use a generic type parameter.
+    let f: SomeStruct<U>  // Error: Can't use a parameter pack.
+}
+```
+
+The value of an integer generic parameter on a type
+is accessible as a static constant member of that type,
+with the same visibility as the type itself.
+The value of an integer generic parameter on a function
+is accessible as a constant from within the function.
+When used in an expression,
+these constants have type `Int`.
+
+```swift
+print(a.x)  // Prints "4"
+```
+
+The value of an integer generic parameter can be inferred
+from the types of the arguments you use
+when initializing the type or calling the function.
+
+```swift
+struct AnotherStruct<let y: Int> {
+    var s: SomeStruct<y>
+}
+func someFunction<let z: Int>(s: SomeStruct<z>) {
+    print(z)
+}
+
+let s1 = SomeStruct<12>()
+let s2 = AnotherStruct(s: s1)  // AnotherStruct.y is inferred to be 12.
+someFunction(s: s1)  // Prints "12"
+```
+
 ### Generic Where Clauses
 
 You can specify additional requirements on type parameters and their associated types
@@ -124,12 +186,17 @@ specifies that `S` conforms to the `Sequence` protocol
 and that the associated type `S.Iterator.Element`
 conforms to the `Equatable` protocol.
 This constraint ensures that each element of the sequence is equatable.
+Integer generic parameters can't have protocol or superclass requirements.
 
 You can also specify the requirement that two types be identical,
 using the `==` operator. For example,
 `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element`
 expresses the constraints that `S1` and `S2` conform to the `Sequence` protocol
 and that the elements of both sequences must be of the same type.
+For integer generic parameters,
+the `==` operator specifies a requirement for their values.
+You can require two integer generic parameters to have the same value,
+or you can require a specific integer value for the integer generic parameter.
 
 Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
@@ -210,7 +277,8 @@ see <doc:Generics#Generic-Where-Clauses>.
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
 > *generic-parameter* → *type-name* \
 > *generic-parameter* → *type-name* **`:`** *type-identifier* \
-> *generic-parameter* → *type-name* **`:`** *protocol-composition-type*
+> *generic-parameter* → *type-name* **`:`** *protocol-composition-type* \
+> *generic-parameter* → **`let`** *type-name* **`:`** *type* \
 >
 > *generic-where-clause* → **`where`** *requirement-list* \
 > *requirement-list* → *requirement* | *requirement* **`,`** *requirement-list* \
@@ -218,7 +286,8 @@ see <doc:Generics#Generic-Where-Clauses>.
 >
 > *conformance-requirement* → *type-identifier* **`:`** *type-identifier* \
 > *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type* \
-> *same-type-requirement* → *type-identifier* **`==`** *type*
+> *same-type-requirement* → *type-identifier* **`==`** *type* \
+> *same-type-requirement* → *type-identifier* **`==`** *signed-integer-literal*
 
 <!--
   NOTE: A conformance requirement can only have one type after the colon,
@@ -239,7 +308,9 @@ and has the following form:
 
 The *generic argument list* is a comma-separated list of type arguments.
 A *type argument* is the name of an actual concrete type that replaces
-a corresponding type parameter in the generic parameter clause of a generic type.
+a corresponding type parameter in the generic parameter clause of a generic type ---
+or, for an integer generic parameter,
+an integer value that replaces that integer generic parameter.
 The result is a specialized version of that generic type.
 The example below shows a simplified version of the Swift standard library's
 generic dictionary type.
@@ -288,7 +359,7 @@ of a generic function or initializer.
 >
 > *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
-> *generic-argument* → *type*
+> *generic-argument* → *type* | *signed-integer-literal*
 
 <!--
 This source file is part of the Swift.org open source project
