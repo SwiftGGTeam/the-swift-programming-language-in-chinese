@@ -1006,7 +1006,7 @@ which provides a shared instance of an actor.
 A global actor generalizes the concept of actor isolation
 to state that's spread out in several different places in code ---
 such as multiple types, files, and modules ---
-and makes it possible to safely assess global variables from concurrent code.
+and makes it possible to safely access global variables from concurrent code.
 The actor that the global actor provides
 as the value of its `shared` property
 serializes access to all this state.
