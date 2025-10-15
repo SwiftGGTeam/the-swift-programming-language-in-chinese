@@ -3238,7 +3238,7 @@ extension Array: Serializable where Element == String {
         // implementation
     }
 }
-// Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+// Error: Redundant conformance of 'Array<Element>' to protocol 'Serializable'.
 ```
 
 <!--
@@ -3261,7 +3261,7 @@ extension Array: Serializable where Element == String {
   >>         return 0
   ->     }
      }
-  // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+  // Error: Redundant conformance of 'Array<Element>' to protocol 'Serializable'.
   !$ error: conflicting conformance of 'Array<Element>' to protocol 'Serializable'; there cannot be more than one conformance, even with different conditional bounds
   !! extension Array: Serializable where Element == String {
   !! ^
@@ -3376,7 +3376,7 @@ resulting in an error:
 ```swift
 extension Array: Loggable where Element: TitledLoggable { }
 extension Array: Loggable where Element: MarkedLoggable { }
-// Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+// Error: Redundant conformance of 'Array<Element>' to protocol 'Loggable'.
 ```
 
 <!--
@@ -3388,7 +3388,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
   >> protocol TitledLoggable : Loggable { }
   -> extension Array: Loggable where Element: TitledLoggable { }
      extension Array: Loggable where Element: MarkedLoggable { }
-  // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+  // Error: Redundant conformance of 'Array<Element>' to protocol 'Loggable'.
   !$ error: conflicting conformance of 'Array<Element>' to protocol 'Loggable'; there cannot be more than one conformance, even with different conditional bounds
   !! extension Array: Loggable where Element: MarkedLoggable { }
   !! ^
