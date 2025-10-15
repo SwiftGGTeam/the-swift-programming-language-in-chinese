@@ -107,6 +107,18 @@ in the reference, omit it.
 
 Spelled as two words, not closed up or hyphenated.
 
+## comments
+
+Prefer full sentences for comments in code.
+End with a period, even when it's a fragment.
+When contrasting code that works and code that doesn't,
+format the comments with a colon as follows:
+
+```
+// OK: Evaluates to true.
+// Error: Value consumed more than once.
+```
+
 ## compiler, the
 
 See entry for *Swift*.
