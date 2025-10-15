@@ -1231,10 +1231,10 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
 
   ```swifttest
   >> var a = 12
-  >> let c1 = { [a] in return a }                  // OK -- no async or throws
+  >> let c1 = { [a] in return a }                  // OK: no async or throws
   >> let c2 = { [a] async in return a }            // ERROR
   >> let c3 = { [a] async -> in return a }         // ERROR
-  >> let c4 = { [a] () async -> Int in return a }  // OK -- has () and ->
+  >> let c4 = { [a] () async -> Int in return a }  // OK: has () and ->
   !$ error: expected expression
   !! let c3 = { [a] async -> in return a }         // ERROR
   !! ^
