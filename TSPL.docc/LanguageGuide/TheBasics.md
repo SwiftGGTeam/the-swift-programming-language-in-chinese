@@ -616,9 +616,9 @@ which is smaller than the spacing after 10,000.
 
 <!---
 var n: Float = 10_000
-print(n + n.ulp)
+print(n.nextUp)
 n = 0.001
-print(n + n.ulp)
+print(n.nextUp)
 -->
 
 Floating-point numbers have values for
