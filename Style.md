@@ -475,33 +475,44 @@ still generally expect text to be made up of lines of <80 characters.
 
 These guidelines apply to the “Grammar of X” blocks in the reference.
 
-**Write an ASCII arrow.**
-The arrow (`-->`) can be read as “can consist of.”
+**Write a Unicode arrow.**
+The arrow (→) can be read as “can consist of.”
+Depending on your text editor,
+the easiest way to insert this arrow
+might be to copy it from another grammar rule.
 
-To make the arrow in RST, use two hyphens (`-`) followed by a right-hand angle bracket (`>`).
-The production path is responsible for making it render as a nice Unicode arrow.
+**End nonfinal lines with a hard break.**
+Write a backslash (`\`) at the end of a line,
+unless it's the last line of a grammar black
+or the next line is blank.
 
-**Write literals with double backticks.**
+**Write literals with backticks.**
 For example:
 
-    forty-two --> ``42``
+    *forty-two* → `42`
 
-**Write syntactic category names without any extra markup.**
-Within a syntax-grammar block, they appear in italics automatically.
+If the literal contains a backtick,
+use multiple backticks to produce code voice:
+
+    *identifier* → **`` ` ``** *identifier-head* *identifier-characters*_?_ **`` ` ``**
+
+**Write syntactic category names in italics.**
+Use a single asterisk (`*`) before and after the name.
 Don’t refer to them from the English prose above them.
 
 **Use full English words as the names for syntactic categories.**
 There are cases where this isn’t feasible because of space considerations.
-For example, in the grammar for a C-style for statement,
+For example, in the grammar for a C-style for statement
+(which is no longer part of the Swift language),
 the category that defines the initialization part of the for statement
 had to be shortened to *for-init*
-(instead of *for-initialization*, as the rule specifies).
+(instead of *for-initialization*, as this rule specifies).
 In this case, nothing seems lost from a readability or pedagogical perspective.
 
-    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT brace-item-list
-    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT ``)`` brace-item-list
+    *c-style-for-statement* → `for` *for-init*_?_ `;` *expression_?_ `;` *basic-expression*_?_ *brace-item-list*
+    *c-style-for-statement* --> `for` `(` *for-init*_?_ `;` *expression*_?_ `;` *basic-expression*_?_ `)` *brace-item-list*
 
-    for-init --> variable-declaration | expression
+    *for-init* → *variable-declaration* | *expression*
 
 **Use a pipe (`|`) to indicate alternation.**
 When there are too many alternatives
@@ -512,7 +523,7 @@ For example, to specify that a *case-block-item* can consist of a *declaration*,
 *expression*, or a *statement*, you can use a pipe instead of a new line,
 because all three alternatives fit nicely on one line:
 
-    code-block-item --> declaration | expression | statement
+    *code-block-item* → *declaration* | *expression* | *statement*
 
 When using pipes,
 keep the number of items in each alternative small for readability.
@@ -522,19 +533,21 @@ although that’s not always possible.
 
 On the other hand, consider the grammar of a control transfer statement:
 
-    control-transfer-statement --> break-statement
-    control-transfer-statement --> continue-statement
-    control-transfer-statement --> fallthrough-statement
-    control-transfer-statement --> return-statement
+    *control-transfer-statement* → *break-statement*
+    *control-transfer-statement* → *continue-statement*
+    *control-transfer-statement* → *fallthrough-statement*
+    *control-transfer-statement* → *return-statement*
 
 There likely wouldn’t be room on a single line to use a pipe to separate each alternative.
 The following tends not to look good:
 
-    control-transfer-statement --> break-statement | continue-statement | fallthrough-statement | return-statement
+    *control-transfer-statement* → *break-statement* | *continue-statement* | *fallthrough-statement* | *return-statement*
 
-**Append `-OPT` to indicate optionality.**
-Within a syntax-grammar block,
-this is translated to a subscript “opt” automatically.
+**Append `_?_` to indicate optionality.**
+This is rendered in italics,
+the same as syntactic categories.
+Using an underscore (`_`) for italics makes them easier to read
+when editing the grammar in source.
 
 **Use plural names for repetition.**
 In BNF, this is represented with a plus (`+`) or star (`*`).
@@ -542,26 +555,26 @@ The syntax of our formal grammar doesn’t include repetition operators,
 so we use two syntactic categories to allow repetition.
 For example:
 
-    categories --> category categories-OPT
-    category --> More formal grammar goes here.
+    *categories* → *category* *categories*_?_
+    *category* → More formal grammar goes here.
 
-    switch-statement --> ``switch`` basic-expression { switch-cases-OPT }
-    switch-cases --> switch-case switch-cases-OPT
-    switch-case --> case-label statements
-    switch-case --> default-label statements
-    switch-case --> conditional-switch-case
+    *switch-statement* → `switch` *basic-expression* `{` *switch-cases*_?_ `}`
+    *switch-cases* → *switch-case* *switch-cases*_?_
+    *switch-case* → *case-label* *statements*
+    *switch-case* → *default-label* *statements*
+    *switch-case* → *conditional-switch-case*
 
 A plural name consists of only a repeated list of the singular version.
 If you need separators like commas, call it a “list”.
 
-    case-label --> attributes-OPT ``case`` case-item-list ``:``
-    case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
+    *case-label* → *attributes*_?_ `case` *case-item-list* `:`
+    *case-item-list* → *pattern* *where-clause*_?_ | *pattern* *where-clause*_?_ `,` *case-item-list*
 
 As shown above, use right-recursion when dealing with repetition.
 
 **Omit grouping parentheses.**
 Our formal grammar doesn’t use grouping parentheses.
-Optionality using `-OPT` always applies to exactly one token before it,
+Optionality using `_?_` always applies to exactly one token before it,
 and only one level of alternation using `|` or line breaks is allowed.
 
 If you see BNF grammar for new language features that uses parentheses,
@@ -575,8 +588,8 @@ which then needed to be defined:
 
 It became:
 
-    guard-expression-OPT
-    guard-expression --> ``where`` expression
+    *guard-expression*_?_
+    *guard-expression* → `where` *expression*
 
 This BNF rule was a bit dense and required the application of several of the rules above:
 
@@ -584,5 +597,5 @@ This BNF rule was a bit dense and required the application of several of the rul
 
 It became:
 
-    switch-case --> case-labels brace-items-OPT | default-label brace-items-OPT
+    *switch-case* → *case-labels* *brace-items*_?_ | *default-label* *brace-items*_?_
 
