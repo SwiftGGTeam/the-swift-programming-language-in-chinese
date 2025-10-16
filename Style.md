@@ -25,7 +25,7 @@ just surface level syntax for concepts they already know from other languages.
 **Language Guide**,
 commonly referred to as “the guide”,
 leads you through the Swift language in a pedagogically useful, linear order.
-It doesn't promise to show you every feature of
+It doesn’t promise to show you every feature of
 the language or the Swift standard library,
 and it hand-waves over the exact details
 of some of the more complicated underlying bits.
@@ -72,13 +72,13 @@ but it makes no attempt to be an instructional text.
 Its material is ordered according to the shape of the formal grammar,
 and it hand-waves over examples and applications.
 Several places explicitly link back to the guide for examples.
-It doesn't need to be as approachable for beginners,
+It doesn’t need to be as approachable for beginners,
 because the guide handles that,
 but it does need to be accurate and unambiguous,
 shining its flashlight into infrequently explored areas of the language.
 To accomplish that,
 it sometimes must sacrifice approachability or user-friendliness.
-That's ok — many readers won't even need the reference,
+That’s ok — many readers won’t even need the reference,
 but if the reference is unclear,
 the readers who need an answer have nowhere else to go.
 
@@ -129,7 +129,7 @@ Use wording and markup like the following:
 ## definite initialization
 
 Not “definitive initialization”.
-Don‘t abbreviate as DI.
+Don’t abbreviate as DI.
 
 ## function
 
@@ -205,7 +205,7 @@ make sure you get tech review on the name you invent for it.
 
 ## optional binding
 
-Omit the article: "use optional binding", not "use an optional binding".
+Omit the article: “use optional binding”, not “use an optional binding”.
 
 ## passive voice
 
@@ -291,18 +291,18 @@ and an error that comes from or is related to the Swift runtime environment.
 Avoid when describing actors.
 By design, actors specifically *avoid* having shared mutable state —
 their mutable state is private,
-and accessible only through the actor's (async) methods.
+and accessible only through the actor’s (async) methods.
 
 ## standard library
 
-Spell out in full as “the Swift standard library“ on the first use.
+Spell out in full as “the Swift standard library” on the first use.
 If context already makes it clear
 and repeating the full name becomes wordy,
 you can shorted it to just “the standard library”
 in continued discussion.
-(We currently don‘t have any examples of doing that.)
+(We currently don’t have any examples of doing that.)
 
-Not “stdlib“ or “the stdlib“.
+Not “stdlib” or “the stdlib”.
 
 ## spawn, start
 
@@ -340,7 +340,7 @@ For example:
 
 In the reference,
 we refer to the compiler specifically
-when it‘s the actual agent performing the action.
+when it’s the actual agent performing the action.
 We don’t distinguish between the parts of the compiler
 like the parser or the lexer or the optimizer.
 
@@ -378,7 +378,7 @@ flow better and hang together better as a cohesive whole.
 In the interest of readability and approachability,
 we don’t write examples that have
 single-letter or meaningless identifiers,
-even in the reference and even when we‘re only describing syntax.
+even in the reference and even when we’re only describing syntax.
 Instead, when there’s no relevant semantic meaning,
 we use types like `SomeStructure` and variables like `someArray`.
 
@@ -518,7 +518,7 @@ When using pipes,
 keep the number of items in each alternative small for readability.
 The most common case is that each alternative is either
 a single literal or a single syntactic category,
-although that's not always possible.
+although that’s not always possible.
 
 On the other hand, consider the grammar of a control transfer statement:
 
