@@ -1224,7 +1224,7 @@ let manualDrawing = Line(elements: [
      Stars(length: 2),
 ])
 print(manualDrawing.draw())
-// Prints "***Hello RAVI PATEL!**"
+// Prints "***Hello RAVI PATEL!**".
 ```
 
 <!--
@@ -1332,11 +1332,11 @@ func makeGreeting(for name: String? = nil) -> Drawable {
 }
 let genericGreeting = makeGreeting()
 print(genericGreeting.draw())
-// Prints "***Hello WORLD!**"
+// Prints "***Hello WORLD!**".
 
 let personalGreeting = makeGreeting(for: "Ravi Patel")
 print(personalGreeting.draw())
-// Prints "***Hello RAVI PATEL!**"
+// Prints "***Hello RAVI PATEL!**".
 ```
 
 <!--

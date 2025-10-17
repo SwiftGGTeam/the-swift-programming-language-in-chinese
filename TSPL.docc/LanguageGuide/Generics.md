@@ -56,7 +56,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// Prints "someInt is now 107, and anotherInt is now 3"
+// Prints "someInt is now 107, and anotherInt is now 3".
 ```
 
 <!--
@@ -672,7 +672,7 @@ let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
 if let foundIndex = findIndex(ofString: "llama", in: strings) {
     print("The index of llama is \(foundIndex)")
 }
-// Prints "The index of llama is 2"
+// Prints "The index of llama is 2".
 ```
 
 <!--
@@ -1583,7 +1583,7 @@ extension Container where Item == Double {
     }
 }
 print([1260.0, 1200.0, 98.6, 37.0].average())
-// Prints "648.9"
+// Prints "648.9".
 ```
 
 <!--
@@ -1651,9 +1651,9 @@ extension Container {
 }
 let numbers = [1260, 1200, 98, 37]
 print(numbers.average())
-// Prints "648.75"
+// Prints "648.75".
 print(numbers.endsWith(37))
-// Prints "true"
+// Prints "true".
 ```
 
 <!--

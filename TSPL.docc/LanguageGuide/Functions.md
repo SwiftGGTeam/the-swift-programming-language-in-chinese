@@ -161,7 +161,7 @@ func sayHelloWorld() -> String {
     return "hello, world"
 }
 print(sayHelloWorld())
-// Prints "hello, world"
+// Prints "hello, world".
 ```
 
 <!--
@@ -393,7 +393,7 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
 ```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
 print("min is \(bounds.min) and max is \(bounds.max)")
-// Prints "min is -6 and max is 109"
+// Prints "min is -6 and max is 109".
 ```
 
 <!--
@@ -479,7 +479,7 @@ returns an actual tuple value or `nil`:
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
     print("min is \(bounds.min) and max is \(bounds.max)")
 }
-// Prints "min is -6 and max is 109"
+// Prints "min is -6 and max is 109".
 ```
 
 <!--
@@ -892,7 +892,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// Prints "someInt is now 107, and anotherInt is now 3"
+// Prints "someInt is now 107, and anotherInt is now 3".
 ```
 
 <!--
@@ -1023,7 +1023,7 @@ You can now call the assigned function with the name `mathFunction`:
 
 ```swift
 print("Result: \(mathFunction(2, 3))")
-// Prints "Result: 5"
+// Prints "Result: 5".
 ```
 
 <!--
@@ -1041,7 +1041,7 @@ in the same way as for nonfunction types:
 ```swift
 mathFunction = multiplyTwoInts
 print("Result: \(mathFunction(2, 3))")
-// Prints "Result: 6"
+// Prints "Result: 6".
 ```
 
 <!--
@@ -1092,7 +1092,7 @@ func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
     print("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
-// Prints "Result: 8"
+// Prints "Result: 8".
 ```
 
 <!--

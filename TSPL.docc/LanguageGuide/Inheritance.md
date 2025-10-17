@@ -322,7 +322,7 @@ you can see that the `Train` subclass version of the method is called:
 ```swift
 let train = Train()
 train.makeNoise()
-// Prints "Choo Choo"
+// Prints "Choo Choo".
 ```
 
 <!--

@@ -853,7 +853,7 @@ do throws(StatisticsError) {
         print("Invalid rating: \(rating)")
     }
 }
-// Prints "No ratings available"
+// Prints "No ratings available".
 ```
 
 In this code,
@@ -897,7 +897,7 @@ do {
         print("Invalid rating: \(rating)")
     }
 }
-// Prints "No ratings available"
+// Prints "No ratings available".
 ```
 
 Even though the `do`-`catch` block above

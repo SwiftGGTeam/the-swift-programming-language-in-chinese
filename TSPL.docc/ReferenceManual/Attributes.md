@@ -539,10 +539,10 @@ let dial = TelephoneExchange()
 
 // Use a dynamic method call.
 dial(4, 1, 1)
-// Prints "Get Swift help on forums.swift.org"
+// Prints "Get Swift help on forums.swift.org".
 
 dial(8, 6, 7, 5, 3, 0, 9)
-// Prints "Unrecognized number"
+// Prints "Unrecognized number".
 
 // Call the underlying method directly.
 dial.dynamicallyCall(withArguments: [4, 1, 1])
@@ -729,12 +729,12 @@ let s = DynamicStruct()
 // Use dynamic member lookup.
 let dynamic = s.someDynamicMember
 print(dynamic)
-// Prints "325"
+// Prints "325".
 
 // Call the underlying subscript directly.
 let equivalent = s[dynamicMember: "someDynamicMember"]
 print(dynamic == equivalent)
-// Prints "true"
+// Prints "true".
 ```
 
 <!--

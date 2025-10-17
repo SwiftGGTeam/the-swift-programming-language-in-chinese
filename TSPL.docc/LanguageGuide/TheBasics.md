@@ -460,7 +460,7 @@ if you want to write multiple separate statements on a single line:
 
 ```swift
 let cat = "🐱"; print(cat)
-// Prints "🐱"
+// Prints "🐱".
 ```
 
 <!--
@@ -1143,9 +1143,9 @@ which you then access as usual:
 ```swift
 let (statusCode, statusMessage) = http404Error
 print("The status code is \(statusCode)")
-// Prints "The status code is 404"
+// Prints "The status code is 404".
 print("The status message is \(statusMessage)")
-// Prints "The status message is Not Found"
+// Prints "The status message is Not Found".
 ```
 
 <!--
@@ -1167,7 +1167,7 @@ when you decompose the tuple:
 ```swift
 let (justTheStatusCode, _) = http404Error
 print("The status code is \(justTheStatusCode)")
-// Prints "The status code is 404"
+// Prints "The status code is 404".
 ```
 
 <!--
@@ -1185,9 +1185,9 @@ access the individual element values in a tuple using index numbers starting at 
 
 ```swift
 print("The status code is \(http404Error.0)")
-// Prints "The status code is 404"
+// Prints "The status code is 404".
 print("The status message is \(http404Error.1)")
-// Prints "The status message is Not Found"
+// Prints "The status message is Not Found".
 ```
 
 <!--
@@ -1220,9 +1220,9 @@ you can use the element names to access the values of those elements:
 
 ```swift
 print("The status code is \(http200Status.statusCode)")
-// Prints "The status code is 200"
+// Prints "The status code is 200".
 print("The status message is \(http200Status.description)")
-// Prints "The status message is OK"
+// Prints "The status message is OK".
 ```
 
 <!--
@@ -1433,7 +1433,7 @@ if let actualNumber = Int(possibleNumber) {
 } else {
     print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
 }
-// Prints "The string "123" has an integer value of 123"
+// Prints "The string "123" has an integer value of 123".
 ```
 
 <!--
@@ -1473,7 +1473,7 @@ if let myNumber = myNumber {
     // Here, myNumber is a non-optional integer
     print("My number is \(myNumber)")
 }
-// Prints "My number is 123"
+// Prints "My number is 123".
 ```
 
 <!--
@@ -1509,7 +1509,7 @@ implicitly uses the same name as the optional value.
 if let myNumber {
     print("My number is \(myNumber)")
 }
-// Prints "My number is 123"
+// Prints "My number is 123".
 ```
 
 <!--
@@ -1546,7 +1546,7 @@ The following `if` statements are equivalent:
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
     print("\(firstNumber) < \(secondNumber) < 100")
 }
-// Prints "4 < 42 < 100"
+// Prints "4 < 42 < 100".
 
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
@@ -1555,7 +1555,7 @@ if let firstNumber = Int("4") {
         }
     }
 }
-// Prints "4 < 42 < 100"
+// Prints "4 < 42 < 100".
 ```
 
 <!--

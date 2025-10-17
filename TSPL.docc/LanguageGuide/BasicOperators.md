@@ -1037,7 +1037,7 @@ let allowedEntry = false
 if !allowedEntry {
     print("ACCESS DENIED")
 }
-// Prints "ACCESS DENIED"
+// Prints "ACCESS DENIED".
 ```
 
 <!--
@@ -1084,7 +1084,7 @@ if enteredDoorCode && passedRetinaScan {
 } else {
     print("ACCESS DENIED")
 }
-// Prints "ACCESS DENIED"
+// Prints "ACCESS DENIED".
 ```
 
 <!--

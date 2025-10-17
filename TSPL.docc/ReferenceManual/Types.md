@@ -1056,7 +1056,7 @@ let someInstance: SomeBaseClass = SomeSubClass()
 // The compile-time type of someInstance is SomeBaseClass,
 // and the runtime type of someInstance is SomeSubClass
 type(of: someInstance).printClassName()
-// Prints "SomeSubClass"
+// Prints "SomeSubClass".
 ```
 
 <!--
@@ -1257,16 +1257,16 @@ class Superclass {
 }
 let x = Superclass()
 print(type(of: x.f()))
-// Prints "Superclass"
+// Prints "Superclass".
 
 class Subclass: Superclass { }
 let y = Subclass()
 print(type(of: y.f()))
-// Prints "Subclass"
+// Prints "Subclass".
 
 let z: Superclass = Subclass()
 print(type(of: z.f()))
-// Prints "Subclass"
+// Prints "Subclass".
 ```
 
 <!--

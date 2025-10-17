@@ -183,7 +183,7 @@ func oneMore(than number: Int) -> Int {
 var myNumber = 1
 myNumber = oneMore(than: myNumber)
 print(myNumber)
-// Prints "2"
+// Prints "2".
 ```
 
 <!--

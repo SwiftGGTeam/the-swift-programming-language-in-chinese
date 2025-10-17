@@ -776,10 +776,10 @@ func f(x: Int) {
   print("End of function")
 }
 f(x: 5)
-// Prints "End of if"
-// Prints "Second defer"
-// Prints "End of function"
-// Prints "First defer"
+// Prints "End of if".
+// Prints "Second defer".
+// Prints "End of function".
+// Prints "First defer".
 ```
 
 <!--
@@ -821,9 +821,9 @@ func f() {
     print("End of function")
 }
 f()
-// Prints "End of function"
-// Prints "Second defer"
-// Prints "First defer"
+// Prints "End of function".
+// Prints "Second defer".
+// Prints "First defer".
 ```
 
 <!--
@@ -1054,9 +1054,9 @@ print("Compiled in Swift 4.2 mode or later")
 #if compiler(>=5) && swift(<5)
 print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
 #endif
-// Prints "Compiled with the Swift 5 compiler or later"
-// Prints "Compiled in Swift 4.2 mode or later"
-// Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+// Prints "Compiled with the Swift 5 compiler or later".
+// Prints "Compiled in Swift 4.2 mode or later".
+// Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5".
 ```
 
 <!--
@@ -1072,7 +1072,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
      #endif
   <- Compiled with the Swift 5 compiler or later
   <- Compiled in Swift 4.2 mode or later
-  // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+  // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5".
   ```
 -->
 
