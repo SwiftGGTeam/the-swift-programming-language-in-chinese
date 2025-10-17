@@ -107,6 +107,28 @@ in the reference, omit it.
 
 Spelled as two words, not closed up or hyphenated.
 
+## comments
+
+End each comment with a period, even when it's a sentence fragment.
+When it makes sense, prefer using full sentences.
+
+For "prints" comments,
+if the printed text is already a full sentence,
+then don't add another period afterward.
+
+```
+// Prints "The first item, 'one', is a string."
+// Prints "Job sent".
+```
+
+When noting that a piece of code works or produces an error,
+format the comment with a colon as follows:
+
+```
+// OK: Evaluates to true.
+// Error: Value consumed more than once.
+```
+
 ## compiler, the
 
 See entry for *Swift*.
