@@ -78,7 +78,7 @@ but it does need to be accurate and unambiguous,
 shining its flashlight into infrequently explored areas of the language.
 To accomplish that,
 it sometimes must sacrifice approachability or user-friendliness.
-That’s ok — many readers won’t even need the reference,
+That’s OK — many readers won’t even need the reference,
 but if the reference is unclear,
 the readers who need an answer have nowhere else to go.
 
@@ -239,7 +239,7 @@ you can shorten it to just “suspension point”.
 The first time you describe conformance to a protocol,
 specify that protocol by name.
 If this phrasing gets wordy in a longer discussion,
-it’s ok to use an English name for the protocol after that.
+it’s OK to use an English name for the protocol after that.
 For example:
 
 > The code listing above passes `someValue`  to `f()`,
