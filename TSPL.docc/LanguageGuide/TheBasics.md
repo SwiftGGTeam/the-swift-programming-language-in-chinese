@@ -594,7 +594,7 @@ Following common terminology for floating-point math,
 You can also write these types as `Float32` or `Float64`.
 For example,
 graphics code often uses `Float` to match the GPU's fastest data type.
-Some floating-point types are supported by only certain platforms,
+Some floating-point types are supported only by certain platforms,
 but `Float` and `Double` are available on all platforms.
 
 Floating-point numbers let you work with
