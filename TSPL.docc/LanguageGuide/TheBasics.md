@@ -490,12 +490,12 @@ you use the `Int` type described below.
 
 Integer types behave like most arithmetic you do by hand;
 integer math produces results without approximating.
-This makes integers suitable for counting
+These characteristics make integers suitable for counting
 and other calculations that represent exact amounts ---
 for example,
 finding the longest line in a text file,
 applying a score multiplier in a game,
-or adding up prices on a receipt.
+or totaling prices on a receipt.
 
 Although integers don't have a fractional component,
 you can use integers to represent quantities with fractions
@@ -513,7 +513,7 @@ before the last two digits.
 > For calculations in a regulated area like finance or construction,
 > or in a domain that has an expectation of high-precision results,
 > you might need a special-purpose numeric type
-> that implements behaviors such as rounding and truncation
+> that implements behaviors such as rounding and truncation,
 > according to that area's requirements.
 
 ### Integer Bounds
@@ -587,18 +587,18 @@ that support different sizes of numbers,
 just like it has different sizes of integers.
 If you don't need to specify an exact size, use `Double`.
 Otherwise,
-use the type whose name includes the needed size,
+use the type that includes the needed size in its name,
 such as `Float16` or `Float80`.
 Following common terminology for floating-point math,
 `Float` uses 32 bits and `Double` uses 64 bits.
 You can also write these types as `Float32` or `Float64`.
 For example,
 graphics code often uses `Float` to match the GPU's fastest data type.
-Some floating-point types are only supported by certain platforms,
+Some floating-point types are supported by only certain platforms,
 but `Float` and `Double` are available on all platforms.
 
 Floating-point numbers let you work with
-both very small and very large numbers,
+very small and very large numbers,
 but can't represent every possible value in that range.
 Unlike integer calculations,
 which always produce an exact result,
@@ -635,7 +635,7 @@ or if the calculations you're doing
 require exact results
 and don't call for the special values listed above,
 a floating-point number might not be the right data type.
-Consider using fixed-point numbers instead
+Consider using fixed-point numbers instead,
 as described in <doc:TheBasics#Integers>.
 
 ## Type Safety and Type Inference
