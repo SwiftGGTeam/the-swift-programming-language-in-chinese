@@ -378,7 +378,7 @@ by checking its Boolean `isEmpty` property:
 if emptyString.isEmpty {
     print("Nothing to see here")
 }
-// Prints "Nothing to see here"
+// Prints "Nothing to see here".
 ```
 
 <!--
@@ -525,7 +525,7 @@ as an argument to its initializer:
 let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
 let catString = String(catCharacters)
 print(catString)
-// Prints "Cat!🐱"
+// Prints "Cat!🐱".
 ```
 
 <!--
@@ -898,7 +898,7 @@ use the `count` property of the string:
 ```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
 print("unusualMenagerie has \(unusualMenagerie.count) characters")
-// Prints "unusualMenagerie has 40 characters"
+// Prints "unusualMenagerie has 40 characters".
 ```
 
 <!--
@@ -923,12 +923,12 @@ with a fourth character of `é`, not `e`:
 ```swift
 var word = "cafe"
 print("the number of characters in \(word) is \(word.count)")
-// Prints "the number of characters in cafe is 4"
+// Prints "the number of characters in cafe is 4".
 
 word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
 
 print("the number of characters in \(word) is \(word.count)")
-// Prints "the number of characters in café is 4"
+// Prints "the number of characters in café is 4".
 ```
 
 <!--
@@ -1074,7 +1074,7 @@ indices of individual characters in a string.
 for index in greeting.indices {
     print("\(greeting[index]) ", terminator: "")
 }
-// Prints "G u t e n   T a g ! "
+// Prints "G u t e n   T a g ! ".
 ```
 
 <!--
@@ -1086,7 +1086,7 @@ for index in greeting.indices {
      }
   >> print("")
   << G u t e n   T a g !
-  // Prints "G u t e n   T a g ! "
+  // Prints "G u t e n   T a g ! ".
   ```
 -->
 
@@ -1273,7 +1273,7 @@ let sameQuotation = "We're a lot alike, you and I."
 if quotation == sameQuotation {
     print("These two strings are considered equal")
 }
-// Prints "These two strings are considered equal"
+// Prints "These two strings are considered equal".
 ```
 
 <!--
@@ -1341,7 +1341,7 @@ let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
 if eAcuteQuestion == combinedEAcuteQuestion {
     print("These two strings are considered equal")
 }
-// Prints "These two strings are considered equal"
+// Prints "These two strings are considered equal".
 ```
 
 <!--
@@ -1500,7 +1500,7 @@ for scene in romeoAndJuliet {
     }
 }
 print("There are \(act1SceneCount) scenes in Act 1")
-// Prints "There are 5 scenes in Act 1"
+// Prints "There are 5 scenes in Act 1".
 ```
 
 <!--
@@ -1532,7 +1532,7 @@ for scene in romeoAndJuliet {
     }
 }
 print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
-// Prints "6 mansion scenes; 2 cell scenes"
+// Prints "6 mansion scenes; 2 cell scenes".
 ```
 
 <!--
@@ -1614,7 +1614,7 @@ for codeUnit in dogString.utf8 {
     print("\(codeUnit) ", terminator: "")
 }
 print("")
-// Prints "68 111 103 226 128 188 240 159 144 182 "
+// Prints "68 111 103 226 128 188 240 159 144 182 ".
 ```
 
 <!--
@@ -1626,7 +1626,7 @@ print("")
      }
   -> print("")
   << 68 111 103 226 128 188 240 159 144 182
-  // Prints "68 111 103 226 128 188 240 159 144 182 "
+  // Prints "68 111 103 226 128 188 240 159 144 182 ".
   ```
 -->
 
@@ -1668,7 +1668,7 @@ for codeUnit in dogString.utf16 {
     print("\(codeUnit) ", terminator: "")
 }
 print("")
-// Prints "68 111 103 8252 55357 56374 "
+// Prints "68 111 103 8252 55357 56374 ".
 ```
 
 <!--
@@ -1680,7 +1680,7 @@ print("")
      }
   -> print("")
   << 68 111 103 8252 55357 56374
-  // Prints "68 111 103 8252 55357 56374 "
+  // Prints "68 111 103 8252 55357 56374 ".
   ```
 -->
 
@@ -1722,7 +1722,7 @@ for scalar in dogString.unicodeScalars {
     print("\(scalar.value) ", terminator: "")
 }
 print("")
-// Prints "68 111 103 8252 128054 "
+// Prints "68 111 103 8252 128054 ".
 ```
 
 <!--
@@ -1734,7 +1734,7 @@ print("")
      }
   -> print("")
   << 68 111 103 8252 128054
-  // Prints "68 111 103 8252 128054 "
+  // Prints "68 111 103 8252 128054 ".
   ```
 -->
 

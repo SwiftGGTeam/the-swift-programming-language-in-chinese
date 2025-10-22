@@ -1235,7 +1235,7 @@ For example:
 ```swift
 let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
 print(await logger.max)
-// Prints "25"
+// Prints "25".
 ```
 
 In this example,

@@ -269,7 +269,7 @@ case .right:
 case nil:
     print("Keep going straight")
 }
-// Prints "Turn left"
+// Prints "Turn left".
 ```
 
 <!--

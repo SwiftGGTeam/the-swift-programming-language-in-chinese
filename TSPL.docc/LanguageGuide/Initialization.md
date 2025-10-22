@@ -73,7 +73,7 @@ struct Fahrenheit {
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
-// Prints "The default temperature is 32.0° Fahrenheit"
+// Prints "The default temperature is 32.0° Fahrenheit".
 ```
 
 <!--
@@ -650,11 +650,11 @@ For example:
 ```swift
 let zeroByTwo = Size(height: 2.0)
 print(zeroByTwo.width, zeroByTwo.height)
-// Prints "0.0 2.0"
+// Prints "0.0 2.0".
 
 let zeroByZero = Size()
 print(zeroByZero.width, zeroByZero.height)
-// Prints "0.0 0.0"
+// Prints "0.0 0.0".
 ```
 
 <!--
@@ -1836,7 +1836,7 @@ let pi = 3.14159
 if let valueMaintained = Int(exactly: wholeNumber) {
     print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
 }
-// Prints "12345.0 conversion to Int maintains value of 12345"
+// Prints "12345.0 conversion to Int maintains value of 12345".
 
 let valueChanged = Int(exactly: pi)
 // valueChanged is of type Int?, not Int
@@ -1844,7 +1844,7 @@ let valueChanged = Int(exactly: pi)
 if valueChanged == nil {
     print("\(pi) conversion to Int doesn't maintain value")
 }
-// Prints "3.14159 conversion to Int doesn't maintain value"
+// Prints "3.14159 conversion to Int doesn't maintain value".
 ```
 
 <!--
@@ -1911,7 +1911,7 @@ let someCreature = Animal(species: "Giraffe")
 if let giraffe = someCreature {
     print("An animal was initialized with a species of \(giraffe.species)")
 }
-// Prints "An animal was initialized with a species of Giraffe"
+// Prints "An animal was initialized with a species of Giraffe".
 ```
 
 <!--
@@ -1938,7 +1938,7 @@ let anonymousCreature = Animal(species: "")
 if anonymousCreature == nil {
     print("The anonymous creature couldn't be initialized")
 }
-// Prints "The anonymous creature couldn't be initialized"
+// Prints "The anonymous creature couldn't be initialized".
 ```
 
 <!--
@@ -2233,7 +2233,7 @@ initialization succeeds:
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
     print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
-// Prints "Item: sock, quantity: 2"
+// Prints "Item: sock, quantity: 2".
 ```
 
 <!--
@@ -2256,7 +2256,7 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 } else {
     print("Unable to initialize zero shirts")
 }
-// Prints "Unable to initialize zero shirts"
+// Prints "Unable to initialize zero shirts".
 ```
 
 <!--
@@ -2281,7 +2281,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 } else {
     print("Unable to initialize one unnamed product")
 }
-// Prints "Unable to initialize one unnamed product"
+// Prints "Unable to initialize one unnamed product".
 ```
 
 <!--
@@ -2936,9 +2936,9 @@ and can be queried with the `squareIsBlackAt(row:column:)` utility function:
 ```swift
 let board = Chessboard()
 print(board.squareIsBlackAt(row: 0, column: 1))
-// Prints "true"
+// Prints "true".
 print(board.squareIsBlackAt(row: 7, column: 7))
-// Prints "false"
+// Prints "false".
 ```
 
 <!--

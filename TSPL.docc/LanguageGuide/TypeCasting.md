@@ -166,7 +166,7 @@ for item in library {
 }
 
 print("Media library contains \(movieCount) movies and \(songCount) songs")
-// Prints "Media library contains 2 movies and 3 songs"
+// Prints "Media library contains 2 movies and 3 songs".
 ```
 
 <!--

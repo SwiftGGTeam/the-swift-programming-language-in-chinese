@@ -451,9 +451,9 @@ class New: Superclass {
 }
 let new = New()
 new.x = 100
-// Prints "Setter was called"
-// Prints "Getter was called"
-// Prints "New value 100"
+// Prints "Setter was called".
+// Prints "Getter was called".
+// Prints "New value 100".
 
 // This subclass refers to oldValue in its observer, so the superclass's
 // getter is called once before the setter, and again to print the value.
@@ -464,10 +464,10 @@ class NewAndOld: Superclass {
 }
 let newAndOld = NewAndOld()
 newAndOld.x = 200
-// Prints "Getter was called"
-// Prints "Setter was called"
-// Prints "Getter was called"
-// Prints "Old value 12 - new value 200"
+// Prints "Getter was called".
+// Prints "Setter was called".
+// Prints "Getter was called".
+// Prints "Old value 12 - new value 200".
 ```
 
 <!--
@@ -3155,7 +3155,7 @@ the specialized version containing the title string is used.
 ```swift
 let oneAndTwo = Pair(first: "one", second: "two")
 oneAndTwo.log()
-// Prints "Pair of 'String': (one, two)"
+// Prints "Pair of 'String': (one, two)".
 ```
 
 <!--
@@ -3181,7 +3181,7 @@ func doSomething<T: Loggable>(with x: T) {
     x.log()
 }
 doSomething(with: oneAndTwo)
-// Prints "(one, two)"
+// Prints "(one, two)".
 ```
 
 <!--

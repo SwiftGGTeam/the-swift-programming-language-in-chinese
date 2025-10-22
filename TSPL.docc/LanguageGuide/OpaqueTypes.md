@@ -616,7 +616,7 @@ For example:
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
     print(downcastTriangle.size)
 }
-// Prints "5"
+// Prints "5".
 ```
 
 For more information, see <doc:TypeCasting#Downcasting>.
@@ -860,7 +860,7 @@ func makeOpaqueContainer<T>(item: T) -> some Container {
 let opaqueContainer = makeOpaqueContainer(item: 12)
 let twelve = opaqueContainer[0]
 print(type(of: twelve))
-// Prints "Int"
+// Prints "Int".
 ```
 
 <!--

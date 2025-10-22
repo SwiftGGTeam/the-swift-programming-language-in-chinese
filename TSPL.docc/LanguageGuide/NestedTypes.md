@@ -148,7 +148,7 @@ You can use this initializer to initialize a new constant called `theAceOfSpades
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
 print("theAceOfSpades: \(theAceOfSpades.description)")
-// Prints "theAceOfSpades: suit is ♠, value is 1 or 11"
+// Prints "theAceOfSpades: suit is ♠, value is 1 or 11".
 ```
 
 <!--
