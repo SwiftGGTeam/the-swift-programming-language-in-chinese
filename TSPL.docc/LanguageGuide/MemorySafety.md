@@ -243,7 +243,7 @@ func increment(_ number: inout Int) {
 }
 
 increment(&stepSize)
-// Error: conflicting accesses to stepSize
+// Error: Conflicting accesses to stepSize.
 ```
 
 <!--
@@ -257,7 +257,7 @@ increment(&stepSize)
      }
 
   -> increment(&stepSize)
-  // Error: conflicting accesses to stepSize
+  // Error: Conflicting accesses to stepSize.
   xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
   xx Previous access (a modification) started at  (0x10e86b032).
   xx Current access (a read) started at:
@@ -334,7 +334,7 @@ var playerOneScore = 42
 var playerTwoScore = 30
 balance(&playerOneScore, &playerTwoScore)  // OK
 balance(&playerOneScore, &playerOneScore)
-// Error: conflicting accesses to playerOneScore
+// Error: Conflicting accesses to playerOneScore.
 ```
 
 <!--
@@ -350,7 +350,7 @@ balance(&playerOneScore, &playerOneScore)
   -> var playerTwoScore = 30
   -> balance(&playerOneScore, &playerTwoScore)  // OK
   -> balance(&playerOneScore, &playerOneScore)
-  // Error: conflicting accesses to playerOneScore
+  // Error: Conflicting accesses to playerOneScore.
   !$ error: inout arguments are not allowed to alias each other
   !! balance(&playerOneScore, &playerOneScore)
   !!                          ^~~~~~~~~~~~~~~
@@ -502,7 +502,7 @@ there's a conflict:
 
 ```swift
 oscar.shareHealth(with: &oscar)
-// Error: conflicting accesses to oscar
+// Error: Conflicting accesses to oscar.
 ```
 
 <!--
@@ -510,7 +510,7 @@ oscar.shareHealth(with: &oscar)
 
   ```swifttest
   -> oscar.shareHealth(with: &oscar)
-  // Error: conflicting accesses to oscar
+  // Error: Conflicting accesses to oscar.
   !$ error: inout arguments are not allowed to alias each other
   !! oscar.shareHealth(with: &oscar)
   !!                         ^~~~~~
@@ -556,7 +556,7 @@ produces a conflict:
 ```swift
 var playerInformation = (health: 10, energy: 20)
 balance(&playerInformation.health, &playerInformation.energy)
-// Error: conflicting access to properties of playerInformation
+// Error: Conflicting access to properties of playerInformation.
 ```
 
 <!--
@@ -570,7 +570,7 @@ balance(&playerInformation.health, &playerInformation.energy)
   >> }
   -> var playerInformation = (health: 10, energy: 20)
   -> balance(&playerInformation.health, &playerInformation.energy)
-  // Error: conflicting access to properties of playerInformation
+  // Error: Conflicting access to properties of playerInformation.
   xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
   xx Previous access (a modification) started at  (0x107952037).
   xx Current access (a modification) started at:

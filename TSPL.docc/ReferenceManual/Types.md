@@ -153,9 +153,9 @@ that name is part of the type.
 
 ```swift
 var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
-someTuple = (top: 4, bottom: 42) // OK: names match
-someTuple = (9, 99)              // OK: names are inferred
-someTuple = (left: 5, right: 5)  // Error: names don't match
+someTuple = (top: 4, bottom: 42) // OK: Names match.
+someTuple = (9, 99)              // OK: Names are inferred.
+someTuple = (left: 5, right: 5)  // Error: Names don't match.
 ```
 
 <!--
@@ -163,11 +163,11 @@ someTuple = (left: 5, right: 5)  // Error: names don't match
 
   ```swifttest
   -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
-  -> someTuple = (top: 4, bottom: 42) // OK: names match
-  -> someTuple = (9, 99)              // OK: names are inferred
-  -> someTuple = (left: 5, right: 5)  // Error: names don't match
+  -> someTuple = (top: 4, bottom: 42) // OK: Names match.
+  -> someTuple = (9, 99)              // OK: Names are inferred.
+  -> someTuple = (left: 5, right: 5)  // Error: Names don't match.
   !$ error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
-  !! someTuple = (left: 5, right: 5)  // Error: names don't match
+  !! someTuple = (left: 5, right: 5)  // Error: Names don't match.
   !!             ^~~~~~~~~~~~~~~~~~~
   ```
 -->

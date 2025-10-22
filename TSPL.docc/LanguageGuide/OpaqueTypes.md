@@ -373,9 +373,9 @@ that includes a special case for squares:
 ```swift
 func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
     if shape is Square {
-        return shape // Error: return types don't match
+        return shape // Error: Return types don't match.
     }
-    return FlippedShape(shape: shape) // Error: return types don't match
+    return FlippedShape(shape: shape) // Error: Return types don't match.
 }
 ```
 
@@ -395,18 +395,18 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   >> }
   -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
          if shape is Square {
-             return shape // Error: return types don't match
+             return shape // Error: Return types don't match.
          }
-         return FlippedShape(shape: shape) // Error: return types don't match
+         return FlippedShape(shape: shape) // Error: Return types don't match.
      }
   !$ error: function declares an opaque return type 'some Shape', but the return statements in its body do not have matching underlying types
   !! func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   !!      ^                                    ~~~~~~~~~~
   !$ note: return statement has underlying type 'T'
-  !! return shape // Error: return types don't match
+  !! return shape // Error: Return types don't match.
   !! ^
   !$ note: return statement has underlying type 'FlippedShape<T>'
-  !! return FlippedShape(shape: shape) // Error: return types don't match
+  !! return FlippedShape(shape: shape) // Error: Return types don't match.
   !! ^
   ```
 -->

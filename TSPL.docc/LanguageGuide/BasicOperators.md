@@ -506,8 +506,8 @@ with the `<` operator because the `<` operator can't be applied to
 `Bool` values.
 
 ```swift
-("blue", -1) < ("purple", 1)        // OK, evaluates to true
-("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+("blue", -1) < ("purple", 1)        // OK: Evaluates to true.
+("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
 ```
 
 <!--
@@ -515,17 +515,17 @@ with the `<` operator because the `<` operator can't be applied to
 
   ```swifttest
   >> _ =
-  -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
+  -> ("blue", -1) < ("purple", 1)        // OK: Evaluates to true.
   >> _ =
-  -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+  -> ("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
   !$ error: type '(String, Bool)' cannot conform to 'Comparable'
-  !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+  !! ("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
   !!                 ^
   !$ note: only concrete types such as structs, enums and classes can conform to protocols
-  !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+  !! ("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
   !!                 ^
   !$ note: required by referencing operator function '<' on 'Comparable' where 'Self' = '(String, Bool)'
-  !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+  !! ("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
   !!                 ^
   ```
 -->
