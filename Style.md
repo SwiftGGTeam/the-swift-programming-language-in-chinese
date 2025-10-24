@@ -25,7 +25,7 @@ just surface level syntax for concepts they already know from other languages.
 **Language Guide**,
 commonly referred to as “the guide”,
 leads you through the Swift language in a pedagogically useful, linear order.
-It doesn't promise to show you every feature of
+It doesn’t promise to show you every feature of
 the language or the Swift standard library,
 and it hand-waves over the exact details
 of some of the more complicated underlying bits.
@@ -72,13 +72,13 @@ but it makes no attempt to be an instructional text.
 Its material is ordered according to the shape of the formal grammar,
 and it hand-waves over examples and applications.
 Several places explicitly link back to the guide for examples.
-It doesn't need to be as approachable for beginners,
+It doesn’t need to be as approachable for beginners,
 because the guide handles that,
 but it does need to be accurate and unambiguous,
 shining its flashlight into infrequently explored areas of the language.
 To accomplish that,
 it sometimes must sacrifice approachability or user-friendliness.
-That's ok — many readers won't even need the reference,
+That’s OK — many readers won’t even need the reference,
 but if the reference is unclear,
 the readers who need an answer have nowhere else to go.
 
@@ -107,6 +107,28 @@ in the reference, omit it.
 
 Spelled as two words, not closed up or hyphenated.
 
+## comments
+
+End each comment with a period, even when it's a sentence fragment.
+When it makes sense, prefer using full sentences.
+
+For "prints" comments,
+if the printed text is already a full sentence,
+then don't add another period afterward.
+
+```
+// Prints "The first item, 'one', is a string."
+// Prints "Job sent".
+```
+
+When noting that a piece of code works or produces an error,
+format the comment with a colon as follows:
+
+```
+// OK: Evaluates to true.
+// Error: Value consumed more than once.
+```
+
 ## compiler, the
 
 See entry for *Swift*.
@@ -129,7 +151,7 @@ Use wording and markup like the following:
 ## definite initialization
 
 Not “definitive initialization”.
-Don‘t abbreviate as DI.
+Don’t abbreviate as DI.
 
 ## function
 
@@ -146,6 +168,18 @@ Although level four headings are allowed and the book does use them,
 you should generally try to avoid them.
 Deeply nested headings often indicate
 that there’s a better way to organize the content.
+
+## isolation
+
+Use the phrase “is isolated” to describe values and types
+that are isolated to a global actor.
+For example, in the following code,
+`MyType` and `m` are isolated to the main actor.
+
+```
+@MainActor struct MyType { ... }
+let m: MyType
+```
 
 ## macro names
 
@@ -193,7 +227,7 @@ make sure you get tech review on the name you invent for it.
 
 ## optional binding
 
-Omit the article: "use optional binding", not "use an optional binding".
+Omit the article: “use optional binding”, not “use an optional binding”.
 
 ## passive voice
 
@@ -221,6 +255,25 @@ and the identity of that agent is irrelevant.
 This is the preferred wording when describing the semantics of `await`.
 If context has already made that clear and repeating “potential” becomes wordy,
 you can shorten it to just “suspension point”.
+
+## protocol conformance
+
+The first time you describe conformance to a protocol,
+specify that protocol by name.
+If this phrasing gets wordy in a longer discussion,
+it’s OK to use an English name for the protocol after that.
+For example:
+
+> The code listing above passes `someValue`  to `f()`,
+> which is safe because `SomeType` conforms to the `Sendable` protocol.
+> Values you pass `f()` must be sendable, so the method can […]
+
+Pay attention to possible ambiguity around `Sendable`:
+Types can conform to `Sendable`,
+not have a conformance to `Sendable`,
+or have an unavailable conformance to `Sendable`.
+Without context, writing “nonsendable”
+is ambiguous between the second and third case.
 
 ## punctuation before a code listing
 
@@ -260,18 +313,18 @@ and an error that comes from or is related to the Swift runtime environment.
 Avoid when describing actors.
 By design, actors specifically *avoid* having shared mutable state —
 their mutable state is private,
-and accessible only through the actor's (async) methods.
+and accessible only through the actor’s (async) methods.
 
 ## standard library
 
-Spell out in full as “the Swift standard library“ on the first use.
+Spell out in full as “the Swift standard library” on the first use.
 If context already makes it clear
 and repeating the full name becomes wordy,
 you can shorted it to just “the standard library”
 in continued discussion.
-(We currently don‘t have any examples of doing that.)
+(We currently don’t have any examples of doing that.)
 
-Not “stdlib“ or “the stdlib“.
+Not “stdlib” or “the stdlib”.
 
 ## spawn, start
 
@@ -309,7 +362,7 @@ For example:
 
 In the reference,
 we refer to the compiler specifically
-when it‘s the actual agent performing the action.
+when it’s the actual agent performing the action.
 We don’t distinguish between the parts of the compiler
 like the parser or the lexer or the optimizer.
 
@@ -347,7 +400,7 @@ flow better and hang together better as a cohesive whole.
 In the interest of readability and approachability,
 we don’t write examples that have
 single-letter or meaningless identifiers,
-even in the reference and even when we‘re only describing syntax.
+even in the reference and even when we’re only describing syntax.
 Instead, when there’s no relevant semantic meaning,
 we use types like `SomeStructure` and variables like `someArray`.
 
@@ -444,33 +497,44 @@ still generally expect text to be made up of lines of <80 characters.
 
 These guidelines apply to the “Grammar of X” blocks in the reference.
 
-**Write an ASCII arrow.**
-The arrow (`-->`) can be read as “can consist of.”
+**Write a Unicode arrow.**
+The arrow (→) can be read as “can consist of.”
+Depending on your text editor,
+the easiest way to insert this arrow
+might be to copy it from another grammar rule.
 
-To make the arrow in RST, use two hyphens (`-`) followed by a right-hand angle bracket (`>`).
-The production path is responsible for making it render as a nice Unicode arrow.
+**End nonfinal lines with a hard break.**
+Write a backslash (`\`) at the end of a line,
+unless it's the last line of a grammar black
+or the next line is blank.
 
-**Write literals with double backticks.**
+**Write literals with backticks.**
 For example:
 
-    forty-two --> ``42``
+    *forty-two* → `42`
 
-**Write syntactic category names without any extra markup.**
-Within a syntax-grammar block, they appear in italics automatically.
+If the literal contains a backtick,
+use multiple backticks to produce code voice:
+
+    *identifier* → **`` ` ``** *identifier-head* *identifier-characters*_?_ **`` ` ``**
+
+**Write syntactic category names in italics.**
+Use a single asterisk (`*`) before and after the name.
 Don’t refer to them from the English prose above them.
 
 **Use full English words as the names for syntactic categories.**
 There are cases where this isn’t feasible because of space considerations.
-For example, in the grammar for a C-style for statement,
+For example, in the grammar for a C-style for statement
+(which is no longer part of the Swift language),
 the category that defines the initialization part of the for statement
 had to be shortened to *for-init*
-(instead of *for-initialization*, as the rule specifies).
+(instead of *for-initialization*, as this rule specifies).
 In this case, nothing seems lost from a readability or pedagogical perspective.
 
-    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT brace-item-list
-    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT ``)`` brace-item-list
+    *c-style-for-statement* → `for` *for-init*_?_ `;` *expression_?_ `;` *basic-expression*_?_ *brace-item-list*
+    *c-style-for-statement* → `for` `(` *for-init*_?_ `;` *expression*_?_ `;` *basic-expression*_?_ `)` *brace-item-list*
 
-    for-init --> variable-declaration | expression
+    *for-init* → *variable-declaration* | *expression*
 
 **Use a pipe (`|`) to indicate alternation.**
 When there are too many alternatives
@@ -481,29 +545,31 @@ For example, to specify that a *case-block-item* can consist of a *declaration*,
 *expression*, or a *statement*, you can use a pipe instead of a new line,
 because all three alternatives fit nicely on one line:
 
-    code-block-item --> declaration | expression | statement
+    *code-block-item* → *declaration* | *expression* | *statement*
 
 When using pipes,
 keep the number of items in each alternative small for readability.
 The most common case is that each alternative is either
 a single literal or a single syntactic category,
-although that's not always possible.
+although that’s not always possible.
 
 On the other hand, consider the grammar of a control transfer statement:
 
-    control-transfer-statement --> break-statement
-    control-transfer-statement --> continue-statement
-    control-transfer-statement --> fallthrough-statement
-    control-transfer-statement --> return-statement
+    *control-transfer-statement* → *break-statement*
+    *control-transfer-statement* → *continue-statement*
+    *control-transfer-statement* → *fallthrough-statement*
+    *control-transfer-statement* → *return-statement*
 
 There likely wouldn’t be room on a single line to use a pipe to separate each alternative.
 The following tends not to look good:
 
-    control-transfer-statement --> break-statement | continue-statement | fallthrough-statement | return-statement
+    *control-transfer-statement* → *break-statement* | *continue-statement* | *fallthrough-statement* | *return-statement*
 
-**Append `-OPT` to indicate optionality.**
-Within a syntax-grammar block,
-this is translated to a subscript “opt” automatically.
+**Append `_?_` to indicate optionality.**
+This is rendered in italics,
+the same as syntactic categories.
+Using an underscore (`_`) for italics makes them easier to read
+when editing the grammar in source.
 
 **Use plural names for repetition.**
 In BNF, this is represented with a plus (`+`) or star (`*`).
@@ -511,26 +577,26 @@ The syntax of our formal grammar doesn’t include repetition operators,
 so we use two syntactic categories to allow repetition.
 For example:
 
-    categories --> category categories-OPT
-    category --> More formal grammar goes here.
+    *categories* → *category* *categories*_?_
+    *category* → More formal grammar goes here.
 
-    switch-statement --> ``switch`` basic-expression { switch-cases-OPT }
-    switch-cases --> switch-case switch-cases-OPT
-    switch-case --> case-label statements
-    switch-case --> default-label statements
-    switch-case --> conditional-switch-case
+    *switch-statement* → `switch` *basic-expression* `{` *switch-cases*_?_ `}`
+    *switch-cases* → *switch-case* *switch-cases*_?_
+    *switch-case* → *case-label* *statements*
+    *switch-case* → *default-label* *statements*
+    *switch-case* → *conditional-switch-case*
 
 A plural name consists of only a repeated list of the singular version.
 If you need separators like commas, call it a “list”.
 
-    case-label --> attributes-OPT ``case`` case-item-list ``:``
-    case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
+    *case-label* → *attributes*_?_ `case` *case-item-list* `:`
+    *case-item-list* → *pattern* *where-clause*_?_ | *pattern* *where-clause*_?_ `,` *case-item-list*
 
 As shown above, use right-recursion when dealing with repetition.
 
 **Omit grouping parentheses.**
 Our formal grammar doesn’t use grouping parentheses.
-Optionality using `-OPT` always applies to exactly one token before it,
+Optionality using `_?_` always applies to exactly one token before it,
 and only one level of alternation using `|` or line breaks is allowed.
 
 If you see BNF grammar for new language features that uses parentheses,
@@ -544,8 +610,8 @@ which then needed to be defined:
 
 It became:
 
-    guard-expression-OPT
-    guard-expression --> ``where`` expression
+    *guard-expression*_?_
+    *guard-expression* → `where` *expression*
 
 This BNF rule was a bit dense and required the application of several of the rules above:
 
@@ -553,5 +619,5 @@ This BNF rule was a bit dense and required the application of several of the rul
 
 It became:
 
-    switch-case --> case-labels brace-items-OPT | default-label brace-items-OPT
+    *switch-case* → *case-labels* *brace-items*_?_ | *default-label* *brace-items*_?_
 
