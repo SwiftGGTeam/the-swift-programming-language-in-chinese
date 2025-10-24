@@ -532,7 +532,7 @@ had to be shortened to *for-init*
 In this case, nothing seems lost from a readability or pedagogical perspective.
 
     *c-style-for-statement* → `for` *for-init*_?_ `;` *expression_?_ `;` *basic-expression*_?_ *brace-item-list*
-    *c-style-for-statement* --> `for` `(` *for-init*_?_ `;` *expression*_?_ `;` *basic-expression*_?_ `)` *brace-item-list*
+    *c-style-for-statement* → `for` `(` *for-init*_?_ `;` *expression*_?_ `;` *basic-expression*_?_ `)` *brace-item-list*
 
     *for-init* → *variable-declaration* | *expression*
 
