@@ -1,9 +1,3 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6.docc/ReferenceManual/GenericParametersAndArguments.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/genericparametersandarguments
-翻译估计用时：⭐️⭐️⭐️
--->
-
 # 泛型形参和实参
 
 将参数声明抽象化以脱离具体类型。

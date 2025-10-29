@@ -1,4 +1,4 @@
-# SwiftGG 翻译组
+# SwiftGG
 
 SwiftGG专注Apple生态的创作者社区旗下Swift文档翻译团队
 
