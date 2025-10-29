@@ -752,7 +752,7 @@ class SomeOtherClass {
   ```
 -->
 
-如果 `self` 是结构体或枚举的实例，则始终可以隐式引用 `self`。但是转义闭包无法捕获其对 `self` 的可变引用。结构体和枚举不允许共享可变性，如 <doc:ClassesAndStructures#结构体和枚举是值类型> 中所述。
+如果 `self` 是结构体或枚举的实例，则始终可以隐式引用 `self`。但是逃逸闭包无法捕获其对 `self` 的可变引用。结构体和枚举不允许共享可变性，如 <doc:ClassesAndStructures#结构体和枚举是值类型> 中所述。
 
 ```swift
 struct SomeStruct {
@@ -791,7 +791,7 @@ struct SomeStruct {
   ```
 -->
 
-在上面的示例中，对 `someFunctionWithEscapingClosure` 函数的调用是一个错误，因为它位于一个可变函数中，因此 `self` 是可变的。这违反了规则，即转义闭包不能捕获对结构的 `self` 的可变引用。
+在上面的示例中，对 `someFunctionWithEscapingClosure` 函数的调用是一个错误，因为它位于一个可变函数中，因此 `self` 是可变的。这违反了规则，即逃逸闭包不能捕获对结构的 `self` 的可变引用。
 
 <!--
   - test: `noescape-closure-as-argument`
