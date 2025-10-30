@@ -2,6 +2,14 @@
 
 Review the recent changes to this book.
 
+**2025-11-03**
+
+- Updated for Swift 6.2.1.
+- Added the <doc:GenericParametersAndArguments#Integer-Generic-Parameters> section
+  with information about generic parameters that have a numeric value.
+- Added information to <doc:TheBasics>
+  about the differences between integers and floating-point numbers.
+
 **2025-09-15**
 
 - Updated for Swift 6.2.
