@@ -383,7 +383,7 @@ include a note as follows.
 > For information about enabling future language features,
 > see [Enabling future language features](FIXME).
 
-[SE-0362]: https://github.com/apple/swift-evolution/blob/main/proposals/0362-piecemeal-future-features.md
+[SE-0362]: https://github.com/swiftlang/swift-evolution/blob/main/proposals/0362-piecemeal-future-features.md
 
 # Tone
 
