@@ -164,7 +164,7 @@ For a list of C atomic functions, see the `stdatomic(3)` man page.
 <!--
   Using the C atomic functions from Swift
   requires some shimming that's out of scope for TSPL - for example:
-  https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
+  https://github.com/apple/swift-atomics/tree/main/Sources/_AtomicsShims
 -->
 
 An access is *instantaneous*
