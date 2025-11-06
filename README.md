@@ -27,13 +27,13 @@ Discussions and contributions follow the [Swift Code of Conduct][conduct].
 For more information, see [Contributing to The Swift Programming Language][contributing].
 
 [asg]: https://help.apple.com/applestyleguide/
-[bugs]: https://github.com/apple/swift-book/issues
+[bugs]: https://github.com/swiftlang/swift-book/issues
 [conduct]: https://www.swift.org/code-of-conduct
 [contributing]: /CONTRIBUTING.md
 [forum]: https://forums.swift.org/c/swift-documentation/92
 [tspl-style]: /Style.md
 [published]: https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
-[docc]: https://github.com/apple/swift-docc
+[docc]: https://github.com/swiftlang/swift-docc
 
 ## Building
 
