@@ -805,6 +805,15 @@ print(wrapper.x)
   ```
 -->
 
+### export
+
+Apply this attribute to a function or method declaration to control how its definition is exported to client modules. The argument to this attribute indicates what aspect of the declaration is exported:
+
+- The `interface` argument specifies that only the interface is exported to clients, in the form of a callable symbol. The definition (function body) is not available to clients for inlining, optimization, or any other purpose. Use this to hide the implementation from clients.
+
+- The `implementation` argument specifies that only the definition (function body) is exported to clients. There is no symbol for this function emitted into the binary, and clients are responsible for emitting a copy of the definition wherever it is required. Use this to introduce a new function or method without affecting the Application Binary Interface (ABI).
+
+
 ### freestanding
 
 Apply the `freestanding` attribute
