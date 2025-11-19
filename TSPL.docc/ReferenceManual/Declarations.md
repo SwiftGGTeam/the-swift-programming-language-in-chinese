@@ -58,11 +58,11 @@ The Swift code you compile to make an executable
 can contain at most one of the following approaches
 to mark the top-level entry point,
 regardless of how the code is organized into files and modules:
+a file that contains top-level executable code,
+a `main.swift` file,
 the `main` attribute,
 the `NSApplicationMain` attribute,
-the `UIApplicationMain` attribute,
-a `main.swift` file,
-or a file that contains top-level executable code.
+or the `UIApplicationMain` attribute.
 
 > Grammar of a top-level declaration:
 >
