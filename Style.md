@@ -148,6 +148,16 @@ Use wording and markup like the following:
 > using this attribute will be an error.
 ```
 
+And when it becomes an error:
+
+```
+> Deprecated:
+> This attribute is deprecated;
+> use the <doc:Attributes#main> attribute instead.
+> In Swift 6,
+> using this attribute produces a compile-time error.
+```
+
 ## definite initialization
 
 Not “definitive initialization”.

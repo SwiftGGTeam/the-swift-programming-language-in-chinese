@@ -1241,7 +1241,7 @@ for a method marked with the `objc` attribute.
 > This attribute is deprecated;
 > use the <doc:Attributes#main> attribute instead.
 > In Swift 6,
-> using this attribute will be an error.
+> using this attribute produces a compile-time error.
 
 Apply this attribute to a class
 to indicate that it's the app delegate.
@@ -2520,7 +2520,7 @@ The imported module must be compiled with testing enabled.
 > This attribute is deprecated;
 > use the <doc:Attributes#main> attribute instead.
 > In Swift 6,
-> using this attribute will be an error.
+> using this attribute produces a compile-time error.
 
 Apply this attribute to a class
 to indicate that it's the app delegate.
