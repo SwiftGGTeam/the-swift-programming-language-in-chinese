@@ -1252,13 +1252,13 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
 > *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
-> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
+> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`,`**_?_ **`)`** | *identifier-list* \
 > *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
 > *closure-parameter* → *closure-parameter-name* *type-annotation*_?_ \
 > *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
 > *closure-parameter-name* → *identifier*
 >
-> *capture-list* → **`[`** *capture-list-items* **`]`** \
+> *capture-list* → **`[`** *capture-list-items* **`,`**_?_ **`]`** \
 > *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* **`=`** *expression* \
@@ -1476,7 +1476,7 @@ A single expression inside parentheses is a parenthesized expression.
 
 > Grammar of a tuple expression:
 >
-> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`** \
+> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`,`**_?_ **`)`** \
 > *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
 > *tuple-element* → *expression* | *identifier* **`:`** *expression*
 
@@ -2643,7 +2643,7 @@ avoid using `&` instead of using the unsafe APIs explicitly.
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
 >
-> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`** \
+> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`,`**_?_ **`)`** \
 > *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list* \
 > *function-call-argument* → *expression* | *identifier* **`:`** *expression* \
 > *function-call-argument* → *operator* | *identifier* **`:`** *operator*

@@ -273,7 +273,7 @@ see <doc:Generics#Generic-Where-Clauses>.
 
 > Grammar of a generic parameter clause:
 >
-> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`>`** \
+> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`,`**_?_ **`>`** \
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
 > *generic-parameter* → *type-name* \
 > *generic-parameter* → *type-name* **`:`** *type-identifier* \
