@@ -886,7 +886,7 @@ to mark that the function call can change the argument's value.
 
 ```swift
 var x = 7
-someFunction(&x)
+someFunction(a: &x)
 print(x)  // Prints "8"
 ```
 
@@ -930,7 +930,7 @@ func someFunction(a: inout Int) {
 }
 
 // Error: This causes a runtime exclusivity violation
-someFunction(&someValue)
+someFunction(a: &someValue)
 ```
 
 For the same reason,
@@ -944,7 +944,7 @@ func someFunction(a: inout Int, b: inout Int) {
 }
 
 // Error: Cannot pass the same value to multiple in-out parameters
-someFunction(&someValue, &someValue)
+someFunction(a: &someValue, b: &someValue)
 ```
 
 For more information about memory safety and memory exclusivity,
