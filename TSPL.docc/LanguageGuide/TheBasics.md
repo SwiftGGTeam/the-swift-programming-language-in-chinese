@@ -1629,7 +1629,7 @@ see <doc:BasicOperators#Nil-Coalescing-Operator>.
 
 When `nil` represents an unrecoverable failure,
 such as a programmer error or corrupted state,
-you can access the underlying value
+you can access the underlying value of the optional
 by adding an exclamation mark (`!`) to the end of the optional's name.
 This is known as *force unwrapping* the optional's value.
 When you force unwrap a non-`nil` value,
