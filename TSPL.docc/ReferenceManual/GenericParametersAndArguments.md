@@ -354,13 +354,22 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```
 -->
 
+The last type argument in a generic argument list
+can be followed by an optional comma.
+<!--
+XXX TR: Please confirm.
+The SE proposal shows only generic parameter lists,
+but the rule that trailing commas are allowed inside matching brackets
+should allow them here also.
+-->
+
 As mentioned in <doc:GenericParametersAndArguments#Generic-Parameter-Clause>,
 you don't use a generic argument clause to specify the type arguments
 of a generic function or initializer.
 
 > Grammar of a generic argument clause:
 >
-> *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
+> *generic-argument-clause* → **`<`** *generic-argument-list* **`,`**_?_ **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
 > *generic-argument* → *type* | *signed-integer-literal*
 
