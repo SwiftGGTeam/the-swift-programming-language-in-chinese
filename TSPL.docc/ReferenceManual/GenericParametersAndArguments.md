@@ -99,6 +99,9 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
+The last generic parameter in a generic parameter list
+can be followed by an optional comma.
+
 ### Integer Generic Parameters
 
 An *integer generic parameter*

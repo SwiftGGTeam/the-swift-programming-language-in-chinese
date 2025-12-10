@@ -1017,6 +1017,7 @@ surrounded by square brackets,
 before the list of parameters.
 If you use a capture list, you must also use the `in` keyword,
 even if you omit the parameter names, parameter types, and return type.
+The last expression in the capture list can be followed by an optional comma.
 
 The entries in the capture list are initialized
 when the closure is created.
@@ -1473,6 +1474,8 @@ A single expression inside parentheses is a parenthesized expression.
 > you can use it to write an empty tuple type.
 > However, like all type aliases, `Void` is always a type ---
 > you can't use it to write an empty tuple expression.
+
+The last expression in a tuple can be followed by an optional comma.
 
 > Grammar of a tuple expression:
 >
@@ -2308,6 +2311,8 @@ This kind of function call expression has the following form:
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
 
+The last argument in parentheses can be followed by an optional comma.
+
 A function call expression can include trailing closures
 in the form of closure expressions immediately after the closing parenthesis.
 The trailing closures are understood as arguments to the function,
@@ -2471,6 +2476,8 @@ If the scan directions produce different results,
 the old right-to-left ordering is used
 and the compiler generates a warning.
 A future version of Swift will always use the left-to-right ordering.
+
+<!-- FIXME: What future version? -->
 
 ```swift
 typealias Callback = (Int) -> Int
