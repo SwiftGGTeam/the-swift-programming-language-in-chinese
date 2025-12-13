@@ -309,7 +309,7 @@ make the same change here also.
 > Grammar of a type inheritance clause:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
 
 ## Expressions
 
