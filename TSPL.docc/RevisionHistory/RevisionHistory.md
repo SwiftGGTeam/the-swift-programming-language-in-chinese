@@ -2,6 +2,12 @@
 
 Review the recent changes to this book.
 
+**2025-12-12**
+
+- Updated for Swift 6.2.3.
+- Added the <doc:Attributes#export> section
+  with information about exporting definitions to client modules.
+
 **2025-11-03**
 
 - Updated for Swift 6.2.1.
