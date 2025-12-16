@@ -162,7 +162,7 @@ https://github.com/swiftlang/swift-markdown/issues/93
 > *identifier-head* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD \
 > *identifier-head* → U+D0000–U+DFFFD or U+E0000–U+EFFFD
 >
-> *identifier-character* → Digit 0 through 9 \
+> *identifier-character* → *decimal-digit* \
 > *identifier-character* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F \
 > *identifier-character* → *identifier-head* \
 > *identifier-characters* → *identifier-character* *identifier-characters*_?_
