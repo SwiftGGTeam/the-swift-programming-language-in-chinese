@@ -2,19 +2,6 @@
 
 Read the whole formal grammar.
 
-<!--
-
-=== IMPORTANT ===
-
-This file is manually updated.
-
-If you edit formal grammar elsewhere in the reference,
-make the same change here also.
-
-=== IMPORTANT ===
-
--->
-
 ## Lexical Structure
 
 > Grammar of whitespace:
@@ -81,12 +68,13 @@ make the same change here also.
 >
 > *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
-> *numeric-literal* → **`-`**_?_ *integer-literal* | **`-`**_?_ *floating-point-literal* \
+> *numeric-literal* → *signed-integer-literal* | *signed-floating-point-literal* \
 > *boolean-literal* → **`true`** | **`false`** \
 > *nil-literal* → **`nil`**
 
 > Grammar of an integer literal:
 >
+> *signed-integer-literal* → **`-`**_?_ *integer-literal*
 > *integer-literal* → *binary-literal* \
 > *integer-literal* → *octal-literal* \
 > *integer-literal* → *decimal-literal* \
@@ -115,6 +103,7 @@ make the same change here also.
 
 > Grammar of a floating-point literal:
 >
+> *signed-floating-point-literal* → > **`-`**_?_ *floating-point-literal*
 > *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
 > *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
 >
@@ -231,6 +220,7 @@ make the same change here also.
 > *type* → *implicitly-unwrapped-optional-type* \
 > *type* → *protocol-composition-type* \
 > *type* → *opaque-type* \
+> *type* → *boxed-protocol-type* \
 > *type* → *metatype-type* \
 > *type* → *any-type* \
 > *type* → *self-type* \
@@ -238,7 +228,7 @@ make the same change here also.
 
 > Grammar of a type annotation:
 >
-> *type-annotation* → **`:`** *attributes*_?_ **`inout`**_?_ *type*
+> *type-annotation* → **`:`** *attributes*_?_ *type*
 
 > Grammar of a type identifier:
 >
@@ -260,7 +250,7 @@ make the same change here also.
 > *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
 >
 > *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
-> *function-type-argument* → *attributes*_?_ **`inout`**_?_ *type* | *argument-label* *type-annotation* \
+> *function-type-argument* → *attributes*_?_ *parameter-modifier*_?_ *type* | *argument-label* *type-annotation* \
 > *argument-label* → *identifier*
 >
 > *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
@@ -699,7 +689,7 @@ make the same change here also.
 > *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
 >
 > *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
-> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
+> *architecture* → **`arm`** | **`arm64`** | **`i386`** | **`wasm32`** | **`x86_64`** \
 > *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
 > *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
 > *environment* → **`simulator`** | **`macCatalyst`**
@@ -747,6 +737,7 @@ make the same change here also.
 > *declaration* → *deinitializer-declaration* \
 > *declaration* → *extension-declaration* \
 > *declaration* → *subscript-declaration* \
+> *declaration* → *macro-declaration* \
 > *declaration* → *operator-declaration* \
 > *declaration* → *precedence-group-declaration*
 
@@ -952,7 +943,7 @@ make the same change here also.
 > Grammar of a macro declaration:
 >
 > *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause* \
-> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`**  \
+> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`** \
 > *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_ \
 > *macro-function-signature-result* → **`->`** *type* \
 > *macro-definition* → **`=`** *expression*
@@ -1080,7 +1071,8 @@ make the same change here also.
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
 > *generic-parameter* → *type-name* \
 > *generic-parameter* → *type-name* **`:`** *type-identifier* \
-> *generic-parameter* → *type-name* **`:`** *protocol-composition-type*
+> *generic-parameter* → *type-name* **`:`** *protocol-composition-type* \
+> *generic-parameter* → **`let`** *type-name* **`:`** *type* \
 >
 > *generic-where-clause* → **`where`** *requirement-list* \
 > *requirement-list* → *requirement* | *requirement* **`,`** *requirement-list* \
@@ -1088,20 +1080,12 @@ make the same change here also.
 >
 > *conformance-requirement* → *type-identifier* **`:`** *type-identifier* \
 > *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type* \
-> *same-type-requirement* → *type-identifier* **`==`** *type*
+> *same-type-requirement* → *type-identifier* **`==`** *type* \
+> *same-type-requirement* → *type-identifier* **`==`** *signed-integer-literal*
 
 > Grammar of a generic argument clause:
 >
 > *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
-> *generic-argument* → *type*
+> *generic-argument* → *type* | *signed-integer-literal*
 
-<!--
-This source file is part of the Swift.org open source project
-
-Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
-Licensed under Apache License v2.0 with Runtime Library Exception
-
-See https://swift.org/LICENSE.txt for license information
-See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
--->
