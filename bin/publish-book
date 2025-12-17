@@ -24,7 +24,7 @@ cd "$(git rev-parse --show-toplevel)"
 
 # Summarize the formal grammar at the end of the reference.
 summary_chapter="TSPL.docc/ReferenceManual/SummaryOfTheGrammar.md"
-if [[ -f $summary_chapter ]]
+if [[ -f "$summary_chapter" ]]
 then
        echo "Summary of the grammar already exists"
        exit 1
@@ -42,7 +42,7 @@ fi
 	awk -f bin/extract_grammar.awk TSPL.docc/ReferenceManual/Attributes.md
 	awk -f bin/extract_grammar.awk TSPL.docc/ReferenceManual/Patterns.md
 	awk -f bin/extract_grammar.awk TSPL.docc/ReferenceManual/GenericParametersAndArguments.md
-} > $summary_chapter
+} > "$summary_chapter"
 
 # The published version of the book gets the swift.org header.
 cp -n TSPL.docc/header-publish.html TSPL.docc/header.html
@@ -54,7 +54,7 @@ xcrun docc convert \
     TSPL.docc
 
 rm TSPL.docc/header.html
-rm $summary_chapter
+rm "$summary_chapter"
 
 # Copy the redirect pages into every location where the legacy RST-based
 # pipeline created an HTML page, to keep links to those chapters and
