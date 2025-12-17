@@ -63,6 +63,12 @@
 - <doc:GenericParametersAndArguments>
 - <doc:SummaryOfTheGrammar>
 
+<!--
+If you add a new chapter to the reference,
+also update bin/publish-book to summarize that chapter's formal grammar
+in the chapter at the end of the book.
+-->
+
 ### Revision History
 
 - <doc:RevisionHistory>
