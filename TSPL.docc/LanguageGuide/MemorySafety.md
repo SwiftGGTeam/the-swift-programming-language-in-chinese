@@ -154,7 +154,7 @@ is either instantaneous or long-term.
 
 An access is *atomic* if
 it's a call to an atomic operation on [`Atomic`] or [`AtomicLazyReference`],
-or it it uses only C atomic operations;
+or if it uses only C atomic operations;
 otherwise it's nonatomic.
 For a list of C atomic functions, see the `stdatomic(3)` man page.
 
