@@ -624,7 +624,7 @@ print(n.nextUp)
 Floating-point numbers have values for
 negative zero, infinity, and negative infinity,
 which represent overflow and underflow in calculations.
-They also have include not-a-number (NaN) values
+They also have not-a-number (NaN) values
 to represent an invalid or undefined result,
 such as dividing zero by zero.
 This behavior is different from integers,
