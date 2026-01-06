@@ -99,6 +99,9 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
+The last generic parameter in a generic parameter list
+can be followed by an optional comma.
+
 ### Integer Generic Parameters
 
 An *integer generic parameter*
@@ -273,7 +276,7 @@ see <doc:Generics#Generic-Where-Clauses>.
 
 > Grammar of a generic parameter clause:
 >
-> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`>`** \
+> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`,`**_?_ **`>`** \
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
 > *generic-parameter* → *type-name* \
 > *generic-parameter* → *type-name* **`:`** *type-identifier* \
@@ -351,13 +354,16 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```
 -->
 
+The last type argument in a generic argument list
+can be followed by an optional comma.
+
 As mentioned in <doc:GenericParametersAndArguments#Generic-Parameter-Clause>,
 you don't use a generic argument clause to specify the type arguments
 of a generic function or initializer.
 
 > Grammar of a generic argument clause:
 >
-> *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
+> *generic-argument-clause* → **`<`** *generic-argument-list* **`,`**_?_ **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
 > *generic-argument* → *type* | *signed-integer-literal*
 

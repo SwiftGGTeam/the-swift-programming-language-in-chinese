@@ -1700,7 +1700,7 @@ but the new method must preserve its return type and nonreturning behavior.
 > *function-result* → **`->`** *attributes*_?_ *type* \
 > *function-body* → *code-block*
 >
-> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
+> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`,`**_?_ **`)`** \
 > *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \

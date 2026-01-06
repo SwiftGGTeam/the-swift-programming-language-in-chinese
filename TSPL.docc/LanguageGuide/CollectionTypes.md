@@ -261,6 +261,23 @@ Because all values in the array literal are of the same type,
 Swift can infer that `[String]` is
 the correct type to use for the `shoppingList` variable.
 
+You can include a comma after last value in an array literal,
+which is known as a *trailing comma*:
+
+```swift
+var shoppingList = [
+    "Eggs",
+    "Milk",
+]
+```
+
+Because the trailing comma makes every line end the same way,
+it's a useful way to write arrays like the one above
+that have one value per line.
+When you change the array,
+you only need to add, remove, or reorder values ---
+you don't have to add or remove commas.
+
 ### Accessing and Modifying an Array
 
 You access and modify an array through its methods and properties,
@@ -1184,6 +1201,17 @@ Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
 Swift can infer that `[String: String]` is
 the correct type to use for the `airports` dictionary.
+
+Like array literals,
+dictionary literals can include a trailing comma
+after the last key-value pair:
+
+```swift
+var airports = [
+    "YYZ": "Toronto Pearson",
+    "DUB": "Dublin",
+]
+```
 
 ### Accessing and Modifying a Dictionary
 

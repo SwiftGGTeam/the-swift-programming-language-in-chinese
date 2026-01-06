@@ -190,11 +190,6 @@ let quotation = """
   ```
 -->
 
-<!--
-  Can't show an example of indentation in the triple-quoted string above.
-  <rdar://problem/49129068> Swift code formatting damages indentation
--->
-
 Create arrays and dictionaries using brackets (`[]`),
 and access their elements by writing
 the index or key in brackets.
