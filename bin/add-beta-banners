@@ -1,0 +1,22 @@
+#! /bin/zsh
+
+setopt ERR_EXIT NO_UNSET PIPE_FAIL
+
+# Start at the top level directory of the repository.
+cd "$(git rev-parse --show-toplevel)"
+
+# Check the table of contents file for "beta" in the book's title.
+toc_path="TSPL.docc/The-Swift-Programming-Language.md"
+if ! grep --silent '^# .*beta' $toc_path
+then
+    echo "Not inserting beta banners."
+    exit
+fi
+
+# Append the beta banner to every chapter.  This glob also matches the
+# table of contents, which shouldn't get the banner, but DocC ignores
+# the banner there anyhow.
+for f in TSPL.docc/**/*.md
+do
+	cat "bin/beta_banner.md" >> $f
+done
