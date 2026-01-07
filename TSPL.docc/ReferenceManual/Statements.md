@@ -1374,8 +1374,6 @@ It has the same meaning as the `*` argument in an availability condition.
 > *availability-argument* → *platform-name* *platform-version* \
 > *availability-argument* → **`*`**
 >
->
->
 > *platform-name* → **`iOS`** | **`iOSApplicationExtension`** \
 > *platform-name* → **`macOS`** | **`macOSApplicationExtension`** \
 > *platform-name* → **`macCatalyst`** | **`macCatalystApplicationExtension`** \
