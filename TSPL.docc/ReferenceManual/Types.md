@@ -1337,6 +1337,9 @@ Protocol types can inherit from any number of other protocols.
 When a protocol type inherits from other protocols,
 the set of requirements from those other protocols are aggregated together,
 and any type that inherits from the current protocol must conform to all of those requirements.
+Writing a tilde (`~`) in front of a protocol name in this list
+suppresses an implicit conformance to that protocol,
+as described in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
 A type inheritance clause in an enumeration definition can be either a list of protocols,
 or in the case of an enumeration that assigns raw values to its cases,
@@ -1347,7 +1350,7 @@ to specify the type of its raw values, see <doc:Enumerations#Raw-Values>.
 > Grammar of a type inheritance clause:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
 
 ## Type Inference
 
