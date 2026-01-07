@@ -1,5 +1,19 @@
 #! /bin/zsh
 
+# This source file is part of the Swift.org open source project
+#
+# Copyright (c) 2023 Apple Inc. and the Swift project authors
+# Licensed under Apache License v2.0 with Runtime Library Exception
+#
+# See https://swift.org/LICENSE.txt for license information
+# See https://swift.org/CONTRIBUTORS.txt for Swift project authors
+
+# Appends the beta banner to the end of each chapter of the book when
+# needed.
+#
+# NOTE: Running this script modifies TSPL in place.  Run the preflight
+# script first, to confirm you have no uncommitted changes.
+
 setopt ERR_EXIT NO_UNSET PIPE_FAIL
 
 # Start at the top level directory of the repository.
