@@ -1,4 +1,6 @@
 
+<!-- BEGIN BETA BANNER -->
+
 > Beta Software:
 >
 > This documentation contains preliminary information
@@ -9,3 +11,5 @@
 >
 > Learn more about using
 > [Apple's beta software](https://developer.apple.com/support/beta-software/).
+
+<!-- END BETA BANNER -->
