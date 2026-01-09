@@ -1116,7 +1116,6 @@ which provides a simple model for an individual element within an HTML document:
 
 ```swift
 class HTMLElement {
-
     let name: String
     let text: String?
 
@@ -1136,7 +1135,6 @@ class HTMLElement {
     deinit {
         print("\(name) is being deinitialized")
     }
-
 }
 ```
 
@@ -1145,7 +1143,6 @@ class HTMLElement {
 
   ```swifttest
   -> class HTMLElement {
-
         let name: String
         let text: String?
 
@@ -1165,7 +1162,6 @@ class HTMLElement {
         deinit {
            print("\(name) is being deinitialized")
         }
-
      }
   ```
 -->
@@ -1406,7 +1402,6 @@ Here's how you write the `HTMLElement` class to avoid the cycle:
 
 ```swift
 class HTMLElement {
-
     let name: String
     let text: String?
 
@@ -1427,7 +1422,6 @@ class HTMLElement {
     deinit {
         print("\(name) is being deinitialized")
     }
-
 }
 ```
 
@@ -1436,7 +1430,6 @@ class HTMLElement {
 
   ```swifttest
   -> class HTMLElement {
-
         let name: String
         let text: String?
 
@@ -1457,7 +1450,6 @@ class HTMLElement {
         deinit {
            print("\(name) is being deinitialized")
         }
-
      }
   ```
 -->

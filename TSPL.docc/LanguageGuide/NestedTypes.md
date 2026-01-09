@@ -27,7 +27,6 @@ which is nested within the `Rank` enumeration:
 
 ```swift
 struct BlackjackCard {
-
     // nested Suit enumeration
     enum Suit: Character {
         case spades = "♠", hearts = "♡", diamonds = "♢", clubs = "♣"
@@ -70,7 +69,6 @@ struct BlackjackCard {
 
   ```swifttest
   -> struct BlackjackCard {
-
         // nested Suit enumeration
         enum Suit: Character {
            case spades = "♠", hearts = "♡", diamonds = "♢", clubs = "♣"
