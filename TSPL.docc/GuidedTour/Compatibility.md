@@ -19,7 +19,7 @@ when you use Xcode 15.3 to build Swift 4 and Swift 4.2 code,
 most Swift 5 functionality is still available.
 That said,
 the following changes are available only to code
-that uses the Swift 5 language mode:
+that uses the Swift 5 language mode or later:
 
 - Functions that return an opaque type require the Swift 5.1 runtime.
 - The `try?` expression doesn't introduce an extra level of optionality
