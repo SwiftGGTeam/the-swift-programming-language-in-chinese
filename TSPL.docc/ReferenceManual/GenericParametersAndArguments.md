@@ -1,52 +1,33 @@
-# Generic Parameters and Arguments
+# 泛型形参和实参
 
-Generalize declarations to abstract away concrete types.
+将参数声明抽象化以脱离具体类型。
 
-This chapter describes parameters and arguments for generic types, functions, and
-initializers. When you declare a generic type, function, subscript, or initializer,
-you specify the type parameters that the generic type, function, or initializer
-can work with. These type parameters act as placeholders that
-are replaced by actual concrete type arguments when an instance of a generic type is
-created or a generic function or initializer is called.
+本节描述泛型类型、泛型函数和泛型构造器的形参和实参。在声明泛型类型、函数或构造器时，需要指定泛型可处理的类型形参。这些类型形参相当于占位符，当实例化泛型类型或调用泛型函数、初始化器时，会被具体的类型实参替换。
 
-For an overview of generics in Swift, see <doc:Generics>.
+关于 Swift 语言中的“泛型”，参阅 <doc:Generics>.
 
 <!--
   NOTE: Generic types are sometimes referred to as :newTerm:`parameterized types`
   because they're declared with one or more type parameters.
 -->
 
-## Generic Parameter Clause
+## 泛型形参子句
 
-A *generic parameter clause* specifies the type parameters of a generic
-type or function, along with any associated constraints and requirements on those parameters.
-A generic parameter clause is enclosed in angle brackets (<>)
-and has the following form:
+*泛型形参子句* 指定了泛型类型或函数的类型形参，以及对这些形参的任何相关约束和要求。泛型形参用尖括号（<>）括起来，格式如下：
 
 ```swift
 <<#generic parameter list#>>
 ```
 
-The *generic parameter list* is a comma-separated list of generic parameters,
-each of which has the following form:
+多个*泛型形参*用逗号分开，每个形参的形式如下：
 
 ```swift
 <#type parameter#>: <#constraint#>
 ```
 
-A generic parameter consists of a *type parameter* followed by
-an optional *constraint*. A *type parameter* is simply the name
-of a placeholder type
-(for example, `T`, `U`, `V`, `Key`, `Value`, and so on).
-You have access to the type parameters (and any of their associated types) in the rest of the
-type, function, or initializer declaration, including in the signature of the function
-or initializer.
+泛型形参由一个*类型形参*和一个可选的*约束*组成。*类型形参*只是一个占位符（如 `T`，`U`，`V`，`Key`，`Value`等），用来表示类型。在声明类型、函数或构造器时（包括函数或构造器的签名），你可以访问这些类型形参及其任何关联的类型。
 
-The *constraint* specifies that a type parameter inherits
-from a specific class or conforms to a protocol or protocol composition.
-For example, in the generic function below, the generic parameter `T: Comparable`
-indicates that any type argument substituted
-for the type parameter `T` must conform to the `Comparable` protocol.
+*约束*指定了类型形参要继承自特定类，或遵循某个协议或协议组合。例如：在下面的泛型函数中，泛型形参 `T: Comparable` 表示任何替代类型形参 `T` 的类型实参都必须遵循 `Comparable` 协议。
 
 ```swift
 func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
@@ -70,11 +51,7 @@ func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
   ```
 -->
 
-Because `Int` and `Double`, for example, both conform to the `Comparable` protocol,
-this function accepts arguments of either type. In contrast with generic types, you don't
-specify a generic argument clause when you use a generic function or initializer.
-The type arguments are instead inferred from the type of the arguments passed
-to the function or initializer.
+以`Int`和`Double`，因为都遵循 `Comparable` 协议，所以该函数可以接受这两种类型的参数。与泛型类型不同，调用泛型函数或构造器时，你不需要指定泛型实参子句。泛型实参的类型会根据传给函数或构造器的参数类型推断出来。
 
 ```swift
 simpleMax(17, 42) // T is inferred to be Int
@@ -99,55 +76,23 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
-### Generic Where Clauses
+### 泛型 Where 子句
 
-You can specify additional requirements on type parameters and their associated types
-by including a generic `where` clause right before the opening curly brace
-of a type or function's body.
-A generic `where` clause consists of the `where` keyword,
-followed by a comma-separated list of one or more *requirements*.
+你可以通过在类型或函数体的起始大括号前包含一个泛型`where`子句，来对类型形参及其相关类型指定额外的要求。泛型 `where`子句由`where`关键字组成，后跟一个或多个要求，多个*要求*用逗号进行分隔。
 
 ```swift
 where <#requirements#>
 ```
 
-The *requirements* in a generic `where` clause specify that a type parameter inherits from
-a class or conforms to a protocol or protocol composition.
-Although the generic `where` clause provides syntactic
-sugar for expressing simple constraints on type parameters
-(for example, `<T: Comparable>` is equivalent to `<T> where T: Comparable` and so on),
-you can use it to provide more complex constraints on type parameters
-and their associated types. For example,
-you can constrain the associated types of type parameters to conform to protocols.
-For example, `<S: Sequence> where S.Iterator.Element: Equatable`
-specifies that `S` conforms to the `Sequence` protocol
-and that the associated type `S.Iterator.Element`
-conforms to the `Equatable` protocol.
-This constraint ensures that each element of the sequence is equatable.
+泛型 `where` 子句中的*要求*指明类型形参要继承自某个类或遵循某个协议或协议组合。虽然 `where` 子句为表达类型形参的简单约束提供了语法糖（比如，`<T: Comparable>` 等同于 `where T: Comparable` 等），但它可以用于为类型形参及其关联类型提供更复杂的约束。比如，你可以指定类型形参的关联类型遵循某个协议：`<S: Sequence> where S.Iterator.Element: Equatable`  指定了`S`遵循 `Sequence`协议，并且`S`的关联类型`S.Iterator.Element`遵循`Equatable`协议。此约束确保序列中的每个元素都是符合`Equatable`协议的。
 
-You can also specify the requirement that two types be identical,
-using the `==` operator. For example,
-`<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element`
-expresses the constraints that `S1` and `S2` conform to the `Sequence` protocol
-and that the elements of both sequences must be of the same type.
+还可以使用 == 运算符来指定两个类型必须相同。例如， `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element`，表示 S1 和 S2 都遵循 Sequence 协议，并且两个序列元素的类型必须相同。
 
-Any type argument substituted for a type parameter must
-meet all the constraints and requirements placed on the type parameter.
+任何替代类型形参的类型实参都必须满足对该类型形参指定的所有约束与要求。
 
-A generic `where` clause can appear
-as part of a declaration that includes type parameters,
-or as part of a declaration
-that's nested inside of a declaration that includes type parameters.
-The generic `where` clause for a nested declaration
-can still refer to the type parameters of the enclosing declaration;
-however,
-the requirements from that `where` clause
-apply only to the declaration where it's written.
+ `where`子句可以出现在包含类型形参的声明中，或作为声明的一部分，被嵌套另一个在含有类型形参的声明中。被嵌套的泛型 `where`子句依然可以指向包围它的声明中的类型形参，然而此时 `where`子句指定的要求仅用于它被声明的地方。
 
-If the enclosing declaration also has a `where` clause,
-the requirements from both clauses are combined.
-In the example below, `startsWithZero()` is available
-only if `Element` conforms to both `SomeProtocol` and `Numeric`.
+如果外层的声明也有一个 `where` 子句，那么两个子句的要求会合并。在下面的示例中，`startsWithZero()`仅在 `Element` 同时遵循`someProtocol`和`Numeric`协议时可用。
 
 ```swift
 extension Collection where Element: SomeProtocol {
@@ -194,31 +139,25 @@ extension Collection where Element: SomeProtocol {
   ```
 -->
 
-You can overload a generic function or initializer by providing different
-constraints, requirements, or both on the type parameters.
-When you call an overloaded generic function or initializer,
-the compiler uses these constraints to resolve which overloaded function
-or initializer to invoke.
+重载泛型函数或构造器，泛型形参子句中的类型形参必须有不同的约束或要求。当调用重载的泛型函数或构造器时，编译器会使用这些约束来决定调用哪个重载的函数或构造器。
 
-For more information about generic `where` clauses and to see an example
-of one in a generic function declaration,
-see <doc:Generics#Generic-Where-Clauses>.
+更多关于泛型 `where` 从句的内容和关于泛型函数声明的例子，参阅 <doc:Generics#泛型-Where-语句>.
 
-> Grammar of a generic parameter clause:
+> 泛型形参子句的语法格式：
 >
-> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`>`** \
-> *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
-> *generic-parameter* → *type-name* \
-> *generic-parameter* → *type-name* **`:`** *type-identifier* \
-> *generic-parameter* → *type-name* **`:`** *protocol-composition-type*
+> *泛型形参子句* → **`<`** *泛型形参列表* **`>`** \
+> *泛型形参列表* → *泛型形参* | *泛型形参* **`,`** *泛型形参列表* \
+> *泛型形参* → *类型名称* \
+> *泛型形参* → *类型名称* **`:`** *类型标识符* \
+> *泛型形参* → *类型名称* **`:`** *协议合成类型*
 >
-> *generic-where-clause* → **`where`** *requirement-list* \
-> *requirement-list* → *requirement* | *requirement* **`,`** *requirement-list* \
-> *requirement* → *conformance-requirement* | *same-type-requirement*
+> *泛型 where 子句* → **`where`** *约束列表* \
+> *要求列表* → *要求* | *要求* **`,`** *要求列表* \
+> *要求* → *一致性要求* | *同类型要求*
 >
-> *conformance-requirement* → *type-identifier* **`:`** *type-identifier* \
-> *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type* \
-> *same-type-requirement* → *type-identifier* **`==`** *type*
+> *一致性要求* → *类型标识符* **`:`** *类型标识符* \
+> *一致性要求* → *类型标识符* **`:`** *协议合成类型* \
+> *同类型要求* → *类型标识符* **`==`** *类型*
 
 <!--
   NOTE: A conformance requirement can only have one type after the colon,
@@ -226,23 +165,15 @@ see <doc:Generics#Generic-Where-Clauses>.
   (a comma-separated list types inside of a comma-separated list of requirements).
 -->
 
-## Generic Argument Clause
+## 泛型实参子句
 
-A *generic argument clause* specifies the type arguments of a generic
-type.
-A generic argument clause is enclosed in angle brackets (<>)
-and has the following form:
+*泛型实参* 指定了泛型类型的类型实参。泛型实参用尖括号（<>）包围，格式如下
 
 ```swift
 <<#generic argument list#>>
 ```
 
-The *generic argument list* is a comma-separated list of type arguments.
-A *type argument* is the name of an actual concrete type that replaces
-a corresponding type parameter in the generic parameter clause of a generic type.
-The result is a specialized version of that generic type.
-The example below shows a simplified version of the Swift standard library's
-generic dictionary type.
+多个泛型实参用逗号分开。类型实参是实际具体类型的名称，用来替代泛型类型中对应的类型参数，从而得到该泛型类型的特定版本。下面的示例展示了 Swift 标准库中的泛型字典类型的简化版本：
 
 ```swift
 struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLiteral {
@@ -254,19 +185,9 @@ struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLite
   TODO: How are we supposed to wrap code lines like the above?
 -->
 
-The specialized version of the generic `Dictionary` type, `Dictionary<String, Int>`
-is formed by replacing the generic parameters `Key: Hashable` and `Value`
-with the concrete type arguments `String` and `Int`. Each type argument must satisfy
-all the constraints of the generic parameter it replaces, including any additional
-requirements specified in a generic `where` clause. In the example above,
-the `Key` type parameter is constrained to conform to the `Hashable` protocol
-and therefore `String` must also conform to the `Hashable` protocol.
+泛型`Dictionary`的特定版本`Dictionary<String, Int>`是通过具体的类型实参（`String`和`Int`）来替换泛型形参（`Key: Hashable` 和 `Value`）而形成的。每个类型实参必须满足它替换的泛型形参的所有约束，包括在泛型`where`子句中指定的额外要求。在上述例子中，`Key`类型形参要遵循`Hashable`协议，因此传入的实参`String`也要遵循`Hashable`协议。
 
-You can also replace a type parameter with a type argument that's itself
-a specialized version of a generic type (provided it satisfies the appropriate
-constraints and requirements). For example, you can replace the type parameter
-`Element` in `Array<Element>` with a specialized version of an array, `Array<Int>`,
-to form an array whose elements are themselves arrays of integers.
+还可以用本身就是泛型类型的特定版本的类型实参替代类型形参（假设已满足合适的约束和关联类型要求）。例如，可以将 `Array<Element>`中的类型形参 `Element` 替换 Array 泛型专用版本 `Array<Int>` ，以形成一个元素本身是整数数组的二维数组。
 
 ```swift
 let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -280,11 +201,9 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```
 -->
 
-As mentioned in <doc:GenericParametersAndArguments#Generic-Parameter-Clause>,
-you don't use a generic argument clause to specify the type arguments
-of a generic function or initializer.
+正如在<doc:GenericParametersAndArguments#泛型形参子句>中提到的，在指定泛型函数或构造器的类型实参时，不能使用泛型实参子句。
 
-> Grammar of a generic argument clause:
+> 泛型实参的语法格式：
 >
 > *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
