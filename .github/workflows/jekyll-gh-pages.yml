@@ -1,0 +1,54 @@
+#! /bin/bash
+
+# Swift 中文版文档发布脚本 - 发布到 GitHub Pages
+# 基于 swiftlang/swift-book 的 update-book-preview 脚本修改
+
+set -eux
+
+REMOTE=${1:-origin}
+CURRENT_COMMIT_HASH="$(git rev-parse --short HEAD)"
+
+# 进入仓库根目录
+cd "$(git rev-parse --show-toplevel)"
+
+# 检出 gh-pages 分支到子目录
+git worktree add --checkout gh-pages "$REMOTE"/gh-pages
+
+# 美化 DocC JSON 输出，便于对比和版本控制
+export DOCC_JSON_PRETTYPRINT="YES"
+
+# 使用 header.html（如果需要不同版本可以先复制）
+# cp -n swift-6.docc/header-publish.html swift-6.docc/header.html
+
+# 构建文档，输出到 gh-pages/docs 子目录
+xcrun docc convert \
+    --experimental-enable-custom-templates \
+    --hosting-base-path the-swift-programming-language-in-chinese-1 \
+    --output-path "./gh-pages/docs" \
+    swift-6.docc
+
+# 如果复制了临时 header，清理掉
+# rm swift-6.docc/header.html
+
+# 提交并推送更改到 gh-pages 分支
+pushd gh-pages
+git add docs
+
+if [[ -n "$(git status --porcelain)" ]]
+then
+    echo "发现文档更新。"
+    echo "正在提交更改到 'gh-pages' 分支并推送到 $REMOTE。"
+    git commit -m "更新 GitHub Pages 文档站点到提交 '$CURRENT_COMMIT_HASH'"
+    echo
+    git push "$REMOTE" HEAD:gh-pages
+else
+    echo "没有发现文档更改。"
+fi
+
+popd
+
+git worktree remove gh-pages
+
+echo "发布完成！"
+echo "GitHub Pages 地址应该是："
+echo "https://你的用户名.github.io/the-swift-programming-language-in-chinese-1/"
