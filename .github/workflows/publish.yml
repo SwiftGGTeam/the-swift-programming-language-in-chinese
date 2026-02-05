@@ -45,11 +45,31 @@ jobs:
           # 使用 xcrun docc 构建文档
           xcrun docc convert TSPL.docc \
             --experimental-enable-custom-templates \
-            --hosting-base-path the-swift-programming-language-in-chinese \
             --fallback-display-name "Swift 编程语言" \
             --fallback-bundle-identifier "org.swift.tspl" \
             --fallback-bundle-version 6.1 \
             --output-path ./_site
+      
+      - name: Add redirect index and CNAME
+        run: |
+          # 创建根目录重定向页面
+          cat > ./_site/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta http-equiv="refresh" content="0;url=/documentation/the-swift-programming-language/">
+            <link rel="canonical" href="/documentation/the-swift-programming-language/" />
+          </head>
+          <body>
+            <p>正在跳转到文档...</p>
+            <p>如果没有自动跳转，请点击<a href="/documentation/the-swift-programming-language/">这里</a></p>
+          </body>
+          </html>
+          EOF
+          
+          # 复制 CNAME 文件到输出目录
+          cp CNAME ./_site/CNAME
       
       - name: Cleanup
         run: rm -f TSPL.docc/header.html
