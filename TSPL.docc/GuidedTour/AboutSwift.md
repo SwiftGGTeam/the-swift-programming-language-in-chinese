@@ -1,56 +1,30 @@
-# About Swift
+# 关于 Swift
 
-Understand the high-level goals of the language.
+理解这门语言的高阶目标。
 
-Swift is a fantastic way to write software
-for phones, tablets, desktops, servers,
-or anything else that runs code.
-It's a safe and fast programming language
-that combines the best in modern language thinking
-with wisdom from a diverse open source community.
+Swift 是为手机、平板电脑、台式机、服务器或任何其他运行代码的设备编写软件的绝佳方式。它是一种安全且快速的编程语言，结合了现代语言思想的精华，并汲取了来自多元化的开源社区的智慧。
 
-Swift is friendly to new programmers,
-without sacrificing the power and flexibility
-that experienced programmers need.
-It's an industrial-quality programming language
-that's as expressive and enjoyable as a scripting language.
-The compiler is optimized for performance
-and the language is optimized for development,
-without compromising on either.
+Swift 对于初学者来说很友好，同时也没有牺牲经验丰富的程序员所需要的强大和灵活性。它是一种企业级的编程语言，但又有着脚本语言般的表达力和可玩性。编译器经过精心优化，可以提供卓越的性能表现。同时语言本身也经过精心设计，以便于开发使用。两者都没有做出任何妥协，鱼与熊掌兼得。
 
-Swift defines away large classes of common programming errors
-by adopting modern programming patterns:
+Swift 通过采用现代编程模式来避免大量常见编程错误：
 
-- Variables are always initialized before use.
-- Array indices are checked for out-of-bounds errors.
-- Integers are checked for overflow.
-- Optionals ensure that `nil` values are handled explicitly.
-- Memory is managed automatically.
-- Error handling allows controlled recovery from unexpected failures.
+- 变量始终在使用前被初始化。
+- 数组索引会进行越界检查。
+- 整数运算会进行溢出检查。
+- 可选类型确保 `nil` 值能够得到明确处理。
+- 内存被自动管理。
+- 错误处理机制使程序能够以可控方式从意外异常中恢复。
 
-Swift code is compiled and optimized to get the most out of modern hardware.
-The syntax and standard library have been designed
-based on the guiding principle that
-the obvious way to write your code should also perform the best.
-Its combination of safety and speed make Swift an excellent choice for
-everything from "Hello, world!" to an entire operating system.
+Swift 代码经过编译和优化，以充分发挥现代硬件的性能。其语法和标准库的设计遵循这样的指导思想：代码的最直观写法也应该具有最佳性能。Swift 兼具安全性和速度，使其成为从编写 "Hello, world!" 到开发整个操作系统的绝佳选择。
 
-Swift combines a modern, lightweight syntax
-that's familiar for developers coming from other popular languages
-with powerful features like type inference and pattern matching,
-allowing complex ideas to be expressed in a clear and concise manner.
-As a result, code is easier to read, write, and maintain.
+Swift 采用了现代化、轻量级的语法，这些语法对来自其他流行语言的开发者来说很熟悉。它还具有类型推断和模式匹配等强大功能，能够以清晰简洁的方式表达复杂的概念。这使得代码更易于阅读、编写和维护。
 
-Swift continues to evolve with thoughtful new features and powerful capabilities.
-The goals for Swift are ambitious.
-We can’t wait to see what you create with it.
+Swift 仍在不断发展，不断推出经过深思熟虑的新特性和强大的功能。Swift 的目标非常远大。我们非常期待看到你使用它创造出的作品。
 
 <!--
 This source file is part of the Swift.org open source project
-
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
 Licensed under Apache License v2.0 with Runtime Library Exception
-
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->

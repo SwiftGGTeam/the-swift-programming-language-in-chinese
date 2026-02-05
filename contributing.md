@@ -55,7 +55,7 @@ who will need to understand what you changed and why.
 
 Every commit starts with a one-sentence summary.
 The summary usually fits in 50 characters,
-but it's ok to exceed that amount occasionally
+but it's OK to exceed that amount occasionally
 if rewriting for brevity would make it too hard to read.
 If it's hard to write a good summary,
 try breaking your changes into multiple smaller commits.

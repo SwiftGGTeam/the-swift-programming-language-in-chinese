@@ -1,1107 +1,1083 @@
-# Summary of the Grammar
-
-Read the whole formal grammar.
-
-<!--
-
-=== IMPORTANT ===
-
-This file is manually updated.
-
-If you edit formal grammar elsewhere in the reference,
-make the same change here also.
-
-=== IMPORTANT ===
-
--->
-
-## Lexical Structure
-
-> Grammar of whitespace:
+# 语法总结
+完整语法一览。
+
+## 词法结构
+
+> 空白符语法：
+>
+> *空白符* → *空白符项* *空白符*可选 \
+> *空白符项* → *换行符* \
+> *空白符项* → *行内空格* \
+> *空白符项* → *注释* \
+> *空白符项* → *多行注释* \
+> *空白符项* → U+0000, U+000B, 或 U+000C
+>
+> *换行符* → U+000A \
+> *换行符* → U+000D \
+> *换行符* → U+000D 后接 U+000A
+>
+> *行内空格* → *行内空格符* *行内空格*可选 \
+> *行内空格符* → U+0009 或 U+0020
 >
-> *whitespace* → *whitespace-item* *whitespace*_?_ \
-> *whitespace-item* → *line-break* \
-> *whitespace-item* → *inline-space* \
-> *whitespace-item* → *comment* \
-> *whitespace-item* → *multiline-comment* \
-> *whitespace-item* → U+0000, U+000B, or U+000C
+> *注释* → **`//`** *注释文本* *换行符* \
+> *多行注释* → **`/*`** *多行注释文本* **`*/`**
 >
-> *line-break* → U+000A \
-> *line-break* → U+000D \
-> *line-break* → U+000D followed by U+000A
+> *注释文本* → *注释文本项* *注释文本*可选 \
+> *注释文本项* → 除 U+000A 或 U+000D 外的任意 Unicode 标量值
 >
-> *inline-spaces* → *inline-space* *inline-spaces*_?_ \
-> *inline-space* → U+0009 or U+0020
+> *多行注释文本* → *多行注释文本项* *多行注释文本*可选 \
+> *多行注释文本项* → *多行注释* \
+> *多行注释文本项* → *注释文本项* \
+> *多行注释文本项* → 除 **`/*`** 或 **`*/`** 外的任意 Unicode 标量值
+
+> 标识符语法：
+>
+> *标识符* → *标识符头（Head）* *标识符字符集*可选 \
+> *标识符* → **`` ` ``** *标识符头（Head）* *标识符字符集*可选 **`` ` ``** \
+> *标识符* → *隐式参数名* \
+> *标识符* → *属性包装器呈现值* \
+> *标识符集* → *标识符* | *标识符* **`,`** *标识符集*
 >
-> *comment* → **`//`** *comment-text* *line-break* \
-> *multiline-comment* → **`/*`** *multiline-comment-text* **`*/`**
+> *标识符头（Head）* → A 到 Z 的大写或小写字母 \
+> *标识符头（Head）* → **`_`** \
+> *标识符头（Head）* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, 或 U+00B7–U+00BA \
+> *标识符头（Head）* → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, 或 U+00F8–U+00FF \
+> *标识符头（Head）* → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, 或 U+180F–U+1DBF \
+> *标识符头（Head）* → U+1E00–U+1FFF \
+> *标识符头（Head）* → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, 或 U+2060–U+206F \
+> *标识符头（Head）* → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, 或 U+2776–U+2793 \
+> *标识符头（Head）* → U+2C00–U+2DFF 或 U+2E80–U+2FFF \
+> *标识符头（Head）* → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, 或 U+3040–U+D7FF \
+> *标识符头（Head）* → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, 或 U+FE30–U+FE44 \
+> *标识符头（Head）* → U+FE47–U+FFFD \
+> *标识符头（Head）* → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, 或 U+40000–U+4FFFD \
+> *标识符头（Head）* → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, 或 U+80000–U+8FFFD \
+> *标识符头（Head）* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, 或 U+C0000–U+CFFFD \
+> *标识符头（Head）* → U+D0000–U+DFFFD 或 U+E0000–U+EFFFD
 >
-> *comment-text* → *comment-text-item* *comment-text*_?_ \
-> *comment-text-item* → Any Unicode scalar value except U+000A or U+000D
+> *标识符字符* → 数字 0 到 9 \
+> *标识符字符* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, 或 U+FE20–U+FE2F \
+> *标识符字符* → *标识符头（Head）* \
+> *标识符字符集* → *标识符字符项* *标识符字符集*可选
 >
-> *multiline-comment-text* → *multiline-comment-text-item* *multiline-comment-text*_?_ \
-> *multiline-comment-text-item* → *multiline-comment* \
-> *multiline-comment-text-item* → *comment-text-item* \
-> *multiline-comment-text-item* → Any Unicode scalar value except  **`/*`** or  **`*/`**
+> *隐式参数名* → **`$`** *十进制数字* \
+> *属性包装器呈现值* → **`$`** *标识符字符集*
 
-> Grammar of an identifier:
->
-> *identifier* → *identifier-head* *identifier-characters*_?_ \
-> *identifier* → **`` ` ``** *identifier-head* *identifier-characters*_?_ **`` ` ``** \
-> *identifier* → *implicit-parameter-name* \
-> *identifier* → *property-wrapper-projection* \
-> *identifier-list* → *identifier* | *identifier* **`,`** *identifier-list*
+> 字面量语法：
 >
-> *identifier-head* → Upper- or lowercase letter A through Z \
-> *identifier-head* → **`_`** \
-> *identifier-head* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, or U+00B7–U+00BA \
-> *identifier-head* → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, or U+00F8–U+00FF \
-> *identifier-head* → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, or U+180F–U+1DBF \
-> *identifier-head* → U+1E00–U+1FFF \
-> *identifier-head* → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, or U+2060–U+206F \
-> *identifier-head* → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, or U+2776–U+2793 \
-> *identifier-head* → U+2C00–U+2DFF or U+2E80–U+2FFF \
-> *identifier-head* → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, or U+3040–U+D7FF \
-> *identifier-head* → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, or U+FE30–U+FE44 \
-> *identifier-head* → U+FE47–U+FFFD \
-> *identifier-head* → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, or U+40000–U+4FFFD \
-> *identifier-head* → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, or U+80000–U+8FFFD \
-> *identifier-head* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD \
-> *identifier-head* → U+D0000–U+DFFFD or U+E0000–U+EFFFD
+> *字面量* → *数字字面量* | *字符串字面量* | *正则表达式字面量* | *布尔字面量* | *空字面量*
 >
-> *identifier-character* → Digit 0 through 9 \
-> *identifier-character* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F \
-> *identifier-character* → *identifier-head* \
-> *identifier-characters* → *identifier-character* *identifier-characters*_?_
->
-> *implicit-parameter-name* → **`$`** *decimal-digits* \
-> *property-wrapper-projection* → **`$`** *identifier-characters*
+> *数字字面量* → **`-`** 可选 *整型字面量* | **`-`** 可选 *浮点型字面量* \
+> *布尔字面量* → **`true`** | **`false`** \
+> *空字面量* → **`nil`**
 
-> Grammar of a literal:
+> 整型字面量语法：
 >
-> *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
+> *整型字面量* → *二进制字面量* \
+> *整型字面量* → *八进制字面量* \
+> *整型字面量* → *十进制字面量* \
+> *整型字面量* → *十六进制字面量*
 >
-> *numeric-literal* → **`-`**_?_ *integer-literal* | **`-`**_?_ *floating-point-literal* \
-> *boolean-literal* → **`true`** | **`false`** \
-> *nil-literal* → **`nil`**
-
-> Grammar of an integer literal:
+> *二进制字面量* → **`0b`** *二进制数字* *二进制字面量字符* 可选 \
+> *二进制数字* → 数字 0 或 1 \
+> *二进制字面量字符* → *二进制数字* | **`_`** \
+> *二进制字面量字符* → *二进制字面量字符* *二进制字面量字符* 可选
 >
-> *integer-literal* → *binary-literal* \
-> *integer-literal* → *octal-literal* \
-> *integer-literal* → *decimal-literal* \
-> *integer-literal* → *hexadecimal-literal*
+> *八进制字面量* → **`0o`** *八进制数字* *八进制字面量字符* 可选 \
+> *八进制数字* → 数字 0 到 7 \
+> *八进制字面量字符* → *八进制数字* | **`_`** \
+> *八进制字面量字符* → *八进制字面量字符* *八进制字面量字符* 可选
+>
+> *十进制字面量* → *十进制数字* *十进制字面量字符* 可选 \
+> *十进制数字* → 数字 0 到 9 \
+> *十进制数字* → *十进制数字* *十进制数字* 可选 \
+> *十进制字面量字符* → *十进制数字* | **`_`** \
+> *十进制字面量字符* → *十进制字面量字符* *十进制字面量字符* 可选
+>
+> *十六进制字面量* → **`0x`** *十六进制数字* *十六进制字面量字符* 可选 \
+> *十六进制数字* → 数字 0 到 9，a 到 f，或 A 到 F \
+> *十六进制字面量字符* → *十六进制数字* | **`_`** \
+> *十六进制字面量字符* → *十六进制字面量字符* *十六进制字面量字符* 可选
+
+> 浮点型字面量语法：
 >
-> *binary-literal* → **`0b`** *binary-digit* *binary-literal-characters*_?_ \
-> *binary-digit* → Digit 0 or 1 \
-> *binary-literal-character* → *binary-digit* | **`_`** \
-> *binary-literal-characters* → *binary-literal-character* *binary-literal-characters*_?_
+> *浮点型字面量* → *十进制字面量* *十进制分数* 可选 *十进制指数* 可选 \
+> *浮点型字面量* → *十六进制字面量* *十六进制分数* 可选 *十六进制指数*
 >
-> *octal-literal* → **`0o`** *octal-digit* *octal-literal-characters*_?_ \
-> *octal-digit* → Digit 0 through 7 \
-> *octal-literal-character* → *octal-digit* | **`_`** \
-> *octal-literal-characters* → *octal-literal-character* *octal-literal-characters*_?_
+> *十进制分数* → **`.`** *十进制字面量* \
+> *十进制指数* → *浮点数 e* *正负号* 可选 *十进制字面量*
 >
-> *decimal-literal* → *decimal-digit* *decimal-literal-characters*_?_ \
-> *decimal-digit* → Digit 0 through 9 \
-> *decimal-digits* → *decimal-digit* *decimal-digits*_?_ \
-> *decimal-literal-character* → *decimal-digit* | **`_`** \
-> *decimal-literal-characters* → *decimal-literal-character* *decimal-literal-characters*_?_
->
-> *hexadecimal-literal* → **`0x`** *hexadecimal-digit* *hexadecimal-literal-characters*_?_ \
-> *hexadecimal-digit* → Digit 0 through 9, a through f, or A through F \
-> *hexadecimal-literal-character* → *hexadecimal-digit* | **`_`** \
-> *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*_?_
-
-> Grammar of a floating-point literal:
+> *十六进制分数* → **`.`** *十六进制数字* *十六进制字面量字符* 可选 \
+> *十六进制指数* → *浮点数 p* *正负号* 可选 *十进制字面量*
 >
-> *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
-> *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
->
-> *decimal-fraction* → **`.`** *decimal-literal* \
-> *decimal-exponent* → *floating-point-e* *sign*_?_ *decimal-literal*
+> *浮点数 e* → **`e`** | **`E`** \
+> *浮点数 p* → **`p`** | **`P`** \
+> *正负号* → **`+`** | **`-`**
+
+> 字符串字面量语法：
+>
+> *字符串字面量* → *静态字符串字面量* | *插值字符串字面量*
 >
-> *hexadecimal-fraction* → **`.`** *hexadecimal-digit* *hexadecimal-literal-characters*_?_ \
-> *hexadecimal-exponent* → *floating-point-p* *sign*_?_ *decimal-literal*
+> *字符串开分隔定界符* → *字符串扩展分隔符* 可选 **`"`** \
+> *字符串闭分隔定界符* → **`"`** *字符串扩展分隔符* 可选
+>
+> *静态字符串字面量* → *字符串开分隔定界符* *引用文本* 可选 *字符串闭分隔定界符* \
+> *静态字符串字面量* → *多行字符串开分隔定界符* *多行引用文本* 可选 *多行字符串闭分隔定界符*
+>
+> *多行字符串开分隔定界符* → *字符串扩展分隔符* 可选 **`"""`** \
+> *多行字符串闭分隔定界符* → **`"""`** *字符串扩展分隔符* 可选 \
+> *字符串扩展分隔符* → **`#`** *字符串扩展分隔符* 可选
 >
-> *floating-point-e* → **`e`** | **`E`** \
-> *floating-point-p* → **`p`** | **`P`** \
-> *sign* → **`+`** | **`-`**
-
-> Grammar of a string literal:
->
-> *string-literal* → *static-string-literal* | *interpolated-string-literal*
->
-> *string-literal-opening-delimiter* → *extended-string-literal-delimiter*_?_ **`"`** \
-> *string-literal-closing-delimiter* → **`"`** *extended-string-literal-delimiter*_?_
->
-> *static-string-literal* → *string-literal-opening-delimiter* *quoted-text*_?_ *string-literal-closing-delimiter* \
-> *static-string-literal* → *multiline-string-literal-opening-delimiter* *multiline-quoted-text*_?_ *multiline-string-literal-closing-delimiter*
->
-> *multiline-string-literal-opening-delimiter* → *extended-string-literal-delimiter*_?_ **`"""`** \
-> *multiline-string-literal-closing-delimiter* → **`"""`** *extended-string-literal-delimiter*_?_ \
-> *extended-string-literal-delimiter* → **`#`** *extended-string-literal-delimiter*_?_
->
-> *quoted-text* → *quoted-text-item* *quoted-text*_?_ \
-> *quoted-text-item* → *escaped-character* \
-> *quoted-text-item* → Any Unicode scalar value except  **`"`**,  **`\`**, U+000A, or U+000D
+> *引用文本* → *引用文本项* *引用文本* 可选 \
+> *引用文本项* → *转义字符* \
+> *引用文本项* → 任何 Unicode 标量值，除了 **`"`**、**`\`**、U+000A 或 U+000D
 >
-> *multiline-quoted-text* → *multiline-quoted-text-item* *multiline-quoted-text*_?_ \
-> *multiline-quoted-text-item* → *escaped-character* \
-> *multiline-quoted-text-item* → Any Unicode scalar value except  **`\`** \
-> *multiline-quoted-text-item* → *escaped-newline*
+> *多行引用文本* → *多行引用文本项* *多行引用文本* 可选 \
+> *多行引用文本项* → *转义字符* \
+> *多行引用文本项* → 任何 Unicode 标量值，除了 **`\`** \
+> *多行引用文本项* → *转义换行符*
 >
-> *interpolated-string-literal* → *string-literal-opening-delimiter* *interpolated-text*_?_ *string-literal-closing-delimiter* \
-> *interpolated-string-literal* → *multiline-string-literal-opening-delimiter* *multiline-interpolated-text*_?_ *multiline-string-literal-closing-delimiter*
+> *插值字符串字面量* → *字符串开分隔定界符* *插值文本* 可选 *字符串闭分隔定界符* \
+> *插值字符串字面量* → *多行字符串开分隔定界符* *多行插值文本* 可选 *多行字符串闭分隔定界符*
 >
-> *interpolated-text* → *interpolated-text-item* *interpolated-text*_?_ \
-> *interpolated-text-item* → **`\(`** *expression* **`)`** | *quoted-text-item*
+> *插值文本* → *插值文本项* *插值文本* 可选 \
+> *插值文本项* → **`\(`** *表达式* **`)`** | *引用文本项*
 >
-> *multiline-interpolated-text* → *multiline-interpolated-text-item* *multiline-interpolated-text*_?_ \
-> *multiline-interpolated-text-item* → **`\(`** *expression* **`)`** | *multiline-quoted-text-item*
+> *多行插值文本* → *多行插值文本项* *多行插值文本* 可选 \
+> *多行插值文本项* → **`\(`** *表达式* **`)`** | *多行引用文本项*
 >
-> *escape-sequence* → **`\`** *extended-string-literal-delimiter* \
-> *escaped-character* → *escape-sequence* **`0`** | *escape-sequence* **`\`** | *escape-sequence* **`t`** | *escape-sequence* **`n`** | *escape-sequence* **`r`** | *escape-sequence* **`"`** | *escape-sequence* **`'`** \
-> *escaped-character* → *escape-sequence* **`u`** **`{`** *unicode-scalar-digits* **`}`** \
-> *unicode-scalar-digits* → Between one and eight hexadecimal digits
+> *转义序列* → **`\`** *字符串扩展分隔符* \
+> *转义字符* → *转义序列* **`0`** | *转义序列* **`\`** | *转义序列* **`t`** | *转义序列* **`n`** | *转义序列* **`r`** | *转义序列* **`"`** | *转义序列* **`'`** \
+> *转义字符* → *转义序列* **`u`** **`{`** *unicode-标量-数字* **`}`** \
+> *unicode-标量-数字* → 一到八位十六进制数字
 >
-> *escaped-newline* → *escape-sequence* *inline-spaces*_?_ *line-break*
+> *转义换行符* → *转义序列* *内联空格* 可选 *换行符*
 
-> Grammar of a regular expression literal:
+> 正则表达式字面量语法：
 >
-> *regular-expression-literal* → *regular-expression-literal-opening-delimiter* *regular-expression* *regular-expression-literal-closing-delimiter* \
-> *regular-expression* → Any regular expression
+> *正则表达式字面量* → *正则表达式字面量开分隔定界符* *正则表达式* *正则表达式字面量闭分隔定界符* \
+> *正则表达式* → 任何正则表达式
 >
-> *regular-expression-literal-opening-delimiter* → *extended-regular-expression-literal-delimiter*_?_ **`/`** \
-> *regular-expression-literal-closing-delimiter* → **`/`** *extended-regular-expression-literal-delimiter*_?_
+> *正则表达式字面量开分隔定界符* → *正则表达式扩展分隔符* 可选 **`/`** \
+> *正则表达式字面量闭分隔定界符* → **`/`** *正则表达式扩展分隔符* 可选
 >
-> *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*_?_
+> *正则表达式扩展分隔符* → **`#`** *正则表达式扩展分隔符* 可选
 
-> Grammar of operators:
+> 运算符语法：
 >
-> *operator* → *operator-head* *operator-characters*_?_ \
-> *operator* → *dot-operator-head* *dot-operator-characters*
+> *运算符* → *运算符头* *运算符字符集* 可选 \
+> *运算符* → *点运算符头* *点运算符字符集*
 >
-> *operator-head* → **`/`** | **`=`** | **`-`** | **`+`** | **`!`** | **`*`** | **`%`** | **`<`** | **`>`** | **`&`** | **`|`** | **`^`** | **`~`** | **`?`** \
-> *operator-head* → U+00A1–U+00A7 \
-> *operator-head* → U+00A9 or U+00AB \
-> *operator-head* → U+00AC or U+00AE \
-> *operator-head* → U+00B0–U+00B1 \
-> *operator-head* → U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7 \
-> *operator-head* → U+2016–U+2017 \
-> *operator-head* → U+2020–U+2027 \
-> *operator-head* → U+2030–U+203E \
-> *operator-head* → U+2041–U+2053 \
-> *operator-head* → U+2055–U+205E \
-> *operator-head* → U+2190–U+23FF \
-> *operator-head* → U+2500–U+2775 \
-> *operator-head* → U+2794–U+2BFF \
-> *operator-head* → U+2E00–U+2E7F \
-> *operator-head* → U+3001–U+3003 \
-> *operator-head* → U+3008–U+3020 \
-> *operator-head* → U+3030
+> *运算符头* → **`/`** | **`=`** | **`-`** | **`+`** | **`!`** | **`*`** | **`%`** | **`<`** | **`>`** | **`&`** | **`|`** | **`^`** | **`~`** | **`?`** \
+> *运算符头* → U+00A1–U+00A7 \
+> *运算符头* → U+00A9 或 U+00AB \
+> *运算符头* → U+00AC 或 U+00AE \
+> *运算符头* → U+00B0–U+00B1 \
+> *运算符头* → U+00B6、U+00BB、U+00BF、U+00D7 或 U+00F7 \
+> *运算符头* → U+2016–U+2017 \
+> *运算符头* → U+2020–U+2027 \
+> *运算符头* → U+2030–U+203E \
+> *运算符头* → U+2041–U+2053 \
+> *运算符头* → U+2055–U+205E \
+> *运算符头* → U+2190–U+23FF \
+> *运算符头* → U+2500–U+2775 \
+> *运算符头* → U+2794–U+2BFF \
+> *运算符头* → U+2E00–U+2E7F \
+> *运算符头* → U+3001–U+3003 \
+> *运算符头* → U+3008–U+3020 \
+> *运算符头* → U+3030
 >
-> *operator-character* → *operator-head* \
-> *operator-character* → U+0300–U+036F \
-> *operator-character* → U+1DC0–U+1DFF \
-> *operator-character* → U+20D0–U+20FF \
-> *operator-character* → U+FE00–U+FE0F \
-> *operator-character* → U+FE20–U+FE2F \
-> *operator-character* → U+E0100–U+E01EF \
-> *operator-characters* → *operator-character* *operator-characters*_?_
+> *运算符字符* → *运算符头* \
+> *运算符字符* → U+0300–U+036F \
+> *运算符字符* → U+1DC0–U+1DFF \
+> *运算符字符* → U+20D0–U+20FF \
+> *运算符字符* → U+FE00–U+FE0F \
+> *运算符字符* → U+FE20–U+FE2F \
+> *运算符字符* → U+E0100–U+E01EF \
+> *运算符字符集* → *运算符字符* *运算符字符集* 可选
 >
-> *dot-operator-head* → **`.`** \
-> *dot-operator-character* → **`.`** | *operator-character* \
-> *dot-operator-characters* → *dot-operator-character* *dot-operator-characters*_?_
+> *点运算符头* → **`.`** \
+> *点运算符字符* → **`.`** | *运算符字符* \
+> *点运算符字符集* → *点运算符字符* *点运算符字符集* 可选
 >
-> *infix-operator* → *operator* \
-> *prefix-operator* → *operator* \
-> *postfix-operator* → *operator*
+> *中缀运算符* → *运算符* \
+> *前缀运算符* → *运算符* \
+> *后缀运算符* → *运算符*
 
-## Types
+## 类型
 
-> Grammar of a type:
+> 类型语法：
 >
-> *type* → *function-type* \
-> *type* → *array-type* \
-> *type* → *dictionary-type* \
-> *type* → *type-identifier* \
-> *type* → *tuple-type* \
-> *type* → *optional-type* \
-> *type* → *implicitly-unwrapped-optional-type* \
-> *type* → *protocol-composition-type* \
-> *type* → *opaque-type* \
-> *type* → *metatype-type* \
-> *type* → *any-type* \
-> *type* → *self-type* \
-> *type* → **`(`** *type* **`)`**
+> *类型* → *函数类型* \
+> *类型* → *数组类型* \
+> *类型* → *字典类型* \
+> *类型* → *类型标识符* \
+> *类型* → *元组类型* \
+> *类型* → *可选类型* \
+> *类型* → *隐式解析可选类型* \
+> *类型* → *协议合成类型* \
+> *类型* → *不透明类型* \
+> *类型* → *元类型* \
+> *类型* → *任意类型* \
+> *类型* → *自身类型* \
+> *类型* → **`(`** *type* **`)`**
 
-> Grammar of a type annotation:
+> 类型注释语法：
 >
-> *type-annotation* → **`:`** *attributes*_?_ **`inout`**_?_ *type*
+> *类型注释* → **`:`** *属性（Attributes）* 可选 **`inout`** 可选 *类型*
 
-> Grammar of a type identifier:
+> 类型标识符语法：
 >
-> *type-identifier* → *type-name* *generic-argument-clause*_?_ | *type-name* *generic-argument-clause*_?_ **`.`** *type-identifier* \
-> *type-name* → *identifier*
+> *类型标识符* → *类型名* *泛型实参子句* 可选 | *类型名* *泛型实参子句* 可选 **`.`** *类型标识符* \
+> *类型名* → *标识符*
 
-> Grammar of a tuple type:
+> 元组类型语法：
 >
-> *tuple-type* → **`(`** **`)`** | **`(`** *tuple-type-element* **`,`** *tuple-type-element-list* **`)`** \
-> *tuple-type-element-list* → *tuple-type-element* | *tuple-type-element* **`,`** *tuple-type-element-list* \
-> *tuple-type-element* → *element-name* *type-annotation* | *type* \
-> *element-name* → *identifier*
+> *元组类型* → **`(`** **`)`** | **`(`** *元组类型元素* **`,`** *元组类型元素集* **`)`** \
+> *元组类型元素集* → *元组类型元素* | *元组类型元素* **`,`** *元组类型元素集* \
+> *元组类型元素* → *元素名* *类型注释* | *类型* \
+> *元素名* → *标识符*
 
-> Grammar of a function type:
+> 函数类型语法：
 >
-> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ *throws-clause*_?_ **`->`** *type*
+> *函数类型* → *属性* 可选 *函数类型子句* **`async`** 可选 *throws* 可选 **`->`** *类型*
 >
-> *function-type-argument-clause* → **`(`** **`)`** \
-> *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
+> *函数类型子句* → **`(`** **`)`** \
+> *函数类型子句* → **`(`** *函数类型参数集* **`...`** 可选 **`)`**
 >
-> *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
-> *function-type-argument* → *attributes*_?_ **`inout`**_?_ *type* | *argument-label* *type-annotation* \
-> *argument-label* → *identifier*
+> *函数类型参数集* → *函数类型参数* | *函数类型参数* **`,`** *函数类型参数集* \
+> *函数类型参数* → *属性* 可选 **`inout`** 可选 *类型* | *参数标签* *类型注释* \
+> *参数标签* → *标识符*
 >
-> *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
+> *throws 子句* → **`throws`** | **`throws`** **`(`** *类型* **`)`**
 
-> Grammar of an array type:
+> 数组类型语法：
 >
-> *array-type* → **`[`** *type* **`]`**
+> *数组类型* → **`[`** *类型* **`]`**
 
-> Grammar of a dictionary type:
+> 字典类型语法：
 >
-> *dictionary-type* → **`[`** *type* **`:`** *type* **`]`**
+> *字典类型* → **`[`** *类型* **`:`** *类型* **`]`**
 
-> Grammar of an optional type:
+> 可选类型语法：
 >
-> *optional-type* → *type* **`?`**
+> *可选类型* → *类型* **`?`**
 
-> Grammar of an implicitly unwrapped optional type:
+> 隐式解析可选类型语法：
 >
-> *implicitly-unwrapped-optional-type* → *type* **`!`**
+> *隐式解析可选类型* → *类型* **`!`**
 
-> Grammar of a protocol composition type:
+> 协议合成类型语法：
 >
-> *protocol-composition-type* → *type-identifier* **`&`** *protocol-composition-continuation* \
-> *protocol-composition-continuation* → *type-identifier* | *protocol-composition-type*
+> *协议合成类型* → *类型标识符* **`&`** *协议合成延续* \
+> *协议合成延续* → *类型标识符* | *协议合成类型*
 
-> Grammar of an opaque type:
+> 不透明类型语法：
 >
-> *opaque-type* → **`some`** *type*
+> *不透明类型* → **`some`** *类型*
 
-> Grammar of a boxed protocol type:
+> 被包装的协议类型语法：
 >
-> *boxed-protocol-type* → **`any`** *type*
+> *被包装的协议类型* → **`any`** *类型*
 
-> Grammar of a metatype type:
+> 元类型语法：
 >
-> *metatype-type* → *type* **`.`** **`Type`** | *type* **`.`** **`Protocol`**
+> *元类型* → *类型* **`.`** **`Type`** | *类型* **`.`** **`Protocol`**
 
-> Grammar of an Any type:
+> 任意类型语法：
 >
-> *any-type* → **`Any`**
+> *任意类型* → **`Any`**
 
-> Grammar of a Self type:
+> 自身类型语法：
 >
-> *self-type* → **`Self`**
+> *自身类型* → **`Self`**
 
-> Grammar of a type inheritance clause:
+> 类型继承子句语法：
 >
-> *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> *类型继承子句* → **`:`** *类型继承集* \
+> *类型继承集* → *属性* 可选 *类型标识符* | *属性* 可选 *类型标识符* **`,`** *类型继承集*
 
-## Expressions
+## 表达式
 
-> Grammar of an expression:
+> 表达式语法：
 >
-> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_
+> *表达式* → *try 运算符* 可选 *await 运算符* 可选 *前缀表达式* *中缀表达式* 可选
 
-> Grammar of a prefix expression:
+> 前缀表达式语法：
 >
-> *prefix-expression* → *prefix-operator*_?_ *postfix-expression* \
-> *prefix-expression* → *in-out-expression*
+> *前缀表达式* → *前缀运算符* 可选 *后缀表达式* \
+> *前缀表达式* → *输入输出表达式*
 
-> Grammar of an in-out expression:
+> 输入输出表达式语法：
 >
-> *in-out-expression* → **`&`** *primary-expression*
+> *输入输出表达式* → **`&`** *基础表达式*
 
-> Grammar of a try expression:
+> try 表达式语法：
 >
-> *try-operator* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
+> *try 运算符* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
 
-> Grammar of an await expression:
+> await 表达式语法：
 >
-> *await-operator* → **`await`**
+> *await 运算符* → **`await`**
 
-> Grammar of an infix expression:
+> 中缀表达式语法：
 >
-> *infix-expression* → *infix-operator* *prefix-expression* \
-> *infix-expression* → *assignment-operator* *try-operator*_?_ *await-operator*_?_ *prefix-expression* \
-> *infix-expression* → *conditional-operator* *try-operator*_?_ *await-operator*_?_ *prefix-expression* \
-> *infix-expression* → *type-casting-operator* \
-> *infix-expressions* → *infix-expression* *infix-expressions*_?_
+> *中缀表达式* → *中缀运算符* *前缀表达式* \
+> *中缀表达式* → *赋值运算符* *try 运算符* 可选 *await 运算符* 可选 *前缀表达式* \
+> *中缀表达式* → *条件运算符* *try 运算符* 可选 *await 运算符* 可选 *前缀表达式* \
+> *中缀表达式* → *类型转换运算符* \
+> *中缀表达式* → *中缀表达式* *中缀表达式* 可选
 
-> Grammar of an assignment operator:
+> 赋值运算符语法：
 >
-> *assignment-operator* → **`=`**
+> *赋值运算符* → **`=`**
 
-> Grammar of a conditional operator:
+> 条件运算符语法：
 >
-> *conditional-operator* → **`?`** *expression* **`:`**
+> *条件运算符* → **`?`** *表达式* **`:`**
 
-> Grammar of a type-casting operator:
+> 类型转换运算符语法：
 >
-> *type-casting-operator* → **`is`** *type* \
-> *type-casting-operator* → **`as`** *type* \
-> *type-casting-operator* → **`as`** **`?`** *type* \
-> *type-casting-operator* → **`as`** **`!`** *type*
+> *类型转换运算符* → **`is`** *类型* \
+> *类型转换运算符* → **`as`** *类型* \
+> *类型转换运算符* → **`as`** **`?`** *类型* \
+> *类型转换运算符* → **`as`** **`!`** *类型*
 
-> Grammar of a primary expression:
+> 基础表达式语法：
 >
-> *primary-expression* → *identifier* *generic-argument-clause*_?_ \
-> *primary-expression* → *literal-expression* \
-> *primary-expression* → *self-expression* \
-> *primary-expression* → *superclass-expression* \
-> *primary-expression* → *conditional-expression* \
-> *primary-expression* → *closure-expression* \
-> *primary-expression* → *parenthesized-expression* \
-> *primary-expression* → *tuple-expression* \
-> *primary-expression* → *implicit-member-expression* \
-> *primary-expression* → *wildcard-expression* \
-> *primary-expression* → *macro-expansion-expression* \
-> *primary-expression* → *key-path-expression* \
-> *primary-expression* → *selector-expression* \
-> *primary-expression* → *key-path-string-expression*
+> *基础表达式* → *标识符* *泛型实参子句* 可选 \
+> *基础表达式* → *字面量表达式* \
+> *基础表达式* → *self 表达式* \
+> *基础表达式* → *父类表达式* \
+> *基础表达式* → *条件表达式* \
+> *基础表达式* → *闭包表达式* \
+> *基础表达式* → *圆括号表达式* \
+> *基础表达式* → *元组表达式* \
+> *基础表达式* → *隐式成员表达式* \
+> *基础表达式* → *通配符表达式* \
+> *基础表达式* → *宏展开表达式* \
+> *基础表达式* → *key-path 表达式* \
+> *基础表达式* → *选择器表达式* \
+> *基础表达式* → *key-path 字符串表达式*
 
-> Grammar of a literal expression:
+> 字面量表达式语法：
 >
-> *literal-expression* → *literal* \
-> *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
+> *字面量表达式* → *字面量* \
+> *字面量表达式* → *数组字面量* | *字典字面量* | *playground 字面量*
 >
-> *array-literal* → **`[`** *array-literal-items*_?_ **`]`** \
-> *array-literal-items* → *array-literal-item* **`,`**_?_ | *array-literal-item* **`,`** *array-literal-items* \
-> *array-literal-item* → *expression*
+> *数组字面量* → **`[`** *数组字面量项* 可选 **`]`** \
+> *数组字面量项* → *数组字面量项* **`,`** 可选 | *数组字面量项* **`,`** *数组字面量项* \
+> *数组字面量项* → *表达式*
 >
-> *dictionary-literal* → **`[`** *dictionary-literal-items* **`]`** | **`[`** **`:`** **`]`** \
-> *dictionary-literal-items* → *dictionary-literal-item* **`,`**_?_ | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
-> *dictionary-literal-item* → *expression* **`:`** *expression*
+> *字典字面量* → **`[`** *字典字面量项* **`]`** | **`[`** **`:`** **`]`** \
+> *字典字面量项* → *字典字面量项* **`,`** 可选 | *字典字面量项* **`,`** *字典字面量项* \
+> *字典字面量项* → *表达式* **`:`** *表达式*
 >
-> *playground-literal* → **`#colorLiteral`** **`(`** **`red`** **`:`** *expression* **`,`** **`green`** **`:`** *expression* **`,`** **`blue`** **`:`** *expression* **`,`** **`alpha`** **`:`** *expression* **`)`** \
-> *playground-literal* → **`#fileLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`** \
-> *playground-literal* → **`#imageLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`**
+> *playground 字面量* → **`#colorLiteral`** **`(`** **`red`** **`:`** *表达式* **`,`** **`green`** **`:`** *表达式* **`,`** **`blue`** **`:`** *表达式* **`,`** **`alpha`** **`:`** *表达式* **`)`** \
+> *playground 字面量* → **`#fileLiteral`** **`(`** **`resourceName`** **`:`** *表达式* **`)`** \
+> *playground 字面量* → **`#imageLiteral`** **`(`** **`resourceName`** **`:`** *表达式* **`)`**
 
-> Grammar of a self expression:
+> self 表达式语法：
 >
-> *self-expression* → **`self`** | *self-method-expression* | *self-subscript-expression* | *self-initializer-expression*
+> *self 表达式* → **`self`** | *self 方法表达式* | *self 下标表达式* | *self 构造器表达式*
 >
-> *self-method-expression* → **`self`** **`.`** *identifier* \
-> *self-subscript-expression* → **`self`** **`[`** *function-call-argument-list* **`]`** \
-> *self-initializer-expression* → **`self`** **`.`** **`init`**
+> *self 方法表达式* → **`self`** **`.`** *标识符* \
+> *self 下标表达式* → **`self`** **`[`** *函数调用参数表* **`]`** \
+> *self 构造器表达式* → **`self`** **`.`** **`init`**
 
-> Grammar of a superclass expression:
+> 父类表达式语法：
 >
-> *superclass-expression* → *superclass-method-expression* | *superclass-subscript-expression* | *superclass-initializer-expression*
+> *父类表达式* → *父类方法表达式* | *父类下标表达式* | *父类构造器表达式*
 >
-> *superclass-method-expression* → **`super`** **`.`** *identifier* \
-> *superclass-subscript-expression* → **`super`** **`[`** *function-call-argument-list* **`]`** \
-> *superclass-initializer-expression* → **`super`** **`.`** **`init`**
+> *父类方法表达式* → **`super`** **`.`** *标识符* \
+> *父类下标表达式* → **`super`** **`[`** *函数调用参数表* **`]`** \
+> *父类构造器表达式* → **`super`** **`.`** **`init`**
 
-> Grammar of a conditional expression:
+> 条件表达式语法：
 >
-> *conditional-expression* → *if-expression* | *switch-expression*
+> *条件表达式* → *if 表达式* | *switch 表达式*
 >
-> *if-expression* → **`if`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail* \
-> *if-expression-tail* → **`else`** *if-expression* \
-> *if-expression-tail* → **`else`** **`{`** *statement* **`}`**
+> *if 表达式* → **`if`** *条件集* **`{`** *语句* **`}`** *if 表达式后续* \
+> *if 表达式后续* → **`else`** *if 表达式* \
+> *if 表达式后续* → **`else`** **`{`** *语句* **`}`**
 >
-> *switch-expression* → **`switch`** *expression* **`{`** *switch-expression-cases* **`}`** \
-> *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*_?_ \
-> *switch-expression-case* → *case-label* *statement* \
-> *switch-expression-case* → *default-label* *statement*
+> *switch 表达式* → **`switch`** *表达式* **`{`** *switch表 达式 case* **`}`** \
+> *switch 表达式 case* → *switch 表达式 case* *switch 表达式 case* 可选 \
+> *switch case 表达式* → *case 标签* *语句* \
+> *switch case 表达式* → *default 标签* *语句*
 
-> Grammar of a closure expression:
+> 闭包表达式语法：
 >
-> *closure-expression* → **`{`** *attributes*_?_ *closure-signature*_?_ *statements*_?_ **`}`**
+> *闭包表达式* → **`{`** *属性* 可选 *闭包签名* 可选 *语句* 可选 **`}`**
 >
-> *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
-> *closure-signature* → *capture-list* **`in`**
+> *闭包签名* → *捕获列表* 可选 *闭包参数子句* **`async`** 可选 *throws* 可选 *函数结果* 可选 **`in`** \
+> *闭包签名* → *捕获列表* **`in`**
 >
-> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
-> *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
-> *closure-parameter* → *closure-parameter-name* *type-annotation*_?_ \
-> *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
-> *closure-parameter-name* → *identifier*
+> *闭包参数子句* → **`(`** **`)`** | **`(`** *闭包参数集* **`)`** | *标识符集* \
+> *闭包参数集* → *闭包参数* | *闭包参数* **`,`** *闭包参数集* \
+> *闭包参数* → *闭包参数名* *类型注释* 可选 \
+> *闭包参数* → *闭包参数名* *类型注释* **`...`** \
+> *闭包参数名* → *标识符*
 >
-> *capture-list* → **`[`** *capture-list-items* **`]`** \
-> *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items* \
-> *capture-list-item* → *capture-specifier*_?_ *identifier* \
-> *capture-list-item* → *capture-specifier*_?_ *identifier* **`=`** *expression* \
-> *capture-list-item* → *capture-specifier*_?_ *self-expression* \
-> *capture-specifier* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
+> *捕获列表* → **`[`** *捕获列表项* **`]`** \
+> *捕获列表项* → *捕获列表项* | *捕获列表项* **`,`** *捕获列表项* \
+> *捕获列表项* → *捕获说明符* 可选 *标识符* \
+> *捕获列表项* → *捕获说明符* 可选 *标识符* **`=`** *表达式* \
+> *捕获列表项* → *捕获说明符* 可选 *self 表达式* \
+> *捕获说明符* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
 
-> Grammar of an implicit member expression:
+> 隐式成员表达式语法：
 >
-> *implicit-member-expression* → **`.`** *identifier* \
-> *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*
+> *隐式成员表达式* → **`.`** *标识符* \
+> *隐式成员表达式* → **`.`** *标识符* **`.`** *后缀表达式*
 
-> Grammar of a parenthesized expression:
+> 圆括号表达式语法：
 >
-> *parenthesized-expression* → **`(`** *expression* **`)`**
+> *圆括号表达式* → **`(`** *表达式* **`)`**
 
-> Grammar of a tuple expression:
+> 元组表达式语法：
 >
-> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`** \
-> *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
-> *tuple-element* → *expression* | *identifier* **`:`** *expression*
+> *元组表达式* → **`(`** **`)`** | **`(`** *元组元素* **`,`** *元组元素集* **`)`** \
+> *元组元素集* → *元组元素* | *元组元素* **`,`** *元组元素集* \
+> *元组元素* → *表达式* | *标识符* **`:`** *表达式*
 
-> Grammar of a wildcard expression:
+> 通配符表达式语法：
 >
-> *wildcard-expression* → **`_`**
+> *通配符表达式* → **`_`**
 
-> Grammar of a macro-expansion expression:
+> 宏展开表达式语法：
 >
-> *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*_?_ *function-call-argument-clause*_?_ *trailing-closures*_?_
+> *宏展开表达式* → **`#`** *标识符* *泛型参数子句* 可选 *函数调用参数子句* 可选 *尾随闭包* 可选
 
-> Grammar of a key-path expression:
+> key-path 表达式语法：
 >
-> *key-path-expression* → **`\`** *type*_?_ **`.`** *key-path-components* \
-> *key-path-components* → *key-path-component* | *key-path-component* **`.`** *key-path-components* \
-> *key-path-component* → *identifier* *key-path-postfixes*_?_ | *key-path-postfixes*
+> *key-path 表达式* → **`\`** *类型* 可选 **`.`** *key-path 组件* \
+> *key-path 组件* → *key-path 组件* | *key-path 组件* **`.`** *key-path 组件* \
+> *key-path 组件* → *标识符* *key-path 后缀* 可选 | *key-path 后缀*
 >
-> *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*_?_ \
-> *key-path-postfix* → **`?`** | **`!`** | **`self`** | **`[`** *function-call-argument-list* **`]`**
+> *key-path 后缀* → *key-path 后缀* *key-path 后缀* 可选 \
+> *key-path 后缀* → **`?`** | **`!`** | **`self`** | **`[`** *函数调用参数集* **`]`**
 
-> Grammar of a selector expression:
+> 选择器表达式语法：
 >
-> *selector-expression* → **`#selector`** **`(`** *expression* **`)`** \
-> *selector-expression* → **`#selector`** **`(`** **`getter:`** *expression* **`)`** \
-> *selector-expression* → **`#selector`** **`(`** **`setter:`** *expression* **`)`**
+> *选择器表达式* → **`#selector`** **`(`** *表达式* **`)`** \
+> *选择器表达式* → **`#selector`** **`(`** **`getter:`** *表达式* **`)`** \
+> *选择器表达式* → **`#selector`** **`(`** **`setter:`** *表达式* **`)`**
 
-> Grammar of a key-path string expression:
+> key-path 字符串表达式语法：
 >
-> *key-path-string-expression* → **`#keyPath`** **`(`** *expression* **`)`**
+> *key-path 字符串表达式* → **`#keyPath`** **`(`** *表达式* **`)`**
 
-> Grammar of a postfix expression:
+> 后缀表达式语法：
 >
-> *postfix-expression* → *primary-expression* \
-> *postfix-expression* → *postfix-expression* *postfix-operator* \
-> *postfix-expression* → *function-call-expression* \
-> *postfix-expression* → *initializer-expression* \
-> *postfix-expression* → *explicit-member-expression* \
-> *postfix-expression* → *postfix-self-expression* \
-> *postfix-expression* → *subscript-expression* \
-> *postfix-expression* → *forced-value-expression* \
-> *postfix-expression* → *optional-chaining-expression*
+> *后缀表达式* → *基本表达式* \
+> *后缀表达式* → *后缀表达式* *后缀运算符* \
+> *后缀表达式* → *函数调用表达式* \
+> *后缀表达式* → *构造器表达式* \
+> *后缀表达式* → *显式成员表达式* \
+> *后缀表达式* → *后缀 self 表达式* \
+> *后缀表达式* → *下标表达式* \
+> *后缀表达式* → *强制取值表达式* \
+> *后缀表达式* → *可选链式表达式*
 
-> Grammar of a function call expression:
+> 函数调用表达式语法：
 >
-> *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
-> *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
+> *函数调用表达式* → *后缀表达式* *函数调用参数子句* \
+> *函数调用表达式* → *后缀表达式* *函数调用参数子句* 可选 *尾随闭包*
 >
-> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`** \
-> *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list* \
-> *function-call-argument* → *expression* | *identifier* **`:`** *expression* \
-> *function-call-argument* → *operator* | *identifier* **`:`** *operator*
+> *函数调用参数子句* → **`(`** **`)`** | **`(`** *函数调用参数集* **`)`** \
+> *函数调用参数集* → *函数调用参数* | *函数调用参数* **`,`** *函数调用参数集* \
+> *函数调用参数* → *表达式* | *标识符* **`:`** *表达式* \
+> *函数调用参数* → *运算符* | *标识符* **`:`** *运算符*
 >
-> *trailing-closures* → *closure-expression* *labeled-trailing-closures*_?_ \
-> *labeled-trailing-closures* → *labeled-trailing-closure* *labeled-trailing-closures*_?_ \
-> *labeled-trailing-closure* → *identifier* **`:`** *closure-expression*
+> *尾随闭包* → *闭包表达式* *带标签的尾随闭包* 可选 \
+> *带标签的尾随闭包* → *带标签的尾随闭包* *带标签的尾随闭包* 可选 \
+> *带标签的尾随闭包* → *标识符* **`:`** *闭包表达式*
 
-> Grammar of an initializer expression:
+> 构造器表达式语法：
 >
-> *initializer-expression* → *postfix-expression* **`.`** **`init`** \
-> *initializer-expression* → *postfix-expression* **`.`** **`init`** **`(`** *argument-names* **`)`**
+> *构造器表达式* → *后缀表达式* **`.`** **`init`** \
+> *构造器表达式* → *后缀表达式* **`.`** **`init`** **`(`** *参数名* **`)`**
 
-> Grammar of an explicit member expression:
+> 显式成员表达式语法：
 >
-> *explicit-member-expression* → *postfix-expression* **`.`** *decimal-digits* \
-> *explicit-member-expression* → *postfix-expression* **`.`** *identifier* *generic-argument-clause*_?_ \
-> *explicit-member-expression* → *postfix-expression* **`.`** *identifier* **`(`** *argument-names* **`)`** \
-> *explicit-member-expression* → *postfix-expression* *conditional-compilation-block*
+> *显式成员表达式* → *后缀表达式* **`.`** *十进制数字* \
+> *显式成员表达式* → *后缀表达式* **`.`** *标识符* *泛型参数子句* 可选 \
+> *显式成员表达式* → *后缀表达式* **`.`** *标识符* **`(`** *参数名* **`)`** \
+> *显式成员表达式* → *后缀表达式* *条件编译块*
 >
-> *argument-names* → *argument-name* *argument-names*_?_ \
-> *argument-name* → *identifier* **`:`**
+> *参数名* → *参数名* *参数名* 可选 \
+> *参数名* → *标识符* **`:`**
 
-> Grammar of a postfix self expression:
+> 后缀 self表达式语法：
 >
-> *postfix-self-expression* → *postfix-expression* **`.`** **`self`**
+> *后缀 self 表达式* → *后缀表达式* **`.`** **`self`**
 
-> Grammar of a subscript expression:
+> 下标表达式语法：
 >
-> *subscript-expression* → *postfix-expression* **`[`** *function-call-argument-list* **`]`**
+> *下标表达式* → *后缀表达式* **`[`** *函数调用参数集* **`]`**
 
-> Grammar of a forced-value expression:
+> 强制取值表达式语法：
 >
-> *forced-value-expression* → *postfix-expression* **`!`**
+> *强制取值表达式* → *后缀表达式* **`!`**
 
-> Grammar of an optional-chaining expression:
+> 可选链式表达式语法：
 >
-> *optional-chaining-expression* → *postfix-expression* **`?`**
+> *可选链式表达式* → *后缀表达式* **`?`**
 
-## Statements
+## 语句
 
-> Grammar of a statement:
+> 语句语法：
 >
-> *statement* → *expression* **`;`**_?_ \
-> *statement* → *declaration* **`;`**_?_ \
-> *statement* → *loop-statement* **`;`**_?_ \
-> *statement* → *branch-statement* **`;`**_?_ \
-> *statement* → *labeled-statement* **`;`**_?_ \
-> *statement* → *control-transfer-statement* **`;`**_?_ \
-> *statement* → *defer-statement* **`;`**_?_ \
-> *statement* → *do-statement* **`;`**_?_ \
-> *statement* → *compiler-control-statement* \
-> *statements* → *statement* *statements*_?_
+> *语句* → *表达式* **`;`** 可选 \
+> *语句* → *声明* **`;`** 可选 \
+> *语句* → *循环语句* **`;`** 可选 \
+> *语句* → *分支语句* **`;`** 可选 \
+> *语句* → *标签语句* **`;`** 可选 \
+> *语句* → *控制转移语句* **`;`** 可选 \
+> *语句* → *延迟语句* **`;`** 可选 \
+> *语句* → *执行语句* **`;`** 可选 \
+> *语句* → *编译控制语句* \
+> *语句集* → *语句* *语句集* 可选
 
-> Grammar of a loop statement:
+> 循环语句语法：
 >
-> *loop-statement* → *for-in-statement* \
-> *loop-statement* → *while-statement* \
-> *loop-statement* → *repeat-while-statement*
+> *循环语句* → *for-in 语句* \
+> *循环语句* → *while 语句* \
+> *循环语句* → *repeat-while 语句*
 
-> Grammar of a for-in statement:
+> for-in 语句语法：
 >
-> *for-in-statement* → **`for`** **`case`**_?_ *pattern* **`in`** *expression* *where-clause*_?_ *code-block*
+> *for-in 语句* → **`for`** **`case`** 可选 *模式* **`in`** *表达式* *where 子句* 可选 *代码块*
 
-> Grammar of a while statement:
+> while 语句语法：
 >
-> *while-statement* → **`while`** *condition-list* *code-block*
+> *while 语句* → **`while`** *条件集* *代码块*
 >
-> *condition-list* → *condition* | *condition* **`,`** *condition-list* \
-> *condition* → *expression* | *availability-condition* | *case-condition* | *optional-binding-condition*
+> *条件集* → *条件* | *条件* **`,`** *条件集* \
+> *条件* → *表达式* | *可用性条件* | *case 条件* | *可选绑定条件*
 >
-> *case-condition* → **`case`** *pattern* *initializer* \
-> *optional-binding-condition* → **`let`** *pattern* *initializer*_?_ | **`var`** *pattern* *initializer*_?_
+> *case 条件* → **`case`** *模式* *构造器* \
+> *可选绑定条件* → **`let`** *模式* *构造器* 可选 | **`var`** *模式* *构造器* 可选
 
-> Grammar of a repeat-while statement:
+> repeat-while 语句语法：
 >
-> *repeat-while-statement* → **`repeat`** *code-block* **`while`** *expression*
+> *repeat-while 语句* → **`repeat`** *代码块* **`while`** *表达式*
 
-> Grammar of a branch statement:
+> 分支语句语法：
 >
-> *branch-statement* → *if-statement* \
-> *branch-statement* → *guard-statement* \
-> *branch-statement* → *switch-statement*
+> *分支语句* → *if 语句* \
+> *分支语句* → *guard 语句* \
+> *分支语句* → *switch 语句*
 
-> Grammar of an if statement:
+> if 语句语法：
 >
-> *if-statement* → **`if`** *condition-list* *code-block* *else-clause*_?_ \
-> *else-clause* → **`else`** *code-block* | **`else`** *if-statement*
+> *if 语句* → **`if`** *条件集* *代码块* *else 子句* 可选 \
+> *else 子句* → **`else`** *代码块* | **`else`** *if 语句*
 
-> Grammar of a guard statement:
+> guard 语句语法：
 >
-> *guard-statement* → **`guard`** *condition-list* **`else`** *code-block*
+> *guard 语句* → **`guard`** *条件集* **`else`** *代码块*
 
-> Grammar of a switch statement:
+> switch 语句语法：
 >
-> *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*_?_ **`}`** \
-> *switch-cases* → *switch-case* *switch-cases*_?_ \
-> *switch-case* → *case-label* *statements* \
-> *switch-case* → *default-label* *statements* \
-> *switch-case* → *conditional-switch-case*
+> *switch 语句* → **`switch`** *表达式* **`{`** *switch 语句* 可选 **`}`** \
+> *switch 语句* → *switch 语句* *switch 语句* 可选 \
+> *switch 语句* → *case 标签* *语句集* \
+> *switch 语句* → *default 标签* *语句集* \
+> *switch 语句* → *条件 switch 语句*
 >
-> *case-label* → *attributes*_?_ **`case`** *case-item-list* **`:`** \
-> *case-item-list* → *pattern* *where-clause*_?_ | *pattern* *where-clause*_?_ **`,`** *case-item-list* \
-> *default-label* → *attributes*_?_ **`default`** **`:`**
+> *case 标签* → *属性* 可选 **`case`** *case 项集* **`:`** \
+> *case 项集* → *模式* *where 子句* 可选 | *模式* *where 子句* 可选 **`,`** *case 项集* \
+> *default 标签* → *属性* 可选 **`default`** **`:`**
 >
-> *where-clause* → **`where`** *where-expression* \
-> *where-expression* → *expression*
+> *where 子句* → **`where`** *where 表达式* \
+> *where 表达式* → *表达式*
 >
-> *conditional-switch-case* → *switch-if-directive-clause* *switch-elseif-directive-clauses*_?_ *switch-else-directive-clause*_?_ *endif-directive* \
-> *switch-if-directive-clause* → *if-directive* *compilation-condition* *switch-cases*_?_ \
-> *switch-elseif-directive-clauses* → *elseif-directive-clause* *switch-elseif-directive-clauses*_?_ \
-> *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*_?_ \
-> *switch-else-directive-clause* → *else-directive* *switch-cases*_?_
+> *条件 switch 语句* → *switch-if 指令子句* *switch-elseif 指令子句集* 可选 *switch-else 指令子句* 可选 *endif 指令* \
+> *switch-if 指令子句* → *if 指令* *编译条件* *switch-case 集* 可选 \
+> *switch-elseif 指令子句* → *elseif 指令子句* *switch-elseif 指令子句集* 可选 \
+> *switch-elseif 指令子句* → *elseif 指令* *编译条件* *switch-case 集* 可选 \
+> *switch-else 指令子句* → *else 指令* *switch-case 集* 可选
 
-> Grammar of a labeled statement:
+> 标签语句语法：
 >
-> *labeled-statement* → *statement-label* *loop-statement* \
-> *labeled-statement* → *statement-label* *if-statement* \
-> *labeled-statement* → *statement-label* *switch-statement* \
-> *labeled-statement* → *statement-label* *do-statement*
+> *标签语句* → *语句标签* *循环语句* \
+> *标签语句* → *语句标签* *if 语句* \
+> *标签语句* → *语句标签* *switch 语句* \
+> *标签语句* → *语句标签* *do 语句*
 >
-> *statement-label* → *label-name* **`:`** \
-> *label-name* → *identifier*
+> *语句标签* → *标签名* **`:`** \
+> *标签名* → *标识符*
 
-> Grammar of a control transfer statement:
+> 控制转移语句语法：
 >
-> *control-transfer-statement* → *break-statement* \
-> *control-transfer-statement* → *continue-statement* \
-> *control-transfer-statement* → *fallthrough-statement* \
-> *control-transfer-statement* → *return-statement* \
-> *control-transfer-statement* → *throw-statement*
+> *控制转移语句* → *break 语句* \
+> *控制转移语句* → *continue 语句* \
+> *控制转移语句* → *fallthrough 语句* \
+> *控制转移语句* → *return 语句* \
+> *控制转移语句* → *throw 语句*
 
-> Grammar of a break statement:
+> break 语句语法：
 >
-> *break-statement* → **`break`** *label-name*_?_
+> *break 语句* → **`break`** *标签名* 可选
 
-> Grammar of a continue statement:
+> continue 语句语法：
 >
-> *continue-statement* → **`continue`** *label-name*_?_
+> *continue 语句* → **`continue`** *标签名* 可选
 
-> Grammar of a fallthrough statement:
+> fallthrough 语句语法：
 >
-> *fallthrough-statement* → **`fallthrough`**
+> *fallthrough 语句* → **`fallthrough`**
 
-> Grammar of a return statement:
+> return 语句语法：
 >
-> *return-statement* → **`return`** *expression*_?_
+> *return 语句* → **`return`** *表达式* 可选
 
-> Grammar of a throw statement:
+> throw 语句语法：
 >
-> *throw-statement* → **`throw`** *expression*
+> *throw 语句* → **`throw`** *表达式*
 
-> Grammar of a defer statement:
+> defer 语句语法：
 >
-> *defer-statement* → **`defer`** *code-block*
+> *defer 语句* → **`defer`** *代码块*
 
-> Grammar of a do statement:
+> do 语句语法：
 >
-> *do-statement* → **`do`** *throws-clause*_?_ *code-block* *catch-clauses*_?_ \
-> *catch-clauses* → *catch-clause* *catch-clauses*_?_ \
-> *catch-clause* → **`catch`** *catch-pattern-list*_?_ *code-block* \
-> *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list* \
-> *catch-pattern* → *pattern* *where-clause*_?_
+> *do 语句* → **`do`** *throws 子句* 可选 *代码块* *catch 子句* 可选 \
+> *catch 子句集* → *catch 子句* *catch 子句* 可选 \
+> *catch 子句* → **`catch`** *catch 模式集* 可选 *代码块* \
+> *catch 模式集* → *catch 模式* | *catch 模式* **`,`** *catch 模式集* \
+> *catch 模式* → *模式* *where 子句* 可选
 
-> Grammar of a compiler control statement:
+> 编译控制语句语法：
 >
-> *compiler-control-statement* → *conditional-compilation-block* \
-> *compiler-control-statement* → *line-control-statement* \
-> *compiler-control-statement* → *diagnostic-statement*
+> *编译控制语句* → *条件编译块* \
+> *编译控制语句* → *行控制语句* \
+> *编译控制语句* → *诊断语句*
 
-> Grammar of a conditional compilation block:
+> 条件编译块语法：
 >
-> *conditional-compilation-block* → *if-directive-clause* *elseif-directive-clauses*_?_ *else-directive-clause*_?_ *endif-directive*
+> *条件编译块* → *if 指令子句* *elseif 指令子句集* 可选 *else 指令子句* 可选 *endif 指令*
 >
-> *if-directive-clause* → *if-directive* *compilation-condition* *statements*_?_ \
-> *elseif-directive-clauses* → *elseif-directive-clause* *elseif-directive-clauses*_?_ \
-> *elseif-directive-clause* → *elseif-directive* *compilation-condition* *statements*_?_ \
-> *else-directive-clause* → *else-directive* *statements*_?_ \
-> *if-directive* → **`#if`** \
-> *elseif-directive* → **`#elseif`** \
-> *else-directive* → **`#else`** \
-> *endif-directive* → **`#endif`**
+> *if 指令子句* → *if 指令* *编译条件* *语句集* 可选 \
+> *elseif 指令子句* → *elseif 指令子句* *elseif 指令子句集* 可选 \
+> *elseif 指令子句* → *elseif 指令* *编译条件* *语句集* 可选 \
+> *else 指令子句* → *else 指令* *语句集* 可选 \
+> *if 指令* → **`#if`** \
+> *elseif 指令* → **`#elseif`** \
+> *else 指令* → **`#else`** \
+> *endif 指令* → **`#endif`**
 >
-> *compilation-condition* → *platform-condition* \
-> *compilation-condition* → *identifier* \
-> *compilation-condition* → *boolean-literal* \
-> *compilation-condition* → **`(`** *compilation-condition* **`)`** \
-> *compilation-condition* → **`!`** *compilation-condition* \
-> *compilation-condition* → *compilation-condition* **`&&`** *compilation-condition* \
-> *compilation-condition* → *compilation-condition* **`||`** *compilation-condition*
+> *编译条件* → *平台条件* \
+> *编译条件* → *标识符* \
+> *编译条件* → *布尔字面量* \
+> *编译条件* → **`(`** *编译条件* **`)`** \
+> *编译条件* → **`!`** *编译条件* \
+> *编译条件* → *编译条件* **`&&`** *编译条件* \
+> *编译条件* → *编译条件* **`||`** *编译条件*
 >
-> *platform-condition* → **`os`** **`(`** *operating-system* **`)`** \
-> *platform-condition* → **`arch`** **`(`** *architecture* **`)`** \
-> *platform-condition* → **`swift`** **`(`** **`>=`** *swift-version* **`)`** | **`swift`** **`(`** **`<`** *swift-version* **`)`** \
-> *platform-condition* → **`compiler`** **`(`** **`>=`** *swift-version* **`)`** | **`compiler`** **`(`** **`<`** *swift-version* **`)`** \
-> *platform-condition* → **`canImport`** **`(`** *import-path* **`)`** \
-> *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
+> *平台条件* → **`os`** **`(`** *操作系统* **`)`** \
+> *平台条件* → **`arch`** **`(`** *体系结构* **`)`** \
+> *平台条件* → **`swift`** **`(`** **`>=`** *swift 版本* **`)`** | **`swift`** **`(`** **`<`** *swift 版本* **`)`** \
+> *平台条件* → **`compiler`** **`(`** **`>=`** *swift 版本* **`)`** | **`compiler`** **`(`** **`<`** *swift 版本* **`)`** \
+> *平台条件* → **`canImport`** **`(`** *导入路径* **`)`** \
+> *平台条件* → **`targetEnvironment`** **`(`** *环境* **`)`**
 >
-> *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
-> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
-> *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
-> *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
-> *environment* → **`simulator`** | **`macCatalyst`**
+> *操作系统* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
+> *体系结构* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
+> *swift 版本* → *十进制数字* *swift 版本后缀* 可选 \
+> *swift 版本后缀* → **`.`** *十进制数字* *swift 版本后缀* 可选 \
+> *环境* → **`simulator`** | **`macCatalyst`**
 
-> Grammar of a line control statement:
+> 行控制语句语法：
 >
-> *line-control-statement* → **`#sourceLocation`** **`(`** **`file:`** *file-path* **`,`** **`line:`** *line-number* **`)`** \
-> *line-control-statement* → **`#sourceLocation`** **`(`** **`)`** \
-> *line-number* → A decimal integer greater than zero \
-> *file-path* → *static-string-literal*
+> *行控制语句* → **`#sourceLocation`** **`(`** **`file:`** *文件路径* **`,`** **`line:`** *行号* **`)`** \
+> *行控制语句* → **`#sourceLocation`** **`(`** **`)`** \
+> *行号* → 大于零的十进制整数 \
+> *文件路径* → *静态字符串字面量*
 
-> Grammar of an availability condition:
+> 可用性条件语法：
 >
-> *availability-condition* → **`#available`** **`(`** *availability-arguments* **`)`** \
-> *availability-condition* → **`#unavailable`** **`(`** *availability-arguments* **`)`** \
-> *availability-arguments* → *availability-argument* | *availability-argument* **`,`** *availability-arguments* \
-> *availability-argument* → *platform-name* *platform-version* \
-> *availability-argument* → **`*`**
+> *可用性条件* → **`#available`** **`(`** *可用性参数* **`)`** \
+> *可用性条件* → **`#unavailable`** **`(`** *可用性参数* **`)`** \
+> *可用性参数* → *可用性参数* | *可用性参数* **`,`** *可用性参数* \
+> *可用性参数* → *平台名* *平台版本* \
+> *可用性参数* → **`*`**
 >
-> *platform-name* → **`iOS`** | **`iOSApplicationExtension`** \
-> *platform-name* → **`macOS`** | **`macOSApplicationExtension`** \
-> *platform-name* → **`macCatalyst`** | **`macCatalystApplicationExtension`** \
-> *platform-name* → **`watchOS`** | **`watchOSApplicationExtension`** \
-> *platform-name* → **`tvOS`** | **`tvOSApplicationExtension`** \
-> *platform-name* → **`visionOS`** | **`visionOSApplicationExtension`** \
-> *platform-version* → *decimal-digits* \
-> *platform-version* → *decimal-digits* **`.`** *decimal-digits* \
-> *platform-version* → *decimal-digits* **`.`** *decimal-digits* **`.`** *decimal-digits*
+> *平台名* → **`iOS`** | **`iOSApplicationExtension`** \
+> *平台名* → **`macOS`** | **`macOSApplicationExtension`** \
+> *平台名* → **`macCatalyst`** | **`macCatalystApplicationExtension`** \
+> *平台名* → **`watchOS`** | **`watchOSApplicationExtension`** \
+> *平台名* → **`tvOS`** | **`tvOSApplicationExtension`** \
+> *平台名* → **`visionOS`** | **`visionOSApplicationExtension`** \
+> *平台版本* → *十进制数字* \
+> *平台版本* → *十进制数字* **`.`** *十进制数字* \
+> *平台版本* → *十进制数字* **`.`** *十进制数字* **`.`** *十进制数字*
 
-## Declarations
+## 声明
 
-> Grammar of a declaration:
+> 声明语法：
 >
-> *declaration* → *import-declaration* \
-> *declaration* → *constant-declaration* \
-> *declaration* → *variable-declaration* \
-> *declaration* → *typealias-declaration* \
-> *declaration* → *function-declaration* \
-> *declaration* → *enum-declaration* \
-> *declaration* → *struct-declaration* \
-> *declaration* → *class-declaration* \
-> *declaration* → *actor-declaration* \
-> *declaration* → *protocol-declaration* \
-> *declaration* → *initializer-declaration* \
-> *declaration* → *deinitializer-declaration* \
-> *declaration* → *extension-declaration* \
-> *declaration* → *subscript-declaration* \
-> *declaration* → *operator-declaration* \
-> *declaration* → *precedence-group-declaration*
+> *声明* → *导入声明* \
+> *声明* → *常量声明* \
+> *声明* → *变量声明* \
+> *声明* → *类型别名声明* \
+> *声明* → *函数声明* \
+> *声明* → *枚举声明* \
+> *声明* → *结构体声明* \
+> *声明* → *类声明* \
+> *声明* → *actor 声明* \
+> *声明* → *协议声明* \
+> *声明* → *构造器声明* \
+> *声明* → *析构器声明* \
+> *声明* → *扩展声明* \
+> *声明* → *下标声明* \
+> *声明* → *运算符声明* \
+> *声明* → *优先级组声明*
 
-> Grammar of a top-level declaration:
+> 顶级声明语法：
 >
-> *top-level-declaration* → *statements*_?_
+> *顶级声明* → *语句集* 可选
 
-> Grammar of a code block:
+> 代码块语法：
 >
-> *code-block* → **`{`** *statements*_?_ **`}`**
+> *代码块* → **`{`** *语句集* 可选 **`}`**
 
-> Grammar of an import declaration:
+> 导入声明语法：
 >
-> *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
+> *导入声明* → *属性* 可选 **`import`** *导入类型* 可选 *导入路径*
 >
-> *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
-> *import-path* → *identifier* | *identifier* **`.`** *import-path*
+> *导入类型* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
+> *导入路径* → *标识符* | *标识符* **`.`** *导入路径*
 
-> Grammar of a constant declaration:
+> 常量声明语法：
 >
-> *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
+> *常量声明* → *属性* 可选 *声明修饰符* 可选 **`let`** *模式构造器集*
 >
-> *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list* \
-> *pattern-initializer* → *pattern* *initializer*_?_ \
-> *initializer* → **`=`** *expression*
+> *模式构造器集* → *模式构造器* | *模式构造器* **`,`** *模式构造器集* \
+> *模式构造器* → *模式* *构造器* 可选 \
+> *构造器* → **`=`** *表达式*
 
-> Grammar of a variable declaration:
+> 变量声明语法：
 >
-> *variable-declaration* → *variable-declaration-head* *pattern-initializer-list* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*_?_ *willSet-didSet-block*
+> *变量声明* → *变量声明头* *模式构造器集* \
+> *变量声明* → *变量声明头* *变量名* *类型注解* *代码块* \
+> *变量声明* → *变量声明头* *变量名* *类型注解* *getter-setter* \
+> *变量声明* → *变量声明头* *变量名* *类型注解* *getter-setter 关键字（Keyword）块* \
+> *变量声明* → *变量声明头* *变量名* *构造器* *willSet-didSet 块* \
+> *变量声明* → *变量声明头* *变量名* *类型注解* *构造器* 可选 *willSet-didSet 块*
 >
-> *variable-declaration-head* → *attributes*_?_ *declaration-modifiers*_?_ **`var`** \
-> *variable-name* → *identifier*
+> *变量声明头* → *属性* 可选 *声明修饰符* 可选 **`var`** \
+> *变量名* → *标识符*
 >
-> *getter-setter-block* → *code-block* \
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
-> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`** \
-> *getter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** *code-block* \
-> *setter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`** *setter-name*_?_ *code-block* \
-> *setter-name* → **`(`** *identifier* **`)`**
+> *getter-setter* → *代码块* \
+> *getter-setter* → **`{`** *getter 子句* *setter 子句* 可选 **`}`** \
+> *getter-setter* → **`{`** *setter 子句* *getter 子句* **`}`** \
+> *getter 子句* → *属性* 可选 *可变性修饰符* 可选 **`get`** *代码块* \
+> *setter 子句* → *属性* 可选 *可变性修饰符* 可选 **`set`** *setter 名* 可选 *代码块* \
+> *setter 名* → **`(`** *标识符* **`)`**
 >
-> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*_?_ **`}`** \
-> *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`** \
-> *getter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** \
-> *setter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`**
+> *getter-setter 关键字（Keyword）块* → **`{`** *getter 关键字子句* *setter 关键字子句* 可选 **`}`** \
+> *getter-setter 关键字（Keyword）块* → **`{`** *setter关键字子句* *getter 关键字子句* **`}`** \
+> *getter 关键字子句* → *属性* 可选 *可变性修饰符* 可选 **`get`** \
+> *setter 关键字子句* → *属性* 可选 *可变性修饰符* 可选 **`set`**
 >
-> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*_?_ **`}`** \
-> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*_?_ **`}`** \
-> *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block* \
-> *didSet-clause* → *attributes*_?_ **`didSet`** *setter-name*_?_ *code-block*
+> *willSet-didSet 块* → **`{`** *willSet 子句* *didSet 子句* 可选 **`}`** \
+> *willSet-didSet 块* → **`{`** *didSet 子句* *willSet 子句* 可选 **`}`** \
+> *willSet 子句* → *属性* 可选 **`willSet`** *setter 名* 可选 *代码块* \
+> *didSet 子句* → *属性* 可选 **`didSet`** *setter 名* 可选 *代码块*
 
-> Grammar of a type alias declaration:
+> 类型别名声明语法：
 >
-> *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment* \
-> *typealias-name* → *identifier* \
-> *typealias-assignment* → **`=`** *type*
+> *类型别名声明* → *属性* 可选 *访问级别修饰符* 可选 **`typealias`** *类型别名名* *泛型参数子句* 可选 *类型别名赋值* \
+> *类型别名名* → *标识符* \
+> *类型别名赋值* → **`=`** *类型*
 
-> Grammar of a function declaration:
+> 函数声明语法：
 >
-> *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
+> *函数声明* → *函数头* *函数名* *泛型参数子句* 可选 *函数签名* *泛型 where 子句* 可选 *函数体* 可选
 >
-> *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
-> *function-name* → *identifier* | *operator*
+> *函数头* → *属性* 可选 *声明修饰符* 可选 **`func`** \
+> *函数名* → *标识符* | *运算符*
 >
-> *function-signature* → *parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ \
-> *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
-> *function-result* → **`->`** *attributes*_?_ *type* \
-> *function-body* → *code-block*
+> *函数签名* → *参数子句* **`async`** 可选 *throws 子句* 可选 *函数结果* 可选 \
+> *函数签名* → *参数子句* **`async`** 可选 **`rethrows`** *函数结果* 可选 \
+> *函数结果* → **`->`** *属性* 可选 *类型* \
+> *函数体* → *代码块*
 >
-> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
-> *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`**
+> *参数子句* → **`(`** **`)`** | **`(`** *参数集* **`)`** \
+> *参数集* → *参数* | *参数* **`,`** *参数集* \
+> *参数* → *外部参数名* 可选 *本地参数名* *参数类型注解* *默认参数子句* 可选 \
+> *参数* → *外部参数名* 可选 *本地参数名* *参数类型注解* \
+> *参数* → *外部参数名* 可选 *本地参数名* *参数类型注解* **`...`**
 >
-> *external-parameter-name* → *identifier* \
-> *local-parameter-name* → *identifier* \
-> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
-> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
-> *default-argument-clause* → **`=`** *expression*
+> *外部参数名* → *标识符* \
+> *本地参数名* → *标识符* \
+> *参数类型注解* → **`:`** *属性* 可选 *参数修饰符* 可选 *类型* \
+> *参数修饰符* → **`inout`** | **`borrowing`** | **`consuming`** \
+> *默认参数子句* → **`=`** *表达式*
 
-> Grammar of an enumeration declaration:
+> 枚举声明语法：
 >
-> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
-> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
+> *枚举声明* → *属性* 可选 *访问级别修饰符* 可选 *联合式枚举* \
+> *枚举声明* → *属性* 可选 *访问级别修饰符* 可选 *原始值式枚举*
 >
-> *union-style-enum* → **`indirect`**_?_ **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ **`{`** *union-style-enum-members*_?_ **`}`** \
-> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*_?_ \
-> *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement* \
-> *union-style-enum-case-clause* → *attributes*_?_ **`indirect`**_?_ **`case`** *union-style-enum-case-list* \
-> *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list* \
-> *union-style-enum-case* → *enum-case-name* *tuple-type*_?_ \
-> *enum-name* → *identifier* \
-> *enum-case-name* → *identifier*
+> *联合式枚举* → **`indirect`** 可选 **`enum`** *枚举名* *泛型参数子句* 可选 *类型继承子句* 可选 *泛型 where 子句* 可选 **`{`** *联合式枚举成员* 可选 **`}`** \
+> *联合式枚举成员* → *联合式枚举成员* *联合式枚举成员* 可选 \
+> *联合式枚举成员* → *声明* | *联合式枚举 case 子句* | *编译控制语句* \
+> *联合式枚举 case 子句* → *属性* 可选 **`indirect`** 可选 **`case`** *联合式枚举 case 集* \
+> *联合式枚举 case 集* → *联合式枚举 case* | *联合式枚举 case* **`,`** *联合式枚举 case 集* \
+> *联合式枚举 case* → *枚举case名* *元组类型* 可选 \
+> *枚举名* → *标识符* \
+> *枚举 case 名* → *标识符*
 >
-> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause* *generic-where-clause*_?_ **`{`** *raw-value-style-enum-members* **`}`** \
-> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*_?_ \
-> *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement* \
-> *raw-value-style-enum-case-clause* → *attributes*_?_ **`case`** *raw-value-style-enum-case-list* \
-> *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list* \
-> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*_?_ \
-> *raw-value-assignment* → **`=`** *raw-value-literal* \
-> *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
+> *原始值式枚举* → **`enum`** *枚举名* *泛型参数子句* 可选 *类型继承子句* *泛型 where 子句* 可选 **`{`** *原始值式枚举成员*
+> *原始值式枚举成员集* → *原始值式枚举成员* *原始值式枚举成员集*可选 \
+> *原始值式枚举成员集* → *声明* | *原始值式枚举 case 子句* | *编译控制语句* \
+> *原始值式枚举 case 子句* → *属性*可选 **`case`** *原始值式枚举 case 集* \
+> *原始值式枚举 case 集* → *原始值式枚举 case* | *原始值式枚举 case* **`,`** *原始值式枚举 case 集* \
+> *原始值式枚举 case* → *枚举 case 名* *原始值赋值*可选 \
+> *原始值赋值* → **`=`** *原始值字面量* \
+> *原始值字面量* → *数值字面量* | *静态字符串字面量* | *布尔字面量*
 
-> Grammar of a structure declaration:
+> 结构声明语法：
 >
-> *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
-> *struct-name* → *identifier* \
-> *struct-body* → **`{`** *struct-members*_?_ **`}`**
+> *结构声明* → *属性*可选 *访问级别修饰符*可选 **`struct`** *结构名* *泛型参数子句*可选 *类型继承子句*可选 *泛型 where 子句*可选 *结构主体* \
+> *结构名* → *标识符* \
+> *结构主体* → **`{`** *结构成员集*可选 **`}`**
 >
-> *struct-members* → *struct-member* *struct-members*_?_ \
-> *struct-member* → *declaration* | *compiler-control-statement*
+> *结构成员集* → *结构成员* *结构成员集*可选 \
+> *结构成员* → *声明* | *编译控制语句*
 
-> Grammar of a class declaration:
+> 类声明语法：
 >
-> *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
-> *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
-> *class-name* → *identifier* \
-> *class-body* → **`{`** *class-members*_?_ **`}`**
+> *类声明* → *属性*可选 *访问级别修饰符*可选 **`final`** 可选 **`class`** *类名* *泛型参数子句*可选 *类型继承子句*可选 *泛型 where 子句*可选 *类主体* \
+> *类声明* → *属性*可选 **`final`** *访问级别修饰符*可选 **`class`** *类名* *泛型参数子句*可选 *类型继承子句*可选 *泛型 where子句*可选 *类主体* \
+> *类名* → *标识符* \
+> *类主体* → **`{`** *类成员*可选 **`}`**
 >
-> *class-members* → *class-member* *class-members*_?_ \
-> *class-member* → *declaration* | *compiler-control-statement*
+> *类成员* → *类成员* *类成员*可选 \
+> *类成员* → *声明* | *编译控制语句*
 
-> Grammar of an actor declaration:
+> actor 声明语法：
 >
-> *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body* \
-> *actor-name* → *identifier* \
-> *actor-body* → **`{`** *actor-members*_?_ **`}`**
+> *actor 声明* → *属性*可选 *访问级别修饰符*可选 **`actor`** *actor 名* *泛型参数子句*可选 *类型继承子句*可选 *泛型 where 子句*可选 *actor 主体* \
+> *actor 名* → *标识符* \
+> *actor 主体* → **`{`** *actor 成员*可选 **`}`**
 >
-> *actor-members* → *actor-member* *actor-members*_?_ \
-> *actor-member* → *declaration* | *compiler-control-statement*
+> *actor 成员* → *actor 成员* *actor 成员*可选 \
+> *actor 成员* → *声明* | *编译控制语句*
 
-> Grammar of a protocol declaration:
+> 协议声明语法：
 >
-> *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body* \
-> *protocol-name* → *identifier* \
-> *protocol-body* → **`{`** *protocol-members*_?_ **`}`**
+> *协议声明* → *属性*可选 *访问级别修饰符*可选 **`protocol`** *协议名* *类型继承子句*可选 *泛型 where 子句*可选 *协议主体* \
+> *协议名* → *标识符* \
+> *协议主体* → **`{`** *协议成员*可选 **`}`**
 >
-> *protocol-members* → *protocol-member* *protocol-members*_?_ \
-> *protocol-member* → *protocol-member-declaration* | *compiler-control-statement*
+> *协议成员* → *协议成员* *协议成员*可选 \
+> *协议成员* → *协议成员声明* | *编译控制语句*
 >
-> *protocol-member-declaration* → *protocol-property-declaration* \
-> *protocol-member-declaration* → *protocol-method-declaration* \
-> *protocol-member-declaration* → *protocol-initializer-declaration* \
-> *protocol-member-declaration* → *protocol-subscript-declaration* \
-> *protocol-member-declaration* → *protocol-associated-type-declaration* \
-> *protocol-member-declaration* → *typealias-declaration*
+> *协议成员声明* → *协议属性声明* \
+> *协议成员声明* → *协议方法声明* \
+> *协议成员声明* → *协议构造器声明* \
+> *协议成员声明* → *协议下标声明* \
+> *协议成员声明* → *协议关联类型声明* \
+> *协议成员声明* → *类型别名声明*
 
-> Grammar of a protocol property declaration:
+> 协议属性声明语法：
 >
-> *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
+> *协议属性声明* → *变量声明头* *变量名* *类型注解* *getter-setter 关键字块*
 
-> Grammar of a protocol method declaration:
+> 协议方法声明语法：
 >
-> *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
+> *协议方法声明* → *函数头* *函数名* *泛型参数子句*可选 *函数签名* *泛型 where 子句*可选
 
-> Grammar of a protocol initializer declaration:
+> 协议构造器声明语法：
 >
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
+> *协议构造器声明* → *构造器头* *泛型参数子句*可选 *参数子句* *抛出子句*可选 *泛型 where 子句*可选 \
+> *协议构造器声明* → *构造器头* *泛型参数子句*可选 *参数子句* **`rethrows`** *泛型 where 子句*可选
 
-> Grammar of a protocol subscript declaration:
+> 协议下标声明语法：
 >
-> *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
+> *协议下标声明* → *下标头* *下标结果* *泛型 where 子句*可选 *getter-setter 关键字块*
 
-> Grammar of a protocol associated type declaration:
+> 协议关联类型声明语法：
 >
-> *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
+> *协议关联类型声明* → *属性*可选 *访问级别修饰符*可选 **`associatedtype`** *类型别名名* *类型继承子句*可选 *类型别名赋值*可选 *泛型 where 子句*可选
 
-> Grammar of an initializer declaration:
+> 构造器声明语法：
 >
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`** \
-> *initializer-body* → *code-block*
+> *构造器声明* → *构造器头* *泛型参数子句*可选 *参数子句* **`async`** 可选 *抛出子句*可选 *泛型 where 子句*可选 *构造器主体* \
+> *构造器声明* → *构造器头* *泛型参数子句*可选 *参数子句* **`async`** 可选 **`rethrows`** *泛型 where 子句*可选 *构造器主体* \
+> *构造器头* → *属性*可选 *声明修饰符*可选 **`init`** \
+> *构造器头* → *属性*可选 *声明修饰符*可选 **`init`** **`?`** \
+> *构造器头* → *属性*可选 *声明修饰符*可选 **`init`** **`!`** \
+> *构造器主体* → *代码块*
 
-> Grammar of a deinitializer declaration:
+> 析构器声明语法：
 >
-> *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
+> *析构器声明* → *属性*可选 **`deinit`** *代码块*
 
-> Grammar of an extension declaration:
+> 扩展声明语法：
 >
-> *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
-> *extension-body* → **`{`** *extension-members*_?_ **`}`**
+> *扩展声明* → *属性*可选 *访问级别修饰符*可选 **`extension`** *类型标识符* *类型继承子句*可选 *泛型 where 子句*可选 *扩展主体* \
+> *扩展主体* → **`{`** *扩展成员*可选 **`}`**
 >
-> *extension-members* → *extension-member* *extension-members*_?_ \
-> *extension-member* → *declaration* | *compiler-control-statement*
+> *扩展成员* → *扩展成员* *扩展成员*可选 \
+> *扩展成员* → *声明集* | *编译控制语句*
 
-> Grammar of a subscript declaration:
+> 下标声明语法：
 >
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block* \
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block* \
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block* \
-> *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause* \
-> *subscript-result* → **`->`** *attributes*_?_ *type*
+> *下标声明* → *下标头* *下标结果* *泛型 where 子句*可选 *代码块* \
+> *下标声明* → *下标头* *下标结果* *泛型 where 子句*可选 *getter-setter 块* \
+> *下标声明* → *下标头* *下标结果* *泛型 where 子句*可选 *getter-setter 关键字块* \
+> *下标头* → *属性*可选 *声明修饰符*可选 **`subscript`** *泛型参数子句*可选 *参数子句* \
+> *下标结果* → **`->`** *特性*可选 *类型*
 
-> Grammar of a macro declaration:
+> 宏声明语法：
 >
-> *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause* \
-> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`**  \
-> *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_ \
-> *macro-function-signature-result* → **`->`** *type* \
-> *macro-definition* → **`=`** *expression*
+> *宏声明* → *宏头* *标识符* *泛型参数子句*可选 *宏签名* *宏定义*可选 *泛型 where子句* \
+> *宏头* → *属性*可选 *声明修饰符*可选 **`macro`**  \
+> *宏签名* → *参数子句* *宏函数签名结果*可选 \
+> *宏函数签名结果* → **`->`** *类型* \
+> *宏定义* → **`=`** *表达式*
 
-> Grammar of an operator declaration:
+> 运算符声明语法：
 >
-> *operator-declaration* → *prefix-operator-declaration* | *postfix-operator-declaration* | *infix-operator-declaration*
+> *运算符声明* → *前缀运算符声明* | *后缀运算符声明* | *中缀运算符声明*
 >
-> *prefix-operator-declaration* → **`prefix`** **`operator`** *operator* \
-> *postfix-operator-declaration* → **`postfix`** **`operator`** *operator* \
-> *infix-operator-declaration* → **`infix`** **`operator`** *operator* *infix-operator-group*_?_
+> *前缀运算符声明* → **`prefix`** **`operator`** *运算符* \
+> *后缀运算符声明* → **`postfix`** **`operator`** *运算符* \
+> *中缀运算符声明* → **`infix`** **`operator`** *运算符* *中缀运算符组*可选
 >
-> *infix-operator-group* → **`:`** *precedence-group-name*
+> *中缀运算符组* → **`:`** *优先级组名*
 
-> Grammar of a precedence group declaration:
+> 优先级组声明语法：
 >
-> *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
+> *优先级组声明* → **`precedencegroup`** *优先级组名* **`{`** *优先级组属性*可选 **`}`**
 >
-> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*_?_ \
-> *precedence-group-attribute* → *precedence-group-relation* \
-> *precedence-group-attribute* → *precedence-group-assignment* \
-> *precedence-group-attribute* → *precedence-group-associativity*
+> *优先级组属性* → *优先级组属性* *优先级组属性*可选 \
+> *优先级组属性* → *优先级组关系* \
+> *优先级组属性* → *优先级组赋值* \
+> *优先级组属性* → *优先级组结合*
 >
-> *precedence-group-relation* → **`higherThan`** **`:`** *precedence-group-names* \
-> *precedence-group-relation* → **`lowerThan`** **`:`** *precedence-group-names*
+> *优先级组关系* → **`higherThan`** **`:`** *优先级组名集* \
+> *优先级组关系* → **`lowerThan`** **`:`** *优先级组名集*
 >
-> *precedence-group-assignment* → **`assignment`** **`:`** *boolean-literal*
+> *优先级组赋值* → **`assignment`** **`:`** *布尔字面量*
 >
-> *precedence-group-associativity* → **`associativity`** **`:`** **`left`** \
-> *precedence-group-associativity* → **`associativity`** **`:`** **`right`** \
-> *precedence-group-associativity* → **`associativity`** **`:`** **`none`**
+> *优先级组结合* → **`associativity`** **`:`** **`left`** \
+> *优先级组结合* → **`associativity`** **`:`** **`right`** \
+> *优先级组结合* → **`associativity`** **`:`** **`none`**
 >
-> *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names* \
-> *precedence-group-name* → *identifier*
+> *优先级组名集* → *优先级组名* | *优先级组名* **`,`** *优先级组名* \
+> *优先级组名* → *标识符*
 
-> Grammar of a declaration modifier:
+> 声明修饰符语法：
 >
-> *declaration-modifier* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`** \
-> *declaration-modifier* → *access-level-modifier* \
-> *declaration-modifier* → *mutation-modifier* \
-> *declaration-modifier* → *actor-isolation-modifier* \
-> *declaration-modifiers* → *declaration-modifier* *declaration-modifiers*_?_
+> *声明修饰符* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`** \
+> *声明修饰符* → *访问级别修饰符* \
+> *声明修饰符* → *可变性修饰符* \
+> *声明修饰符* → *actor 隔离修饰符* \
+> *声明修饰符* → *声明修饰符* *声明修饰符*可选
 >
-> *access-level-modifier* → **`private`** | **`private`** **`(`** **`set`** **`)`** \
-> *access-level-modifier* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`** \
-> *access-level-modifier* → **`internal`** | **`internal`** **`(`** **`set`** **`)`** \
-> *access-level-modifier* → **`package`** | **`package`** **`(`** **`set`** **`)`** \
-> *access-level-modifier* → **`public`** | **`public`** **`(`** **`set`** **`)`** \
-> *access-level-modifier* → **`open`** | **`open`** **`(`** **`set`** **`)`**
+> *访问级别修饰符* → **`private`** | **`private`** **`(`** **`set`** **`)`** \
+> *访问级别修饰符* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`** \
+> *访问级别修饰符* → **`internal`** | **`internal`** **`(`** **`set`** **`)`** \
+> *访问级别修饰符* → **`package`** | **`package`** **`(`** **`set`** **`)`** \
+> *访问级别修饰符* → **`public`** | **`public`** **`(`** **`set`** **`)`** \
+> *访问级别修饰符* → **`open`** | **`open`** **`(`** **`set`** **`)`**
 >
-> *mutation-modifier* → **`mutating`** | **`nonmutating`**
+> *可变性修饰符* → **`mutating`** | **`nonmutating`**
 >
-> *actor-isolation-modifier* → **`nonisolated`**
+> *actor 隔离修饰符* → **`nonisolated`**
 
-## Attributes
+## 属性
 
-> Grammar of an attribute:
+> 属性语法：
 >
-> *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_ \
-> *attribute-name* → *identifier* \
-> *attribute-argument-clause* → **`(`** *balanced-tokens*_?_ **`)`** \
-> *attributes* → *attribute* *attributes*_?_
+> *属性* → **`@`** *属性名* *属性参数子句*可选 \
+> *属性名* → *标识符* \
+> *属性参数子句* → **`(`** *平衡令牌*可选 **`)`** \
+> *属性* → *属性* *属性*可选
 >
-> *balanced-tokens* → *balanced-token* *balanced-tokens*_?_ \
-> *balanced-token* → **`(`** *balanced-tokens*_?_ **`)`** \
-> *balanced-token* → **`[`** *balanced-tokens*_?_ **`]`** \
-> *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
-> *balanced-token* → Any identifier, keyword, literal, or operator \
-> *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
+> *平衡令牌集* → *平衡令牌* *平衡令牌集*可选 \
+> *平衡令牌* → **`(`** *平衡令牌集*可选 **`)`** \
+> *平衡令牌* → **`[`** *平衡令牌集*可选 **`]`** \
+> *平衡令牌* → **`{`** *平衡令牌集*可选 **`}`** \
+> *平衡令牌* → 任何标识符、关键字、字面量或运算符 \
+> *平衡令牌* → 任何标点符号，除了 **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, 或  **`}`**
 
-## Patterns
+## 模式
 
-> Grammar of a pattern:
+> 模式语法：
 >
-> *pattern* → *wildcard-pattern* *type-annotation*_?_ \
-> *pattern* → *identifier-pattern* *type-annotation*_?_ \
-> *pattern* → *value-binding-pattern* \
-> *pattern* → *tuple-pattern* *type-annotation*_?_ \
-> *pattern* → *enum-case-pattern* \
-> *pattern* → *optional-pattern* \
-> *pattern* → *type-casting-pattern* \
-> *pattern* → *expression-pattern*
+> *模式* → *通配符模式* *类型注解*可选 \
+> *模式* → *标识符模式* *类型注解*可选 \
+> *模式* → *值绑定模式* \
+> *模式* → *元组模式* *类型注解*可选 \
+> *模式* → *枚举 case 模式* \
+> *模式* → *可选模式* \
+> *模式* → *类型转换模式* \
+> *模式* → *表达式模式*
 
-> Grammar of a wildcard pattern:
+> 通配符模式语法：
 >
-> *wildcard-pattern* → **`_`**
+> *通配符模式* → **`_`**
 
-> Grammar of an identifier pattern:
+> 标识符模式语法：
 >
-> *identifier-pattern* → *identifier*
+> *标识符模式* → *标识符*
 
-> Grammar of a value-binding pattern:
+> 值绑定模式语法：
 >
-> *value-binding-pattern* → **`var`** *pattern* | **`let`** *pattern*
+> *值绑定模式* → **`var`** *模式* | **`let`** *模式*
 
-> Grammar of a tuple pattern:
+> 元组模式语法：
 >
-> *tuple-pattern* → **`(`** *tuple-pattern-element-list*_?_ **`)`** \
-> *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list* \
-> *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
+> *元组模式* → **`(`** *元组模式元素集*可选 **`)`** \
+> *元组模式元素集* → *元组模式元素* | *元组模式元素* **`,`** *元组模式元素集* \
+> *元组模式元素* → *模式* | *标识符* **`:`** *模式*
 
-> Grammar of an enumeration case pattern:
+> 枚举 case 模式语法：
 >
-> *enum-case-pattern* → *type-identifier*_?_ **`.`** *enum-case-name* *tuple-pattern*_?_
+> *枚举 case 模式* → *类型标识符*可选 **`.`** *枚举 case 名* *元组模式*可选
 
-> Grammar of an optional pattern:
+> 可选模式语法：
 >
-> *optional-pattern* → *identifier-pattern* **`?`**
+> *可选模式* → *标识符模式* **`?`**
 
-> Grammar of a type casting pattern:
+> 类型转换模式语法：
 >
-> *type-casting-pattern* → *is-pattern* | *as-pattern* \
-> *is-pattern* → **`is`** *type* \
-> *as-pattern* → *pattern* **`as`** *type*
+> *类型转换模式* → *is 模式* | *as 模式* \
+> *is 模式* → **`is`** *类型* \
+> *as 模式* → *模式* **`as`** *类型*
 
-> Grammar of an expression pattern:
+> 表达式模式语法：
 >
-> *expression-pattern* → *expression*
+> *表达式模式* → *表达式*
 
-## Generic Parameters and Arguments
+## 泛型参数和参数
 
-> Grammar of a generic parameter clause:
+> 泛型参数子句语法：
 >
-> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`>`** \
-> *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
-> *generic-parameter* → *type-name* \
-> *generic-parameter* → *type-name* **`:`** *type-identifier* \
-> *generic-parameter* → *type-name* **`:`** *protocol-composition-type*
+> *泛型参数子句* → **`<`** *泛型参数集* **`>`** \
+> *泛型参数集* → *泛型参数* | *泛型参数* **`,`** *泛型参数集* \
+> *泛型参数* → *类型名* \
+> *泛型参数* → *类型名* **`:`** *类型标识符* \
+> *泛型参数* → *类型名* **`:`** *协议组合类型*
 >
-> *generic-where-clause* → **`where`** *requirement-list* \
-> *requirement-list* → *requirement* | *requirement* **`,`** *requirement-list* \
-> *requirement* → *conformance-requirement* | *same-type-requirement*
+> *泛型 where子句* → **`where`** *需求集* \
+> *需求集* → *需求* | *需求* **`,`** *需求集* \
+> *需求* → *符合要求* | *同类型要求*
 >
-> *conformance-requirement* → *type-identifier* **`:`** *type-identifier* \
-> *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type* \
-> *same-type-requirement* → *type-identifier* **`==`** *type*
+> *符合要求* → *类型标识符* **`:`** *类型标识符* \
+> *符合要求* → *类型标识符* **`:`** *协议组合类型* \
+> *同类型要求* → *类型标识符* **`==`** *类型*
 
-> Grammar of a generic argument clause:
+> 泛型参数子句语法：
 >
-> *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
-> *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
-> *generic-argument* → *type*
-
-<!--
-This source file is part of the Swift.org open source project
-
-Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
-Licensed under Apache License v2.0 with Runtime Library Exception
-
-See https://swift.org/LICENSE.txt for license information
-See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
--->
+> *泛型参数子句* → **`<`** *泛型参数集* **`>`** \
+> *泛型参数集* → *泛型参数* | *泛型参数* **`,`** *泛型参数集* \
+> *泛型参数* → *类型*

@@ -1,28 +1,14 @@
-# Statements
+# 语句
 
-Group expressions and control the flow of execution.
+对表达式进行分组，并控制执行流程。
 
-In Swift, there are three kinds of statements: simple statements, compiler control statements,
-and control flow statements.
-Simple statements are the most common and consist of either an expression or a declaration.
-Compiler control statements allow the program to change aspects of the compiler's behavior
-and include a conditional compilation block and a line control statement.
+在 Swift 中，有三种类型的语句：简单语句、编译器控制语句和控制流语句。简单语句是最常见的，用于构造表达式或者声明。编译器控制语句允许程序改变编译器的行为，包含编译配置语句和行控制语句。
 
-Control flow statements are used to control the flow of execution in a program.
-There are several types of control flow statements in Swift, including
-loop statements, branch statements, and control transfer statements.
-Loop statements allow a block of code to be executed repeatedly,
-branch statements allow a certain block of code to be executed
-only when certain conditions are met,
-and control transfer statements provide a way to alter the order in which code is executed.
-In addition, Swift provides a `do` statement to introduce scope,
-and catch and handle errors,
-and a `defer` statement for running cleanup actions just before the current scope exits.
+控制流语句则用于控制程序执行的流程，Swift 中有多种类型的控制流语句：循环语句、分支语句和控制转移语句。循环语句用于重复执行代码块；分支语句用于执行满足特定条件的代码块；控制转移语句则用于改变代码的执行顺序。另外，Swift 提供了 `do` 语句，用于构建局部作用域，还用于错误的捕获和处理；还提供了 `defer` 语句，用于退出当前作用域之前执行清理操作。
 
-A semicolon (`;`) can optionally appear after any statement
-and is used to separate multiple statements if they appear on the same line.
+是否将分号（`;`）添加到语句的末尾是可选的。但若要在同一行内写多条独立语句，则必须使用分号。
 
-> Grammar of a statement:
+> 语句语法：
 >
 > *statement* → *expression* **`;`**_?_ \
 > *statement* → *declaration* **`;`**_?_ \
@@ -46,33 +32,24 @@ and is used to separate multiple statements if they appear on the same line.
   of readability.
 -->
 
-## Loop Statements
+## 循环语句
 
-Loop statements allow a block of code to be executed repeatedly,
-depending on the conditions specified in the loop.
-Swift has three loop statements:
-a `for`-`in` statement,
-a `while` statement,
-and a `repeat`-`while` statement.
+循环语句会根据特定的循环条件来重复执行代码块。Swift 提供三种类型的循环语句：`for-in` 语句、`while` 语句和 `repeat-while` 语句。
 
-Control flow in a loop statement can be changed by a `break` statement
-and a `continue` statement and is discussed in <doc:Statements#Break-Statement> and
-<doc:Statements#Continue-Statement> below.
+通过 break 语句和 continue 语句可以改变循环语句的控制流。有关这两条语句，可参阅 <doc:Statements#Break-语句> 和
+<doc:Statements#Continue-语句> 。
 
-> Grammar of a loop statement:
+> 循环语句的语法：
 >
 > *loop-statement* → *for-in-statement* \
 > *loop-statement* → *while-statement* \
 > *loop-statement* → *repeat-while-statement*
 
-### For-In Statement
+### For-In 语句
 
-A `for`-`in` statement allows a block of code to be executed
-once for each item in a collection (or any type)
-that conforms to the
-[`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol.
+`for-in` 语句会为集合（或遵循[`Sequence`](https://developer.apple.com/documentation/swift/sequence)协议的任意类型）中的每一项执行一次代码块。
 
-A `for`-`in` statement has the following form:
+`for-in` 语句的形式如下：
 
 ```swift
 for <#item#> in <#collection#> {
@@ -80,29 +57,17 @@ for <#item#> in <#collection#> {
 }
 ```
 
-The `makeIterator()` method is called on the *collection* expression
-to obtain a value of an iterator type --- that is,
-a type that conforms to the
-[`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
-The program begins executing a loop
-by calling the `next()` method on the iterator.
-If the value returned isn't `nil`,
-it's assigned to the *item* pattern,
-the program executes the *statements*,
-and then continues execution at the beginning of the loop.
-Otherwise, the program doesn't perform assignment or execute the *statements*,
-and it's finished executing the `for`-`in` statement.
+`for-in` 语句在循环开始前会调用集合表达式（`collection expression`）的 `makeIterator()` 方法来获取一个遵循了 `IteratorProtocol` 协议的迭代器类型。接下来循环开始，反复调用该迭代器的 `next()` 方法。如果其返回值不是 `nil`，它将会被赋给 `item`，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
 
-> Grammar of a for-in statement:
+> for-in 语句的语法：
 >
 > *for-in-statement* → **`for`** **`case`**_?_ *pattern* **`in`** *expression* *where-clause*_?_ *code-block*
 
-### While Statement
+### While 语句
 
-A `while` statement allows a block of code to be executed repeatedly,
-as long as a condition remains true.
+只要循环条件为真，`while` 语句就会重复执行代码块。
 
-A `while` statement has the following form:
+`while` 语句的形式如下：
 
 ```swift
 while <#condition#> {
@@ -110,23 +75,19 @@ while <#condition#> {
 }
 ```
 
-A `while` statement is executed as follows:
+ `while` 语句的执行流程如下：
 
-1. The *condition* is evaluated.
+1. *条件* 判断
 
-   If `true`, execution continues to step 2.
-   If `false`, the program is finished executing the `while` statement.
-2. The program executes the *statements*, and execution returns to step 1.
+   如果为 `true`， 程序执行到第 2 步；
+   如果为 `false`， 程序将结束执行 `while` 语句。
+2. 执行循环体中的语句，然后回到第 1 步
 
-Because the value of the *condition* is evaluated before the *statements* are executed,
-the *statements* in a `while` statement can be executed zero or more times.
+由于会在执行循环体中的语句前判断条件的值，因此循环体中的语句可能会被执行若干次，也可能一次也不会被执行。
 
-The value of the *condition*
-must be of type `Bool` or a type bridged to `Bool`.
-The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 <doc:TheBasics#可选绑定>。
 
-> Grammar of a while statement:
+> while 语句的语法：
 >
 > *while-statement* → **`while`** *condition-list* *code-block*
 >
@@ -136,12 +97,11 @@ as discussed in <doc:TheBasics#Optional-Binding>.
 > *case-condition* → **`case`** *pattern* *initializer* \
 > *optional-binding-condition* → **`let`** *pattern* *initializer*_?_ | **`var`** *pattern* *initializer*_?_
 
-### Repeat-While Statement
+### Repeat-While 语句
 
-A `repeat`-`while` statement allows a block of code to be executed one or more times,
-as long as a condition remains true.
+`repeat-while` 语句至少执行一次代码块，之后只要循环条件为真，就会重复执行代码块。
 
-A `repeat`-`while` statement has the following form:
+`repeat`-`while` 语句的形式如下：
 
 ```swift
 repeat {
@@ -149,53 +109,41 @@ repeat {
 } while <#condition#>
 ```
 
-A `repeat`-`while` statement is executed as follows:
+`repeat`-`while`语句的执行流程如下：
 
-1. The program executes the *statements*,
-   and execution continues to step 2.
-2. The *condition* is evaluated.
+1. 执行循环体中的语句，然后转到第 2 步。
+2. 判断 *条件* 的值：
 
-   If `true`, execution returns to step 1.
-   If `false`, the program is finished executing the `repeat`-`while` statement.
+   如果为 `true`，重复第 1 步；
+   如果为 `false`，程序会结束执行 `repeat`-`while` 语句。
 
-Because the value of the *condition* is evaluated after the *statements* are executed,
-the *statements* in a `repeat`-`while` statement are executed at least once.
+由于条件的值是在循环体中的语句执行后才进行判断，因此循环体中的语句至少会被执行一次。
 
-The value of the *condition*
-must be of type `Bool` or a type bridged to `Bool`.
+条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅
 
-> Grammar of a repeat-while statement:
+> repeat-while 语句的语法：
 >
 > *repeat-while-statement* → **`repeat`** *code-block* **`while`** *expression*
 
-## Branch Statements
+## 分支语句
 
-Branch statements allow the program to execute certain parts of code
-depending on the value of one or more conditions.
-The values of the conditions specified in a branch statement
-control how the program branches and, therefore, what block of code is executed.
-Swift has three branch statements:
-an `if` statement, a `guard` statement, and a `switch` statement.
+分支语句会根据一个或者多个条件来执行指定部分的代码。分支语句中的条件将会决定程序如何分支以及执行哪部分代码。Swift 提供三种类型的分支语句：`if` 语句、 `guard` 语句和 `switch` 语句。
 
-Control flow in an `if` statement or a `switch` statement can be changed by a `break` statement
-and is discussed in <doc:Statements#Break-Statement> below.
+`if` 语句和 `switch` 语句中的控制流可以用 `break` 语句改变，关于`break`的用法，请参阅 <doc:Statements#Break-语句> 。
 
-> Grammar of a branch statement:
+> 分支语句的语法：
 >
 > *branch-statement* → *if-statement* \
 > *branch-statement* → *guard-statement* \
 > *branch-statement* → *switch-statement*
 
-### If Statement
+### If 语句
 
-An `if` statement is used for executing code
-based on the evaluation of one or more conditions.
+`if` 语句会根据一个或多个条件来决定执行哪一块代码。
 
-There are two basic forms of an `if` statement.
-In each form, the opening and closing braces are required.
+`if` 语句有两种基本形式，无论哪种形式，都必须有花括号。
 
-The first form allows code to be executed only when a condition is true
-and has the following form:
+第一种形式是当且仅当条件为真时执行代码，形式如下：
 
 ```swift
 if <#condition#> {
@@ -203,11 +151,7 @@ if <#condition#> {
 }
 ```
 
-The second form of an `if` statement provides an additional *else clause*
-(introduced by the `else` keyword)
-and is used for executing one part of code when the condition is true
-and another part of code when the same condition is false.
-When a single else clause is present, an `if` statement has the following form:
+第二种形式是在第一种形式的基础上添加 `else` 语句（通过引入 `else` 关键字），并且用于：当条件为真时执行一部分代码，当这同一个条件为假的时候执行另一部分代码。当只有一个 `else` 语句时，`if` 语句具有以下的形式：
 
 ```swift
 if <#condition#> {
@@ -217,9 +161,7 @@ if <#condition#> {
 }
 ```
 
-The else clause of an `if` statement can contain another `if` statement
-to test more than one condition.
-An `if` statement chained together in this way has the following form:
+`if` 语句的 `else` 语句也可包含另一个 `if` 语句，从而形成一条链来测试更多的条件，像下面这样：
 
 ```swift
 if <#condition 1#> {
@@ -231,22 +173,18 @@ if <#condition 1#> {
 }
 ```
 
-The value of any condition in an `if` statement
-must be of type `Bool` or a type bridged to `Bool`.
-The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+if 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 <doc:TheBasics#可选绑定>.
 
-> Grammar of an if statement:
+> if 语句的语法:
 >
 > *if-statement* → **`if`** *condition-list* *code-block* *else-clause*_?_ \
 > *else-clause* → **`else`** *code-block* | **`else`** *if-statement*
 
-### Guard Statement
+### Guard 语句
 
-A `guard` statement is used to transfer program control out of a scope
-if one or more conditions aren't met.
+如果一个或者多个条件不成立，可用 `guard` 语句来退出当前作用域。
 
-A `guard` statement has the following form:
+`guard` 语句的格式如下：
 
 ```swift
 guard <#condition#> else {
@@ -254,39 +192,28 @@ guard <#condition#> else {
 }
 ```
 
-The value of any condition in a `guard` statement
-must be of type `Bool` or a type bridged to `Bool`.
-The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件也可以是一条可选绑定，请参阅 <doc:TheBasics#可选绑定>。
 
-Any constants or variables assigned a value
-from an optional binding declaration in a `guard` statement condition
-can be used for the rest of the guard statement's enclosing scope.
+在 `guard` 语句中进行可选绑定的任何常量或者变量，其可用范围从声明开始直到作用域结束。
 
-The `else` clause of a `guard` statement is required,
-and must either call a function with the `Never` return type
-or transfer program control outside the guard statement's enclosing scope
-using one of the following statements:
+`guard` 语句必须有 `else` 子句，而且必须在该子句中调用返回类型是 `Never` 的函数，或者使用下面的语句退出当前作用域：
 
 - `return`
 - `break`
 - `continue`
 - `throw`
 
-Control transfer statements are discussed in <doc:Statements#Control-Transfer-Statements> below.
-For more information on functions with the `Never` return type,
-see <doc:Declarations#Functions-that-Never-Return>.
+关于控制转移语句，请参阅 <doc:Statements#控制转移语句> 。关于返回类型是 `Never` 的函数，请参阅<doc:Declarations#永远不返回的函数>。
 
-> Grammar of a guard statement:
+> guard 语句的语法：
 >
 > *guard-statement* → **`guard`** *condition-list* **`else`** *code-block*
 
-### Switch Statement
+### Switch 语句
 
-A `switch` statement allows certain blocks of code to be executed
-depending on the value of a control expression.
+`switch` 语句会根据控制表达式的值来决定执行哪部分代码。
 
-A `switch` statement has the following form:
+`switch` 语句的形式如下：
 
 ```swift
 switch <#control expression#> {
@@ -302,33 +229,11 @@ default:
 }
 ```
 
-The *control expression* of the `switch` statement is evaluated
-and then compared with the patterns specified in each case.
-If a match is found,
-the program executes the *statements* listed within the scope of that case.
-The scope of each case can't be empty.
-As a result, you must include at least one statement
-following the colon (`:`) of each case label. Use a single `break` statement
-if you don't intend to execute any code in the body of a matched case.
+`switch` 语句会先计算 *控制表达式* 的值，然后与每一个 `case` 的模式进行匹配。如果匹配成功，程序将会执行对应的 `case` 中的语句。另外，每一个 `case` 的作用域都不能为空，也就是说在每一个 `case` 的冒号（`:`）后面必须至少有一条语句。如果你不想在匹配到的 `case` 中执行代码，只需在该 `case` 中写一条 `break` 语句即可。
 
-The values of expressions your code can branch on are very flexible. For example,
-in addition to the values of scalar types, such as integers and characters,
-your code can branch on the values of any type, including floating-point numbers, strings,
-tuples, instances of custom classes, and optionals.
-The value of the *control expression* can even be matched to the value of a case in an enumeration
-and checked for inclusion in a specified range of values.
-For examples of how to use these various types of values in `switch` statements,
-see <doc:ControlFlow#Switch> in <doc:ControlFlow>.
+可以用作控制表达式的值是十分灵活的。除了标量类型外，如 `Int`、`Character`，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类型的实例和可选类型。控制表达式的值还可以用来匹配枚举类型中的成员值或是检查该值是否包含在指定的 `Range` 中。关于如何在 `switch` 语句中使用这些类型，请参阅 <doc:ControlFlow#Switch语句> 中的 <doc:ControlFlow>。
 
-A `switch` case can optionally contain a `where` clause after each pattern.
-A *where clause* is introduced by the `where` keyword followed by an expression,
-and is used to provide an additional condition
-before a pattern in a case is considered matched to the *control expression*.
-If a `where` clause is present, the *statements* within the relevant case
-are executed only if the value of the *control expression*
-matches one of the patterns of the case and the expression of the `where` clause evaluates to `true`.
-For example, a *control expression* matches the case in the example below
-only if it's a tuple that contains two elements of the same value, such as `(1, 1)`.
+每个 case 的模式后面可以有一个 `where` 子句。`where` 子句由 `where` 关键字紧跟一个提供额外条件的表达式组成。因此，当且仅当控制表达式匹配一个 `case` 的模式且 `where` 子句的表达式为真时，`case` 中的语句才会被执行。在下面的例子中，控制表达式只会匹配包含两个相等元素的元组，例如 `(1, 1)`：
 
 ```swift
 case let (x, y) where x == y:
@@ -346,33 +251,16 @@ case let (x, y) where x == y:
   ```
 -->
 
-As the above example shows, patterns in a case can also bind constants
-using the `let` keyword (they can also bind variables using the `var` keyword).
-These constants (or variables) can then be referenced in a corresponding `where` clause
-and throughout the rest of the code within the scope of the case.
-If the case contains multiple patterns that match the control expression,
-all of the patterns must contain the same constant or variable bindings,
-and each bound variable or constant must have the same type
-in all of the case's patterns.
+如上例所示， `case` 中的模式也可以使用 `let` 关键字绑定常量（也可以使用 `var` 关键字绑定变量）。这些常量（或变量）随后可以在相应的 `where` 子句中引用，并在 `case` 范围内的代码中使用。如果 `case` 包含多个匹配控制表达式的模式，则所有模式必须包含相同的常量或变量绑定，并且每个绑定的变量或常量在该 `case` 的所有模式中必须具有相同的类型。
 
 <!--
   The discussion above about multi-pattern cases
   matches discussion of multi-pattern catch under Do Statement.
 -->
 
-A `switch` statement can also include a default case, introduced by the `default` keyword.
-The code within a default case is executed only if no other cases match the control expression.
-A `switch` statement can include only one default case,
-which must appear at the end of the `switch` statement.
+`switch` 语句也可以包含默认分支，使用 `default` 关键字表示。只有所有 `case` 都无法匹配控制表达式时，默认分支中的代码才会被执行。一个 `switch` 语句只能有一个默认分支，而且必须在 `switch` 语句的最后面。
 
-Although the actual execution order of pattern-matching operations,
-and in particular the evaluation order of patterns in cases, is unspecified,
-pattern matching in a `switch` statement behaves
-as if the evaluation is performed in source order --- that is,
-the order in which they appear in source code.
-As a result, if multiple cases contain patterns that evaluate to the same value,
-and thus can match the value of the control expression,
-the program executes only the code within the first matching case in source order.
+尽管模式匹配操作的实际执行顺序，特别是 `case` 中模式的求值顺序是未指定的，但在 switch 语句中，模式匹配的行为大概是按照源码中的顺序进行求值的——即它们在源代码中出现的顺序。因此，如果多个 `case` 包含求值为相同值的模式，从而可以匹配控制表达式的值，程序只会执行源代码中第一个匹配的 `case` 中的代码。
 
 <!--
   - test: `switch-case-with-multiple-patterns`
@@ -402,58 +290,23 @@ the program executes only the code within the first matching case in source orde
   ```
 -->
 
-#### Switch Statements Must Be Exhaustive
+#### Switch 语句必须是详尽的
 
-In Swift,
-every possible value of the control expression’s type
-must match the value of at least one pattern of a case.
-When this simply isn’t feasible
-(for example, when the control expression’s type is `Int`),
-you can include a default case to satisfy the requirement.
+在 Swift 中，`switch` 语句中控制表达式的每一个可能的值都必须至少有一个 `case` 与之对应。在某些无法面面俱到的情况下（例如，表达式的类型是 `Int`），你可以使用 `default` 分支满足该要求。
 
-#### Switching Over Future Enumeration Cases
+#### 对未来枚举的`case`进行`switch`
 
-A *nonfrozen enumeration* is a special kind of enumeration
-that may gain new enumeration cases in the future ---
-even after you compile and ship an app.
-Switching over a nonfrozen enumeration requires extra consideration.
-When a library's authors mark an enumeration as nonfrozen,
-they reserve the right to add new enumeration cases,
-and any code that interacts with that enumeration
-*must* be able to handle those future cases without being recompiled.
-Code that's compiled in library evolution mode,
-code in the Swift standard library,
-Swift overlays for Apple frameworks,
-and C and Objective-C code can declare nonfrozen enumerations.
-For information about frozen and nonfrozen enumerations,
-see <doc:Attributes#frozen>.
+*非冻结枚举(`nonfrozen enumeration`)* 是一种特殊的枚举类型，它可能在未来会增加新的枚举 case，即使这时候你已经编译并且发布了你的应用，所以在 switch 非冻结枚举前需要深思熟虑。当一个库的作者们把一个枚举标记为非冻结的，这意味着他们保留了增加新的枚举 case 的权利，并且任何和这个枚举交互的代码都必须在无需重新编译的条件下能够处理那些未来可能新加入的 case 。只有演进模式的库代码、标准库代码、用 Swift 实现的 Apple 框架、C 以及 Objective-C 代码才能够声明非冻结枚举。更多关于冻结和非冻结枚举的内容，请参阅 <doc:Attributes#frozen>.
 
-When switching over a nonfrozen enumeration value,
-you always need to include a default case,
-even if every case of the enumeration already has a corresponding switch case.
-You can apply the `@unknown` attribute to the default case,
-which indicates that the default case should match only enumeration cases
-that are added in the future.
-Swift produces a warning
-if the default case matches
-any enumeration case that's known at compiler time.
-This future warning informs you that the library author
-added a new case to the enumeration
-that doesn't have a corresponding switch case.
+当你对非冻结枚举进行 switch 时，你总是需要有一个`default case`，即使每种枚举类型都已经有对应的 `case` 了。你可以在 `default` 前标注 `@unknown`，意思是这个 `case` 应该只匹配未来加入的枚举 `case`。如果你的 `default case` 中匹配了任何在编译时就能确定的枚举 `case`，Swift 会抛出一个警告。这可以很好地提醒你库的作者已经新增了一种 `case`，并且你还没有去处理。
 
-The following example switches over all three existing cases of
-the Swift standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
-enumeration.
-If you add additional cases in the future,
-the compiler generates a warning to indicate
-that you need to update the switch statement
-to take the new cases into account.
+以下就是一个例子，我们对标准库的 [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation) 进行 switch 操作，每当有新的 case 加入，我们会得到一个警告，提示我们要去处理它。
 
 ```swift
 let representation: Mirror.AncestorRepresentation = .generated
 switch representation {
 case .customized:
-    print("Use the nearest ancestor’s implementation.")
+    print("Use the nearest ancestor's implementation.")
 case .generated:
     print("Generate a default mirror for all ancestor classes.")
 case .suppressed:
@@ -471,7 +324,7 @@ case .suppressed:
   -> let representation: Mirror.AncestorRepresentation = .generated
   -> switch representation {
      case .customized:
-         print("Use the nearest ancestor’s implementation.")
+         print("Use the nearest ancestor's implementation.")
      case .generated:
          print("Generate a default mirror for all ancestor classes.")
      case .suppressed:
@@ -483,19 +336,11 @@ case .suppressed:
   ```
 -->
 
-#### Execution Does Not Fall Through Cases Implicitly
+#### 不存在隐式落入
 
-After the code within a matched case has finished executing,
-the program exits from the `switch` statement.
-Program execution doesn't continue or "fall through" to the next case or default case.
-That said, if you want execution to continue from one case to the next,
-explicitly include a `fallthrough` statement,
-which simply consists of the `fallthrough` keyword,
-in the case from which you want execution to continue.
-For more information about the `fallthrough` statement,
-see <doc:Statements#Fallthrough-Statement> below.
+当匹配到的 case 中的代码执行完毕后，switch 语句会直接退出，而不会继续执行下一个 case 。这就意味着，如果你想执行下一个 case，需要显式地在当前 case 中使用 fallthrough 语句。关于 fallthrough 语句的更多信息，请参阅<doc:Statements#Fallthrough-语句> 。
 
-> Grammar of a switch statement:
+> switch 语句的语法：
 >
 > *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*_?_ **`}`** \
 > *switch-cases* → *switch-case* *switch-cases*_?_ \
@@ -522,22 +367,13 @@ see <doc:Statements#Fallthrough-Statement> below.
   although as of Swift 4.2 only a single attribute (@unknown) is allowed.
 -->
 
-## Labeled Statement
+## 带标签的语句
 
-You can prefix a loop statement, an `if` statement, a `switch` statement,
-or a `do` statement with a *statement label*,
-which consists of the name of the label followed immediately by a colon (:).
-Use statement labels with `break` and `continue` statements to be explicit
-about how you want to change control flow in a loop statement or a `switch` statement,
-as discussed in <doc:Statements#Break-Statement> and
-<doc:Statements#Continue-Statement> below.
+你可以在循环语句、if 语句、switch 语句或 do 语句前加上*语句标签*，它由标签名称跟一个冒号(`:`)组成。使用语句标签配合 `break` 和 `continue` 语句，以明确你希望如何在循环语句或 switch 语句中改变控制流程，关于`break` 和 `continue` 语句，请参阅<doc:Statements#Break-语句> 和<doc:Statements#Continue-语句> 。
 
-The scope of a labeled statement is the entire statement following the statement label.
-You can nest labeled statements, but the name of each statement label must be unique.
+标签的作用域在该标签所标记的语句内。可以嵌套使用带标签的语句，但标签名称必须是唯一的。
 
-For more information and to see examples
-of how to use statement labels,
-see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
+关于使用带标签的语句的例子，请参阅 <doc:ControlFlow> 中的 <doc:ControlFlow#带标签的语句> 。
 
 <!--
   - test: `backtick-identifier-is-legal-label`
@@ -555,7 +391,7 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
   ```
 -->
 
-> Grammar of a labeled statement:
+> 带标签语句的语法：
 >
 > *labeled-statement* → *statement-label* *loop-statement* \
 > *labeled-statement* → *statement-label* *if-statement* \
@@ -565,14 +401,11 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
 > *statement-label* → *label-name* **`:`** \
 > *label-name* → *identifier*
 
-## Control Transfer Statements
+## 控制转移语句
 
-Control transfer statements can change the order in which code in your program is executed
-by unconditionally transferring program control from one piece of code to another.
-Swift has five control transfer statements: a `break` statement, a `continue` statement,
-a `fallthrough` statement, a `return` statement, and a `throw` statement.
+控制转移语句能够无条件地把控制权从一片代码转移到另一片代码，从而改变代码执行的顺序。Swift 提供五种类型的控制转移语句：`break`语句、`continue` 语句、`fallthrough` 语句、`return` 语句和 `throw` 语句。
 
-> Grammar of a control transfer statement:
+> 控制转移语句的语法：
 >
 > *control-transfer-statement* → *break-statement* \
 > *control-transfer-statement* → *continue-statement* \
@@ -580,174 +413,114 @@ a `fallthrough` statement, a `return` statement, and a `throw` statement.
 > *control-transfer-statement* → *return-statement* \
 > *control-transfer-statement* → *throw-statement*
 
-### Break Statement
+### Break 语句
 
-A `break` statement ends program execution of a loop,
-an `if` statement, or a `switch` statement.
-A `break` statement can consist of only the `break` keyword,
-or it can consist of the `break` keyword followed by the name of a statement label,
-as shown below.
+`break` 语句用于终止`循环`语句、`if` 语句或 `switch` 语句的执行。使用 `break` 语句时，可以只写 `break` 这个关键词，也可以在 `break` 后面跟上标签名，如下：
 
 ```swift
 break
 break <#label name#>
 ```
 
-When a `break` statement is followed by the name of a statement label,
-it ends program execution of the loop,
-`if` statement, or `switch` statement named by that label.
+当 `break` 语句后面带标签名时，可用于终止由这个标签标记的`循环`语句、`if` 语句或 `switch` 语句的执行。
 
-When a `break` statement isn't followed by the name of a statement label,
-it ends program execution of the `switch` statement or the innermost enclosing loop
-statement in which it occurs.
-You can't use an unlabeled `break` statement to break out of an `if` statement.
+而只写 `break` 时，则会终止 `switch` 语句或 `break` 语句所属的最内层循环语句的执行。不能使用 `break` 语句来终止未使用标签的 `if` 语句。
 
-In both cases, program control is then transferred to the first line
-of code following the enclosing loop or `switch` statement, if any.
+在这两种情况下，程序控制会被转移到包围的循环或 switch 语句后面的第一行代码（如果有的话）。
 
-For examples of how to use a `break` statement,
-see <doc:ControlFlow#Break> and <doc:ControlFlow#Labeled-Statements>
-in <doc:ControlFlow>.
+关于使用 break 语句的例子，请参阅<doc:ControlFlow>中的 <doc:ControlFlow#Break语句> 和 <doc:ControlFlow#带标签的语句>。
 
-> Grammar of a break statement:
+> break 语句的语法：
 >
 > *break-statement* → **`break`** *label-name*_?_
 
-### Continue Statement
+### Continue 语句
 
-A `continue` statement ends program execution of the current iteration of a loop
-statement but doesn't stop execution of the loop statement.
-A `continue` statement can consist of only the `continue` keyword,
-or it can consist of the `continue` keyword followed by the name of a statement label,
-as shown below.
+`continue` 语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用 `continue` 语句时，可以只写 `continue` 这个关键词，也可以在 `continue` 后面跟上标签名，如下：
 
 ```swift
 continue
 continue <#label name#>
 ```
 
-When a `continue` statement is followed by the name of a statement label,
-it ends program execution of the current iteration
-of the loop statement named by that label.
+当 `continue` 语句后面带标签名时，可用于终止由这个标签标记的循环中当前迭代的执行。
 
-When a `continue` statement isn't followed by the name of a statement label,
-it ends program execution of the current iteration
-of the innermost enclosing loop statement in which it occurs.
+而当只写 `continue` 时，可用于终止 `continue` 语句所属的最内层循环中当前迭代的执行。
 
-In both cases, program control is then transferred to the condition
-of the enclosing loop statement.
+在这两种情况下，控制权都会被转移给循环语句的条件语句。
 
-In a `for` statement,
-the increment expression is still evaluated after the `continue` statement is executed,
-because the increment expression is evaluated after the execution of the loop's body.
+在 `for` 语句中，`continue` 语句执行后，增量表达式还是会被计算，这是因为每次循环体执行完毕后，增量表达式都会被计算。
 
-For examples of how to use a `continue` statement,
-see <doc:ControlFlow#Continue> and <doc:ControlFlow#Labeled-Statements>
-in <doc:ControlFlow>.
+关于使用 `continue` 语句的例子，请参阅<doc:ControlFlow>中的<doc:ControlFlow#Continue语句> 和 <doc:ControlFlow#带标签的语句>
 
-> Grammar of a continue statement:
+> continue 语句的语法：
 >
 > *continue-statement* → **`continue`** *label-name*_?_
 
-### Fallthrough Statement
+### Fallthrough 语句
 
-A `fallthrough` statement consists of the `fallthrough` keyword
-and occurs only in a case block of a `switch` statement.
-A `fallthrough` statement causes program execution to continue
-from one case in a `switch` statement to the next case.
-Program execution continues to the next case
-even if the patterns of the case label don't match
-the value of the `switch` statement's control expression.
+`fallthrough` 语句由 `fallthrough` 关键字组成，只能出现在 `switch` 语句的某个 `case` 块中。`fallthrough` 语句会导致程序执行从当前 `switch` 语句的一个 `case` 继续到下一个 `case`。即使下一个 `case` 标签的模式与 `switch` 语句的控制表达式的值不匹配，程序仍会继续执行该 `case`。
 
-A `fallthrough` statement can appear anywhere inside a `switch` statement,
-not just as the last statement of a case block,
-but it can't be used in the final case block.
-It also can't transfer control into a case block
-whose pattern contains value binding patterns.
+`fallthrough` 语句可出现在 `switch` 语句中的任意 `case` 中，但不能出现在最后一个 `case` 中。同时，`fallthrough` 语句也不能把控制权转移到使用了值绑定的 `case`。
 
-For an example of how to use a `fallthrough` statement in a `switch` statement,
-see <doc:ControlFlow#Control-Transfer-Statements>
-in <doc:ControlFlow>.
+关于在 `switch` 语句中使用 `fallthrough` 语句的例子，请参阅<doc:ControlFlow>中的<doc:ControlFlow#控制转移语句>。
 
-> Grammar of a fallthrough statement:
+> fallthrough 语句的语法：
 >
 > *fallthrough-statement* → **`fallthrough`**
 
-### Return Statement
+### Return 语句
 
-A `return` statement occurs in the body of a function or method definition
-and causes program execution to return to the calling function or method.
-Program execution continues at the point immediately following the function or method call.
+`return` 语句用于在函数或方法的实现中将控制权转移到调用函数或方法，接着程序将会从调用位置继续向下执行。
 
-A `return` statement can consist of only the `return` keyword,
-or it can consist of the `return` keyword followed by an expression, as shown below.
+使用 `return` 语句时，可以只写 `return` 这个关键词，也可以在 `return` 后面跟上表达式，像下面这样：
 
 ```swift
 return
 return <#expression#>
 ```
 
-When a `return` statement is followed by an expression,
-the value of the expression is returned to the calling function or method.
-If the value of the expression doesn't match the value of the return type
-declared in the function or method declaration,
-the expression's value is converted to the return type
-before it's returned to the calling function or method.
+当 `return` 语句后面带表达式时，表达式的值将会返回给调用函数或方法。如果表达式的值的类型与函数或者方法声明的返回类型不匹配，Swift 则会在返回表达式的值之前将表达式的值的类型转换为返回类型。
 
-> Note: As described in <doc:Declarations#Failable-Initializers>, a special form of the `return` statement (`return nil`)
-> can be used in a failable initializer to indicate initialization failure.
+> 注意： 
+> 正如 <doc:Declarations#可失败构造器>中所描述的， return 语句的一种特殊形式`return nil`可以在可失败的构造器中使用，以表示构造失败。
 
 <!--
   TODO: Discuss how the conversion takes place and what is allowed to be converted
   in the (yet to be written) chapter on subtyping and type conversions.
 -->
 
-When a `return` statement isn't followed by an expression,
-it can be used only to return from a function or method that doesn't return a value
-(that is, when the return type of the function or method is `Void` or `()`).
+当只写 `return` 时，仅仅是从该函数或方法中返回，而不返回任何值（也就是说，函数或方法的返回类型为 `Void` 或者说 `()`）。
 
-> Grammar of a return statement:
+> return 语句的语法：
 >
 > *return-statement* → **`return`** *expression*_?_
 
-### Throw Statement
+### Throw 语句：
 
-A `throw` statement occurs in the body of a throwing function or method,
-or in the body of a closure expression whose type is marked with the `throws` keyword.
+`throw` 语句出现在抛出函数或者抛出方法体内，或者类型被 `throws` 关键字标记的闭包表达式体内。
 
-A `throw` statement causes a program to end execution of the current scope
-and begin error propagation to its enclosing scope.
-The error that's thrown continues to propagate until it's handled by a `catch` clause
-of a `do` statement.
+`throw` 语句使程序在当前作用域结束执行，并向外围作用域传播错误。抛出的错误会一直传递，直到被 do 语句的 catch 子句处理掉。
 
-A `throw` statement consists of the `throw` keyword
-followed by an expression, as shown below.
+`throw` 语句由 `throw` 关键字紧跟一个表达式组成，如下所示：
 
 ```swift
 throw <#expression#>
 ```
 
-The value of the *expression* must have a type that conforms to
-the `Error` protocol.
-If the `do` statement or function that contains the `throw` statement
-declares the type of errors it throws,
-the value of the *expression* must be an instance of that type.
+ *表达式* 的值必须具有符合`Error`协议的类型。如果包含 `throw` 语句的 `do` 语句或函数声明了它抛出的错误类型，则该表达式的值必须是该类型的实例。
 
-For an example of how to use a `throw` statement,
-see <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions>
-in <doc:ErrorHandling>.
+关于如何使用 `throw` 语句的例子，请参阅<doc:ErrorHandling>中的 <doc:ErrorHandling#使用-Throwing-函数传递错误>
 
-> Grammar of a throw statement:
+> throw 语句的语法：
 >
 > *throw-statement* → **`throw`** *expression*
 
-## Defer Statement
+## Defer 语句
 
-A `defer` statement is used for executing code
-just before transferring program control outside of the scope
-that the `defer` statement appears in.
+`defer` 语句用于在将程序控制转移到 `defer` 语句所在作用域之外之前执行代码。
 
-A `defer` statement has the following form:
+`defer` 语句的形式如下：
 
 ```swift
 defer {
@@ -755,14 +528,9 @@ defer {
 }
 ```
 
-The statements within the `defer` statement are executed
-no matter how program control is transferred.
-This means that a `defer` statement can be used, for example,
-to perform manual resource management such as closing file descriptors,
-and to perform actions that need to happen even if an error is thrown.
+在 `defer` 语句中的语句无论程序控制如何转移都会被执行。在某些情况下，例如，手动管理资源时，比如关闭文件描述符，或者即使抛出了错误也需要执行一些操作时，就可以使用 `defer` 语句。
 
-The *statements* in the `defer` statement
-are executed at the end of the scope that encloses the `defer` statement.
+`defer` 语句中的语句在包含 `defer` 语句的作用域结束时执行。
 
 ```swift
 func f(x: Int) {
@@ -802,17 +570,9 @@ f(x: 5)
   ```
 -->
 
-In the code above,
-the `defer` in the `if` statement
-executes before the `defer` declared in the function `f`
-because the scope of the `if` statement ends
-before the scope of the function.
+在上面的代码中，`if` 语句中的 `defer` 会在函数 f 中声明的 `defer` 之前执行，因为 `if` 语句的作用域在函数的作用域之前结束。
 
-If multiple `defer` statements appear in the same scope,
-the order they appear is the reverse of the order they're executed.
-Executing the last `defer` statement in a given scope first
-means that statements inside that last `defer` statement
-can refer to resources that will be cleaned up by other `defer` statements.
+如果多个 `defer` 语句出现在同一作用域中，它们的出现顺序与执行顺序相反。在给定作用域内，首先执行最后一个 `defer` 语句，这意味着该最后一个 `defer` 语句内部的语句可以引用将由其他 `defer` 语句清理的资源。
 
 ```swift
 func f() {
@@ -840,26 +600,19 @@ f()
   ```
 -->
 
-The statements in the `defer` statement can't
-transfer program control outside of the `defer` statement.
+`defer` 语句中的语句无法将控制权转移到 `defer` 语句外部。
 
-> Grammar of a defer statement:
+> defer 语句的语法：
 >
 > *defer-statement* → **`defer`** *code-block*
 
-## Do Statement
+## Do 语句
 
-The `do` statement is used to introduce a new scope
-and can optionally contain one or more `catch` clauses,
-which contain patterns that match against defined error conditions.
-Variables and constants declared in the scope of a `do` statement
-can be accessed only within that scope.
+`do` 语句用于引入一个新的作用域，该作用域中可以含有一个或多个 `catch` 子句，`catch` 子句中定义了一些匹配错误条件的模式。`do` 语句作用域内定义的常量和变量只能在 `do` 语句作用域内使用。
 
-A `do` statement in Swift is similar to
-curly braces (`{}`) in C used to delimit a code block,
-and doesn't incur a performance cost at runtime.
+Swift 中的 `do` 语句与 C 中限定代码块界限的大括号（`{}`）很相似，也并不会降低程序运行时的性能。
 
-A `do` statement has the following form:
+`do` 语句的形式如下：
 
 ```swift
 do {
@@ -876,8 +629,7 @@ do {
 }
 ```
 
-A `do` statement can optionally specify the type of error it throws,
-which has the following form:
+`do` 语句可以选择性地指定它抛出的错误类型，形式如下：
 
 ```swift
 do throws(<#type#>) {
@@ -889,73 +641,33 @@ do throws(<#type#>) {
 }
 ```
 
-If the `do` statement includes a `throws` clause,
-the `do` block can throw errors of only the specified *type*.
-The *type* must be
-a concrete type that conforms to the `Error` protocol,
-an opaque type that conforms to the `Error` protocol,
-or the boxed protocol type `any Error`.
-If the `do` statement doesn't specify the type of error it throws,
-Swift infers the error type as follows:
+如果 `do` 语句包含 `throws` 子句，则 `do` 块只能抛出指定类型的错误。类型必须是符合 `Error` 协议的具体类型、符合 `Error` 协议的不透明类型，或者是被封装的协议类型 `any Error`。如果 `do` 语句没有指定它抛出的错误类型，Swift 将按照以下方式推断错误类型：
 
-- If every `throws` statement and `try` expression in the `do` code block
-  is nested inside of an exhaustive error-handling mechanism,
-  then Swift infers that the `do` statement is nonthrowing.
+- 如果 `do` 代码块中的每个 `throws` 语句和 `try` 表达式都嵌套在一个全面的错误处理机制中，则 Swift 推断该 `do` 语句是非抛出的。
 
-- If the `do` code block contains code that throws
-  errors of only a single type
-  outside of exhaustive error handling,
-  other than throwing `Never`,
-  then Swift infers that the `do` statement throws that concrete error type.
+- 如果 `do` 代码块包含的代码抛出只有单一类型的错误，并且没有全面的错误处理（除了抛出 `Never`），则 Swift 推断该 `do` 语句抛出该具体错误类型。
 
-- If the `do` code block contains code that throws
-  errors of more than a single type
-  outside of exhaustive error handling,
-  then Swift infers that the `do` statement throws `any Error`.
+- 如果 `do` 代码块包含的代码抛出超过一种类型的错误，并且没有全面的错误处理，则 Swift 推断该 `do` 语句抛出 `any Error`。
 
-For more information about working with errors that have explicit types,
-see <doc:ErrorHandling#Specifying-the-Error-Type>.
+有关处理具有显式类型的错误的更多信息，可参阅 <doc:ErrorHandling#指定错误类型>.
 
-If any statement in the `do` code block throws an error,
-program control is transferred
-to the first `catch` clause whose pattern matches the error.
-If none of the clauses match,
-the error propagates to the surrounding scope.
-If an error is unhandled at the top level,
-program execution stops with a runtime error.
+如果 `do` 代码块中的任何语句抛出了错误，程序会跳转到第一个能模式匹配该错误的 `catch` 子句。如果没有任何子句匹配，错误会传递到外层作作用域。如果错误在最顶层依旧没有被处理，程序执行会因为运行时错误而停止。
 
-Like a `switch` statement,
-the compiler attempts to infer whether `catch` clauses are exhaustive.
-If such a determination can be made, the error is considered handled.
-Otherwise, the error can propagate out of the containing scope,
-which means
-the error must be handled by an enclosing `catch` clause
-or the containing function must be declared with `throws`.
+如同 `switch` 语句，编译器会判断 `catch` 子句是否有遗漏。如果 `catch` 子句没有遗漏，则认为错误已被处理。否则，错误会自动传递到外层作用域，被某个 `catch` 子句处理掉或者被用 `throws` 关键字声明的抛出函数继续向外抛出。
 
-A `catch` clause that has multiple patterns
-matches the error if any of its patterns match the error.
-If a `catch` clause contains multiple patterns,
-all of the patterns must contain the same constant or variable bindings,
-and each bound variable or constant must have the same type
-in all of the `catch` clause's patterns.
+拥有多个模式匹配的 `catch` 子句只需其中一个匹配到错误即可。如果 `catch` 子句拥有多个模式匹配，所有的模式必须包含相同的绑定常量或变量，并且每个 `catch` 子句里所有绑定的变量或常量的类型必须相同。
 
 <!--
   The discussion above of multi-pattern catch
   matches the discussion of multi-pattern case under Switch Statement.
 -->
 
-To ensure that an error is handled,
-use a `catch` clause with a pattern that matches all errors,
-such as a wildcard pattern (`_`).
-If a `catch` clause doesn't specify a pattern,
-the `catch` clause matches and binds any error to a local constant named `error`.
-For more information about the patterns you can use in a `catch` clause,
-see <doc:Patterns>.
+为了确保错误已经被处理，可以让 `catch` 子句使用匹配所有错误的模式，如通配符模式（`_`）。如果一个 `catch` 子句不指定一种具体模式，`catch` 子句会匹配任何错误，并绑定到名为 `error` 的局部常量。有关在 `catch` 子句中使用模式的更多信息，
+可参阅 <doc:Patterns>.
 
-To see an example of how to use a `do` statement with several `catch` clauses,
-see <doc:ErrorHandling#Handling-Errors>.
+关于如何在 `do` 语句中使用一系列 `catch` 子句的例子，请参阅<doc:ErrorHandling#处理错误>.
 
-> Grammar of a do statement:
+> do 语句的语法：
 >
 > *do-statement* → **`do`** *throws-clause*_?_ *code-block* *catch-clauses*_?_ \
 > *catch-clauses* → *catch-clause* *catch-clauses*_?_ \
@@ -963,28 +675,21 @@ see <doc:ErrorHandling#Handling-Errors>.
 > *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list* \
 > *catch-pattern* → *pattern* *where-clause*_?_
 
-## Compiler Control Statements
+## 编译器控制语句
 
-Compiler control statements allow the program to change aspects of the compiler's behavior.
-Swift has three compiler control statements:
-a conditional compilation block
-a line control statement,
-and a compile-time diagnostic statement.
+编译器控制语句允许程序改变编译器的行为。Swift 有三种编译器控制语句：条件编译语句、线路控制语句和编译时诊断语句。
 
-> Grammar of a compiler control statement:
+> 编译器控制语句的语法：
 >
 > *compiler-control-statement* → *conditional-compilation-block* \
 > *compiler-control-statement* → *line-control-statement* \
 > *compiler-control-statement* → *diagnostic-statement*
 
-### Conditional Compilation Block
+### 条件编译代码块：
 
-A conditional compilation block allows code to be conditionally compiled
-depending on the value of one or more compilation conditions.
+条件编译代码块可以根据一个或多个配置来有条件地编译代码。
 
-Every conditional compilation block begins with the `#if` compilation directive
-and ends with the `#endif` compilation directive.
-A simple conditional compilation block has the following form:
+每一个条件编译代码块都以 `#if` 开始，`#endif` 结束。如下：
 
 ```swift
 #if <#compilation condition#>
@@ -992,15 +697,9 @@ A simple conditional compilation block has the following form:
 #endif
 ```
 
-Unlike the condition of an `if` statement,
-the *compilation condition* is evaluated at compile time.
-As a result,
-the *statements* are compiled and executed only if the *compilation condition*
-evaluates to `true` at compile time.
+和`if`语句的条件不同， *编译条件* 是在编译时进行判断的。因此，只有当编译条件在编译时评估为 `true` 时，语句才会被编译和执。
 
-The *compilation condition* can include the `true` and `false` Boolean literals,
-an identifier used with the `-D` command line flag, or any of the platform
-conditions listed in the table below.
+编译条件可以包括 `true` 和 `false` 布尔字面量、与 `-D` 命令行标志一起使用的标识符，或者下表中列出的任何平台条件。
 
 | Platform condition | Valid arguments |
 | ------------------ | --------------- |
@@ -1032,17 +731,7 @@ conditions listed in the table below.
   so it's omitted from the table above.
 -->
 
-The version number for the `swift()` and `compiler()` platform conditions
-consists of a major number, optional minor number, optional patch number, and so on,
-with a dot (`.`) separating each part of the version number.
-There must not be whitespace between the comparison operator and the version number.
-The version for `compiler()` is the compiler version,
-regardless of the Swift version setting passed to the compiler.
-The version for `swift()` is the language version currently being compiled.
-For example, if you compile your code using the Swift 5 compiler in Swift 4.2 mode,
-the compiler version is 5 and the language version is 4.2.
-With those settings,
-the following code prints all three messages:
+在 `swift()` 和 `compiler()` 之后的版本号包含有主版本号，可选副版本号，可选补丁版本号类似，并且用（`.`）来分隔。在比较符和版本号之间不能有空格，版本号与前面的函数相对应，比如 `compiler()` 对应的就是这个编译器的版本号，`swift()` 对应的就是你要编译的 Swift 语言的版本号。举个简单的例子，如果你在使用 `Swift 5` 的编译器，想编译 `Swift 4.2` ，可以看下面的例子：
 
 ```swift
 #if compiler(>=5)
@@ -1081,13 +770,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
   since it's not actually running in Swift 4.2 mode.
 -->
 
-The argument for the `canImport()` platform condition
-is the name of a module that may not be present on all platforms.
-The module can include periods (`.`) in its name.
-This condition tests whether it's possible to import the module,
-but doesn't actually import it.
-If the module is present, the platform condition returns `true`;
-otherwise, it returns `false`.
+`canImport()` 条件传入的实参是模块的名字，这个模块可能并不是每个平台上都存在的。该模块的命名可以包含 . 符号。使用它可以检测是否可以导入这个模块，但实际上并没有导入。如果模块存在就返回 `true`，否则返回 `false` 。
 
 <!--
   - test: `canImport_A, canImport`
@@ -1127,13 +810,9 @@ otherwise, it returns `false`.
   ```
 -->
 
-The `targetEnvironment()` platform condition
-returns `true` when code is being compiled for the specified environment;
-otherwise, it returns `false`.
+`targetEnvironment()` 条件在特殊环境编译时返回 `true`；否则返回 `false`。
 
-> Note: The `arch(arm)` platform condition doesn't return `true` for ARM 64 devices.
-> The `arch(i386)` platform condition returns `true`
-> when code is compiled for the 32–bit iOS simulator.
+> 注意： `arch(arm)` 平台检测函数在 ARM 64 位设备上不会返回 `true` 。如果代码在 32 位的 iOS 模拟器上编译，`arch(i386)` 平台检测函数会返回 `true`。
 
 <!--
   - test: `pound-if-swift-version`
@@ -1189,18 +868,9 @@ otherwise, it returns `false`.
   ```
 -->
 
-You can combine and negate compilation conditions using the logical operators
-`&&`, `||`, and `!`
-and use parentheses for grouping.
-These operators have the same associativity and precedence as the
-logical operators that are used to combine ordinary Boolean expressions.
+你可以使用逻辑操作符 `&&`、`||` 和 `!` 来组合多个编译配置，还可以使用圆括号来进行分组。这些运算符与用于组合普通布尔表达式的逻辑运算符具有相同的结合性和优先级。
 
-Similar to an `if` statement,
-you can add multiple conditional branches to test for different compilation conditions.
-You can add any number of additional branches using `#elseif` clauses.
-You can also add a final additional branch using an `#else` clause.
-Conditional compilation blocks that contain multiple branches
-have the following form:
+类似于 `if` 语句，你可以添加多个条件分支来测试不同的编译条件。你可以使用 `#elseif` 子句添加任意数量的附加分支。你还可以使用 `#else` 子句添加一个最终的附加分支。包含多个分支的条件编译块具有以下形式：
 
 ```swift
 #if <#compilation condition 1#>
@@ -1212,21 +882,11 @@ have the following form:
 #endif
 ```
 
-> Note: Each statement in the body of a conditional compilation block is parsed
-> even if it's not compiled.
-> However, there's an exception
-> if the compilation condition includes a `swift()` or `compiler()` platform condition:
-> The statements are parsed
-> only if the language or compiler version matches
-> what is specified in the platform condition.
-> This exception ensures that an older compiler doesn't attempt to parse
-> syntax introduced in a newer version of Swift.
+> 注意： 即使没有被编译，上面编译配置中的每个语句仍然会被解析。然而，唯一的例外是编译配置语句中包含 `swift()` 或 `compiler()` 条件：这时仅当编译器版本和语言版本匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
 
-For information about how you can wrap
-explicit member expressions in conditional compilation blocks,
-see <doc:Expressions#Explicit-Member-Expression>.
+关于在条件编译块中如何包装显式成员表达式，请参见<doc:Expressions#显式成员表达式>。
 
-> Grammar of a conditional compilation block:
+> 条件编译代码块的语法：
 >
 > *conditional-compilation-block* → *if-directive-clause* *elseif-directive-clauses*_?_ *else-directive-clause*_?_ *endif-directive*
 >
@@ -1274,59 +934,40 @@ see <doc:Expressions#Explicit-Member-Expression>.
       #endif
 -->
 
-### Line Control Statement
+### 行控制语句
 
-A line control statement is used to specify a line number and filename
-that can be different from the line number and filename of the source code being compiled.
-Use a line control statement to change the source code location
-used by Swift for diagnostic and debugging purposes.
+行控制语句用于指定一个行号和文件名，这些行号和文件名可以与正在编译的源代码的行号和文件名不同。使用行控制语句可以更改 Swift 用于诊断和调试目的的源代码位置。
 
-A line control statement has the following forms:
+行控制语句形式如下：
 
 ```swift
 #sourceLocation(file: <#file path#>, line: <#line number#>)
 #sourceLocation()
 ```
 
-The first form of a line control statement changes the values
-of the `#line`, `#file`, `#fileID`, and `#filePath`
-literal expressions, beginning with the line of code following the line control statement.
-The *line number* changes the value of `#line`,
-and is any integer literal greater than zero.
-The *file path* changes the value of `#file`, `#fileID`, and `#filePath`,
-and is a string literal.
-The specified string becomes the value of `#filePath`,
-and the last path component of the string is used by the value of `#fileID`.
-For information about `#file`, `#fileID`, and `#filePath`,
-see <doc:Expressions#Literal-Expression>.
+第一种的行控制语句会改变该语句之后的代码中的字面量表达式 `#line`、 `#file`、`#fileID` 和 `#filePath` 所表示的值，从行控制语句里行号的代码开始。*行号*是一个大于 0 的整形字面量，会改变 `#line` 表达式的值。*file path*会更改 `#file`、`#fileID` 和 `#filePath` 的值，并且是一个字符串字面量。指定的字符串成为 `#filePath` 的值，字符串的最后一个路径组件用于 `#fileID` 的值。关于 `#file`、 `#fileID` 和 `#filePath`，可参阅<doc:Expressions#字面量表达式>。
 
-The second form of a line control statement, `#sourceLocation()`,
-resets the source code location back to the default line numbering and file path.
+行控制语句的第二种形式是 `#sourceLocation()`，会将源代码的定位信息重置回默认的行号和文件名。
 
-> Grammar of a line control statement:
+> 行控制语句的语法:
 >
 > *line-control-statement* → **`#sourceLocation`** **`(`** **`file:`** *file-path* **`,`** **`line:`** *line-number* **`)`** \
 > *line-control-statement* → **`#sourceLocation`** **`(`** **`)`** \
 > *line-number* → A decimal integer greater than zero \
 > *file-path* → *static-string-literal*
 
-### Compile-Time Diagnostic Statement
+### 编译时诊断语句
 
-Prior to Swift 5.9,
-the `#warning` and `#error` statements emit a diagnostic during compilation.
-This behavior is now provided by
-the [`warning(_:)`][] and [`error(_:)`][] macros in the Swift standard library.
+在 `Swift 5.9` 之前，`#warning`和`#error`语句在编译期间会发出诊断。。现在，这一行为由 Swift 标准库中的 [warning(_:)][] 和 [error(_:)][] 宏提供。
 
 [`warning(_:)`]: https://developer.apple.com/documentation/swift/warning(_:)
 [`error(_:)`]: https://developer.apple.com/documentation/swift/error(_:)
 
-## Availability Condition
+## 可用性条件
 
-An *availability condition* is used as a condition of an `if`, `while`,
-and `guard` statement to query the availability of APIs at runtime,
-based on specified platforms arguments.
+可用性条件可作为 `if`，`while`，`guard` 语句的条件，可以在运行时基于特定的平台参数来查询 API 的可用性。
 
-An availability condition has the following form:
+可用性条件的形式如下：
 
 ```swift
 if #available(<#platform name#> <#version#>, <#...#>, *) {
@@ -1336,22 +977,11 @@ if #available(<#platform name#> <#version#>, <#...#>, *) {
 }
 ```
 
-You use an availability condition to execute a block of code,
-depending on whether the APIs you want to use are available at runtime.
-The compiler uses the information from the availability condition
-when it verifies that the APIs in that block of code are available.
+使用可用性条件来执行一个代码块时，取决于使用的 API 在运行时是否可用，编译器会根据可用性条件提供的信息来决定是否执行相应的代码块。
 
-The availability condition takes a comma-separated list of platform names and versions.
-Use `iOS`, `macOS`, `watchOS`, `tvOS` and `visionOS` for the platform names,
-and include the corresponding version numbers.
-The `*` argument is required and specifies that, on any other platform,
-the body of the code block guarded by the availability condition
-executes on the minimum deployment target specified by your target.
+可用性条件使用一系列逗号分隔的平台名称和版本。使用 `iOS`，`macOS`，`watchOS`，`tvOS`，`visionOS` 作为平台名称，并写上相应的版本号。`*` 参数是必须写的，用于处理未来的潜在平台。可用性条件确保了运行时的平台不低于条件中指定的平台版本时才执行代码块。
 
-Unlike Boolean conditions, you can't combine availability conditions using
-logical operators like `&&` and `||`.
-Instead of using `!` to negate an availability condition,
-use an unavailability condition, which has the following form:
+与布尔类型的条件不同，不能用逻辑运算符 `&&` 和 `||` 组合可用性条件。不要使用 `!` 来表示平台不可以用，可以使用"不可用性条件"，其形式如下：
 
 ```swift
 if #unavailable(<#platform name#> <#version#>, <#...#>) {
@@ -1361,12 +991,9 @@ if #unavailable(<#platform name#> <#version#>, <#...#>) {
 }
 ```
 
-The `#unavailable` form is syntactic sugar that negates the condition.
-In an unavailability condition,
-the `*` argument is implicit and must not be included.
-It has the same meaning as the `*` argument in an availability condition.
+`#unavailable` 形式是语法糖，用于取反条件。在不可用性条件中，`*` 参数是隐式的，不能包含。它与可用性条件中的 `*` 参数具有相同的含义。
 
-> Grammar of an availability condition:
+> 可用性条件的语法：
 >
 > *availability-condition* → **`#available`** **`(`** *availability-arguments* **`)`** \
 > *availability-condition* → **`#unavailable`** **`(`** *availability-arguments* **`)`** \
