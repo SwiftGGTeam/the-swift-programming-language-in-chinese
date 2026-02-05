@@ -35,23 +35,24 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
       
+      - name: Prepare custom templates
+        run: |
+          # 复制发布版 header
+          cp TSPL.docc/header-publish.html TSPL.docc/header.html
+      
       - name: Build with DocC
         run: |
           # 使用 xcrun docc 构建文档
           xcrun docc convert TSPL.docc \
+            --experimental-enable-custom-templates \
+            --hosting-base-path the-swift-programming-language-in-chinese \
             --fallback-display-name "Swift 编程语言" \
             --fallback-bundle-identifier "org.swift.tspl" \
             --fallback-bundle-version 6.1 \
-            --additional-symbol-graph-dir . \
             --output-path ./_site
       
-      - name: Add custom header and footer
-        run: |
-          # 将自定义的 header 和 footer 应用到生成的页面
-          if [ -f "TSPL.docc/header-publish.html" ] && [ -f "TSPL.docc/footer.html" ]; then
-            find ./_site -name "*.html" -type f -exec sed -i '' '/<\/head>/e cat TSPL.docc/header-publish.html' {} \;
-            find ./_site -name "*.html" -type f -exec sed -i '' '/<\/body>/e cat TSPL.docc/footer.html' {} \;
-          fi
+      - name: Cleanup
+        run: rm -f TSPL.docc/header.html
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
