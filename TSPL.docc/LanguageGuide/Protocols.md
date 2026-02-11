@@ -274,9 +274,9 @@ class LinearCongruentialGenerator: RandomNumberGenerator {
 }
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-// 打印 “Here's a random number: 0.37464991998171”
+// 打印 “Here's a random number: 0.37464991998171”。
 print("And another one: \(generator.random())")
-// 打印 “And another one: 0.729023776863283”
+// 打印 “And another one: 0.729023776863283”。
 ```
 
 <!--
@@ -633,6 +633,46 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
   ```
 -->
 
+## 仅有语义要求的协议
+
+上面的所有示例协议都要求一些方法或属性，但协议声明不一定要包含任何要求。你还可以使用协议来描述*语义*要求——也就是关于这些类型的值如何行为以及它们支持哪些操作的要求。
+<!--
+Avoiding the term "marker protocol",
+which more specifically refers to @_marker on a protocol.
+-->
+Swift 标准库定义了几个不包含任何必需方法或属性的协议：
+
+- [`Sendable`][] 用于可以跨并发域共享的值，详见 <doc:Concurrency#Sendable-类型>。
+- [`Copyable`][] 用于 Swift 在传递给函数时可以复制的值，详见 <doc:Declarations#Borrowing-and-Consuming-Parameters>。
+- [`BitwiseCopyable`][] 用于可以按位复制的值。
+
+[`BitwiseCopyable`]: https://developer.apple.com/documentation/swift/bitwisecopyable
+[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
+[`Sendable`]: https://developer.apple.com/documentation/swift/sendable
+
+<!--
+These link definitions are also used in the section below,
+Implicit Conformance to a Protocol.
+-->
+
+有关这些协议要求的信息，请参阅其文档中的概述。
+
+你可以使用与遵循其他协议相同的语法来遵循这些协议。唯一的区别是你不需要包含实现协议要求的方法或属性声明。例如：
+
+```swift
+struct MyStruct: Copyable {
+    var counter = 12
+}
+
+extension MyStruct: BitwiseCopyable { }
+```
+
+上面的代码定义了一个新的结构体。由于 `Copyable` 只有语义要求，因此结构体声明中不需要任何代码来遵循该协议。类似地，由于 `BitwiseCopyable` 只有语义要求，遵循该协议的扩展主体为空。
+
+你通常不需要编写对这些协议的遵循——相反，Swift 会隐式地为你添加遵循，如 <doc:Protocols#对协议的隐式遵循> 中所述。
+
+<!-- TODO: Mention why you might define your own empty protocols. -->
+
 ## 协议作为类型
 
 协议本身并不实现任何功能。尽管如此，你仍然可以在代码中将协议用作类型。
@@ -821,7 +861,7 @@ extension Dice: TextRepresentable {
 ```swift
 let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
 print(d12.textualDescription)
-// 打印 “A 12-sided dice”
+// 打印 “A 12-sided dice”。
 ```
 
 <!--
@@ -843,7 +883,7 @@ extension SnakesAndLadders: TextRepresentable {
     }
 }
 print(game.textualDescription)
-// 打印 “A game of Snakes and Ladders with 25 squares”
+// 打印 “A game of Snakes and Ladders with 25 squares”。
 ```
 
 <!--
@@ -875,7 +915,7 @@ extension Array: TextRepresentable where Element: TextRepresentable {
 }
 let myDice = [d6, d12]
 print(myDice.textualDescription)
-// 打印 "[A 6-sided dice, A 12-sided dice]"
+// 打印 "[A 6-sided dice, A 12-sided dice]"。
 ```
 
 <!--
@@ -928,7 +968,7 @@ extension Hamster: TextRepresentable {}
 let simonTheHamster = Hamster(name: "Simon")
 let somethingTextRepresentable: TextRepresentable = simonTheHamster
 print(somethingTextRepresentable.textualDescription)
-// 打印 “A hamster named Simon”
+// 打印 “A hamster named Simon”。
 ```
 
 <!--
@@ -991,7 +1031,7 @@ let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
 if twoThreeFour == anotherTwoThreeFour {
     print("These two vectors are also equivalent.")
 }
-// 打印 "These two vectors are also equivalent."
+// 打印 "These two vectors are also equivalent."。
 ```
 
 <!--
@@ -1043,10 +1083,10 @@ var levels = [SkillLevel.intermediate, SkillLevel.beginner,
 for level in levels.sorted() {
     print(level)
 }
-// 打印 “beginner”
-// 打印 “intermediate”
-// 打印 “expert(stars: 3)”
-// 打印 “expert(stars: 5)”
+// 打印 “beginner”。
+// 打印 “intermediate”。
+// 打印 “expert(stars: 3)”。
+// 打印 “expert(stars: 5)”。
 ```
 
 <!--
@@ -1113,6 +1153,68 @@ for level in levels.sorted() {
   !!                 ^
   ```
 -->
+
+## 对协议的隐式遵循
+
+有些协议非常常见，以至于你几乎在每次声明新类型时都会编写它们。对于以下协议，当你定义一个实现协议要求的类型时，Swift 会自动推断其遵循性，因此你不必自己编写：
+
+- [`Copyable`][]
+- [`Sendable`][]
+- [`BitwiseCopyable`][]
+
+<!--
+The definitions for the links in this list
+are in the section above, Protocols That Have Semantic Requirements.
+-->
+
+你仍然可以显式编写遵循声明，但这不会改变代码的行为方式。要抑制隐式遵循，在遵循列表中的协议名称前写一个波浪号（`~`）：
+
+```swift
+struct FileDescriptor: ~Sendable {
+    let rawValue: Int
+}
+```
+
+<!--
+The example above is based on a Swift System API.
+https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+
+See also this PR that adds Sendable conformance to FileDescriptor:
+https://github.com/apple/swift-system/pull/112
+-->
+
+上面的代码显示了 POSIX 文件描述符包装器的一部分。`FileDescriptor` 结构体满足 `Sendable` 协议的所有要求，这通常会使其可发送。然而，编写 `~Sendable` 会抑制这种隐式遵循。即使文件描述符使用整数来标识和与打开的文件交互，并且整数值是可发送的，使其不可发送可以帮助避免某些类型的错误。
+
+抑制隐式遵循的另一种方式是使用标记为不可用的扩展：
+
+```swift
+@available(*, unavailable)
+extension FileDescriptor: Sendable { }
+```
+
+<!--
+  - test: `suppressing-implied-sendable-conformance`
+
+  -> struct FileDescriptor {
+  ->     let rawValue: CInt
+  -> }
+
+  -> @available(*, unavailable)
+  -> extension FileDescriptor: Sendable { }
+  >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !$ warning: conformance of 'FileDescriptor' to 'Sendable' is unavailable; this is an error in Swift 6
+  !! let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !! ^
+  !$ note: conformance of 'FileDescriptor' to 'Sendable' has been explicitly marked unavailable here
+  !! extension FileDescriptor: Sendable { }
+  !! ^
+-->
+
+当你在代码中的某处编写 `~Sendable` 时（如前面的示例所示），代码的其他地方仍然可以扩展 `FileDescriptor` 类型以添加 `Sendable` 遵循。相反，此示例中的不可用扩展会抑制对 `Sendable` 的隐式遵循，并且还会阻止代码中其他任何地方的扩展向该类型添加 `Sendable` 遵循。
+
+> 注意：除了上面讨论的协议之外，分布式 actor 还隐式遵循 [`Codable`][] 协议。
+
+[`Codable`]: https://developer.apple.com/documentation/swift/codable
 
 ## 协议类型的集合
 
@@ -1330,7 +1432,7 @@ func wishHappyBirthday(to celebrator: Named & Aged) {
 }
 let birthdayPerson = Person(name: "Malcolm", age: 21)
 wishHappyBirthday(to: birthdayPerson)
-// 打印 “Happy birthday Malcolm - you're 21!”
+// 打印 “Happy birthday Malcolm - you're 21!”。
 ```
 
 <!--
@@ -1386,7 +1488,7 @@ func beginConcert(in location: Location & Named) {
 
 let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
 beginConcert(in: seattle)
-// 打印 “Hello, Seattle!”
+// 打印 “Hello, Seattle!”。
 ```
 
 <!--
@@ -1823,9 +1925,9 @@ extension RandomNumberGenerator {
 ```swift
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-// 打印 “Here's a random number: 0.37464991998171”
+// 打印 “Here's a random number: 0.37464991998171”。
 print("And here's a random Boolean: \(generator.randomBool())")
-// 打印 “And here's a random Boolean: true”
+// 打印 “And here's a random Boolean: true”。
 ```
 
 <!--
@@ -1964,9 +2066,9 @@ let differentNumbers = [100, 100, 200, 100, 200]
 
 ```swift
 print(equalNumbers.allEqual())
-// 打印 “true”
+// 打印 “true”。
 print(differentNumbers.allEqual())
-// 打印 “false”
+// 打印 “false”。
 ```
 
 <!--

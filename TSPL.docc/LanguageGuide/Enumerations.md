@@ -130,7 +130,7 @@ case .east:
 case .west:
     print("Where the skies are blue")
 }
-// 打印 "Watch out for penguins"
+// 打印 "Watch out for penguins"。
 ```
 
 <!--
@@ -170,7 +170,7 @@ case .earth:
 default:
     print("Not a safe place for humans")
 }
-// 打印 "Mostly harmless"
+// 打印 "Mostly harmless"。
 ```
 
 <!--
@@ -198,7 +198,7 @@ enum Beverage: CaseIterable {
 }
 let numberOfChoices = Beverage.allCases.count
 print("\(numberOfChoices) beverages available")
-// 打印 "3 beverages available"
+// 打印 "3 beverages available"。
 ```
 
 <!--
@@ -326,7 +326,7 @@ case .upc(let numberSystem, let manufacturer, let product, let check):
 case .qrCode(let productCode):
     print("QR code: \(productCode).")
 }
-// 打印 "QR code: ABCDEFGHIJKLMNOP."
+// 打印 "QR code: ABCDEFGHIJKLMNOP."。
 ```
 
 <!--
@@ -352,7 +352,7 @@ case let .upc(numberSystem, manufacturer, product, check):
 case let .qrCode(productCode):
     print("QR code: \(productCode).")
 }
-// 打印 "QR code: ABCDEFGHIJKLMNOP."
+// 打印 "QR code: ABCDEFGHIJKLMNOP."。
 ```
 
 <!--
@@ -368,6 +368,16 @@ case let .qrCode(productCode):
   <- QR code: ABCDEFGHIJKLMNOP.
   ```
 -->
+
+当你只匹配枚举的一个 case 时——例如，要提取其关联值——你可以使用 `if`-`case` 语句，而不是编写完整的 switch 语句。代码如下所示：
+
+```swift
+if case .qrCode(let productCode) = productBarcode {
+    print("QR code: \(productCode).")
+}
+```
+
+就像前面的 switch 语句一样，这里将 `productBarcode` 变量与模式 `.qrCode(let productCode)` 进行匹配。与 switch case 中一样，编写 `let` 会将关联值提取为常量。有关 `if`-`case` 语句的更多信息，请参阅 <doc:ControlFlow#模式>。
 
 ## 原始值
 
@@ -399,8 +409,7 @@ enum ASCIIControlCharacter: Character {
 
 原始值可以是字符串、字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 
->注意:
->原始值和关联值是*不同*的。原始值是在定义枚举时被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终不变。关联值是创建一个基于枚举成员的常量或变量时才设置的值，枚举成员的关联值可以变化。
+虽然你可以使用原始值和关联值来为枚举提供附加值，但理解它们之间的区别很重要。你在代码中定义枚举 case 时选择该枚举 case 的原始值，例如上面的三个 ASCII 码。特定枚举 case 的原始值始终相同。相反，你在使用枚举的某个 case 创建新常量或变量时选择关联值，并且每次可以选择不同的值。
 
 ### 原始值的隐式赋值
 
@@ -516,7 +525,7 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 } else {
     print("There isn't a planet at position \(positionToFind)")
 }
-// 打印 "There isn't a planet at position 11"
+// 打印 "There isn't a planet at position 11"。
 ```
 
 <!--
@@ -628,7 +637,7 @@ func evaluate(_ expression: ArithmeticExpression) -> Int {
 }
 
 print(evaluate(product))
-// 打印 "18"
+// 打印 "18"。
 ```
 
 <!--

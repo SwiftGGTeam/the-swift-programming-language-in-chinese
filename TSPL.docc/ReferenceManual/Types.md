@@ -68,9 +68,9 @@ var someValue: ExampleModule.MyType
 
 ```swift
 var someTuple = (top: 10, bottom: 12)  // someTuple 的类型为 (top: Int, bottom: Int)
-someTuple = (top: 4, bottom: 42) // OK: 名称匹配
-someTuple = (9, 99)              // OK: 名称被推断
-someTuple = (left: 5, right: 5)  // 错误: 名称不匹配
+someTuple = (top: 4, bottom: 42) // OK: 名称匹配。
+someTuple = (9, 99)              // OK: 名称被推断。
+someTuple = (left: 5, right: 5)  // 错误: 名称不匹配。
 ```
 
 除了 Void 是空元组类型 () 的类型别名外，所有元组类型都包含两个或更多类型。
@@ -392,7 +392,7 @@ class SomeSubClass: SomeBaseClass {
 let someInstance: SomeBaseClass = SomeSubClass()
 // someInstance 的编译时类型是 SomeBaseClass,
 // someInstance 的运行时类型是 SomeSubClass
-type(of: someInstance).printClassName() // 打印 "SomeSubClass"
+type(of: someInstance).printClassName() // 打印 "SomeSubClass"。
 ```
 
 使用初始化表达式可以从该类型的元类型值构造该类型的实例。对于类实例，被调用的初始化方法必须使用 required 关键字标记，或者该类被标记为 final 类。
@@ -506,13 +506,13 @@ if let first = mixed.first as? String {
 
 类可以继承自单个超类并符合任意数量的协议。在定义类时，超类的名称必须出现在类型标识符列表的首位，后跟该类必须符合的任意数量的协议。如果该类不继承自其他类，则列表可以从协议开始。有关类继承的扩展讨论和几个示例，请参阅 <doc:Inheritance>。
 
-其他命名类型只能继承自或符合一系列协议。协议类型可以继承自任意数量的其他协议。当一个协议类型继承自其他协议时，来自那些其他协议的要求会被聚合在一起，任何继承自当前协议的类型都必须符合所有这些要求。
+其他命名类型只能继承自或符合一系列协议。协议类型可以继承自任意数量的其他协议。当一个协议类型继承自其他协议时，来自那些其他协议的要求会被聚合在一起，任何继承自当前协议的类型都必须符合所有这些要求。在此列表中的协议名称前面写波浪号（`~`）会抑制对该协议的隐式符合性，如 <doc:Protocols#Implicit-Conformance-to-a-Protocol> 中所述。
 
 对于为枚举案例分配原始值的枚举定义，类型继承子句可以是指定这些原始值类型的单个命名类型。有关使用类型继承子句指定其原始值类型的枚举定义示例，请参阅 <doc:Enumerations#原始值>。
 
 > 类型继承子句的语法:
 > > *type-inheritance-clause* → **`:`** *type-inheritance-list* 
-> > *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> > *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
 
 Swift 广泛使用 *类型推断*，允许你在代码中省略许多变量和表达式的类型或部分类型。
 

@@ -130,7 +130,7 @@ for item in library {
 }
 
 print("Media library contains \(movieCount) movies and \(songCount) songs")
-// 打印 "Media library contains 2 movies and 3 songs"
+// 打印 "Media library contains 2 movies and 3 songs"。
 ```
 
 <!--

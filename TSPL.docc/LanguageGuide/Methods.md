@@ -151,7 +151,7 @@ let somePoint = Point(x: 4.0, y: 5.0)
 if somePoint.isToTheRightOf(x: 1.0) {
     print("This point is to the right of the line where x == 1.0")
 }
-// Prints "This point is to the right of the line where x == 1.0"
+// Prints "This point is to the right of the line where x == 1.0".
 ```
 
 <!--
@@ -199,7 +199,7 @@ struct Point {
 var somePoint = Point(x: 1.0, y: 1.0)
 somePoint.moveBy(x: 2.0, y: 3.0)
 print("The point is now at (\(somePoint.x), \(somePoint.y))")
-// Prints "The point is now at (3.0, 4.0)"
+// Prints "The point is now at (3.0, 4.0)".
 ```
 
 <!--
@@ -514,7 +514,7 @@ class Player {
 var player = Player(name: "Argyrios")
 player.complete(level: 1)
 print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
-// Prints "highest unlocked level is now 2"
+// Prints "highest unlocked level is now 2".
 ```
 
 <!--
@@ -537,7 +537,7 @@ if player.tracker.advance(to: 6) {
 } else {
     print("level 6 hasn't yet been unlocked")
 }
-// Prints "level 6 hasn't yet been unlocked"
+// Prints "level 6 hasn't yet been unlocked".
 ```
 
 <!--

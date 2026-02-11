@@ -39,7 +39,7 @@ If there's a stable URL we can use, make the macro protocols below links.
 
 - Extension 扩展宏：将 `extension` 作为此特性的第一个参数。实现宏的类型遵循 `ExtensionMacro` 协议。这些宏可以添加协议遵循、`where` 从句，以及宏所附加到的类型的成员的新声明。如果宏添加了协议遵循，请包含 `conformances:` 参数并指定这些协议。遵循列表包含协议名称、指向遵循列表项的类型别名，或者是遵循列表项的协议组合。嵌套类型上的扩展宏会展开为该文件顶层的扩展。你不能在扩展、类型别名或嵌套在函数内的类型上编写扩展宏，也不能使用扩展宏添加具有 peer 宏的扩展。
 
-peer、member 和 accessor 宏角色需要一个 `names:` 参数，列出宏生成的符号名称。如果宏在扩展内部添加声明，扩展宏角色也需要一个 `names:` 参数。当宏声明包含 `names:` 参数时，宏实现必须仅生成与该列表匹配的名称的符号。也就是说，宏不必为每个列出的名称生成符号。该参数的值是以下一个或多个项的列表：
+peer 和 member 宏角色需要一个 `names:` 参数，列出宏生成的符号名称。accessor 宏角色在宏生成 `willSet` 或 `didSet` 属性观察者时需要一个 `names:` 参数。生成属性观察者的 accessor 宏不能添加其他访问器，因为观察者仅适用于存储属性。如果宏在扩展内部添加声明，扩展宏角色也需要一个 `names:` 参数。当宏声明包含 `names:` 参数时，宏实现必须仅生成与该列表匹配的名称的符号。也就是说，宏不必为每个列出的名称生成符号。该参数的值是以下一个或多个项的列表：
 
 - `named(<#name#>)` 其中 *name* 是那个固定的符号名称，用于一个已知的名称。
 
@@ -345,10 +345,10 @@ let dial = TelephoneExchange()
 
 // 使用动态方法调用
 dial(4, 1, 1)
-// 打印 "Get Swift help on forums.swift.org"
+// 打印 "Get Swift help on forums.swift.org"。
 
 dial(8, 6, 7, 5, 3, 0, 9)
-// 打印 "Unrecognized number"
+// 打印 "Unrecognized number"。
 
 // 直接调用内部的方法
 dial.dynamicallyCall(withArguments: [4, 1, 1])
@@ -492,12 +492,12 @@ let s = DynamicStruct()
 // 使用动态成员查询
 let dynamic = s.someDynamicMember
 print(dynamic)
-// 打印 "325"
+// 打印 "325"。
 
 // 直接调用底层下标
 let equivalent = s[dynamicMember: "someDynamicMember"]
 print(dynamic == equivalent)
-// 打印 "true"
+// 打印 "true"。
 
 ```
 
@@ -566,6 +566,14 @@ print(wrapper.x)
   ```
 -->
 
+### export
+
+将此特性应用于函数或方法声明，以控制如何将其定义导出到客户端模块。包含以下参数之一，指示要导出声明的哪个方面：
+
+- `interface` 参数指定仅将接口以可调用符号的形式导出到客户端。定义（函数体）不可供客户端用于内联、优化或任何其他目的。使用此参数可以向客户端隐藏实现。
+
+- `implementation` 参数指定仅将定义（函数体）导出到客户端。此函数不会在二进制文件中发出符号，客户端负责在需要时发出定义的副本。使用此参数可以引入新的函数或方法而不影响应用程序二进制接口（ABI）。
+
 ### freestanding
 
 将 `freestanding` 特性应用于独立宏的声明。
@@ -592,9 +600,6 @@ https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Macros.swift#L10
 ### frozen
 
 将此特性应用于结构体或枚举的声明，以限制可以对该类型所能进行的更改类型。此特性仅在以库演进模式编译时允许使用。库的未来版本不能通过添加、删除或重新排序枚举的成员或结构体的存储实例属性来更改其声明。这些更改在非冻结类型上是允许的，但会破坏冻结类型的 ABI 兼容性。
-
-> 注意:
-> 当编译器不处于库演进模式时，所有结构体和枚举都被隐式冻结，此特性将被忽略。
 
 <!--
   - test: `can-use-frozen-without-evolution`
@@ -721,6 +726,16 @@ https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Macros.swift#L10
   See also <rdar://problem/27287369> Document @GKInspectable attribute
   which we will want to link to, once it's written.
 -->
+
+### globalActor
+
+将此特性应用于 actor、结构体、枚举或 final 类。该类型必须定义一个名为 `shared` 的静态属性，该属性提供一个 actor 的共享实例。
+
+全局 actor 将 actor 隔离的概念推广到分散在代码中多个不同位置的状态 —— 例如多个类型、文件和模块 —— 并使得从并发代码中安全访问全局变量成为可能。全局 actor 提供的 actor 作为其 `shared` 属性的值，将对所有这些状态的访问串行化。你还可以使用全局 actor 来建模并发代码中的约束，例如所有代码都需要在同一线程上执行。
+
+全局 actor 隐式遵循 [`GlobalActor`][] 协议。主 actor 是标准库提供的全局 actor，如 <doc:Concurrency#The-Main-Actor> 中所述。大多数代码可以使用主 actor，而不是定义新的全局 actor。
+
+[`GlobalActor`]: https://developer.apple.com/documentation/swift/globalactor
 
 ### inlinable
 
@@ -877,7 +892,7 @@ protocol ProvidesMain {
 ### NSApplicationMain
 
 > 已弃用:
-> 此特性已弃用；请改用 <doc:Attributes#main> 特性。在 Swift 6 中，使用此特性将会导致错误。
+> 此特性已弃用；请改用 <doc:Attributes#main> 特性。在 Swift 6 中，使用此特性会产生编译时错误。
 
 将此特性应用于一个类，以指示它是应用程序委托。使用此特性等同于调用 `NSApplicationMain` 函数。
 
@@ -1828,7 +1843,7 @@ struct ArrayBuilder {
 ### UIApplicationMain
 
 > 已弃用:
-> 此特性已弃用；请改用 <doc:Attributes#main> 特性。在 Swift 6 中，使用此特性将会导致错误。
+> 此特性已弃用；请改用 <doc:Attributes#main> 特性。在 Swift 6 中，使用此特性会产生编译时错误。
 
 将此特性应用于一个类，以指示它是应用程序委托。使用此特性相当于调用 `UIApplicationMain` 函数，并将此类的名称作为委托类的名称传递。
 

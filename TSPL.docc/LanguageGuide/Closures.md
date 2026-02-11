@@ -682,11 +682,11 @@ class SomeClass {
 let instance = SomeClass()
 instance.doSomething()
 print(instance.x)
-// 打印 “200”
+// 打印 "200"。
 
 completionHandlers.first?()
 print(instance.x)
-// 打印 “100”
+// 打印 "100"。
 ```
 
 <!--
@@ -756,7 +756,7 @@ class SomeOtherClass {
 struct SomeStruct {
     var x = 10
     mutating func doSomething() {
-        someFunctionWithNonescapingClosure { x = 200 }  // Ok
+        someFunctionWithNonescapingClosure { x = 200 }  // OK
         someFunctionWithEscapingClosure { x = 100 }     // Error
     }
 }
@@ -776,7 +776,7 @@ struct SomeStruct {
   -> struct SomeStruct {
          var x = 10
          mutating func doSomething() {
-             someFunctionWithNonescapingClosure { x = 200 }  // Ok
+             someFunctionWithNonescapingClosure { x = 200 }  // OK
              someFunctionWithEscapingClosure { x = 100 }     // Error
          }
      }
@@ -842,16 +842,16 @@ struct SomeStruct {
 ```swift
 var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 print(customersInLine.count)
-// 打印 “5”
+// 打印 "5"。
 
 let customerProvider = { customersInLine.remove(at: 0) }
 print(customersInLine.count)
-// 打印 ”5“
+// 打印 "5"。
 
 print("Now serving \(customerProvider())!")
 // 打印 “Now serving Chris!”
 print(customersInLine.count)
-// 打印 “4”
+// 打印 "4"。
 ```
 
 <!--

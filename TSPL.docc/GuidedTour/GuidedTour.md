@@ -11,7 +11,7 @@
 
 ```swift
 print("Hello, world!")
-// 打印“Hello, world!”
+// 打印“Hello, world!”。
 ```
 
 <!--
@@ -147,11 +147,6 @@ let quotation = """
   ```
 -->
 
-<!--
-  Can't show an example of indentation in the triple-quoted string above.
-  <rdar://problem/49129068> Swift code formatting damages indentation
--->
-
 使用方括号（`[]`）来创建数组和字典，并通过在方括号内写上索引（index）或键（key）来访问它们的元素。最后一个元素后面允许有个逗号。
 
 <!--
@@ -225,7 +220,7 @@ occupations["Jayne"] = "Public Relations"
 ```swift
 fruits.append("blueberries")
 print(fruits)
-// 打印“["strawberries", "grapes", "tangerines", "blueberries"]”
+// 打印“["strawberries", "grapes", "tangerines", "blueberries"]”。
 ```
 
 <!--
@@ -288,7 +283,7 @@ for score in individualScores {
     }
 }
 print(teamScore)
-// 打印“11”
+// 打印“11”。
 ```
 
 <!--
@@ -333,7 +328,7 @@ let scoreDecoration = if teamScore > 10 {
     ""
 }
 print("Score:", teamScore, scoreDecoration)
-// 打印“Score: 11 🎉”
+// 打印“Score: 11 🎉”。
 ```
 
 你可以将 `if` 和 `let` 结合使用，来处理值可能缺失的情况。这些值用可选值来表示。一个可选值要么包含一个值，要么包含 `nil` 来表示值缺失。在一个值的类型后面加一个问号（`?`）来标记该值是可选值。
@@ -350,7 +345,7 @@ print("Score:", teamScore, scoreDecoration)
 ```swift
 var optionalString: String? = "Hello"
 print(optionalString == nil)
-// 打印“false”
+// 打印“false”。
 
 var optionalName: String? = "John Appleseed"
 var greeting = "Hello!"
@@ -442,7 +437,7 @@ case let x where x.hasSuffix("pepper"):
 default:
     print("Everything tastes good in soup.")
 }
-// 打印“Is it a spicy red pepper?”
+// 打印“Is it a spicy red pepper?”。
 ```
 
 <!--
@@ -500,7 +495,7 @@ for (_, numbers) in interestingNumbers {
     }
 }
 print(largest)
-// 打印“25”
+// 打印“25”。
 ```
 
 <!--
@@ -542,14 +537,14 @@ while n < 100 {
     n *= 2
 }
 print(n)
-// 打印“128”
+// 打印“128”。
 
 var m = 2
 repeat {
     m *= 2
 } while m < 100
 print(m)
-// 打印“128”
+// 打印“128”。
 ```
 
 <!--
@@ -582,7 +577,7 @@ for i in 0..<4 {
     total += i
 }
 print(total)
-// 打印“6”
+// 打印“6”。
 ```
 
 <!--
@@ -687,9 +682,9 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
 }
 let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
 print(statistics.sum)
-// 打印“120”
+// 打印“120”。
 print(statistics.2)
-// 打印“120”
+// 打印“120”。
 ```
 
 <!--
@@ -857,7 +852,7 @@ numbers.map({ (number: Int) -> Int in
 ```swift
 let mappedNumbers = numbers.map({ number in 3 * number })
 print(mappedNumbers)
-// 打印“[60, 57, 21, 36]”
+// 打印“[60, 57, 21, 36]”。
 ```
 
 <!--
@@ -875,7 +870,7 @@ print(mappedNumbers)
 ```swift
 let sortedNumbers = numbers.sorted { $0 > $1 }
 print(sortedNumbers)
-// 打印“[20, 19, 12, 7]”
+// 打印“[20, 19, 12, 7]”。
 ```
 
 <!--
@@ -1093,10 +1088,10 @@ class EquilateralTriangle: NamedShape {
 }
 var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
 print(triangle.perimeter)
-// 打印“9.3”
+// 打印“9.3”。
 triangle.perimeter = 9.9
 print(triangle.sideLength)
-// 打印“3.3000000000000003”
+// 打印“3.3000000000000003”。
 ```
 
 <!--
@@ -1170,12 +1165,12 @@ class TriangleAndSquare {
 }
 var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
 print(triangleAndSquare.square.sideLength)
-// 打印“10.0”
+// 打印“10.0”。
 print(triangleAndSquare.triangle.sideLength)
-// 打印“10.0”
+// 打印“10.0”。
 triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
 print(triangleAndSquare.triangle.sideLength)
-// 打印“50.0”
+// 打印“50.0”。
 ```
 
 <!--
@@ -1393,7 +1388,7 @@ let heartsDescription = hearts.simpleDescription()
   The server response is a simple way to essentially re-implement Optional
   while sidestepping the fact that I'm doing so.
 
-  "Out of cheese" is a reference to a Terry Pratchet book,
+  "Out of cheese" is a reference to a Terry Pratchett book,
   which features a computer named Hex.
   Hex's other error messages include:
 
@@ -1437,7 +1432,7 @@ case let .result(sunrise, sunset):
 case let .failure(message):
     print("Failure...  \(message)")
 }
-// 打印“Sunrise is at 6:00 am and sunset is at 8:09 pm.”
+// 打印“Sunrise is at 6:00 am and sunset is at 8:09 pm.”。
 ```
 
 <!--
@@ -1582,7 +1577,7 @@ func connectUser(to server: String) async {
 Task {
     await connectUser(to: "primary")
 }
-// 打印“Hello Guest, user ID 97”
+// 打印“Hello Guest, user ID 97”。
 ```
 
 <!--
@@ -1764,7 +1759,7 @@ extension Int: ExampleProtocol {
     }
  }
 print(7.simpleDescription)
-// 打印“The number 7”
+// 打印“The number 7”。
 ```
 
 <!--
@@ -1791,7 +1786,7 @@ print(7.simpleDescription)
 ```swift
 let protocolValue: any ExampleProtocol = a
 print(protocolValue.simpleDescription)
-// 打印“A very simple class.  Now 100% adjusted.”
+// 打印“A very simple class.  Now 100% adjusted.”。
 // print(protocolValue.anotherProperty)  // 去掉注释可以看到错误
 ```
 
@@ -1884,7 +1879,7 @@ do {
 } catch {
     print(error)
 }
-// 打印“Job sent”
+// 打印“Job sent”。
 ```
 
 <!--
@@ -1939,7 +1934,7 @@ do {
 } catch {
     print(error)
 }
-// 打印“Job sent”
+// 打印“Job sent”。
 ```
 
 <!--
@@ -2001,7 +1996,7 @@ if fridgeContains("banana") {
     print("Found a banana")
 }
 print(fridgeIsOpen)
-// 打印“false”
+// 打印“false”。
 ```
 
 <!--

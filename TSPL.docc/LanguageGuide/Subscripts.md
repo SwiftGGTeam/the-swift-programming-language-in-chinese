@@ -78,7 +78,7 @@ struct TimesTable {
 }
 let threeTimesTable = TimesTable(multiplier: 3)
 print("six times three is \(threeTimesTable[6])")
-// 打印“six times three is 18”
+// 打印“six times three is 18”。
 ```
 
 <!--

@@ -298,18 +298,18 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   >> }
   -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
          if shape is Square {
-             return shape // Error: return types don't match
+             return shape // Error: Return types don't match.
          }
-         return FlippedShape(shape: shape) // Error: return types don't match
+         return FlippedShape(shape: shape) // Error: Return types don't match.
      }
   !$ error: function declares an opaque return type 'some Shape', but the return statements in its body do not have matching underlying types
   !! func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   !!      ^                                    ~~~~~~~~~~
   !$ note: return statement has underlying type 'T'
-  !! return shape // Error: return types don't match
+  !! return shape // Error: Return types don't match.
   !! ^
   !$ note: return statement has underlying type 'FlippedShape<T>'
-  !! return FlippedShape(shape: shape) // Error: return types don't match
+  !! return FlippedShape(shape: shape) // Error: Return types don't match.
   !! ^
   ```
 -->
@@ -466,7 +466,7 @@ print(vertical.draw())
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
     print(downcastTriangle.size)
 }
-// 打印输出 "5"
+// 打印输出 "5"。
 ```
 
 要了解更多信息请参考<doc:TypeCasting#向下转型>。
@@ -639,7 +639,7 @@ func makeOpaqueContainer<T>(item: T) -> some Container {
 let opaqueContainer = makeOpaqueContainer(item: 12)
 let twelve = opaqueContainer[0]
 print(type(of: twelve))
-// 打印输出 "Int"
+// 打印输出 "Int"。
 ```
 
 <!--

@@ -69,55 +69,19 @@ Swift 的访问级别遵循一个指导原则：**实体的定义都不能依赖
 
 ## 访问控制语法
 
-在实体声明的前面添加修饰符 `open`、`public`、`internal`、`fileprivate` 或 `private` 来定义该实体的访问级别。
+通过在实体声明的前面添加 <doc:AccessControl#访问级别> 中列出的修饰符之一（例如 `public` 或 `private`）来定义该实体的访问级别。例如：
 
 ```swift
-open class SomeOpenClass {}
 public class SomePublicClass {}
-internal class SomeInternalClass {}
-fileprivate class SomeFilePrivateClass {}
-private class SomePrivateClass {}
-
-open var someOpenVariable = 0
-public var somePublicVariable = 0
-internal let someInternalConstant = 0
-fileprivate func someFilePrivateFunction() {}
+internal struct SomeInternalStruct() {}
 private func somePrivateFunction() {}
 ```
 
-<!--
-  - test: `accessControlSyntax`
-
-  ```swifttest
-  -> open class SomeOpenClass {}
-  -> public class SomePublicClass {}
-  -> internal class SomeInternalClass {}
-  -> fileprivate class SomeFilePrivateClass {}
-  -> private class SomePrivateClass {}
-
-  -> open var someOpenVariable = 0
-  -> public var somePublicVariable = 0
-  -> internal let someInternalConstant = 0
-  -> fileprivate func someFilePrivateFunction() {}
-  -> private func somePrivateFunction() {}
-  ```
--->
-
-除非专门指定，否则默认的访问级别是 `internal`，如在 <doc:AccessControl#默认访问级别> 中所述。这意味着在不使用修饰符显式指定访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 的访问级别仍然是 `internal`：
+上面的代码将 `SomePublicClass` 声明为 public，将 `SomeInternalStruct` 声明为 internal，将 `somePrivateFunction()` 声明为 private。如果你不写显式的访问级别，默认的访问级别修饰符是 `internal`，如 <doc:AccessControl#默认访问级别> 中所述。例如，在下面的代码中，`SomeInternalStruct` 隐式地是 internal：
 
 ```swift
-class SomeInternalClass {}              // 隐式指定为 internal
-let someInternalConstant = 0            // 隐式指定为 internal
+struct SomeInternalStruct() {}
 ```
-
-<!--
-  - test: `accessControlDefaulted`
-
-  ```swifttest
-  -> class SomeInternalClass {}              // implicitly internal
-  -> let someInternalConstant = 0            // implicitly internal
-  ```
--->
 
 ## 自定义类型
 
@@ -680,7 +644,7 @@ stringToEdit.value = "This string will be tracked."
 stringToEdit.value += " This edit will increment numberOfEdits."
 stringToEdit.value += " So will this one."
 print("The number of edits is \(stringToEdit.numberOfEdits)")
-// 打印“The number of edits is 3”
+// 打印“The number of edits is 3”。
 ```
 
 <!--

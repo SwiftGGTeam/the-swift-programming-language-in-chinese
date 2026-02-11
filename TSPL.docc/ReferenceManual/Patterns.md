@@ -120,7 +120,7 @@ case .right:
 case nil:
     print("Keep going straight")
 }
-// 打印 "Turn left"
+// 打印 "Turn left"。
 ```
 
 > 枚举用例模式语法:

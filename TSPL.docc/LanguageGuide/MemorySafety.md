@@ -84,7 +84,7 @@ print("We're number \(one)!")
 
 <!--
   Using these functions from Swift requires some shimming -- for example:
-  https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
+  https://github.com/apple/swift-atomics/tree/main/Sources/_AtomicsShims
 -->
 
 如果在一次内存访问的过程中没有任何其他代码可以在其开始后、结束前运行，则这次访问是**瞬时**完成的。其性质决定了两次瞬时访问不可能同时发生。大多数内存访问都是瞬时完成的。比如，下面这段代码中的所有读写操作都是瞬时完成的：
@@ -97,7 +97,7 @@ func oneMore(than number: Int) -> Int {
 var myNumber = 1
 myNumber = oneMore(than: myNumber)
 print(myNumber)
-// Prints "2"
+// Prints "2".
 ```
 
 <!--
@@ -149,7 +149,7 @@ increment(&stepSize)
      }
 
   -> increment(&stepSize)
-  // Error: conflicting accesses to stepSize
+  // Error: Conflicting accesses to stepSize.
   xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
   xx Previous access (a modification) started at  (0x10e86b032).
   xx Current access (a read) started at:
@@ -221,7 +221,7 @@ balance(&playerOneScore, &playerOneScore)
   -> var playerTwoScore = 30
   -> balance(&playerOneScore, &playerTwoScore)  // OK
   -> balance(&playerOneScore, &playerOneScore)
-  // Error: conflicting accesses to playerOneScore
+  // Error: Conflicting accesses to playerOneScore.
   !$ error: inout arguments are not allowed to alias each other
   !! balance(&playerOneScore, &playerOneScore)
   !!                          ^~~~~~~~~~~~~~~
@@ -342,7 +342,7 @@ oscar.shareHealth(with: &oscar)
 
   ```swifttest
   -> oscar.shareHealth(with: &oscar)
-  // Error: conflicting accesses to oscar
+  // Error: Conflicting accesses to oscar.
   !$ error: inout arguments are not allowed to alias each other
   !! oscar.shareHealth(with: &oscar)
   !!                         ^~~~~~
@@ -383,7 +383,7 @@ balance(&playerInformation.health, &playerInformation.energy)
   >> }
   -> var playerInformation = (health: 10, energy: 20)
   -> balance(&playerInformation.health, &playerInformation.energy)
-  // Error: conflicting access to properties of playerInformation
+  // Error: Conflicting access to properties of playerInformation.
   xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
   xx Previous access (a modification) started at  (0x107952037).
   xx Current access (a modification) started at:

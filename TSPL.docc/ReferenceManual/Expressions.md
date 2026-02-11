@@ -70,13 +70,13 @@ try! <#表达式#>
 
 
 ```swift
-// try 对两个函数调用都产生作用
+// 编写 try 对两个函数调用都产生作用。
 sum = try someThrowingFunction() + anotherThrowingFunction()
 
-// try 对两个函数调用都产生作用
+// 编写 try 对两个函数调用都产生作用。
 sum = try (someThrowingFunction() + anotherThrowingFunction())
 
-// 错误：try 只对第一个函数调用产生作用
+// 错误：编写 try 只对第一个函数调用产生作用。
 sum = (try someThrowingFunction()) + anotherThrowingFunction()
 ```
 
@@ -111,13 +111,13 @@ await 表达式只能在异步的上下文中出现，比如传入 `async(priori
 
 
 ```swift
-// await 对两个函数调用都产生作用
+// 编写 await 对两个函数调用都产生作用。
 sum = await someAsyncFunction() + anotherAsyncFunction()
 
-// await 对两个函数调用都产生作用
+// 编写 await 对两个函数调用都产生作用。
 sum = await (someAsyncFunction() + anotherAsyncFunction())
 
-// 错误：await 只对第一个函数调用产生作用
+// 错误：编写 await 只对第一个函数调用产生作用。
 sum = (await someAsyncFunction()) + anotherAsyncFunction()
 ```
 
@@ -210,14 +210,14 @@ func f(_ any: Any) { print("Function for Any") }
 func f(_ int: Int) { print("Function for Int") }
 let x = 10
 f(x)
-// 打印 "Function for Int"
+// 打印 "Function for Int"。
 
 let y: Any = x
 f(y)
-// 打印 "Function for Any"
+// 打印 "Function for Any"。
 
 f(x as Any)
-// 打印 "Function for Any"
+// 打印 "Function for Any"。
 ```
 
 桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅[Working with Foundation Types](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types).
@@ -314,12 +314,12 @@ in Xcode Help.
 > *literal-expression* → *literal* \
 > *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
 >
-> *array-literal* → **`[`** *array-literal-items*_?_ **`]`** \
-> *array-literal-items* → *array-literal-item* **`,`**_?_ | *array-literal-item* **`,`** *array-literal-items* \
+> *array-literal* → **`[`** *array-literal-items*_?_ **`,`**_?_ **`]`** \
+> *array-literal-items* → *array-literal-item* | *array-literal-item* **`,`** *array-literal-items* \
 > *array-literal-item* → *expression*
 >
-> *dictionary-literal* → **`[`** *dictionary-literal-items* **`]`** | **`[`** **`:`** **`]`** \
-> *dictionary-literal-items* → *dictionary-literal-item* **`,`**_?_ | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
+> *dictionary-literal* → **`[`** *dictionary-literal-items* **`,`**_?_ **`]`** | **`[`** **`:`** **`]`** \
+> *dictionary-literal-items* → *dictionary-literal-item* | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
 > *dictionary-literal-item* → *expression* **`:`** *expression*
 >
 > *playground-literal* → **`#colorLiteral`** **`(`** **`red`** **`:`** *expression* **`,`** **`green`** **`:`** *expression* **`,`** **`blue`** **`:`** *expression* **`,`** **`alpha`** **`:`** *expression* **`)`** \
@@ -511,7 +511,7 @@ myFunction { $0 + $1 }
 
 默认情况下，闭包会捕获附近作用域中的常量和变量，并使用强引用指向它们。你可以通过一个*捕获列表*来显式指定它的捕获行为。
 
-捕获列表在参数列表之前，由中括号括起来，里面是由逗号分隔的一系列表达式。一旦使用了捕获列表，就必须使用 `in` 关键字，即使省略了参数名、参数类型和返回类型。
+捕获列表在参数列表之前，由中括号括起来，里面是由逗号分隔的一系列表达式。一旦使用了捕获列表，就必须使用 `in` 关键字，即使省略了参数名、参数类型和返回类型。捕获列表中的最后一个表达式后面可以跟一个可选的逗号。
 
 捕获列表中的项会在闭包创建时被初始化。每一项都会用闭包附近作用域中的同名常量或者变量的值初始化。例如下面的代码示例中，捕获列表包含 `a` 而不包含 `b`，这将导致这两个变量具有不同的行为。
 
@@ -525,7 +525,7 @@ let closure = { [a] in
 a = 10
 b = 10
 closure()
-// 打印 "0 10"
+// 打印 "0 10"。
 ```
 
 在示例中，变量 `b` 只有一个，然而，变量 `a` 有两个，一个在闭包外，一个在闭包内。闭包内的变量 `a` 会在闭包创建时用闭包外的变量 `a` 的值来初始化，除此之外它们并无其他联系。这意味着在闭包创建后，改变某个 `a` 的值都不会对另一个 `a` 的值造成任何影响。与此相反，闭包内外都是同一个变量 `b`，因此在闭包外改变其值，闭包内的值也会受影响。
@@ -545,7 +545,7 @@ let closure = { [x] in
 x.value = 10
 y.value = 10
 closure()
-// 打印 "10 10"
+// 打印 "10 10"。
 ```
 
 如果捕获列表中的值是类类型，你可以使用 `weak` 或者 `unowned` 来修饰它，闭包会分别用弱引用和无主引用来捕获该值。
@@ -575,13 +575,13 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 > *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
-> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
+> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`,`**_?_ **`)`** | *identifier-list* \
 > *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
 > *closure-parameter* → *closure-parameter-name* *type-annotation*_?_ \
 > *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
 > *closure-parameter-name* → *identifier*
 >
-> *capture-list* → **`[`** *capture-list-items* **`]`** \
+> *capture-list* → **`[`** *capture-list-items* **`,`**_?_ **`]`** \
 > *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* **`=`** *expression* \
@@ -660,9 +660,11 @@ let z: SomeClass = .sharedSubclass
 > However, like all type aliases, `Void` is always a type ---
 > you can't use it to write an empty tuple expression.
 
+元组中的最后一个表达式后面可以跟一个可选的逗号。
+
 > Grammar of a tuple expression:
 >
-> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`** \
+> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`,`**_?_ **`)`** \
 > *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
 > *tuple-element* → *expression* | *identifier* **`:`** *expression*
 
@@ -695,7 +697,7 @@ let z: SomeClass = .sharedSubclass
 func f(a: Int = #line, b: Int = (#line), c: Int = 100 + #line) {
     print(a, b, c)
 }
-f()  // 打印 "4 1 101"
+f()  // 打印 "4 1 101"。
 ```
 
 在上面的函数中,参数 `a` 的默认值是一个单独的宏表达式,因此该宏使用 `f(a:b:c:)` 被调用的源代码位置进行求值。相比之下,参数 `b` 和 `c` 的值是包含宏的表达式 —— 这些表达式中的宏使用 `f(a:b:c:)` 被定义的源代码位置进行求值。
@@ -816,18 +818,18 @@ let path = \[String].[index]
 let fn: ([String]) -> String = { strings in strings[index] }
 
 print(greetings[keyPath: path])
-// 打印 "bonjour"
+// 打印 "bonjour"。
 print(fn(greetings))
-// 打印 "bonjour"
+// 打印 "bonjour"。
 
 // 将 'index' 设置为一个新的值不会影响到 'path'
 index += 1
 print(greetings[keyPath: path])
-// 打印 "bonjour"
+// 打印 "bonjour"。
 
 //  'fn' 闭包使用了新值。
 print(fn(greetings))
-// 打印 "안녕"
+// 打印 "안녕"。
 ```
 
 路径可以使用可选链和强制解包。下面的代码在 key path 中使用了可选链来访问可选字符串的属性。
@@ -981,7 +983,7 @@ let keyPath = #keyPath(SomeClass.someProperty)
 if let value = c.value(forKey: keyPath) {
     print(value)
 }
-// 打印 "12"
+// 打印 "12"。
 ```
 
 当在一个类中使用 key-path 字符串表达式时，可以省略类名，直接使用属性名来访问这个类的某个属性。
@@ -993,7 +995,7 @@ extension SomeClass {
     }
 }
 print(keyPath == c.getSomeKeyPath())
-// 打印 "true"
+// 打印 "true"。
 ```
 
 由于 key-path 字符串表达式在编译期才创建，编译期可以检查属性是否存在，以及属性是否暴露给 Objective-C 运行时。
@@ -1044,6 +1046,8 @@ print(keyPath == c.getSomeKeyPath())
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
 
+括号中的最后一个参数后面可以跟一个可选的逗号。
+
 函数调用表达式可以在函数调用表达式的尾部（右圆括号之后）加上多个尾随闭包，该闭包会作为函数的实参，在括号中最后一个实参后面添加。第一个闭包表达式时没有实参签名的，其他任意闭包表达式签名都有实参标签。如下两种写法是等价的，区别在是否使用尾随闭包语法：
 
 ```swift
@@ -1088,6 +1092,8 @@ myData.someMethod { $0 == 13 }
 
 为了简化 Swift 5.3 之前版本（从右到左匹配）的代码迁移 —— 编译器会同时检查从左到右和从右到左的顺序。如果不同的扫描方向产生了不同的结果，编译器则使用旧的从右到左的顺序，并生成警告。Swift 的未来版本将都使用从左到右的顺序。
 
+<!-- FIXME: What future version? -->
+
 ```swift
 typealias Callback = (Int) -> Int
 func someFunction(firstClosure: Callback? = nil,
@@ -1097,9 +1103,9 @@ func someFunction(firstClosure: Callback? = nil,
     print(first ?? "-", second ?? "-")
 }
 
-someFunction()  // 打印 "- -"
+someFunction()  // 打印 "- -"。
 someFunction { return $0 + 100 }  // 歧义
-someFunction { return $0 } secondClosure: { return $0 }  // 打印 "10 20"
+someFunction { return $0 } secondClosure: { return $0 }  // 打印 "10 20"。
 ```
 
 在上面的例子中，Swift 5.3 中被标记为"歧义"的函数调用会打印"- 120"并产生一个编辑器警告。未来版本的 Swift 会打印"110 -"。
@@ -1149,7 +1155,7 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
 >
-> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`** \
+> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`,`**_?_ **`)`** \
 > *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list* \
 > *function-call-argument* → *expression* | *identifier* **`:`** *expression* \
 > *function-call-argument* → *operator* | *identifier* **`:`** *operator*
@@ -1184,7 +1190,7 @@ class SomeSubClass: SomeSuperClass {
 let initializer: (Int) -> String = String.init
 let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
 print(oneTwoThree)
-// 打印 "123"
+// 打印 "123"。
 ```
 
 如果通过名字来指定某个类型，可以不用构造器表达式而直接使用类型的构造器。在其他情况下，你必须使用构造器表达式。

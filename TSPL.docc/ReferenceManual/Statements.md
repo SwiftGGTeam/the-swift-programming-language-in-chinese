@@ -314,7 +314,7 @@ case .suppressed:
 @unknown default:
     print("Use a representation that was unknown when this code was compiled.")
 }
-// Prints "Generate a default mirror for all ancestor classes."
+// Prints "Generate a default mirror for all ancestor classes".
 ```
 
 <!--
@@ -544,10 +544,10 @@ func f(x: Int) {
   print("End of function")
 }
 f(x: 5)
-// Prints "End of if"
-// Prints "Second defer"
-// Prints "End of function"
-// Prints "First defer"
+// Prints "End of if".
+// Prints "Second defer".
+// Prints "End of function".
+// Prints "First defer".
 ```
 
 <!--
@@ -581,9 +581,9 @@ func f() {
     print("End of function")
 }
 f()
-// Prints "End of function"
-// Prints "Second defer"
-// Prints "First defer"
+// Prints "End of function".
+// Prints "Second defer".
+// Prints "First defer".
 ```
 
 <!--
@@ -704,7 +704,7 @@ do throws(<#type#>) {
 | Platform condition | Valid arguments |
 | ------------------ | --------------- |
 | `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `visionOS`, `Linux`, `Windows` |
-| `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
+| `arch()` | `arm`, `arm64`, `i386`, `wasm32`, `x86_64`, |
 | `swift()` | `>=` or `<` followed by a version number |
 | `compiler()` | `>=` or `<` followed by a version number |
 | `canImport()` | A module name |
@@ -743,9 +743,9 @@ print("Compiled in Swift 4.2 mode or later")
 #if compiler(>=5) && swift(<5)
 print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
 #endif
-// Prints "Compiled with the Swift 5 compiler or later"
-// Prints "Compiled in Swift 4.2 mode or later"
-// Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+// Prints "Compiled with the Swift 5 compiler or later".
+// Prints "Compiled in Swift 4.2 mode or later".
+// Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5".
 ```
 
 <!--
@@ -761,7 +761,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
      #endif
   <- Compiled with the Swift 5 compiler or later
   <- Compiled in Swift 4.2 mode or later
-  // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+  // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5".
   ```
 -->
 
@@ -915,7 +915,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 > *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
 >
 > *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
-> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
+> *architecture* → **`arm`** | **`arm64`** | **`i386`** | **`wasm32`** | **`x86_64`** \
 > *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
 > *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
 > *environment* → **`simulator`** | **`macCatalyst`**
@@ -1000,8 +1000,6 @@ if #unavailable(<#platform name#> <#version#>, <#...#>) {
 > *availability-arguments* → *availability-argument* | *availability-argument* **`,`** *availability-arguments* \
 > *availability-argument* → *platform-name* *platform-version* \
 > *availability-argument* → **`*`**
->
->
 >
 > *platform-name* → **`iOS`** | **`iOSApplicationExtension`** \
 > *platform-name* → **`macOS`** | **`macOSApplicationExtension`** \

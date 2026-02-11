@@ -627,7 +627,7 @@ do throws(StatisticsError) {
         print("Invalid rating: \(rating)")
     }
 }
-// 打印 "No ratings available"
+// 打印 "No ratings available"。
 ```
 
 在此代码中，写入 `do throws(StatisticsError)` 表明 `do`-`catch` 语句抛出 `StatisticsError` 值作为其错误。与其他 `do`-`catch` 语句一样，`catch` 子句可以处理所有可能的错误，也可以传递未处理的错误让周围的作用域处理。此代码使用 `switch` 语句处理所有错误，每个枚举值有一个分支(case)。与其他没有模式的 `catch` 子句一样，该子句匹配任何错误并将错误绑定到名为 `error` 的局部常量。`do`-`catch` 语句会抛出 `StatisticsError` 值，所以 `error` 是 `StatisticsError` 类型的值。
@@ -648,7 +648,7 @@ do {
         print("Invalid rating: \(rating)")
     }
 }
-// 打印 "No ratings available"
+// 打印 "No ratings available"。
 ```
 
 尽管上面的 `do`-`catch` 块没有指定它抛出的错误类型，Swift 仍会推断它抛出 `StatisticsError` 。您可以显式地编写 `throws(any Error)` 以避免让 Swift 推断出指定类型抛错。

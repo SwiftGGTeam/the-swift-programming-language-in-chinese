@@ -13,7 +13,7 @@
 
 你可以在构造器中为存储属性设置初始值，或者在定义属性时赋予默认值。以下部分将会详细介绍这两种方法。
 
-> 注意：当你为存储属性赋予默认值，或者在构造器中设置其初始值时，该属性的值会被直接设置，而不会触发任何属性观察器。
+> 注意：当你为存储属性赋予默认值，或者在构造器中设置其值时，该属性的值会被直接设置，而不会触发任何属性观察器。
 
 ### 构造器
 
@@ -48,7 +48,7 @@ struct Fahrenheit {
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
-// 打印 "The default temperature is 32.0° Fahrenheit"
+// 打印 "The default temperature is 32.0° Fahrenheit"。
 ```
 
 <!--
@@ -516,11 +516,11 @@ For example:
 ```swift
 let zeroByTwo = Size(height: 2.0)
 print(zeroByTwo.width, zeroByTwo.height)
-// 输出 "0.0 2.0"
+// 输出 "0.0 2.0"。
 
 let zeroByZero = Size()
 print(zeroByZero.width, zeroByZero.height)
-// Prints "0.0 0.0"
+// Prints "0.0 0.0".
 ```
 
 <!--
@@ -1396,7 +1396,7 @@ let pi = 3.14159
 if let valueMaintained = Int(exactly: wholeNumber) {
     print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
 }
-// 打印 "12345.0 conversion to Int maintains value of 12345"
+// 打印 "12345.0 conversion to Int maintains value of 12345"。
 
 let valueChanged = Int(exactly: pi)
 // valueChanged 是 Int? 类型，不是 Int 类型
@@ -1404,7 +1404,7 @@ let valueChanged = Int(exactly: pi)
 if valueChanged == nil {
     print("\(pi) conversion to Int doesn't maintain value")
 }
-// 打印 "3.14159 conversion to Int doesn't maintain value"
+// 打印 "3.14159 conversion to Int doesn't maintain value"。
 ```
 
 <!--
@@ -1465,7 +1465,7 @@ let someCreature = Animal(species: "Giraffe")
 if let giraffe = someCreature {
     print("An animal was initialized with a species of \(giraffe.species)")
 }
-// 打印 "An animal was initialized with a species of Giraffe"
+// 打印 "An animal was initialized with a species of Giraffe"。
 ```
 
 <!--
@@ -1491,7 +1491,7 @@ let anonymousCreature = Animal(species: "")
 if anonymousCreature == nil {
     print("The anonymous creature couldn't be initialized")
 }
-// 打印 "The anonymous creature couldn't be initialized"
+// 打印 "The anonymous creature couldn't be initialized"。
 ```
 
 <!--
@@ -1751,7 +1751,7 @@ class CartItem: Product {
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
     print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
-// 打印 "Item: sock, quantity: 2"
+// 打印 "Item: sock, quantity: 2"。
 ```
 
 <!--
@@ -1773,7 +1773,7 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 } else {
     print("Unable to initialize zero shirts")
 }
-// 打印 "Unable to initialize zero shirts"
+// 打印 "Unable to initialize zero shirts"。
 ```
 
 <!--
@@ -1797,7 +1797,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 } else {
     print("Unable to initialize one unnamed product")
 }
-// 打印 "Unable to initialize one unnamed product"
+// 打印 "Unable to initialize one unnamed product"。
 ```
 
 <!--
@@ -2370,9 +2370,9 @@ struct Chessboard {
 ```swift
 let board = Chessboard()
 print(board.squareIsBlackAt(row: 0, column: 1))
-// 打印 "true"
+// 打印 "true"。
 print(board.squareIsBlackAt(row: 7, column: 7))
-// 打印 "false"
+// 打印 "false"。
 ```
 
 <!--

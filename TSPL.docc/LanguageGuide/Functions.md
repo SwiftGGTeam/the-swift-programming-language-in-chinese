@@ -39,9 +39,9 @@ func greet(person: String) -> String {
 
 ```swift
 print(greet(person: "Anna"))
-// 打印 "Hello, Anna!"
+// 打印 "Hello, Anna!"。
 print(greet(person: "Brian"))
-// 打印 "Hello, Brian!"
+// 打印 "Hello, Brian!"。
 ```
 
 <!--
@@ -71,7 +71,7 @@ func greetAgain(person: String) -> String {
     return "Hello again, " + person + "!"
 }
 print(greetAgain(person: "Anna"))
-// 打印 "Hello again, Anna!"
+// 打印 "Hello again, Anna!"。
 ```
 
 <!--
@@ -99,7 +99,7 @@ func sayHelloWorld() -> String {
     return "hello, world"
 }
 print(sayHelloWorld())
-// 打印 "hello, world"
+// 打印 "hello, world"。
 ```
 
 <!--
@@ -131,7 +131,7 @@ func greet(person: String, alreadyGreeted: Bool) -> String {
     }
 }
 print(greet(person: "Tim", alreadyGreeted: true))
-// 打印 "Hello again, Tim!"
+// 打印 "Hello again, Tim!"。
 ```
 
 <!--
@@ -161,7 +161,7 @@ func greet(person: String) {
     print("Hello, \(person)!")
 }
 greet(person: "Dave")
-// 打印 "Hello, Dave!"
+// 打印 "Hello, Dave!"。
 ```
 
 <!--
@@ -194,9 +194,9 @@ func printWithoutCounting(string: String) {
     let _ = printAndCount(string: string)
 }
 printAndCount(string: "hello, world")
-// 打印 "hello, world" 并返回 12
+// 打印 "hello, world" 并返回 12。
 printWithoutCounting(string: "hello, world")
-// 打印 "hello, world" 但没有返回值
+// 打印 "hello, world" 但没有返回值。
 ```
 
 <!--
@@ -290,7 +290,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 ```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
 print("min is \(bounds.min) and max is \(bounds.max)")
-// 打印 "min is -6 and max is 109"
+// 打印 "min is -6 and max is 109"。
 ```
 
 <!--
@@ -358,7 +358,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
     print("min is \(bounds.min) and max is \(bounds.max)")
 }
-// 打印 "min is -6 and max is 109"
+// 打印 "min is -6 and max is 109"。
 ```
 
 <!--
@@ -381,13 +381,13 @@ func greeting(for person: String) -> String {
     "Hello, " + person + "!"
 }
 print(greeting(for: "Dave"))
-// 打印 "Hello, Dave!"
+// 打印 "Hello, Dave!"。
 
 func anotherGreeting(for person: String) -> String {
     return "Hello, " + person + "!"
 }
 print(anotherGreeting(for: "Dave"))
-// 打印 "Hello, Dave!"
+// 打印 "Hello, Dave!"。
 ```
 
 <!--
@@ -499,7 +499,7 @@ func greet(person: String, from hometown: String) -> String {
     return "Hello \(person)!  Glad you could visit from \(hometown)."
 }
 print(greet(person: "Bill", from: "Cupertino"))
-// 打印 "Hello Bill!  Glad you could visit from Cupertino."
+// 打印 "Hello Bill!  Glad you could visit from Cupertino."。
 ```
 
 <!--
@@ -688,7 +688,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// 打印 "someInt is now 107, and anotherInt is now 3"
+// 打印 "someInt is now 107, and anotherInt is now 3"。
 ```
 
 <!--
@@ -801,7 +801,7 @@ var mathFunction: (Int, Int) -> Int = addTwoInts
 
 ```swift
 print("Result: \(mathFunction(2, 3))")
-// Prints "Result: 5"
+// Prints "Result: 5".
 ```
 
 <!--
@@ -818,7 +818,7 @@ print("Result: \(mathFunction(2, 3))")
 ```swift
 mathFunction = multiplyTwoInts
 print("Result: \(mathFunction(2, 3))")
-// 打印 "Result: 6"
+// 打印 "Result: 6"。
 ```
 
 <!--
@@ -864,7 +864,7 @@ func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
     print("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
-// 打印 "Result: 8"
+// 打印 "Result: 8"。
 ```
 
 <!--

@@ -921,7 +921,7 @@ let manualDrawing = Line(elements: [
      Stars(length: 2),
 ])
 print(manualDrawing.draw())
-// 打印 "***Hello RAVI PATEL!**"
+// 打印 "***Hello RAVI PATEL!**"。
 ```
 
 <!--
@@ -1009,11 +1009,11 @@ func makeGreeting(for name: String? = nil) -> Drawable {
 }
 let genericGreeting = makeGreeting()
 print(genericGreeting.draw())
-// 打印 "***Hello WORLD!**"
+// 打印 "***Hello WORLD!**"。
 
 let personalGreeting = makeGreeting(for: "Ravi Patel")
 print(personalGreeting.draw())
-// 打印 "***Hello RAVI PATEL!**"
+// 打印 "***Hello RAVI PATEL!**"。
 ```
 
 <!--

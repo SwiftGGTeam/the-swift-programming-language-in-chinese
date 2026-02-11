@@ -196,6 +196,17 @@ var shoppingList = ["Eggs", "Milk"]
 
 由于数组字面量中的所有值都是相同类型，Swift 可以推断出 `[String]` 是 `shoppingList` 变量的正确类型。
 
+你可以在数组字面量的最后一个值之后包含一个逗号，这被称为*尾随逗号*：
+
+```swift
+var shoppingList = [
+    "Eggs",
+    "Milk",
+]
+```
+
+因为尾随逗号使每一行的结尾都一样，所以在编写像上面这样每行一个值的数组时，这是一种很有用的方式。当你修改数组时，你只需要添加、删除或重新排列值 —— 而不需要添加或删除逗号。
+
 ### 访问和修改数组
 
 您可以通过数组的方法和属性或使用下标语法来访问和修改数组。
@@ -974,6 +985,15 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 -->
 
 因为字面量中的所有键都是同一类型，所有值也是同一类型，Swift 能够推断出 `[String: String]` 是用于 `airports` 字典的正确类型。
+
+与数组字面量一样，字典字面量也可以在最后一个键值对之后包含尾随逗号：
+
+```swift
+var airports = [
+    "YYZ": "Toronto Pearson",
+    "DUB": "Dublin",
+]
+```
 
 ### 访问和修改字典
 

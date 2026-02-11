@@ -127,10 +127,10 @@ extension Double {
 }
 let oneInch = 25.4.mm
 print("One inch is \(oneInch) meters")
-// 打印“One inch is 0.0254 meters”
+// 打印“One inch is 0.0254 meters”。
 let threeFeet = 3.ft
 print("Three feet is \(threeFeet) meters")
-// 打印“Three feet is 0.914399970739201 meters”
+// 打印“Three feet is 0.914399970739201 meters”。
 ```
 
 <!--
@@ -164,7 +164,7 @@ print("Three feet is \(threeFeet) meters")
 ```swift
 let aMarathon = 42.km + 195.m
 print("A marathon is \(aMarathon) meters long")
-// 打印“A marathon is 42195.0 meters long”
+// 打印“A marathon is 42195.0 meters long”。
 ```
 
 <!--
@@ -556,7 +556,7 @@ func printIntegerKinds(_ numbers: [Int]) {
     print("")
 }
 printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
-// 打印“+ + - 0 - 0 + ”
+// 打印“+ + - 0 - 0 + ”。
 ```
 
 <!--
@@ -578,7 +578,7 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
      }
   -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
   << + + - 0 - 0 +
-  // Prints "+ + - 0 - 0 + "
+  // Prints "+ + - 0 - 0 + ".
   ```
 -->
 

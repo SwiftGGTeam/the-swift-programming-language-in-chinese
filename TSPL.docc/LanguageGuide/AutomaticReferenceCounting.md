@@ -78,7 +78,7 @@ var reference3: Person?
 
 ```swift
 reference1 = Person(name: "John Appleseed")
-// Prints "John Appleseed is being initialized"
+// Prints "John Appleseed is being initialized".
 ```
 
 <!--
@@ -132,7 +132,7 @@ ARC 不会释放 `Person` 实例，直到第三个也是最后一个强引用被
 
 ```swift
 reference3 = nil
-// Prints "John Appleseed is being deinitialized"
+// Prints "John Appleseed is being deinitialized".
 ```
 
 <!--
@@ -394,7 +394,7 @@ unit4A!.tenant = john
 
 ```swift
 john = nil
-// Prints "John Appleseed is being deinitialized"
+// Prints "John Appleseed is being deinitialized".
 ```
 
 <!--
@@ -414,7 +414,7 @@ john = nil
 
 ```swift
 unit4A = nil
-// Prints "Apartment 4A is being deinitialized"
+// Prints "Apartment 4A is being deinitialized".
 ```
 
 <!--
@@ -558,8 +558,8 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
 ```swift
 john = nil
-// Prints "John Appleseed is being deinitialized"
-// Prints "Card #1234567890123456 is being deinitialized"
+// Prints "John Appleseed is being deinitialized".
+// Prints "Card #1234567890123456 is being deinitialized".
 ```
 
 <!--
@@ -781,7 +781,7 @@ class City {
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
 print("\(country.name)'s capital city is called \(country.capitalCity.name)")
-// Prints "Canada's capital city is called Ottawa"
+// Prints "Canada's capital city is called Ottawa".
 ```
 
 <!--
@@ -810,7 +810,6 @@ Swift 为这个问题提供了一个优雅的解决方案，称为 *闭包捕获
 
 ```swift
 class HTMLElement {
-
     let name: String
     let text: String?
 
@@ -830,7 +829,6 @@ class HTMLElement {
     deinit {
         print("\(name) is being deinitialized")
     }
-
 }
 ```
 
@@ -839,7 +837,6 @@ class HTMLElement {
 
   ```swifttest
   -> class HTMLElement {
-
         let name: String
         let text: String?
 
@@ -859,7 +856,6 @@ class HTMLElement {
         deinit {
            print("\(name) is being deinitialized")
         }
-
      }
   ```
 -->
@@ -881,7 +877,7 @@ heading.asHTML = {
     return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
 }
 print(heading.asHTML())
-// Prints "<h1>some default text</h1>"
+// Prints "<h1>some default text</h1>".
 ```
 
 <!--
@@ -907,7 +903,7 @@ print(heading.asHTML())
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
 print(paragraph!.asHTML())
-// Prints "<p>hello, world</p>"
+// Prints "<p>hello, world</p>".
 ```
 
 <!--
@@ -1022,7 +1018,6 @@ lazy var someClosure = {
 
 ```swift
 class HTMLElement {
-
     let name: String
     let text: String?
 
@@ -1043,7 +1038,6 @@ class HTMLElement {
     deinit {
         print("\(name) is being deinitialized")
     }
-
 }
 ```
 
@@ -1052,7 +1046,6 @@ class HTMLElement {
 
   ```swifttest
   -> class HTMLElement {
-
         let name: String
         let text: String?
 
@@ -1073,7 +1066,6 @@ class HTMLElement {
         deinit {
            print("\(name) is being deinitialized")
         }
-
      }
   ```
 -->
@@ -1085,7 +1077,7 @@ class HTMLElement {
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
 print(paragraph!.asHTML())
-// Prints "<p>hello, world</p>"
+// Prints "<p>hello, world</p>".
 ```
 
 <!--
@@ -1106,7 +1098,7 @@ print(paragraph!.asHTML())
 
 ```swift
 paragraph = nil
-// Prints "p is being deinitialized"
+// Prints "p is being deinitialized".
 ```
 
 <!--
