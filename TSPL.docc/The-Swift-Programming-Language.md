@@ -1,4 +1,4 @@
-# The Swift Programming Language (6.1) 中文版
+# The Swift Programming Language (6.2.3) 中文版
 
 @Metadata {
   @TechnologyRoot
