@@ -250,7 +250,7 @@ class Train: Vehicle {
 ```swift
 let train = Train()
 train.makeNoise()
-// 打印 "Choo Choo"
+// 打印 "Choo Choo"。
 ```
 
 <!--
@@ -308,7 +308,7 @@ let car = Car()
 car.currentSpeed = 25.0
 car.gear = 3
 print("Car: \(car.description)")
-// 打印 "Car: traveling at 25.0 miles per hour in gear 3"
+// 打印 "Car: traveling at 25.0 miles per hour in gear 3"。
 ```
 
 <!--
@@ -472,7 +472,6 @@ print("AutomaticCar: \(automatic.description)")
   TODO: 提及在重写使用可选类型或未经检查的可选类型的方法时，
   可以返回更具体的类型，并接受更不具体的类型。
   TODO: 重写类型方法
-  ~~~~~~~~~~~~~~~~~
 -->
 
 <!--

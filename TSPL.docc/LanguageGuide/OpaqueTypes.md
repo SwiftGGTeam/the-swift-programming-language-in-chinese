@@ -23,7 +23,7 @@ Boxed protocol types don't preserve type identity ---
 the value's specific type isn't known until runtime,
 and it can change over time as different values are stored.
 
-## The Problem That Opaque Types Solve
+## The Problem that Opaque Types Solve
 
 For example,
 suppose you're writing a module that draws ASCII art shapes.
@@ -350,7 +350,7 @@ print(opaqueJoinedTriangles.draw())
 
 The value of `opaqueJoinedTriangles` in this example
 is the same as `joinedTriangles` in the generics example
-in the <doc:OpaqueTypes#The-Problem-That-Opaque-Types-Solve> section earlier in this chapter.
+in the <doc:OpaqueTypes#The-Problem-that-Opaque-Types-Solve> section earlier in this chapter.
 However, unlike the value in that example,
 `flip(_:)` and `join(_:_:)` wrap the underlying types
 that the generic shape operations return
@@ -373,9 +373,9 @@ that includes a special case for squares:
 ```swift
 func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
     if shape is Square {
-        return shape // Error: return types don't match
+        return shape // Error: Return types don't match.
     }
-    return FlippedShape(shape: shape) // Error: return types don't match
+    return FlippedShape(shape: shape) // Error: Return types don't match.
 }
 ```
 
@@ -395,18 +395,18 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   >> }
   -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
          if shape is Square {
-             return shape // Error: return types don't match
+             return shape // Error: Return types don't match.
          }
-         return FlippedShape(shape: shape) // Error: return types don't match
+         return FlippedShape(shape: shape) // Error: Return types don't match.
      }
   !$ error: function declares an opaque return type 'some Shape', but the return statements in its body do not have matching underlying types
   !! func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   !!      ^                                    ~~~~~~~~~~
   !$ note: return statement has underlying type 'T'
-  !! return shape // Error: return types don't match
+  !! return shape // Error: Return types don't match.
   !! ^
   !$ note: return statement has underlying type 'FlippedShape<T>'
-  !! return FlippedShape(shape: shape) // Error: return types don't match
+  !! return FlippedShape(shape: shape) // Error: Return types don't match.
   !! ^
   ```
 -->
@@ -616,7 +616,7 @@ For example:
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
     print(downcastTriangle.size)
 }
-// Prints "5"
+// Prints "5".
 ```
 
 For more information, see <doc:TypeCasting#Downcasting>.
@@ -860,7 +860,7 @@ func makeOpaqueContainer<T>(item: T) -> some Container {
 let opaqueContainer = makeOpaqueContainer(item: 12)
 let twelve = opaqueContainer[0]
 print(type(of: twelve))
-// Prints "Int"
+// Prints "Int".
 ```
 
 <!--

@@ -39,6 +39,14 @@ then
     exit_status=1
 fi
 
+
+# Avoid committing the the generated beta banner.
+if git grep "<!-- \(BEGIN\|END\) BETA BANNER -->"  TSPL.docc/
+then
+    echo "Error: Remove the generated beta banner before comitting."
+    exit_status=1
+fi
+
 echo "Checking links..."
 cmark --to xml TSPL.docc/*/*.md |
 xpath -q -n -e '//link/@destination' |

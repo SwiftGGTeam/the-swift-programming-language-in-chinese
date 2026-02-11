@@ -417,8 +417,8 @@ if name == "world" {
 只有当给定的运算符可以应用于各自元组中的每个值时，元组才能与该运算符进行比较。例如，如下面的代码所示，您可以比较两个类型为 `(String, Int)` 的元组，因为 `String` 和 `Int` 值都可以使用 `<` 运算符进行比较。相反，类型为 `(String, Bool)` 的两个元组不能使用 `<` 运算符进行比较，因为 `<` 运算符不能应用于 `Bool` 值。
 
 ```swift
-("blue", -1) < ("purple", 1)        // 可以，计算结果为 true
-("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+("blue", -1) < ("purple", 1)        // 可以：计算结果为 true。
+("blue", false) < ("purple", true)  // 错误：不能使用 < 来比较布尔值。
 ```
 
 <!--
@@ -426,17 +426,17 @@ if name == "world" {
 
   ```swifttest
   >> _ =
-  -> ("blue", -1) < ("purple", 1)        // 可以，计算结果为 true
+  -> ("blue", -1) < ("purple", 1)        // 可以：计算结果为 true。
   >> _ =
-  -> ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+  -> ("blue", false) < ("purple", true)  // 错误：不能使用 < 来比较布尔值。
   !$ error: type '(String, Bool)' cannot conform to 'Comparable'
-  !! ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+  !! ("blue", false) < ("purple", true)  // 错误：不能使用 < 来比较布尔值。
   !!                 ^
   !$ note: only concrete types such as structs, enums and classes can conform to protocols
-  !! ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+  !! ("blue", false) < ("purple", true)  // 错误：不能使用 < 来比较布尔值。
   !!                 ^
   !$ note: required by referencing operator function '<' on 'Comparable' where 'Self' = '(String, Bool)'
-  !! ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+  !! ("blue", false) < ("purple", true)  // 错误：不能使用 < 来比较布尔值。
   !!                 ^
   ```
 -->
@@ -445,7 +445,7 @@ if name == "world" {
   - test: `tuple-comparison-operators-ok`
 
   ```swifttest
-  >> let x = ("blue", -1) < ("purple", 1)        // 可以，计算结果为 true
+  >> let x = ("blue", -1) < ("purple", 1)        // 可以：计算结果为 true。
   >> print(x)
   << true
   ```
@@ -869,7 +869,7 @@ Swift 支持 C 语言中的三个标准逻辑运算符：
 let allowedEntry = false
 if !allowedEntry {
     print("ACCESS DENIED")
-} // 打印 "ACCESS DENIED"
+} // 打印 "ACCESS DENIED"。
 ```
 
 <!--
@@ -901,7 +901,7 @@ if enteredDoorCode && passedRetinaScan {
     print("Welcome!")
 } else {
     print("ACCESS DENIED")
-} // 打印 "ACCESS DENIED"
+} // 打印 "ACCESS DENIED"。
 ```
 
 <!--

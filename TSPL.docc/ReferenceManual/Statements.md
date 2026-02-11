@@ -436,7 +436,7 @@ which indicates that the default case should match only enumeration cases
 that are added in the future.
 Swift produces a warning
 if the default case matches
-any enumeration case that's known at compiler time.
+any enumeration case that's known at compile time.
 This future warning informs you that the library author
 added a new case to the enumeration
 that doesn't have a corresponding switch case.
@@ -776,10 +776,10 @@ func f(x: Int) {
   print("End of function")
 }
 f(x: 5)
-// Prints "End of if"
-// Prints "Second defer"
-// Prints "End of function"
-// Prints "First defer"
+// Prints "End of if".
+// Prints "Second defer".
+// Prints "End of function".
+// Prints "First defer".
 ```
 
 <!--
@@ -821,9 +821,9 @@ func f() {
     print("End of function")
 }
 f()
-// Prints "End of function"
-// Prints "Second defer"
-// Prints "First defer"
+// Prints "End of function".
+// Prints "Second defer".
+// Prints "First defer".
 ```
 
 <!--
@@ -1005,7 +1005,7 @@ conditions listed in the table below.
 | Platform condition | Valid arguments |
 | ------------------ | --------------- |
 | `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `visionOS`, `Linux`, `Windows` |
-| `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
+| `arch()` | `arm`, `arm64`, `i386`, `wasm32`, `x86_64`, |
 | `swift()` | `>=` or `<` followed by a version number |
 | `compiler()` | `>=` or `<` followed by a version number |
 | `canImport()` | A module name |
@@ -1054,9 +1054,9 @@ print("Compiled in Swift 4.2 mode or later")
 #if compiler(>=5) && swift(<5)
 print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
 #endif
-// Prints "Compiled with the Swift 5 compiler or later"
-// Prints "Compiled in Swift 4.2 mode or later"
-// Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+// Prints "Compiled with the Swift 5 compiler or later".
+// Prints "Compiled in Swift 4.2 mode or later".
+// Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5".
 ```
 
 <!--
@@ -1072,7 +1072,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
      #endif
   <- Compiled with the Swift 5 compiler or later
   <- Compiled in Swift 4.2 mode or later
-  // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+  // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5".
   ```
 -->
 
@@ -1255,7 +1255,7 @@ see <doc:Expressions#Explicit-Member-Expression>.
 > *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
 >
 > *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
-> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
+> *architecture* → **`arm`** | **`arm64`** | **`i386`** | **`wasm32`** | **`x86_64`** \
 > *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
 > *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
 > *environment* → **`simulator`** | **`macCatalyst`**
@@ -1373,8 +1373,6 @@ It has the same meaning as the `*` argument in an availability condition.
 > *availability-arguments* → *availability-argument* | *availability-argument* **`,`** *availability-arguments* \
 > *availability-argument* → *platform-name* *platform-version* \
 > *availability-argument* → **`*`**
->
->
 >
 > *platform-name* → **`iOS`** | **`iOSApplicationExtension`** \
 > *platform-name* → **`macOS`** | **`macOSApplicationExtension`** \

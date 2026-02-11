@@ -175,7 +175,7 @@ let someVideoMode = VideoMode()
 
 ```swift
 print("The width of someResolution is \(someResolution.width)")
-// 打印 "The width of someResolution is 0" 
+// 打印 "The width of someResolution is 0"。 
 ```
 
 <!--
@@ -196,7 +196,7 @@ print("The width of someResolution is \(someResolution.width)")
 
 ```swift
 print("The width of someVideoMode is \(someVideoMode.resolution.width)")
-// 打印 "The width of someVideoMode is 0"
+// 打印 "The width of someVideoMode is 0"。
 ```
 
 <!--
@@ -213,7 +213,7 @@ print("The width of someVideoMode is \(someVideoMode.resolution.width)")
 ```swift
 someVideoMode.resolution.width = 1280
 print("The width of someVideoMode is now \(someVideoMode.resolution.width)") 
-// 打印 "The width of someVideoMode is now 1280"
+// 打印 "The width of someVideoMode is now 1280"。
 ```
 
 <!--
@@ -328,7 +328,7 @@ cinema.width = 2048
 
 ```swift
 print("cinema is now \(cinema.width) pixels wide")
-// 打印 "cinema is now 2048 pixels wide"
+// 打印 "cinema is now 2048 pixels wide"。
 ```
 
 <!--
@@ -344,7 +344,7 @@ print("cinema is now \(cinema.width) pixels wide")
 
 ```swift 
 print("hd is still \(hd.width) pixels wide")
-// 打印 "hd is still 1920 pixels wide"
+// 打印 "hd is still 1920 pixels wide"。
 ```
 
 <!--
@@ -378,9 +378,9 @@ let rememberedDirection = currentDirection
 currentDirection.turnNorth()
 
 print("The current direction is \(currentDirection)")
-// 打印 "The current direction is north"
+// 打印 "The current direction is north"。
 print("The remembered direction is \(rememberedDirection)")
-// 打印 "The current direction is west"
+// 打印 "The remembered direction is west"。
 ```
 
 <!--
@@ -475,7 +475,7 @@ alsoTenEighty.frameRate = 30.0
 
 ```swift
 print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
-// 打印 "The frameRate property of tenEighty is now 30.0"
+// 打印 "The frameRate property of tenEighty is now 30.0"。
 ```
 
 <!--
@@ -567,7 +567,7 @@ tenEighty 和 alsoTenEighty 常量的值本身并没有变化。
 if tenEighty === alsoTenEighty {
     print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
 } 
-// 打印 "tenEighty and alsoTenEighty refer to the same VideoMode instance."
+// 打印 "tenEighty and alsoTenEighty refer to the same VideoMode instance."。
 ```
 
 <!--

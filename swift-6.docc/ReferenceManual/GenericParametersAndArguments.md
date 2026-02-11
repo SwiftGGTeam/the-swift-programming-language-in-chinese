@@ -76,6 +76,56 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
+泛型参数列表中的最后一个泛型参数后面可以跟一个可选的逗号。
+
+### 整数泛型参数
+
+*整数泛型参数*作为整数值而不是类型的占位符。它具有以下形式：
+
+```swift
+let <#type parameter#>: <#type>
+```
+
+*类型*必须是 Swift 标准库中的 `Int` 类型，或者解析为 `Int` 的类型别名或泛型类型。
+
+你为整数泛型参数提供的值必须是整数字面量，或者是来自封闭泛型上下文的另一个整数泛型参数。例如：
+
+```swift
+struct SomeStruct<let x: Int> { }
+let a: SomeStruct<2>  // OK: integer literal
+
+struct AnotherStruct<let x: Int, T, each U> {
+    let b: SomeStruct<x>  // OK: another integer generic parameter
+
+    static let c = 42
+    let d: SomeStruct<c>  // Error: Can't use a constant.
+
+    let e: SomeStruct<T>  // Error: Can't use a generic type parameter.
+    let f: SomeStruct<U>  // Error: Can't use a parameter pack.
+}
+```
+
+类型上的整数泛型参数的值可以作为该类型的静态常量成员访问，具有与类型本身相同的可见性。函数上的整数泛型参数的值可以从函数内部作为常量访问。在表达式中使用时，这些常量的类型为 `Int`。
+
+```swift
+print(a.x)  // Prints "4"
+```
+
+整数泛型参数的值可以从初始化类型或调用函数时使用的参数类型中推断出来。
+
+```swift
+struct AnotherStruct<let y: Int> {
+    var s: SomeStruct<y>
+}
+func someFunction<let z: Int>(s: SomeStruct<z>) {
+    print(z)
+}
+
+let s1 = SomeStruct<12>()
+let s2 = AnotherStruct(s: s1)  // AnotherStruct.y is inferred to be 12.
+someFunction(s: s1)  // Prints "12"
+```
+
 ### 泛型 Where 子句
 
 你可以通过在类型或函数体的起始大括号前包含一个泛型`where`子句，来对类型形参及其相关类型指定额外的要求。泛型 `where`子句由`where`关键字组成，后跟一个或多个要求，多个*要求*用逗号进行分隔。
@@ -84,9 +134,9 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
 where <#requirements#>
 ```
 
-泛型 `where` 子句中的*要求*指明类型形参要继承自某个类或遵循某个协议或协议组合。虽然 `where` 子句为表达类型形参的简单约束提供了语法糖（比如，`<T: Comparable>` 等同于 `where T: Comparable` 等），但它可以用于为类型形参及其关联类型提供更复杂的约束。比如，你可以指定类型形参的关联类型遵循某个协议：`<S: Sequence> where S.Iterator.Element: Equatable`  指定了`S`遵循 `Sequence`协议，并且`S`的关联类型`S.Iterator.Element`遵循`Equatable`协议。此约束确保序列中的每个元素都是符合`Equatable`协议的。
+泛型 `where` 子句中的*要求*指明类型形参要继承自某个类或遵循某个协议或协议组合。虽然 `where` 子句为表达类型形参的简单约束提供了语法糖（比如，`<T: Comparable>` 等同于 `where T: Comparable` 等），但它可以用于为类型形参及其关联类型提供更复杂的约束。比如，你可以指定类型形参的关联类型遵循某个协议：`<S: Sequence> where S.Iterator.Element: Equatable`  指定了`S`遵循 `Sequence`协议，并且`S`的关联类型`S.Iterator.Element`遵循`Equatable`协议。此约束确保序列中的每个元素都是符合`Equatable`协议的。整数泛型参数不能有协议或超类要求。整数泛型参数不能有协议或超类要求。
 
-还可以使用 == 运算符来指定两个类型必须相同。例如， `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element`，表示 S1 和 S2 都遵循 Sequence 协议，并且两个序列元素的类型必须相同。
+还可以使用 == 运算符来指定两个类型必须相同。例如， `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element`，表示 S1 和 S2 都遵循 Sequence 协议，并且两个序列元素的类型必须相同。对于整数泛型参数，== 运算符指定对其值的要求。你可以要求两个整数泛型参数具有相同的值，或者可以为整数泛型参数要求特定的整数值。
 
 任何替代类型形参的类型实参都必须满足对该类型形参指定的所有约束与要求。
 
@@ -145,11 +195,12 @@ extension Collection where Element: SomeProtocol {
 
 > 泛型形参子句的语法格式：
 >
-> *泛型形参子句* → **`<`** *泛型形参列表* **`>`** \
+> *泛型形参子句* → **`<`** *泛型形参列表* **`,`**_?_ **`>`** \
 > *泛型形参列表* → *泛型形参* | *泛型形参* **`,`** *泛型形参列表* \
 > *泛型形参* → *类型名称* \
 > *泛型形参* → *类型名称* **`:`** *类型标识符* \
-> *泛型形参* → *类型名称* **`:`** *协议合成类型*
+> *泛型形参* → *类型名称* **`:`** *协议合成类型* \
+> *泛型形参* → **`let`** *类型名称* **`:`** *类型* \
 >
 > *泛型 where 子句* → **`where`** *约束列表* \
 > *要求列表* → *要求* | *要求* **`,`** *要求列表* \
@@ -157,7 +208,8 @@ extension Collection where Element: SomeProtocol {
 >
 > *一致性要求* → *类型标识符* **`:`** *类型标识符* \
 > *一致性要求* → *类型标识符* **`:`** *协议合成类型* \
-> *同类型要求* → *类型标识符* **`==`** *类型*
+> *同类型要求* → *类型标识符* **`==`** *类型* \
+> *同类型要求* → *类型标识符* **`==`** *有符号整数字面量*
 
 <!--
   NOTE: A conformance requirement can only have one type after the colon,
@@ -173,7 +225,7 @@ extension Collection where Element: SomeProtocol {
 <<#generic argument list#>>
 ```
 
-多个泛型实参用逗号分开。类型实参是实际具体类型的名称，用来替代泛型类型中对应的类型参数，从而得到该泛型类型的特定版本。下面的示例展示了 Swift 标准库中的泛型字典类型的简化版本：
+多个泛型实参用逗号分开。类型实参是实际具体类型的名称，用来替代泛型类型的泛型参数子句中相应的类型参数——或者对于整数泛型参数，是替换该整数泛型参数的整数值。从而得到该泛型类型的特定版本。下面的示例展示了 Swift 标准库中的泛型字典类型的简化版本：
 
 ```swift
 struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLiteral {
@@ -203,11 +255,13 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 正如在<doc:GenericParametersAndArguments#泛型形参子句>中提到的，在指定泛型函数或构造器的类型实参时，不能使用泛型实参子句。
 
+泛型实参列表中的最后一个类型实参后面可以跟一个可选的逗号。
+
 > 泛型实参的语法格式：
 >
-> *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
+> *generic-argument-clause* → **`<`** *generic-argument-list* **`,`**_?_ **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
-> *generic-argument* → *type*
+> *generic-argument* → *type* | *signed-integer-literal*
 
 <!--
 This source file is part of the Swift.org open source project

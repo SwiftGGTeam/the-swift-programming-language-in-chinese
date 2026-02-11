@@ -12,11 +12,11 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 <footer id="footer" role="contentinfo" hidden>
   <div class="container">
     <div>
-      <p class="copyright">Copyright © 2014–2023 Apple Inc. and the Swift project authors. All rights reserved.</p>
-      <p>This document is made available under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" style="color: #09f">Creative Commons Attribution 4.0 International (CC BY 4.0) License</a>.</p>
-      <p class="trademark">Swift and the Swift logo are trademarks of Apple Inc.</p>
+      <p class="copyright">版权所有 © 2026 SwiftGG 翻译组 | 翻译自 <a href="https://swift.org" style="color: inherit; text-decoration: none;">swift.org</a></p>
+      <p>本文档依据 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/" style="color: #09f">知识共享署名 4.0 国际许可协议 (CC BY 4.0)</a> 提供。</p>
+      <p class="trademark">Swift 和 Swift 徽标是 Apple Inc. 的商标。</p>
       <p class="privacy">
-        <a href="//www.apple.com/privacy/privacy-policy/">Privacy Policy</a>
+        <a href="//www.apple.com/privacy/privacy-policy/">隐私政策</a>
         <a href="//www.apple.com/legal/privacy/en-ww/cookies/">Cookies</a>
       </p>
     </div>
@@ -27,18 +27,18 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
         tabindex="0"
         id="color-scheme-toggle"
       >
-        <legend class="visuallyhidden">Color scheme preference</legend>
+        <legend class="visuallyhidden">配色方案偏好</legend>
         <label for="scheme-light">
           <input id="scheme-light" type="radio" class="visuallyhidden" name="color-scheme-preference" value="light" onchange="doccAppearance('light')">
-          <span class="color-scheme-toggle-label">Light</span>
+          <span class="color-scheme-toggle-label">浅色</span>
         </label>
         <label for="scheme-dark">
           <input id="scheme-dark" type="radio" class="visuallyhidden" name="color-scheme-preference" value="dark" onchange="doccAppearance('dark')">
-          <span class="color-scheme-toggle-label">Dark</span>
+          <span class="color-scheme-toggle-label">深色</span>
         </label>
         <label for="scheme-auto" id="scheme-auto-wrapper">
           <input id="scheme-auto" type="radio" class="visuallyhidden" name="color-scheme-preference" value="auto" onchange="doccAppearance('auto')">
-          <span class="color-scheme-toggle-label">Auto</span>
+          <span class="color-scheme-toggle-label">自动</span>
         </label>
       </form>
       <aside>
@@ -112,12 +112,12 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
     }
   </style>
   <script type="text/javascript">
-    // DocC uses this local storage key to persist appearance preferences.
+    // DocC 使用此本地存储键来保存外观偏好设置。
     const appearanceKey = 'developer.setting.preferredColorScheme'
     window.addEventListener('DOMContentLoaded', _ => {
       let appearancePreference = localStorage.getItem(appearanceKey)
       if (appearancePreference) {
-        // Set a color scheme according to a saved preference.
+        // 根据保存的偏好设置配色方案。
         document.body.dataset.colorScheme = appearancePreference
         document.querySelector('custom-footer')
           .shadowRoot
@@ -131,7 +131,7 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
       }
     })
 
-    // Set a color scheme based on user choice and persist it.
+    // 根据用户选择设置配色方案并保存。
     function doccAppearance(mode) {
       document.body.dataset.colorScheme = mode
       switch(mode) {

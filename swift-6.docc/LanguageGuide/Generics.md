@@ -39,7 +39,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// 打印 "someInt is now 107, and anotherInt is now 3"
+// 打印 "someInt is now 107, and anotherInt is now 3"。
 ```
 
 <!--
@@ -404,7 +404,7 @@ extension Stack {
 if let topItem = stackOfStrings.topItem {
     print("The top item on the stack is \(topItem).")
 }
-// 打印 "The top item on the stack is tres."
+// 打印 "The top item on the stack is tres."。
 ```
 
 <!--
@@ -495,7 +495,7 @@ let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
 if let foundIndex = findIndex(ofString: "llama", in: strings) {
     print("The index of llama is \(foundIndex)")
 }
-// Prints "The index of llama is 2"
+// Prints "The index of llama is 2".
 ```
 
 <!--
@@ -1032,7 +1032,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 } else {
     print("Not all items match.")
 }
-// 打印 "All items match."
+// 打印 "All items match."。
 ```
 
 <!--
@@ -1097,7 +1097,7 @@ if stackOfStrings.isTop("tres") {
 } else {
     print("Top element is something else.")
 }
-// 打印 "Top element is tres."
+// 打印 "Top element is tres."。
 ```
 
 <!--
@@ -1203,7 +1203,7 @@ extension Container where Item == Double {
     }
 }
 print([1260.0, 1200.0, 98.6, 37.0].average())
-// 打印 "648.9"
+// 打印 "648.9"。
 ```
 
 <!--
@@ -1253,9 +1253,9 @@ extension Container {
 }
 let numbers = [1260, 1200, 98, 37]
 print(numbers.average())
-// 打印 "648.75"
+// 打印 "648.75"。
 print(numbers.endsWith(37))
-// 打印 "true"
+// 打印 "true"。
 ```
 
 <!--
@@ -1523,6 +1523,39 @@ extension Container {
 - 泛型 `where` 子句要求序列的迭代器必须遍历 `Int` 类型的元素。这确保了序列中的索引与用于容器的索引类型相同。
 
 综合起来，这些约束意味着传入给 `indices` 参数的值是一个整型序列。
+
+## 隐式约束
+
+除了你显式编写的约束外，泛型代码中的许多地方也隐式地要求遵循一些非常常见的协议，如 [`Copyable`][]。
+<!-- When SE-0446 is implemented, add Escapable above. -->
+这些不需要你显式编写的泛型约束被称为*隐式约束*。例如，以下两个函数声明都要求 `MyType` 是可复制的：
+
+[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
+
+```swift
+function someFunction<MyType> { ... }
+function someFunction<MyType: Copyable> { ... }
+```
+
+在上面的代码中，第一个声明具有隐式约束，第二个版本显式列出了该遵循关系。在大多数代码中，类型也隐式地遵循这些常见协议。有关更多信息，请参阅 <doc:Protocols#Implicit-Conformance-to-a-Protocol>。
+
+由于 Swift 中的大多数类型都遵循这些协议，在几乎所有地方都编写它们将会很重复。相反，通过仅标记例外情况，你可以突出显示省略常见约束的地方。要抑制隐式约束，请在协议名称前加上波浪号（`~`）。你可以将 `~Copyable` 理解为"可能是可复制的"——这个被抑制的约束允许在此位置使用可复制和不可复制的类型。请注意，`~Copyable` 并不*要求*类型是不可复制的。例如：
+
+```swift
+func f<MyType>(x: inout MyType) {
+    let x1 = x  // x1 的值是 x 值的副本。
+    let x2 = x  // x2 的值是 x 值的副本。
+}
+
+func g<AnotherType: ~Copyable>(y: inout AnotherType) {
+    let y1 = y  // 赋值消费了 y 的值。
+    let y2 = y  // 错误：值被消费了多次。
+}
+```
+
+在上面的代码中，函数 `f()` 隐式地要求 `MyType` 是可复制的。在函数体内，`x` 的值在赋值时被复制到 `x1` 和 `x2`。相反，`g()` 抑制了对 `AnotherType` 的隐式约束，这允许你传递可复制或不可复制的值。在函数体内，你不能复制 `y` 的值，因为 `AnotherType` 可能是不可复制的。赋值会消费 `y` 的值，多次消费该值是一个错误。像 `y` 这样的不可复制值必须作为输入输出、借用或消费参数传递——有关更多信息，请参阅 <doc:Declarations#Borrowing-and-Consuming-Parameters>。
+
+有关泛型代码何时包含对给定协议的隐式约束的详细信息，请参阅该协议的参考文档。
 
 <!--
   TODO: Generic Enumerations

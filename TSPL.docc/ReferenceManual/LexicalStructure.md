@@ -162,7 +162,7 @@ https://github.com/swiftlang/swift-markdown/issues/93
 > *identifier-head* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD \
 > *identifier-head* → U+D0000–U+DFFFD or U+E0000–U+EFFFD
 >
-> *identifier-character* → Digit 0 through 9 \
+> *identifier-character* → *decimal-digit* \
 > *identifier-character* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F \
 > *identifier-character* → *identifier-head* \
 > *identifier-characters* → *identifier-character* *identifier-characters*_?_
@@ -500,7 +500,7 @@ in the declaration `let x: Int8 = 42`.
 >
 > *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
-> *numeric-literal* → **`-`**_?_ *integer-literal* | **`-`**_?_ *floating-point-literal* \
+> *numeric-literal* → *signed-integer-literal* | *signed-floating-point-literal* \
 > *boolean-literal* → **`true`** | **`false`** \
 > *nil-literal* → **`nil`**
 
@@ -552,6 +552,7 @@ as described in <doc:TheBasics#Integers>.
 
 > Grammar of an integer literal:
 >
+> *signed-integer-literal* → **`-`**_?_ *integer-literal*
 > *integer-literal* → *binary-literal* \
 > *integer-literal* → *octal-literal* \
 > *integer-literal* → *decimal-literal* \
@@ -626,6 +627,7 @@ which represents a 32-bit floating-point number.
 
 > Grammar of a floating-point literal:
 >
+> *signed-floating-point-literal* → > **`-`**_?_ *floating-point-literal*
 > *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
 > *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
 >
@@ -800,9 +802,9 @@ that create equivalent string values:
 let string = #"\(x) \ " \u{2603}"#
 let escaped = "\\(x) \\ \" \\u{2603}"
 print(string)
-// Prints "\(x) \ " \u{2603}"
+// Prints "\(x) \ " \u{2603}".
 print(string == escaped)
-// Prints "true"
+// Prints "true".
 ```
 
 <!--

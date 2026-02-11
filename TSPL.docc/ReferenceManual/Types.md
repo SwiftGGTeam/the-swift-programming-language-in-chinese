@@ -153,9 +153,9 @@ that name is part of the type.
 
 ```swift
 var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
-someTuple = (top: 4, bottom: 42) // OK: names match
-someTuple = (9, 99)              // OK: names are inferred
-someTuple = (left: 5, right: 5)  // Error: names don't match
+someTuple = (top: 4, bottom: 42) // OK: Names match.
+someTuple = (9, 99)              // OK: Names are inferred.
+someTuple = (left: 5, right: 5)  // Error: Names don't match.
 ```
 
 <!--
@@ -163,11 +163,11 @@ someTuple = (left: 5, right: 5)  // Error: names don't match
 
   ```swifttest
   -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
-  -> someTuple = (top: 4, bottom: 42) // OK: names match
-  -> someTuple = (9, 99)              // OK: names are inferred
-  -> someTuple = (left: 5, right: 5)  // Error: names don't match
+  -> someTuple = (top: 4, bottom: 42) // OK: Names match.
+  -> someTuple = (9, 99)              // OK: Names are inferred.
+  -> someTuple = (left: 5, right: 5)  // Error: Names don't match.
   !$ error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
-  !! someTuple = (left: 5, right: 5)  // Error: names don't match
+  !! someTuple = (left: 5, right: 5)  // Error: Names don't match.
   !!             ^~~~~~~~~~~~~~~~~~~
   ```
 -->
@@ -1056,7 +1056,7 @@ let someInstance: SomeBaseClass = SomeSubClass()
 // The compile-time type of someInstance is SomeBaseClass,
 // and the runtime type of someInstance is SomeSubClass
 type(of: someInstance).printClassName()
-// Prints "SomeSubClass"
+// Prints "SomeSubClass".
 ```
 
 <!--
@@ -1257,16 +1257,16 @@ class Superclass {
 }
 let x = Superclass()
 print(type(of: x.f()))
-// Prints "Superclass"
+// Prints "Superclass".
 
 class Subclass: Superclass { }
 let y = Subclass()
 print(type(of: y.f()))
-// Prints "Subclass"
+// Prints "Subclass".
 
 let z: Superclass = Subclass()
 print(type(of: z.f()))
-// Prints "Subclass"
+// Prints "Subclass".
 ```
 
 <!--
@@ -1337,6 +1337,9 @@ Protocol types can inherit from any number of other protocols.
 When a protocol type inherits from other protocols,
 the set of requirements from those other protocols are aggregated together,
 and any type that inherits from the current protocol must conform to all of those requirements.
+Writing a tilde (`~`) in front of a protocol name in this list
+suppresses an implicit conformance to that protocol,
+as described in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
 A type inheritance clause in an enumeration definition can be either a list of protocols,
 or in the case of an enumeration that assigns raw values to its cases,
@@ -1347,7 +1350,7 @@ to specify the type of its raw values, see <doc:Enumerations#Raw-Values>.
 > Grammar of a type inheritance clause:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
 
 ## Type Inference
 

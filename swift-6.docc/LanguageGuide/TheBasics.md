@@ -8,9 +8,9 @@ Swift 使用变量来存储值，并通过标识名称来引用值。Swift 还�
 
 除了熟悉的类型外，Swift 还引入了元组等高级类型。通过元组，你可以创建并传递一组值。你可以使用元组从函数返回一个包含了多个值的复合值。
 
-Swift 还引入了可选类型，用于处理值缺失的情况。可选类型要么表示“变量*有*值，且等于 *x*”，要么表示“压根就*没有*值”。
+Swift 使用可选类型处理值缺失的情况。可选类型要么表示"*有*值，它是 *x*"，要么表示"压根就*没有*值"。可选类型确保代码在使用值之前始终检查值是否缺失，并且保证非可选值永远不会缺失。
 
-Swift 是一种*类型安全*的语言，这意味着该语言可以帮助你明确代码可以处理的值的类型。如果你的部分代码需要字符串，类型安全可以防止你错误地将整数传递给它。同样，类型安全也能防止你不小心将可选字符串传递给需要非可选字符串的代码。类型安全可帮助你在开发过程中尽早发现并修复错误。
+Swift 是一种安全的语言，这意味着它可以更容易让你在开发过程中尽早发现和修复几类错误，并让你保证某些类型的错误不会发生。类型安全使你能够明确代码处理的值的类型。如果你的部分代码需要字符串，类型安全可以防止你错误地将整数传递给它。内存安全确保你只处理有效的数据，而不是未初始化的内存或已释放的对象，并确保你以安全的方式处理该数据——即使在同时运行多段代码的程序中。Swift 在构建代码时执行大部分安全检查，在某些情况下，在代码运行时执行额外的检查。
 
 ## 常量和变量
 
@@ -223,7 +223,7 @@ languageName = "Swift++"
 
 ```swift
 print(friendlyWelcome)
-// 打印 "Bonjour!"
+// 打印 "Bonjour!"。
 ```
 
 <!--
@@ -262,7 +262,7 @@ Swift 使用*字符串插值*将常量或变量的名称作为占位符包含在
 
 ```swift
 print("The current value of friendlyWelcome is \(friendlyWelcome)")
-// 打印 "The current value of friendlyWelcome is Bonjour！"
+// 打印 "The current value of friendlyWelcome is Bonjour！"。
 ```
 
 <!--
@@ -336,7 +336,7 @@ Swift 中的注释与 C 语言中的注释非常相似。单行注释以两个�
 
 ```swift
 let cat = "🐱"; print(cat)
-// 打印 "🐱"
+// 打印 "🐱"。
 ```
 
 <!--
@@ -350,9 +350,15 @@ let cat = "🐱"; print(cat)
 
 ## 整数
 
-*整数*是没有小数成分的数字，如 `42` 和 `-23`。 整数可以是*有符号的*（正数、零或负数），也可以是*无符号的*（正数或零）。
+*整数*是没有小数成分的数字，如 `42` 和 `-23`。整数可以是*有符号的*（正数、零或负数）或*无符号的*（正数或零），其最大值和最小值取决于其*大小*（用于存储值的位数）。整数类型在其名称中包含大小和符号——例如，8 位无符号整数的类型是 `UInt8`，32 位有符号整数的类型是 `Int32`。与 Swift 中的所有类型一样，这些整数类型的名称都是大写的。在大多数情况下，当你不需要指定确切的整数大小时，使用下面描述的 `Int` 类型。
 
-Swift 提供 8、16、32 和 64 位有符号和无符号整数。这些整数遵循与 C 类似的命名规则，即 8 位无符号整数的类型是 `UInt8`，32 位有符号整数的类型是 `Int32`。与 Swift 中的所有类型一样，这些整数类型的名称也是大写的。
+
+
+整数类型的行为类似于你手工进行的大多数算术运算；整数数学产生的结果没有近似值。这些特性使得整数适合于计数和其他表示精确数量的计算——例如，查找文本文件中最长的行、在游戏中应用分数乘数或累加收据上的价格。
+
+尽管整数没有小数部分，但你可以通过计数小数部分来使用整数表示带有分数的数量。例如，你可以通过在整数中存储数字 `123` 来表示 $1.23，该整数以美分为单位计数。这种方法被称为*固定点数学*，因为小数点在数字中处于固定位置。在上面的示例中，数字 `123` 被理解为在最后两位数字之前有一个小数点。
+
+> 注意：对于金融或建筑等受监管领域的计算，或者对于期望高精度结果的领域，你可能需要一个专用的数值类型来实现特定行为，例如根据该领域的要求进行舍入和截断。
 
 ### 整数边界
 
@@ -376,6 +382,8 @@ let maxValue = UInt8.max  // maxValue 等于 255，类型为 UInt8
 
 这些属性的值属于适当大小的数字类型（如上例中的 `UInt8`），因此可以在表达式中与同类型的其他值一起使用。
 
+
+产生超出边界结果的计算（例如大于 `max` 属性的数字）会停止程序的执行，而不是存储无效结果。你可以显式地使操作溢出，如 <doc:AdvancedOperators#Overflow-Operators> 中所述。
 ### Int（整数）
 
 在大多数情况下，你不需要在代码中使用特定大小的整数。Swift 提供了一种额外的整数类型 `Int`，其大小与当前平台的原生字长大小相同：
@@ -396,33 +404,33 @@ Swift 还提供了无符号整数类型 `UInt`，其大小与当前平台的原�
 
 ## 浮点数
 
-*浮点数*是带有小数成分的数字，如 `3.14159`、`0.1` 和 `-273.15`。
+*浮点数*具有小数成分，如 `3.14159`、`0.1` 和 `-273.15`。Swift 提供各种浮点类型，支持不同大小的数字，就像它有不同大小的整数一样。如果你不需要指定精确的大小，请使用 `Double`。否则，使用名称中包含所需大小的类型，如 `Float16` 或 `Float80`。遵循浮点数学的常见术语，`Float` 使用 32 位，`Double` 使用 64 位。你也可以将这些类型写为 `Float32` 或 `Float64`。例如，图形代码通常使用 `Float` 来匹配 GPU 最快的数据类型。某些浮点类型仅受特定平台支持，但 `Float` 和 `Double` 在所有平台上都可用。
 
-与整数类型相比，浮点类型可以表示的数值范围更广，而且可以存储比 `Int` 类型大得多或小得多的数字。Swift 提供了两种带符号浮点数类型：
+浮点数让你可以处理非常小和非常大的数字，但不能表示该范围内的每个可能值。与总是产生精确结果的整数计算不同，浮点数学将结果四舍五入到最接近的可表示数字。例如，当将数字 10,000 存储为 `Float` 时，你可以表示的下一个最大数字是 10,000.001——这两个数字之间的值会四舍五入到其中一个。数字之间的间隔也是可变的；大数字之间的间隔比小数字之间的间隔更大。例如，0.001 之后的下一个 `Float` 值是 0.0010000002，其间隔小于 10,000 之后的间隔。
 
-- `Double` 表示 64 位浮点数。
-- `Float` 表示 32 位浮点数。
-
-> 备注: `Double` 的精度至少为小数点后 15 位，而 `Float` 的精度可以少至小数点后 6 位。使用哪种浮点类型更合适，取决于代码中需要处理数值的性质和范围。在两种类型都适用的情况下，`Double` 是首选。
-
-<!--
-  TODO: Explicitly mention situations where Float is appropriate,
-  such as when optimizing for storage size of collections?
+<!---
+var n: Float = 10_000
+print(n.nextUp)
+n = 0.001
+print(n.nextUp)
 -->
 
-<!--
-  TODO: mention infinity, -infinity etc.
--->
+浮点数具有负零、无穷大和负无穷大的值，表示计算中的溢出和下溢。它们还具有非数字（NaN）值来表示无效或未定义的结果，例如零除以零。这种行为不同于整数，整数如果无法表示结果则会停止程序。
+
+如果你需要所有可能值之间的间隔相同，或者你正在进行的计算需要精确结果并且不需要上面列出的特殊值，那么浮点数可能不是正确的数据类型。考虑改用固定点数，如 <doc:TheBasics#Integers> 中所述。
 
 ## 类型安全和类型推断
 
-Swift 是一种*类型安全*的语言。类型安全语言鼓励你显式指示代码可处理的值的类型。如果代码的一部分需要 `String`，你就不能错误地将 `Int` 传递给它。
+## 类型安全和类型推断
 
-由于 Swift 是类型安全的语言，因此它在编译代码时会执行*类型检查*，并将任何不匹配的类型标记为错误。这样，你就能在开发过程中尽早发现并修复错误。
+Swift 程序中的每个值都有一个类型。存储值的每个地方——包括常量、变量和属性——也都有类型。你可以使用类型注解显式写出类型，或者 Swift 可能会从初始值推断类型。在代码中提供值的每个地方，该值的类型必须与使用它的地方匹配。例如，如果代码的一部分需要 `String`，你就不能错误地将 `Int` 传递给它。这种检查使 Swift 成为一种*类型安全*的语言。
+
+类型安全语言鼓励你明确代码处理的值的类型。一种类型的值永远不会隐式转换为另一种类型。但是，某些类型可以显式转换。在构建代码时，Swift 检查代码的类型安全并将任何不匹配的类型标记为错误。
 
 类型检查可帮助你在处理不同类型的值时避免错误。但是，这并不意味着你必须指定你声明的每个常量和变量的类型。如果你没有指定所需值的类型，Swift 会使用*类型推断*来确定适当的类型。类型推断使编译器在编译代码时，仅通过检查你提供的值，就能自动推断出特定表达式的类型。
 
 由于有了类型推断，Swift 所需的类型声明比 C 或 Objective-C 等语言要少得多。常量和变量仍然是显式类型的，但为其指定类型的大部分工作都是自动完成的。
+
 
 当你声明一个带有初始值的常量或变量时，类型推断尤其有用。通常的做法是在声明常量或变量时为其赋*字面量*。（字面量指的是直接出现在源代码中的值，如下面示例中的 `42` 和 `3.14159`）。
 
@@ -753,7 +761,7 @@ let turnipsAreDelicious = false
   ```
 -->
 
-`orangesAreOrange` 和 `turnipsAreDelicious` 的类型已被推断为 `Bool`，因为它们使用了布尔字面量初始化。与上述的 `Int` 和 `Double` 一样，如果你在创建常量或变量时将其设置为 `true` 或 `false`，则无需将其声明为 Bool。类型推断有助于让 Swift 代码在使用类型已知的值初始化常量或变量时更简洁易读。
+`orangesAreOrange` 和 `turnipsAreDelicious` 的类型已被推断为 `Bool`，因为它们使用了布尔字面量初始化。与上述的 `Int` 和 `Double` 一样，如果你在创建常量或变量时将其设置为 `true` 或 `false`，则无需将其声明为 Bool。
 
 布尔值在使用条件语句（如 `if` 语句）时尤其有用：
 
@@ -763,7 +771,7 @@ if turnipsAreDelicious {
 } else {
     print("Eww, turnips are horrible.")
 }
-// 打印 "Eww, turnips are horrible."
+// 打印 "Eww, turnips are horrible."。
 ```
 
 <!--
@@ -825,7 +833,7 @@ if i == 1 {
   ```
 -->
 
-`i == 1` 的比较结果是 `Bool` 类型，因此第二个示例通过了类型检查。类似 `i == 1` 的比较结果将在 <doc:BasicOperators> 中讨论。
+`i == 1` 的比较结果是 `Bool` 类型，因此第二个示例通过了类型检验。类似 `i == 1` 的比较结果将在 <doc:BasicOperators> 中讨论。
 
 与 Swift 中其他类型安全示例一样，这种方法可以避免意外错误，并确保特定代码部分的意图始终清晰明了。
 
@@ -859,9 +867,9 @@ let http404Error = (404, "Not Found")
 ```swift
 let (statusCode, statusMessage) = http404Error
 print("The status code is \(statusCode)")
-// 打印 "The status code is 404"
+// 打印 "The status code is 404"。
 print("The status message is \(statusMessage)")
-// 打印 "The status message is Not Found"
+// 打印 "The status message is Not Found"。
 ```
 
 <!--
@@ -881,7 +889,7 @@ print("The status message is \(statusMessage)")
 ```swift
 let (justTheStatusCode, _) = http404Error
 print("The status code is \(justTheStatusCode)")
-// 打印 "The status code is 404"
+// 打印 "The status code is 404"。
 ```
 
 <!--
@@ -898,9 +906,9 @@ print("The status code is \(justTheStatusCode)")
 
 ```swift
 print("The status code is \(http404Error.0)")
-// 打印 "The status code is 404"
+// 打印 "The status code is 404"。
 print("The status message is \(http404Error.1)")
-// 打印 "The status message is Not Found"
+// 打印 "The status message is Not Found"。
 ```
 
 <!--
@@ -932,9 +940,9 @@ let http200Status = (statusCode: 200, description: "OK")
 
 ```swift
 print("The status code is \(http200Status.statusCode)")
-// 打印 "The status code is 200"
+// 打印 "The status code is 200"。
 print("The status message is \(http200Status.description)")
-// 打印 "The status message is OK"
+// 打印 "The status message is OK"。
 ```
 
 <!--
@@ -1030,7 +1038,7 @@ let convertedNumber = Int(possibleNumber)
 if convertedNumber != nil {
     print("convertedNumber contains some integer value.")
 }
-// 打印 "convertedNumber contains some integer value."
+// 打印 "convertedNumber contains some integer value."。
 ```
 
 <!--
@@ -1081,7 +1089,7 @@ if let actualNumber = Int(possibleNumber) {
 } else {
     print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
 }
-// 打印 "The string "123" has an integer value of 123"
+// 打印 "The string "123" has an integer value of 123"。
 ```
 
 <!--
@@ -1112,7 +1120,7 @@ if let myNumber = myNumber {
     // 这里，myNumber 是一个非可选整数
     print("My number is \(myNumber)")
 }
-// 打印 "My number is 123"
+// 打印 "My number is 123"。
 ```
 
 <!--
@@ -1137,7 +1145,7 @@ if let myNumber = myNumber {
 if let myNumber {
     print("My number is \(myNumber)")
 }
-// 打印 "My number is 123"
+// 打印 "My number is 123"。
 ```
 
 <!--
@@ -1159,7 +1167,7 @@ if let myNumber {
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
     print("\(firstNumber) < \(secondNumber) < 100")
 }
-// 打印 "4 < 42 < 100"
+// 打印 "4 < 42 < 100"。
 
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
@@ -1168,7 +1176,7 @@ if let firstNumber = Int("4") {
         }
     }
 }
-// 打印 "4 < 42 < 100"
+// 打印 "4 < 42 < 100"。
 ```
 
 <!--
@@ -1210,7 +1218,7 @@ if let firstNumber = Int("4") {
 let name: String? = nil
 let greeting = "Hello, " + (name ?? "friend") + "!"
 print(greeting)
-// 打印 "Hello, friend!"
+// 打印 "Hello, friend!"。
 ```
 
 <!--
@@ -1228,7 +1236,7 @@ print(greeting)
 
 ### 强制解包
 
-当 `nil` 表示不可恢复的故障时（如程序员错误或状态损坏），你可以通过在可选名称的末尾添加感叹号 (`!`) 来访问底层值。这被称为*强制解包*可选的值。强制解包一个非 `nil` 值时，结果是其解包值。强制解包一个 `nil` 值则会引发运行时错误。
+当 `nil` 表示不可恢复的故障时（如程序员错误或状态损坏），你可以通过在可选值名称的末尾添加感叹号 (`!`) 来访问该可选值的底层值。这被称为*强制解包*可选的值。强制解包一个非 `nil` 值时，结果是其解包值。强制解包一个 `nil` 值则会引发运行时错误。
 
 实际上，`!` 是 [`fatalError(_:file:line:)`][] 的简写。例如，下面的代码显示了两种等效的方法：
 
@@ -1309,7 +1317,7 @@ let optionalString = assumedString
 if assumedString != nil {
     print(assumedString!)
 }
-// 打印 "An implicitly unwrapped optional string."
+// 打印 "An implicitly unwrapped optional string."。
 ```
 
 <!--
@@ -1329,7 +1337,7 @@ if assumedString != nil {
 if let definiteString = assumedString {
     print(definiteString)
 }
-// 打印 "An implicitly unwrapped optional string."
+// 打印 "An implicitly unwrapped optional string."。
 ```
 
 <!--
@@ -1342,6 +1350,21 @@ if let definiteString = assumedString {
   <- An implicitly unwrapped optional string.
   ```
 -->
+
+## 内存安全
+
+除了上述 <doc:TheBasics#Type-Safety-and-Type-Inference> 中描述的防止类型不匹配的检查外，Swift 还保护代码免受处理无效内存的影响。这种保护称为*内存安全*，包括以下要求：
+
+- 值在读取之前先设置。防止与未初始化的内存区域交互的保护也称为*确定性初始化*。
+- 数组和缓冲区仅在有效索引处访问。防止越界访问的保护也称为*边界安全*。
+- 内存仅在值的生命周期内访问。防止释放后使用错误的保护也称为*生命周期安全*。
+- 对内存的访问仅以可证明安全的方式重叠。防止并发代码中可能的数据竞争的保护也称为*线程安全*。
+
+如果你使用过不提供这些保证的语言，你可能熟悉上面列表中提到的一些错误和漏洞。如果你没有遇到过这些问题，那也没关系；Swift 中的安全代码可以避免这些问题。有关 Swift 如何确保你设置初始值的信息，请参阅 <doc:Initialization>，有关 Swift 如何检查并发代码中内存安全的信息，请参阅 <doc:Concurrency>，有关 Swift 如何检查对内存的重叠访问的信息，请参阅 <doc:MemorySafety>。
+
+有时你需要在安全范围之外工作——例如，由于语言或标准库的限制——因此 Swift 也提供了一些 API 的不安全版本。当你使用名称中包含"unsafe"、"unchecked"或"unmanaged"等词的类型或方法时，你需要自己承担安全责任。
+
+Swift 中的安全代码仍然可能遇到错误和意外故障，这可能会停止程序的执行。安全并不能保证你的代码运行到完成。Swift 提供了几种方法来指示和从错误中恢复，在下面的 <doc:TheBasics#Error-Handling> 和 <doc:TheBasics#Assertions-and-Preconditions> 中讨论。但是，在某些情况下，处理错误的*唯一*安全方法是停止执行。如果你需要保证服务永远不会意外停止，请将容错能力纳入其整体架构，以便它可以从任何组件的意外停止中恢复。
 
 ## 错误处理
 

@@ -1103,6 +1103,59 @@ default:
 
 上面的 `case` 有两个模式：`(let distance, 0)` 匹配了在 x 轴上的值，`(0, let distance)` 匹配了在 y 轴上的值。两个模式都绑定了 `distance`，并且 `distance` 在两种模式下，都是整型——这意味着分支体内的代码，只要 `case` 匹配，都可以获取到 `distance` 值。
 
+## 模式
+
+在前面的示例中，每个 switch case 都包含一个模式，指示哪些值与该 case 匹配。你还可以将模式用作 `if` 语句的条件。代码如下所示：
+
+```swift
+let somePoint = (12, 100)
+if case (let x, 100) = somePoint {
+    print("Found a point on the y=100 line, at \(x)")
+}
+// 打印 "Found a point on the y=100 line, at 12"。
+```
+
+在此代码中，`if` 语句的条件以 `case` 开头，表示条件是一个模式而不是布尔值。如果模式匹配，则 `if` 的条件被视为真，因此 `if` 语句体中的代码会运行。你可以在 `if case` 之后编写的模式与你可以在 switch case 中编写的模式相同。
+
+在 `for`-`in` 循环中，你可以使用值绑定模式为值的各部分命名，即使不在代码中编写 `case`：
+
+```swift
+let points = [(10, 0), (30, -30), (-20, 0)]
+
+for (x, y) in points {
+    if y == 0 {
+        print("Found a point on the x-axis at \(x)")
+    }
+}
+// 打印 "Found a point on the x-axis at 10"。
+// 打印 "Found a point on the x-axis at -20"。
+```
+
+上面的 `for`-`in` 循环遍历元组数组，将元组的第一个和第二个元素绑定到 `x` 和 `y` 常量。循环内的语句可以使用这些常量，例如检查点是否位于 x 轴上的 `if` 语句。一种更简洁的编写方式是使用 `for`-`case`-`in` 循环将值绑定和条件组合在一起。下面的代码与上面的 `for`-`in` 循环具有相同的行为：
+
+```swift
+for case (let x, 0) in points {
+    print("Found a point on the x-axis at \(x)")
+}
+// 打印 "Found a point on the x-axis at 10"。
+// 打印 "Found a point on the x-axis at -20"。
+```
+
+在此代码中，条件作为模式的一部分集成到 `for`-`case`-`in` 循环中。`for`-`case`-`in` 循环中的语句仅针对 x 轴上的点运行。此代码产生与上面 `for`-`in` 循环相同的结果，但是是一种更紧凑的方式来仅迭代集合中的某些元素。
+
+`for`-`case`-`in` 循环还可以包含 `where` 子句来检查附加条件。循环内的语句仅在 `where` 子句与当前元素匹配时才运行。例如：
+
+```swift
+for case let (x, y) in points where x == y || x == -y  {
+    print("Found (\(x), \(y)) along a line through the origin")
+}
+// 打印 "Found (30, -30) along a line through the origin"。
+```
+
+此代码将元组的第一个和第二个元素绑定到 `x` 和 `y` 作为常量，然后在 `where` 子句中检查它们的值。如果 `where` 子句为 `true`，则 `for` 循环体中的代码运行；否则，继续迭代下一个元素。
+
+因为模式可以绑定值，所以 `if`-`case` 语句和 `for`-`case`-`in` 循环对于处理具有关联值的枚举非常有用，如 <doc:Enumerations#关联值> 中所述。
+
 ## 控制转移语句
 
 *控制转移语句*改变你代码的执行顺序，通过它可以实现代码的跳转。Swift 有五种控制转移语句：

@@ -11,6 +11,36 @@ and built using [Swift-DocC][docc].
 
 This repository includes the latest version of TSPL, as well as Simplified Chinese translations corresponding to different Swift versions.
 
+## Contributing
+
+For small changes,
+like typo fixes and changes to a few paragraphs,
+fork this repository and make a pull request.
+
+A formal contribution process for this document is still in development.
+In the meantime,
+start a pitch thread in the [Swift forums][forum] for larger changes
+to discuss your approach and identify possible issues
+before you invest a lot of time in writing.
+
+Content in this book follows [Apple Style Guide][asg]
+and [this book's style guide][tspl-style].
+
+File bugs about the content using the [issues page][bugs] on Github.
+
+Discussions and contributions follow the [Swift Code of Conduct][conduct].
+
+For more information, see [Contributing to The Swift Programming Language][contributing].
+
+[asg]: https://help.apple.com/applestyleguide/
+[bugs]: https://github.com/swiftlang/swift-book/issues
+[conduct]: https://www.swift.org/code-of-conduct
+[contributing]: /CONTRIBUTING.md
+[forum]: https://forums.swift.org/c/swift-documentation/92
+[tspl-style]: /Style.md
+[published]: https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
+[docc]: https://github.com/swiftlang/swift-docc
+
 ## Building
 
 Clone this repository and run `docc preview swift-6.docc`
@@ -51,47 +81,47 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 
 ## 中文版本
 
-本仓库包含 *The Swift Programming Language* (缩写为 TSPL) 的源代码，
-该文档发布在 [docs.swift.org][published] 上，
+本仓库包含 *The Swift Programming Language* (缩写为 TSPL) 的源代码,
+该文档发布在 [docs.swift.org][published] 上,
 并使用 [Swift-DocC][docc] 构建。
 
-本仓库包括 TSPL 的最新版本，以及对应不同 Swift 版本的简体中文翻译。
+本仓库包括 TSPL 的最新版本,以及对应不同 Swift 版本的简体中文翻译。
 
 ## 构建
 
 克隆此仓库并在仓库根目录运行 `docc preview swift-6.docc`。
 
-运行 DocC 后，打开 `docc` 输出的链接，即可在浏览器中显示本地预览。
+运行 DocC 后,打开 `docc` 输出的链接,即可在浏览器中显示本地预览。
 
 ## 当前状态
 
 - The Swift Programming Language 的最新英文版本。[最新提交: 378f76a][https://github.com/swiftlang/swift-book/commit/378f76a4a0fb29cd72722686f78cb7c097437796] 
-- 对应的简体中文翻译 (进行中和已归档)：
+- 对应的简体中文翻译 (进行中和已归档):
   - Swift 6 beta (当前正在翻译)
   - Swift 5.x 及更早版本 (可在 [GitBook][legacy-documentations] 上阅读)
 
 ## 如何贡献
 
-1. 首先，将此仓库 fork 到您的账户。在 issues 中认领标记为 `Swift x translation` 的翻译任务。在您 fork 的仓库中创建与 issue 对应的分支，将源分支设置为当前正在翻译的 Swift 版本 (例如，swift-6-beta-translation)。
+1. 首先,将此仓库 fork 到您的账户。在 issues 中认领标记为 `Swift x translation` 的翻译任务。在您 fork 的仓库中创建与 issue 对应的分支,将源分支设置为当前正在翻译的 Swift 版本 (例如,swift-6-beta-translation)。
 
 2. 通过从 Swift.org 下载 toolchain 或安装 Xcode 来安装 `docc` 命令行工具。
 
-> 注意：
+> 注意:
 >
-> 如果您通过从 Swift.org 下载 toolchain 安装了 DocC，
+> 如果您通过从 Swift.org 下载 toolchain 安装了 DocC,
 > `docc` 位于 toolchain 安装路径下的 `usr/bin/` 目录中。
 > 确保您的 shell 的 `PATH` 环境变量包含该目录。
 >
-> 如果您通过下载 Xcode 安装了 DocC，
+> 如果您通过下载 Xcode 安装了 DocC,
 > 请运行 `xcrun docc preview swift-6.docc`。
 
-3. 按照下面的术语表和 [SwiftGG 排版指南][swiftgg-style-guide] 将原始 Markdown 文件的内容替换为您的中文翻译。通过 Pull Request 提交您的翻译。经 SwiftGG 成员验证后，将合并到当前的翻译分支。
+3. 按照下面的术语表和 [SwiftGG 排版指南][swiftgg-style-guide] 将原始 Markdown 文件的内容替换为您的中文翻译。通过 Pull Request 提交您的翻译。经 SwiftGG 成员验证后,将合并到当前的翻译分支。
 
 ## 参与成员
 
 我们衷心感谢所有的参与成员。您可以在[这里][contributors]找到参与成员列表。
 
-## Terminology Table（术语表）
+## Terminology Table(术语表)
 
 | Term | Suggest Transition |
 | --- | --- |
@@ -101,7 +131,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | assertion | 断言 |
 | associated type | 关联类型 |
 | associated value | 关联值 |
-| attribute | 特性或者属性，根据上下文 |
+| attribute | 特性或者属性,根据上下文 |
 | automatic reference counting | 自动引用计数 |
 | availability-condition | 可用性条件 |
 | base class | 基类 |

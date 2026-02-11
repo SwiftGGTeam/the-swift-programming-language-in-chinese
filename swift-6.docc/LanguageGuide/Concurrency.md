@@ -4,11 +4,9 @@
 
 Swift 原生支持结构化的异步和并行代码。
 
-*异步代码*是能够被暂时挂起并在稍后继续执行的代码，不过在同一时刻中只有一段程序代码执行。通过挂起和恢复代码，你的程序就可以在执行耗时很长的任务时抽空执行一些快速的操作，比如在下载文件、解析文件的过程中更新 UI。*并行代码*则意味着多段代码可以在同一时刻执行；例如，一台拥有四核处理器的电脑可以同时运行四段代码（每个核心执行一项任务）。一款运用并行和异步代码编写的程序可以同时运行多个任务，且可以在等待外部系统处理时，暂时挂起一些任务。
+*异步代码*是能够被暂时挂起并在稍后继续执行的代码，不过在同一时刻中只有一段程序代码执行。通过挂起和恢复代码，你的程序就可以在执行耗时很长的任务时抽空执行一些快速的操作，比如在下载文件、解析文件的过程中更新 UI。*并行代码*则意味着多段代码可以在同一时刻执行；例如，一台拥有四核处理器的电脑可以同时运行四段代码（每个核心执行一项任务）。一款运用并行和异步代码编写的程序可以同时运行多个任务，且可以在等待外部系统处理时，暂时挂起一些任务。本章剩余的部分将使用*并发*一词指代异步和并行代码这一常见的组合。
 
-并发和异步代码在增加调度灵活性的同时也会增加复杂度。Swift 能够在你在编写异步代码时，提供一些编译时检查——例如，你可以使用 actor 来安全地访问可变状态。然而，为一段运行缓慢或是有错误的代码添加并发能力，并不一定就能使它变得更快速或者更正确地运行。事实上，简单地为代码增加并发能力甚至可能导致代码问题更难排查。不过，对于的确有必要并发执行的代码来说，Swift 语言级别的并发支持能帮助你在编译时就捕捉到错误。
-
-本章剩余的部分将使用*并发*一词指代异步和并行代码这一常见的组合。
+并发和异步代码在增加调度灵活性的同时也会增加复杂度。在编写并发代码时，你无法事先知道哪些代码会同时运行，也可能不总是知道代码的运行顺序。并发代码中的一个常见问题是当多段代码试图访问某些共享的可变状态时会发生——这被称为*数据竞争*。当你使用语言级别的并发支持时，Swift 会检测并防止数据竞争，大多数数据竞争会产生编译时错误。有些数据竞争在代码运行之前无法被检测到；这些数据竞争会终止代码执行。你可以使用 actor 和隔离来防止数据竞争，本章将对此进行描述。
 
 > 如果你曾经编写过并发代码的话，那你可能习惯于使用线程。Swift 中的并发模型基于线程，但你不会直接与线程打交道。在 Swift 中，一个异步函数可以交出它在某个线程上的运行权 —— 这样，另一个异步函数在这个函数被阻塞时就能获得此在此线程上的运行权。但是，Swift 并不保证异步函数恢复运行时其将在哪条线程上运行。
 
@@ -153,22 +151,6 @@ show(photo)
   - Code at the top level that forms an implicit main function.
 -->
 
-你还可以通过调用 `Task.yield()` 来显式地插入挂起点。
-
-[`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
-
-```swift
-func generateSlideshow(forGallery gallery: String) async {
-    let photos = await listPhotos(inGallery: gallery)
-    for photo in photos {
-        // ... 为这张照片渲染一段几秒钟的视频 ...
-        await Task.yield()
-    }
-}
-```
-
-假设在上面这段代码中，渲染视频的部份是同步执行的，它其中不会包含任何挂起点。但是，渲染视频的任务又可能耗时很长。这种情况下，你就可以通过调用 `Task.yield()` 来手动添加挂起点。你可以通过以这种结构编写长时间运行的代码，来协助 Swift 在任务执行上取得平衡 —— 在长耗时的任务上取得进展的同时，也给程序中的其他任务提供了执行的机会。
-
 在学习并发编程时， [`Task.sleep(for:tolerance:clock:)`][] 这个方法非常有用。这个方法会将当前任务挂起至少指定的时长。以下是 `listPhotos(inGallery:)` 这个函数的另一个版本，它使用 `sleep(for:tolerance:clock:)` 来模拟等待网络请求:
 
 [`Task.sleep(for:tolerance:clock:)`]: https://developer.apple.com/documentation/swift/task/sleep(for:tolerance:clock:)
@@ -254,10 +236,6 @@ for try await line in handle.bytes.lines {
 -->
 
 在这个事例中，我们使用 `for` 和 `await` 来代替了普通的 `for`-`in` 循环。和你调用异步函数或方法一样，在这里 `await` 也标注了潜在的挂起点。一个 `for`-`await`-`in` 循环在每一轮迭代的开头都有可能挂起，以便等待序列中下一个元素的就绪。
-
-<!--
-  FIXME TR: Where does the 'try' above come from?
--->
 
 正如同你可以在 `for`-`in` 循环中通过遵从 [`Sequence`][] 协议来使用自定义类型一样，你也可以在 `for`-`await`-`in` 循环中通过遵循 [`AsyncSequence`] 来使用自定义类型。
 
@@ -627,7 +605,10 @@ task.cancel()  // 输出 "Canceled!"
 
 ### 非结构化并发
 
-除了像前文所述那样以结构化的方式编写并发逻辑，Swift 也支持非结构化并发。不像从属于某个任务组的任务，一项*非结构化*的任务没有父任务。管理非结构化任务时，你将拥有最大的灵活性，可以按任意方式组织他们。但是，你也将需要对他们的正确性承担全部责任。要在当前 actor 上创建一项非结构化的任务，你可调用 [`Task.init(priority:operation:)`][] 这个构造器。要创建一项不属于当前 actor 的非结构化任务 —— 也被称作为*分离 (detached)* 任务 —— ，请调用 [`Task.detached(priority:operation:)`][]  这个类方法。这两项操作都会返回 task 实例，便于你管理他们。比如，你可以等待他们的返回结果，也可以取消他们：
+除了像前文所述那样以结构化的方式编写并发逻辑，Swift 也支持非结构化并发。不像从属于某个任务组的任务，一项*非结构化*的任务没有父任务。管理非结构化任务时，你将拥有最大的灵活性，可以按任意方式组织他们。但是，你也将需要对他们的正确性承担全部责任。
+
+要创建一个与周围代码运行方式类似的非结构化任务，请调用 [`Task.init(name:priority:operation:)`][] 构造器。新任务默认会继承当前任务的 actor 隔离、优先级和任务局部状态。要创建一个更独立于周围代码的非结构化任务——更具体地说是*分离任务*——请调用 [`Task.detached(name:priority:operation:)`][] 静态方法。新任务默认会在没有任何 actor 隔离的情况下运行，并且不会继承当前任务的优先级或任务局部状态。这两项操作都会返回 task 实例，便于你管理他们。比如，你可以等待他们的返回结果，也可以取消他们：
+<!-- TODO: In SE-0461 terms, Task.detached runs as an @concurrent function. -->
 
 ```swift
 let newPhoto = // ... some photo data ...
@@ -638,8 +619,9 @@ let result = await handle.value
 ```
 
 要了解更多有关如何管理分离任务的信息，请查看 [`Task`](https://developer.apple.com/documentation/swift/task).
-[`Task.init(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(priority:operation:)-7f0zv
-[`Task.detached(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(priority:operation:)-d24l
+
+[`Task.init(name:priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(name:priority:operation:)-43wmk
+[`Task.detached(name:priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(name:priority:operation:)-795w1
 
 <!--
   TODO Add some conceptual guidance about
@@ -648,9 +630,119 @@ let result = await handle.value
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
 -->
 
+## 隔离
+
+前面的章节讨论了拆分并发工作的方法。这些工作可能涉及修改共享数据，例如应用程序的 UI。如果代码的不同部分可以同时修改相同的数据，就会有产生数据竞争的风险。Swift 可以保护你的代码免受数据竞争的影响：每当你读取或修改一段数据时，Swift 会确保没有其他代码同时修改它。这种保证被称为*数据隔离*。数据隔离主要有三种方式：
+
+1. 不可变数据始终是隔离的。因为你无法修改常量，所以不存在其他代码在你读取常量的同时修改它的风险。
+
+2. 仅由当前任务引用的数据始终是隔离的。局部变量可以安全地读写，因为任务之外的代码没有对该内存的引用，所以其他代码无法修改该数据。此外，如果你在闭包中捕获该变量，Swift 会确保该闭包不会被并发使用。
+
+3. 由 actor 保护的数据是隔离的，前提是访问该数据的代码也隔离到该 actor。如果当前函数隔离到某个 actor，那么读写该 actor 保护的数据是安全的，因为隔离到同一 actor 的任何其他代码都必须等待轮到它才能运行。
+
+## 主 Actor
+
+Actor 是一个对象，它通过强制代码轮流访问可变数据来保护对可变数据的访问。在许多程序中，最重要的 actor 是*主 actor*。在应用程序中，主 actor 保护用于显示 UI 的所有数据。主 actor 轮流渲染 UI、处理 UI 事件以及运行需要查询或更新 UI 的代码。
+
+在开始在代码中使用并发之前，所有内容都在主 actor 上运行。当你识别出长时间运行或资源密集型的代码时，可以以安全且正确的方式将这些工作移出主 actor。
+
+> 注意：主 actor 与主线程密切相关，但它们不是同一回事。主 actor 有私有可变状态，主线程序列化对该状态的访问。当你在主 actor 上运行代码时，Swift 会在主线程上执行该代码。由于这种联系，你可能会看到这两个术语可以互换使用。你的代码与主 actor 交互；主线程是较低级别的实现细节。
+
+<!--
+TODO: Discuss the SE-0478 syntax for 'using @MainActor'
+
+When you're writing UI code,
+you often want all of it to be isolated to the main actor.
+To do this, you can write `using @MainActor`
+at the top of a Swift file to apply that attribute by default
+to all the code in the file.
+If there's a specific function or property
+that you want to exclude from `using @MainActor`,
+you can use the `nonisolated` modifier on that declaration
+to override the default.
+Modules can be configured to be built using `using @MainActor` by default.
+This can be overridden on a per-file basis
+by writing `using nonisolated` at the top of a file.
+-->
+
+有几种方法可以在主 actor 上运行工作。要确保函数始终在主 actor 上运行，请使用 `@MainActor` 属性标记它：
+
+```swift
+@MainActor
+func show(_: Data) {
+    // ... UI 代码用于显示照片 ...
+}
+```
+
+在上面的代码中，`show(_:)` 函数上的 `@MainActor` 属性要求此函数只能在主 actor 上运行。在主 actor 上运行的其他代码中，你可以将 `show(_:)` 作为同步函数调用。但是，要从不在主 actor 上运行的代码调用 `show(_:)`，你必须包含 `await` 并将其作为异步函数调用，因为切换到主 actor 会引入一个潜在的挂起点。例如：
+
+```swift
+func downloadAndShowPhoto(named name: String) async {
+    let photo = await downloadPhoto(named: name)
+    await show(photo)
+}
+```
+
+在上面的代码中，`downloadPhoto(named:)` 和 `show(_:)` 函数在调用时都可能挂起。这段代码还展示了一个常见模式：在后台执行长时间运行和 CPU 密集型的工作，然后切换到主 actor 更新 UI。因为 `downloadAndShowPhoto(named:)` 函数不在主 actor 上，`downloadPhoto(named:)` 中的工作也不在主 actor 上运行。只有 `show(_:)` 中更新 UI 的工作在主 actor 上运行，因为该函数标记了 `@MainActor` 属性。
+<!-- TODO
+When updating for SE-0461,
+this is a good place to note
+that downloadPhoto(named:) runs
+on whatever actor you were on when you called it.
+-->
+
+要确保闭包在主 actor 上运行，请在捕获列表之前和 `in` 之前、闭包开头写入 `@MainActor`。
+
+```swift
+let photo = await downloadPhoto(named: "Trees at Sunrise")
+Task { @MainActor in
+    show(photo)
+}
+```
+
+上面的代码与前面代码清单中的 `downloadAndShowPhoto(named:)` 类似，但此示例中的代码不等待 UI 更新。你还可以在结构、类或枚举上写入 `@MainActor`，以确保其所有方法和对其属性的所有访问都在主 actor 上运行：
+
+```swift
+@MainActor
+struct PhotoGallery {
+    var photoNames: [String]
+    func drawUI() { /* ... 其他 UI 代码 ... */ }
+}
+```
+
+上面代码中的 `PhotoGallery` 结构在屏幕上绘制照片，使用其 `photoNames` 属性中的名称来确定要显示哪些照片。因为 `photoNames` 影响 UI，更改它的代码需要在主 actor 上运行以序列化该访问。
+
+在基于框架构建时，该框架的协议和基类通常已经标记了 `@MainActor`，所以在这种情况下，你通常不需要在自己的类型上写入 `@MainActor`。这里有一个简化的例子：
+
+```swift
+@MainActor
+protocol View { /* ... */ }
+
+// 隐式地标记为 @MainActor
+struct PhotoGalleryView: View { /* ... */ }
+```
+
+在上面的代码中，像 SwiftUI 这样的框架定义了 `View` 协议。通过在协议声明上写入 `@MainActor`，像 `PhotoGalleryView` 这样符合该协议的类型也会隐式地标记为 `@MainActor`。如果 `View` 是基类而 `PhotoGalleryView` 是子类，你会看到相同的行为——子类会隐式地标记为 `@MainActor`。
+
+在上面的例子中，`PhotoGallery` 在主 actor 上保护整个结构。为了更精细的控制，你可以仅在需要在主线程上访问或运行的属性或方法上写入 `@MainActor`：
+
+```swift
+struct PhotoGallery {
+    @MainActor var photoNames: [String]
+    var hasCachedPhotos = false
+
+    @MainActor func drawUI() { /* ... UI 代码 ... */ }
+    func cachePhotos() { /* ... 网络代码 ... */ }
+}
+```
+
+在上面版本的 `PhotoGallery` 中，`drawUI()` 方法在屏幕上绘制图库的图片，所以它需要隔离到主 actor。`photoNames` 属性不直接创建 UI，但它确实存储了 `drawUI()` 函数用于绘制 UI 的状态，因此该属性也需要仅在主 actor 上访问。相反，对 `hasCachedPhotos` 属性的更改不与 UI 交互，`cachePhotos()` 方法不访问任何需要在主 actor 上运行的状态。所以这些没有标记 `@MainActor`。
+
+与前面的例子一样，如果你使用框架来构建 UI，该框架的属性包装器可能已经将你的 UI 状态属性标记为 `@MainActor`。在定义属性包装器时，如果其 `wrappedValue` 属性标记为 `@MainActor`，那么你应用该属性包装器的任何属性也会隐式地标记为 `@MainActor`。
+
 ## Actors
 
-你可以使用任务来将自己的程序分割为相互独立、并行的片段。任务之间时相互隔离的，这样他们才能安全地同时运行。但有时候，你需要在任务之前共享信息。此时，你就可以使用 actors 来安全地在并行代码之间共享这些信息。
+Swift 为你提供了主 actor——你也可以定义自己的 actor。Actor 让你可以在并发代码之间安全地共享信息。
 
 就和类一样，actor 也是引用类型，所以在  <doc:ClassesAndStructures#类是引用类型> 一文中有关引用类型和值类型的对比，同时适用于类和 actor。与类不同的是，actor 在同一时刻只允许一项任务访问其可变状态，这样多个任务同时与 actor 交互时才不会产生安全性问题。举个例子，下面是一个用于记录温度的 actor：
 
@@ -816,6 +908,68 @@ extension TemperatureLogger {
        print(await logger.getMax())
 -->
 
+
+## 全局 Actor
+
+主 actor 是 [`MainActor`][] 类型的全局单例实例。Actor 通常可以有多个实例，每个实例提供独立的隔离。这就是为什么你将 actor 的所有隔离数据声明为该 actor 的实例属性。然而，因为 `MainActor` 是单例——该类型只有一个实例——仅类型本身就足以标识该 actor，允许你仅使用属性来标记主 actor 隔离。这种方法让你更灵活地以最适合你的方式组织代码。
+
+[`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
+
+你可以使用 `@globalActor` 属性定义自己的单例全局 actor，如 <doc:Attributes#globalActor> 中所述。
+
+
+<!--
+  OUTLINE
+  .. _Concurrency_Nonisolated:
+
+   .. _Concurrency_ActorIsolation:
+
+   Actor Isolation
+
+   TODO outline impact from SE-0313 Control Over Actor Isolation
+   about the 'isolated' and 'nonisolated' keywords
+
+   - when you access an actor property from outside the actor,
+   you get a getter function that returns ... a future?  Some sendable thing.
+   You can't say ``instance.property++`` because you can't get and set
+   from outside the actor.
+
+   - Swift infers what properties are accessible from outside
+   based on what you put in the actor definition.
+   Actor-isolated properties (ones that default to being on the actor)
+   aren't available outside the actor.
+
+   - you can't write to a property directly from outside the actor
+
+   - The same actor method can be called multiple times, overlapping itself.
+   This is sometimes referred to as *reentrant code*.
+   The behavior is defined and safe... but might have unexpected results.
+   Consider a withdrawal function that
+   checks you have at least the requested money in your account,
+   performs a slow async operation,
+   and then debits your account at the end.
+   When the second call starts,
+   it checks your account balance
+   and the first call has not yet removed funds.
+   It might allow you to overdraft if the first plus second call
+   spend more than you have.
+
+   .. _Concurrency_PerformanceConsiderations:
+
+   Performance Considerations
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   - Switching to an actor might have costs;
+   don't use them to protect a simple int that you're incrementing.
+
+   - The more work you can do inside an actor,
+   without needing to switch back and forth,
+   the better its performance.
+
+  .. _Concurrency_Sendability:
+
+-->
+
 ## 可发送类型
 
 任务和 actor 能让你将一个程序分成多个小段并安全地并行运行。一个任务或是一个 actor 的实例内部所包含的可变状态（例如变量或属性），被称为*并发域*。有些数据无法在不同的并发域之间共享，因为这些数据包含可变状态，但其又无法对重叠访问提供保护。
@@ -896,70 +1050,26 @@ struct TemperatureReading {
   ```
 -->
 
-要显式地标注一个类型为不可发送，你可以通过扩展来覆写对 `Sendable` 的隐式遵从：
+要显式地标注一个类型为不可发送，请编写一个不可用的 `Sendable` 遵循：
 
 ```swift
 struct FileDescriptor {
-    let rawValue: CInt
+    let rawValue: Int
 }
 
 @available(*, unavailable)
-extension FileDescriptor: Sendable { }
+extension FileDescriptor: Sendable {}
 ```
 
 <!--
-The example above is abbreviated from a Swift System API.
+The example above is based on a Swift System API.
 https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+
+See also this PR that adds Sendable conformance to FileDescriptor:
+https://github.com/apple/swift-system/pull/112
 -->
 
-上面这段代码是 POSIX 文件描述符包装器的其中一部分。尽管文件描述符的接口使用整数来识别和处理打开的文件，且整数值是可发送的，文件描述符并不能够被安全地在并发域之间传递。
-
-<!--
-  - test: `suppressing-implied-sendable-conformance`
-
-  -> struct FileDescriptor {
-  ->     let rawValue: CInt
-  -> }
-
-  -> @available(*, unavailable)
-  -> extension FileDescriptor: Sendable { }
-  >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
-  !$ warning: conformance of 'FileDescriptor' to 'Sendable' is unavailable; this is an error in Swift 6
-  !! let nonsendable: Sendable = FileDescriptor(rawValue: 10)
-  !! ^
-  !$ note: conformance of 'FileDescriptor' to 'Sendable' has been explicitly marked unavailable here
-  !! extension FileDescriptor: Sendable { }
-  !! ^
--->
-
-在上面的代码中，`FileDescriptor` 这个结构体符合隐式可发送的条件。但是，我们使用扩展来将其对于 `Sendable` 的遵从标注为不可用，从而防止其称为一个可发送类型。
-
-<!--
-  OUTLINE
-  .. _Concurrency_MainActor:
-
-  The Main Actor
-  ~~~~~~~~~~~~~~
-
-
-  - the main actor is kinda-sorta like the main thread
-
-  - use it when you have shared mutable state,
-  but that state isn't neatly wrapped up in a single type
-
-  - you can put it on a function,
-  which makes calls to the function always run on the main actor
-
-  - you can put it on a type,
-  which makes calls to all of the type's methods run on the main actor
-
-  - some property wrappers like ``@EnvironmentObject`` from SwiftUI
-  imply ``@MainActor`` on a type.
-  Check for a ``wrappedValue`` that's marked ``@MainActor``.
-  If you mark the property of a type with one of these implicit-main-actor properties,
-  that has the same effect as marking the type with ``@MainActor``
-  you can wait for each child of a task
--->
+你还可以使用不可用的遵循来抑制对协议的隐式遵循，如 <doc:Protocols#Implicit-Conformance-to-a-Protocol> 中所述。
 
 <!--
   LEFTOVER OUTLINE BITS

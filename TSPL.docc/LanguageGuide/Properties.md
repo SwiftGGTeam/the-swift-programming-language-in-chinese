@@ -282,7 +282,7 @@ such as when its `filename` property is queried:
 ```swift
 print(manager.importer.filename)
 // the DataImporter instance for the importer property has now been created
-// Prints "data.txt"
+// Prints "data.txt".
 ```
 
 <!--
@@ -361,7 +361,7 @@ let initialSquareCenter = square.center
 // initialSquareCenter is at (5.0, 5.0)
 square.center = Point(x: 15.0, y: 15.0)
 print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-// Prints "square.origin is now at (10.0, 10.0)"
+// Prints "square.origin is now at (10.0, 10.0)".
 ```
 
 <!--
@@ -577,7 +577,7 @@ struct Cuboid {
 }
 let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-// Prints "the volume of fourByFiveByTwo is 40.0"
+// Prints "the volume of fourByFiveByTwo is 40.0".
 ```
 
 <!--
@@ -736,8 +736,8 @@ the new value that you assign replaces the one that was just set.
 > Note: The `willSet` and `didSet` observers of superclass properties
 > are called when a property is set in a subclass initializer,
 > after the superclass initializer has been called.
-> They aren't called while a class is setting its own properties,
-> before the superclass initializer has been called.
+> They aren't called while a class is setting its own properties
+> in the body of the initializer.
 >
 > For more information about initializer delegation,
 > see <doc:Initialization#Initializer-Delegation-for-Value-Types>
@@ -1004,15 +1004,15 @@ struct SmallRectangle {
 
 var rectangle = SmallRectangle()
 print(rectangle.height)
-// Prints "0"
+// Prints "0".
 
 rectangle.height = 10
 print(rectangle.height)
-// Prints "10"
+// Prints "10".
 
 rectangle.height = 24
 print(rectangle.height)
-// Prints "12"
+// Prints "12".
 ```
 
 <!--
@@ -1200,7 +1200,7 @@ struct ZeroRectangle {
 
 var zeroRectangle = ZeroRectangle()
 print(zeroRectangle.height, zeroRectangle.width)
-// Prints "0 0"
+// Prints "0 0".
 ```
 
 <!--
@@ -1263,7 +1263,7 @@ struct UnitRectangle {
 
 var unitRectangle = UnitRectangle()
 print(unitRectangle.height, unitRectangle.width)
-// Prints "1 1"
+// Prints "1 1".
 ```
 
 <!--
@@ -1323,12 +1323,12 @@ struct NarrowRectangle {
 
 var narrowRectangle = NarrowRectangle()
 print(narrowRectangle.height, narrowRectangle.width)
-// Prints "2 3"
+// Prints "2 3".
 
 narrowRectangle.height = 100
 narrowRectangle.width = 100
 print(narrowRectangle.height, narrowRectangle.width)
-// Prints "5 4"
+// Prints "5 4".
 ```
 
 <!--
@@ -1403,11 +1403,11 @@ struct MixedRectangle {
 
 var mixedRectangle = MixedRectangle()
 print(mixedRectangle.height)
-// Prints "1"
+// Prints "1".
 
 mixedRectangle.height = 20
 print(mixedRectangle.height)
-// Prints "12"
+// Prints "12".
 ```
 
 <!--
@@ -1485,11 +1485,11 @@ var someStructure = SomeStructure()
 
 someStructure.someNumber = 4
 print(someStructure.$someNumber)
-// Prints "false"
+// Prints "false".
 
 someStructure.someNumber = 55
 print(someStructure.$someNumber)
-// Prints "true"
+// Prints "true".
 ```
 
 <!--
@@ -1883,9 +1883,9 @@ SomeStructure.storedTypeProperty = "Another value."
 print(SomeStructure.storedTypeProperty)
 // Prints "Another value."
 print(SomeEnumeration.computedTypeProperty)
-// Prints "6"
+// Prints "6".
 print(SomeClass.computedTypeProperty)
-// Prints "27"
+// Prints "27".
 ```
 
 <!--
@@ -2018,9 +2018,9 @@ is updated to equal `7`:
 ```swift
 leftChannel.currentLevel = 7
 print(leftChannel.currentLevel)
-// Prints "7"
+// Prints "7".
 print(AudioChannel.maxInputLevelForAllChannels)
-// Prints "7"
+// Prints "7".
 ```
 
 <!--
@@ -2043,9 +2043,9 @@ and the `maxInputLevelForAllChannels` type property is updated to equal `10`:
 ```swift
 rightChannel.currentLevel = 11
 print(rightChannel.currentLevel)
-// Prints "10"
+// Prints "10".
 print(AudioChannel.maxInputLevelForAllChannels)
-// Prints "10"
+// Prints "10".
 ```
 
 <!--

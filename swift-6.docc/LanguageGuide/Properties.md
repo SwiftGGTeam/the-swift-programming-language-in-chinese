@@ -281,7 +281,7 @@ let initialSquareCenter = square.center
 // initialSquareCenter 位于（5.0， 5.0）
 square.center = Point(x: 15.0, y: 15.0)
 print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-// 打印“square.origin is now at (10.0, 10.0)”
+// 打印“square.origin is now at (10.0, 10.0)”。
 ```
 
 <!--
@@ -465,7 +465,7 @@ struct Cuboid {
 }
 let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-// 打印 "the volume of fourByFiveByTwo is 40.0"
+// 打印 "the volume of fourByFiveByTwo is 40.0"。
 ```
 
 <!--
@@ -599,7 +599,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 -->
 
 > 注意: 
-> 父类属性的 `willSet` 和 `didSet` 观察器会在子类初始化器中设置属性时调用，此时父类的初始化器已经被调用。而在父类初始化器被调用之前，给子类的属性赋值时不会调用子类属性的观察器。
+> 父类属性的 `willSet` 和 `didSet` 观察器会在子类初始化器中设置属性时调用，此时父类的初始化器已经被调用。在构造器主体中为类的自有属性赋值时不会调用这些观察器。
 >
 > 有关初始化器代理的更多信息，请参见 <doc:Initialization#值类型的构造器代理> 和 <doc:Initialization#类类型的构造器代理>。
 
@@ -817,15 +817,15 @@ struct SmallRectangle {
 
 var rectangle = SmallRectangle()
 print(rectangle.height)
-// 打印 "0"
+// 打印 "0"。
 
 rectangle.height = 10
 print(rectangle.height)
-// 打印 "10"
+// 打印 "10"。
 
 rectangle.height = 24
 print(rectangle.height)
-// 打印 "12"
+// 打印 "12"。
 ```
 
 <!--
@@ -973,7 +973,7 @@ struct ZeroRectangle {
 
 var zeroRectangle = ZeroRectangle()
 print(zeroRectangle.height, zeroRectangle.width)
-// 打印 "0 0"
+// 打印 "0 0"。
 ```
 
 <!--
@@ -1025,7 +1025,7 @@ struct UnitRectangle {
 
 var unitRectangle = UnitRectangle()
 print(unitRectangle.height, unitRectangle.width)
-// 打印 "1 1"
+// 打印 "1 1"。
 ```
 
 <!--
@@ -1077,12 +1077,12 @@ struct NarrowRectangle {
 
 var narrowRectangle = NarrowRectangle()
 print(narrowRectangle.height, narrowRectangle.width)
-// 打印 "2 3"
+// 打印 "2 3"。
 
 narrowRectangle.height = 100
 narrowRectangle.width = 100
 print(narrowRectangle.height, narrowRectangle.width)
-// 打印 "5 4"
+// 打印 "5 4"。
 ```
 
 <!--
@@ -1145,11 +1145,11 @@ struct MixedRectangle {
 
 var mixedRectangle = MixedRectangle()
 print(mixedRectangle.height)
-// 打印 "1"
+// 打印 "1"。
 
 mixedRectangle.height = 20
 print(mixedRectangle.height)
-// 打印 "12"
+// 打印 "12"。
 ```
 
 <!--
@@ -1210,11 +1210,11 @@ var someStructure = SomeStructure()
 
 someStructure.someNumber = 4
 print(someStructure.$someNumber)
-// 打印 "false"
+// 打印 "false"。
 
 someStructure.someNumber = 55
 print(someStructure.$someNumber)
-// 打印 "true"
+// 打印 "true"。
 ```
 
 <!--
@@ -1520,14 +1520,14 @@ class SomeClass {
 
 ```swift
 print(SomeStructure.storedTypeProperty)
-// 打印 "Some value."
+// 打印 "Some value."。
 SomeStructure.storedTypeProperty = "Another value."
 print(SomeStructure.storedTypeProperty)
-// 打印 "Another value."
+// 打印 "Another value."。
 print(SomeEnumeration.computedTypeProperty)
-// 打印 "6"
+// 打印 "6"。
 print(SomeClass.computedTypeProperty)
-// 打印 "27"
+// 打印 "27"。
 ```
 
 <!--
@@ -1630,9 +1630,9 @@ var rightChannel = AudioChannel()
 ```swift
 leftChannel.currentLevel = 7
 print(leftChannel.currentLevel)
-// 打印 "7"
+// 打印 "7"。
 print(AudioChannel.maxInputLevelForAllChannels)
-// 打印 "7"
+// 打印 "7"。
 ```
 
 <!--
@@ -1652,9 +1652,9 @@ print(AudioChannel.maxInputLevelForAllChannels)
 ```swift
 rightChannel.currentLevel = 11
 print(rightChannel.currentLevel)
-// 打印 "10"
+// 打印 "10"。
 print(AudioChannel.maxInputLevelForAllChannels)
-// 打印 "10"
+// 打印 "10"。
 ```
 
 <!--

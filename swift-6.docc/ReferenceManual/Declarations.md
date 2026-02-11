@@ -32,7 +32,7 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
 
 有两种类型的顶级代码：顶级声明和可执行的顶级代码。顶级声明仅由声明组成，允许出现在所有 Swift 源文件中。可执行的顶级代码包含语句和表达式，而不仅仅是声明，仅允许作为程序的顶级入口点。
 
-编译 Swift 代码生成可执行文件时，无论文件和模块中的代码如何组织，都只能通过以下方法之一来指定顶级入口点：`main` 特性、`NSApplicationMain` 特性、`UIApplicationMain` 特性、`main.swift` 文件，或包含顶级可执行代码的文件。
+编译 Swift 代码生成可执行文件时，无论文件和模块中的代码如何组织，都只能通过以下方法之一来指定顶级入口点：包含顶级可执行代码的文件、`main.swift` 文件、`main` 特性、`NSApplicationMain` 特性或 `UIApplicationMain` 特性。
 
 > 顶级声明的语法:
 >
@@ -295,9 +295,9 @@ class New: Superclass {
 }
 let new = New()
 new.x = 100
-// 打印 "Setter was called"
-// 打印 "Getter was called"
-// 打印 "New value 100"
+// 打印 "Setter was called"。
+// 打印 "Getter was called"。
+// 打印 "New value 100"。
 
 // 这个子类在它的观察器中引用了 oldValue，
 // 因此父类的 getter 在 setter 之前会被调用一次，
@@ -309,10 +309,10 @@ class NewAndOld: Superclass {
 }
 let newAndOld = NewAndOld()
 newAndOld.x = 200
-// 打印 "Getter was called"
-// 打印 "Setter was called"
-// 打印 "Getter was called"
-// 打印 "Old value 12 - new value 200"
+// 打印 "Getter was called"。
+// 打印 "Setter was called"。
+// 打印 "Getter was called"。
+// 打印 "Old value 12 - new value 200"。
 ```
 
 <!--
@@ -657,7 +657,7 @@ func someFunction(a: inout Int) {
 
 ```swift
 var x = 7
-someFunction(&x)
+someFunction(a: &x)
 print(x)  // 打印 "8"
 ```
 
@@ -680,7 +680,7 @@ func someFunction(a: inout Int) {
 }
 
 // 错误：这会导致运行时排他性违规
-someFunction(&someValue)
+someFunction(a: &someValue)
 ```
 
 出于同样的原因，你不能将相同的值传递给多个 in-out 参数。
@@ -693,7 +693,7 @@ func someFunction(a: inout Int, b: inout Int) {
 }
 
 // 错误：不能将同一个值传递给多个 in-out 参数
-someFunction(&someValue, &someValue)
+someFunction(a: &someValue, b: &someValue)
 ```
 
 有关内存安全和内存独占的更多信息，请参见 <doc:MemorySafety>。
@@ -801,7 +801,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
 
 #### 借用和消费参数
 
-默认情况下，Swift 使用一套规则在函数调用之间自动管理对象生命周期，在需要时复制值。默认规则旨在在大多数情况下最小化开销——如果你想要更具体的控制，可以应用 `borrowing` 或 `consuming` 参数修饰符。在这种情况下，使用 `copy` 显式标记复制操作。
+默认情况下，Swift 使用一套规则在函数调用之间自动管理对象生命周期，在需要时复制值。默认规则旨在在大多数情况下最小化开销——如果你想要更具体的控制，可以应用 `borrowing` 或 `consuming` 参数修饰符。在这种情况下，使用 `copy` 显式标记复制操作。此外，不可复制类型的值必须作为借用或消费参数传递。
 
 无论你是否使用默认规则，Swift 确保在所有情况下对象的生命周期和所有权都得到正确管理。这些参数修饰符仅影响特定使用模式的相对效率，而不影响正确性。
 
@@ -1273,7 +1273,7 @@ Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返�
 > *function-result* → **`->`** *attributes*_?_ *type* \
 > *function-body* → *code-block*
 >
-> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
+> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`,`**_?_ **`)`** \
 > *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
@@ -2299,7 +2299,7 @@ extension String: TitledLoggable {
 ```swift
 let oneAndTwo = Pair(first: "one", second: "two")
 oneAndTwo.log()
-// 打印 "Pair of 'String': (one, two)"
+// 打印 "Pair of 'String': (one, two)"。
 ```
 
 <!--
@@ -2319,7 +2319,7 @@ func doSomething<T: Loggable>(with x: T) {
     x.log()
 }
 doSomething(with: oneAndTwo)
-// 打印 "(one, two)"
+// 打印 "(one, two)"。
 ```
 
 <!--
@@ -2359,7 +2359,7 @@ extension Array: Serializable where Element == String {
         // 实现
     }
 }
-// 错误：'Array<Element>' 对协议 'Serializable' 的遵循是多余的
+// 错误：'Array<Element>' 对协议 'Serializable' 的遵循是多余的。
 ```
 
 <!--
@@ -2483,7 +2483,7 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
 ```swift
 extension Array: Loggable where Element: TitledLoggable { }
 extension Array: Loggable where Element: MarkedLoggable { }
-// 错误：'Array<Element>' 对协议 'Loggable' 的遵循是多余的
+// 错误：'Array<Element>' 对协议 'Loggable' 的遵循是多余的。
 ```
 
 <!--
@@ -2596,7 +2596,7 @@ subscript (<#parameters#>) -> <#return type#> {
 
 与计算属性一样，下标声明支持读取和写入所访问元素的值。getter 用于读取值，setter 用于写入值。setter 子句是可选的，当只需要 getter 时，可以省略两个子句，直接返回请求的值。也就是说，如果提供了 setter 子句，则必须同时提供 getter 子句。
 
-*setter 名称*和括号是可选的。如果你提供了 setter 名称，它将用作 setter 的参数名称。如果你不提供 setter 名称，setter 的默认参数名称是 `value`。setter 的参数类型与*返回类型*相同。
+*setter 名称*和括号是可选的。如果你提供了 setter 名称，它将用作 setter 的参数名称。如果你不提供 setter 名称，setter 的默认参数名称是 `newValue`。setter 的参数类型与*返回类型*相同。
 
 你可以在声明其类型的地方重载下标声明，只要*参数*或*返回类型*与要重载的下标不同。你也可以重写从超类继承的下标声明。在这样做时，必须使用 `override` 声明修饰符标记被重写的下标声明。
 

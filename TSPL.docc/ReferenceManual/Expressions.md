@@ -105,13 +105,13 @@ that operator applies to the whole infix expression.
 That said, you can use parentheses to be explicit about the scope of the operator's application.
 
 ```swift
-// try applies to both function calls
+// Writing 'try' applies to both function calls.
 sum = try someThrowingFunction() + anotherThrowingFunction()
 
-// try applies to both function calls
+// Writing 'try' applies to both function calls.
 sum = try (someThrowingFunction() + anotherThrowingFunction())
 
-// Error: try applies only to the first function call
+// Error: Writing 'try' applies only to the first function call.
 sum = (try someThrowingFunction()) + anotherThrowingFunction()
 ```
 
@@ -122,13 +122,13 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
   >> func someThrowingFunction() throws -> Int { return 10 }
   >> func anotherThrowingFunction() throws -> Int { return 5 }
   >> var sum = 0
-  // try applies to both function calls
+  // Writing 'try' applies to both function calls.
   -> sum = try someThrowingFunction() + anotherThrowingFunction()
 
-  // try applies to both function calls
+  // Writing 'try' applies to both function calls.
   -> sum = try (someThrowingFunction() + anotherThrowingFunction())
 
-  // Error: try applies only to the first function call
+  // Error: Writing 'try' applies only to the first function call.
   -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
   !$ error: call can throw but is not marked with 'try'
   !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
@@ -215,13 +215,13 @@ That said, you can use parentheses
 to be explicit about the scope of the operator's application.
 
 ```swift
-// await applies to both function calls
+// Writing 'await' applies to both function calls.
 sum = await someAsyncFunction() + anotherAsyncFunction()
 
-// await applies to both function calls
+// Writing 'await' applies to both function calls.
 sum = await (someAsyncFunction() + anotherAsyncFunction())
 
-// Error: await applies only to the first function call
+// Error: Writing 'await' applies only to the first function call.
 sum = (await someAsyncFunction()) + anotherAsyncFunction()
 ```
 
@@ -233,13 +233,13 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   >> func anotherAsyncFunction() async -> Int { return 5 }
   >> func f() async {
   >> var sum = 0
-  // await applies to both function calls
+  // Writing 'await' applies to both function calls.
   -> sum = await someAsyncFunction() + anotherAsyncFunction()
 
-  // await applies to both function calls
+  // Writing 'await' applies to both function calls.
   -> sum = await (someAsyncFunction() + anotherAsyncFunction())
 
-  // Error: await applies only to the first function call
+  // Error: Writing 'await' applies only to the first function call.
   -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
   >> _ = sum  // Suppress irrelevant written-but-not-read warning
   >> }
@@ -463,14 +463,14 @@ func f(_ any: Any) { print("Function for Any") }
 func f(_ int: Int) { print("Function for Int") }
 let x = 10
 f(x)
-// Prints "Function for Int"
+// Prints "Function for Int".
 
 let y: Any = x
 f(y)
-// Prints "Function for Any"
+// Prints "Function for Any".
 
 f(x as Any)
-// Prints "Function for Any"
+// Prints "Function for Any".
 ```
 
 <!--
@@ -677,12 +677,12 @@ in Xcode Help.
 > *literal-expression* → *literal* \
 > *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
 >
-> *array-literal* → **`[`** *array-literal-items*_?_ **`]`** \
-> *array-literal-items* → *array-literal-item* **`,`**_?_ | *array-literal-item* **`,`** *array-literal-items* \
+> *array-literal* → **`[`** *array-literal-items*_?_ **`,`**_?_ **`]`** \
+> *array-literal-items* → *array-literal-item* | *array-literal-item* **`,`** *array-literal-items* \
 > *array-literal-item* → *expression*
 >
-> *dictionary-literal* → **`[`** *dictionary-literal-items* **`]`** | **`[`** **`:`** **`]`** \
-> *dictionary-literal-items* → *dictionary-literal-item* **`,`**_?_ | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
+> *dictionary-literal* → **`[`** *dictionary-literal-items* **`,`**_?_ **`]`** | **`[`** **`:`** **`]`** \
+> *dictionary-literal-items* → *dictionary-literal-item* | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
 > *dictionary-literal-item* → *expression* **`:`** *expression*
 >
 > *playground-literal* → **`#colorLiteral`** **`(`** **`red`** **`:`** *expression* **`,`** **`green`** **`:`** *expression* **`,`** **`blue`** **`:`** *expression* **`,`** **`alpha`** **`:`** *expression* **`)`** \
@@ -1017,6 +1017,7 @@ surrounded by square brackets,
 before the list of parameters.
 If you use a capture list, you must also use the `in` keyword,
 even if you omit the parameter names, parameter types, and return type.
+The last expression in the capture list can be followed by an optional comma.
 
 The entries in the capture list are initialized
 when the closure is created.
@@ -1038,7 +1039,7 @@ let closure = { [a] in
 a = 10
 b = 10
 closure()
-// Prints "0 10"
+// Prints "0 10".
 ```
 
 <!--
@@ -1104,7 +1105,7 @@ let closure = { [x] in
 x.value = 10
 y.value = 10
 closure()
-// Prints "10 10"
+// Prints "10 10".
 ```
 
 <!--
@@ -1231,15 +1232,15 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
 
   ```swifttest
   >> var a = 12
-  >> let c1 = { [a] in return a }                  // OK -- no async or throws
-  >> let c2 = { [a] async in return a }            // ERROR
-  >> let c3 = { [a] async -> in return a }         // ERROR
-  >> let c4 = { [a] () async -> Int in return a }  // OK -- has () and ->
+  >> let c1 = { [a] in return a }                  // OK: No async or throws
+  >> let c2 = { [a] async in return a }            // Error
+  >> let c3 = { [a] async -> in return a }         // Error
+  >> let c4 = { [a] () async -> Int in return a }  // OK: Has () and ->
   !$ error: expected expression
-  !! let c3 = { [a] async -> in return a }         // ERROR
+  !! let c3 = { [a] async -> in return a }         // Error
   !! ^
   !$ error: unable to infer type of a closure parameter 'async' in the current context
-  !! let c2 = { [a] async in return a }            // ERROR
+  !! let c2 = { [a] async in return a }            // Error
   !! ^
   // NOTE: The error message for c3 gets printed by the REPL before the c2 error.
   ```
@@ -1252,13 +1253,13 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
 > *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
-> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
+> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`,`**_?_ **`)`** | *identifier-list* \
 > *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
 > *closure-parameter* → *closure-parameter-name* *type-annotation*_?_ \
 > *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
 > *closure-parameter-name* → *identifier*
 >
-> *capture-list* → **`[`** *capture-list-items* **`]`** \
+> *capture-list* → **`[`** *capture-list-items* **`,`**_?_ **`]`** \
 > *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* **`=`** *expression* \
@@ -1474,9 +1475,11 @@ A single expression inside parentheses is a parenthesized expression.
 > However, like all type aliases, `Void` is always a type ---
 > you can't use it to write an empty tuple expression.
 
+The last expression in a tuple can be followed by an optional comma.
+
 > Grammar of a tuple expression:
 >
-> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`** \
+> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`,`**_?_ **`)`** \
 > *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
 > *tuple-element* → *expression* | *identifier* **`:`** *expression*
 
@@ -1823,18 +1826,18 @@ let path = \[String].[index]
 let fn: ([String]) -> String = { strings in strings[index] }
 
 print(greetings[keyPath: path])
-// Prints "bonjour"
+// Prints "bonjour".
 print(fn(greetings))
-// Prints "bonjour"
+// Prints "bonjour".
 
 // Setting 'index' to a new value doesn't affect 'path'
 index += 1
 print(greetings[keyPath: path])
-// Prints "bonjour"
+// Prints "bonjour".
 
 // Because 'fn' closes over 'index', it uses the new value
 print(fn(greetings))
-// Prints "안녕"
+// Prints "안녕".
 ```
 
 <!--
@@ -1868,12 +1871,12 @@ to access a property of an optional string:
 ```swift
 let firstGreeting: String? = greetings.first
 print(firstGreeting?.count as Any)
-// Prints "Optional(5)"
+// Prints "Optional(5)".
 
 // Do the same thing using a key path.
 let count = greetings[keyPath: \[String].first?.count]
 print(count as Any)
-// Prints "Optional(5)"
+// Prints "Optional(5)".
 ```
 
 <!--
@@ -1908,13 +1911,13 @@ let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
                           "triangular": [1, 3, 6, 10, 15, 21, 28],
                           "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
 print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
-// Prints "Optional([2, 3, 5, 7, 11, 13, 17])"
+// Prints "Optional([2, 3, 5, 7, 11, 13, 17])".
 print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
-// Prints "2"
+// Prints "2".
 print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
-// Prints "7"
+// Prints "7".
 print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
-// Prints "64"
+// Prints "64".
 ```
 
 <!--
@@ -2000,7 +2003,7 @@ func makeIndex() -> Int {
 }
 // The line below calls makeIndex().
 let taskKeyPath = \[Task][makeIndex()]
-// Prints "Made an index"
+// Prints "Made an index".
 
 // Using taskKeyPath doesn't call makeIndex() again.
 let someTask = toDoList[keyPath: taskKeyPath]
@@ -2187,7 +2190,7 @@ let keyPath = #keyPath(SomeClass.someProperty)
 if let value = c.value(forKey: keyPath) {
     print(value)
 }
-// Prints "12"
+// Prints "12".
 ```
 
 <!--
@@ -2223,7 +2226,7 @@ extension SomeClass {
     }
 }
 print(keyPath == c.getSomeKeyPath())
-// Prints "true"
+// Prints "true".
 ```
 
 <!--
@@ -2307,6 +2310,8 @@ This kind of function call expression has the following form:
 ```swift
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
+
+The last argument in parentheses can be followed by an optional comma.
 
 A function call expression can include trailing closures
 in the form of closure expressions immediately after the closing parenthesis.
@@ -2471,6 +2476,8 @@ If the scan directions produce different results,
 the old right-to-left ordering is used
 and the compiler generates a warning.
 A future version of Swift will always use the left-to-right ordering.
+
+<!-- FIXME: What future version? -->
 
 ```swift
 typealias Callback = (Int) -> Int
@@ -2643,7 +2650,7 @@ avoid using `&` instead of using the unsafe APIs explicitly.
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
 >
-> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`** \
+> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`,`**_?_ **`)`** \
 > *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list* \
 > *function-call-argument* → *expression* | *identifier* **`:`** *expression* \
 > *function-call-argument* → *operator* | *identifier* **`:`** *operator*
@@ -2698,7 +2705,7 @@ For example:
 let initializer: (Int) -> String = String.init
 let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
 print(oneTwoThree)
-// Prints "123"
+// Prints "123".
 ```
 
 <!--

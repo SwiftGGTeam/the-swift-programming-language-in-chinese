@@ -157,7 +157,7 @@ for _ in 1...power {
     answer *= base
 }
 print("\(base) to the power of \(power) is \(answer)")
-// Prints "3 to the power of 10 is 59049"
+// Prints "3 to the power of 10 is 59049".
 ```
 
 <!--
@@ -936,7 +936,7 @@ case "z":
 default:
     print("Some other character")
 }
-// Prints "The last letter of the Latin alphabet"
+// Prints "The last letter of the Latin alphabet".
 ```
 
 <!--
@@ -980,7 +980,7 @@ default:
 }
 
 print(message)
-// Prints "The first letter of the Latin alphabet"
+// Prints "The first letter of the Latin alphabet".
 ```
 
 In this example,
@@ -1070,7 +1070,7 @@ case "a", "A":
 default:
     print("Not the letter A")
 }
-// Prints "The letter A"
+// Prints "The letter A".
 ```
 
 <!--
@@ -1188,7 +1188,7 @@ case (-2...2, -2...2):
 default:
     print("\(somePoint) is outside of the box")
 }
-// Prints "(1, 1) is inside the box"
+// Prints "(1, 1) is inside the box".
 ```
 
 <!--
@@ -1249,7 +1249,7 @@ case (0, let y):
 case let (x, y):
     print("somewhere else at (\(x), \(y))")
 }
-// Prints "on the x-axis with an x value of 2"
+// Prints "on the x-axis with an x value of 2".
 ```
 
 <!--
@@ -1312,7 +1312,7 @@ case let (x, y) where x == -y:
 case let (x, y):
     print("(\(x), \(y)) is just some arbitrary point")
 }
-// Prints "(1, -1) is on the line x == -y"
+// Prints "(1, -1) is on the line x == -y".
 ```
 
 <!--
@@ -1369,7 +1369,7 @@ case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
 default:
     print("\(someCharacter) isn't a vowel or a consonant")
 }
-// Prints "e is a vowel"
+// Prints "e is a vowel".
 ```
 
 <!--
@@ -1414,7 +1414,7 @@ case (let distance, 0), (0, let distance):
 default:
     print("Not on an axis")
 }
-// Prints "On an axis, 9 from the origin"
+// Prints "On an axis, 9 from the origin".
 ```
 
 <!--
@@ -1439,6 +1439,97 @@ Both patterns include a binding for `distance`
 and `distance` is an integer in both patterns ---
 which means that the code in the body of the `case`
 can always access a value for `distance`.
+
+## Patterns
+
+In the previous examples, each switch case includes a pattern
+that indicates what values match that case.
+You can also use a pattern as the condition for an `if` statement.
+Here's what that looks like:
+
+```swift
+let somePoint = (12, 100)
+if case (let x, 100) = somePoint {
+    print("Found a point on the y=100 line, at \(x)")
+}
+// Prints "Found a point on the y=100 line, at 12".
+```
+
+In this code,
+the condition for the `if` statement starts with `case`,
+indicating that the condition is a pattern instead of a Boolean value.
+If the pattern matches,
+then the condition for the `if` is considered to be true,
+and so the code in the body of the `if` statement runs.
+The patterns you can write after `if case`
+are the same as the patterns you can write in a switch case.
+
+In a `for`-`in` loop,
+you can give names to parts of the value using a value binding pattern,
+even without writing `case` in your code:
+
+```swift
+let points = [(10, 0), (30, -30), (-20, 0)]
+
+for (x, y) in points {
+    if y == 0 {
+        print("Found a point on the x-axis at \(x)")
+    }
+}
+// Prints "Found a point on the x-axis at 10".
+// Prints "Found a point on the x-axis at -20".
+```
+
+The `for`-`in` loop above iterates over an array of tuples,
+binding the first and second elements of the tuples
+to the `x` and `y` constants.
+The statements inside the loop can use those constants,
+such as the `if` statement that checks whether the point lies on the x-axis.
+A more concise way to write this code
+is to combine the value bindings and condition
+using a `for`-`case`-`in` loop.
+The code below has the same behavior as the `for`-`in` loop above:
+
+```swift
+for case (let x, 0) in points {
+    print("Found a point on the x-axis at \(x)")
+}
+// Prints "Found a point on the x-axis at 10".
+// Prints "Found a point on the x-axis at -20".
+```
+
+In this code,
+the condition is integrated into the `for`-`case`-`in` loop
+as part of the pattern.
+The statements in the `for`-`case`-`in` loop run only for points on the x-axis.
+This code produces the same result as the `for`-`in` loop above,
+but is a more compact way to iterate
+over only certain elements in a collection.
+
+A `for`-`case`-`in` loop can also include a `where` clause,
+to check for an additional condition.
+The statements inside the loop run
+only when `where` clause matches the current element.
+For example:
+
+```swift
+for case let (x, y) in points where x == y || x == -y  {
+    print("Found (\(x), \(y)) along a line through the origin")
+}
+// Prints "Found (30, -30) along a line through the origin".
+```
+
+This code binds the first and second elements of the tuple
+to `x` and `y` as constants,
+and then checks their values in the `where` clause.
+If the `where` clause is `true`,
+then the code in the body of the `for` loop runs;
+otherwise, iteration continues with the next element.
+
+Because patterns can bind values,
+`if`-`case` statements and `for`-`case`-`in` loops
+are useful for working with enumerations that have associated values,
+as described in <doc:Enumerations#Associated-Values>.
 
 ## Control Transfer Statements
 
@@ -1477,7 +1568,7 @@ for character in puzzleInput {
     puzzleOutput.append(character)
 }
 print(puzzleOutput)
-// Prints "grtmndsthnklk"
+// Prints "grtmndsthnklk".
 ```
 
 <!--
@@ -2001,7 +2092,7 @@ if score < 10 {
     }
     score += 5
 }
-// Prints "6"
+// Prints "6".
 ```
 
 <!--
@@ -2052,7 +2143,7 @@ if score < 100 {
     // Other code that uses the score with its bonus goes here.
     print(score)
 }
-// Prints "103"
+// Prints "103".
 ```
 
 <!--
@@ -2085,8 +2176,8 @@ if score < 10 {
     }
     score += 5
 }
-// Prints "The score is:"
-// Prints "6"
+// Prints "The score is:".
+// Prints "6".
 ```
 
 <!--

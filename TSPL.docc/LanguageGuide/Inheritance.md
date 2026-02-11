@@ -322,7 +322,7 @@ you can see that the `Train` subclass version of the method is called:
 ```swift
 let train = Train()
 train.makeNoise()
-// Prints "Choo Choo"
+// Prints "Choo Choo".
 ```
 
 <!--
@@ -604,7 +604,6 @@ Any attempt to subclass a final class is reported as a compile-time error.
   when overriding methods that use optionals / unchecked optionals.
 
   TODO: Overriding Type Methods
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
 <!--

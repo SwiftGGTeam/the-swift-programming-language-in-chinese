@@ -4,6 +4,7 @@
 /.build
 /Package.resolved
 /TSPL.docc/header.html
+/TSPL.docc/ReferenceManual/SummaryOfTheGrammar.md
 /swift-book
 node_modules
 package-lock.json

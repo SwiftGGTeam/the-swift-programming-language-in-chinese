@@ -302,7 +302,7 @@ var anotherEmptyString = String()  // 初始化方法
 if emptyString.isEmpty {
     print("Nothing to see here")
 }
-// 打印输出 "Nothing to see here"
+// 打印输出 "Nothing to see here"。
 ```
 
 <!--
@@ -429,7 +429,7 @@ let exclamationMark: Character = "!"
 let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
 let catString = String(catCharacters)
 print(catString)
-// 打印 "Cat!🐱"
+// 打印 "Cat!🐱"。
 ```
 
 <!--
@@ -594,7 +594,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 
 ```swift
 print(#"Write an interpolated string in Swift using \(multiplier)."#)
-// 打印 "Write an interpolated string in Swift using \(multiplier)."
+// 打印 "Write an interpolated string in Swift using \(multiplier)."。
 ```
 
 <!--
@@ -610,7 +610,7 @@ print(#"Write an interpolated string in Swift using \(multiplier)."#)
 
 ```swift
 print(#"6 times 7 is \#(6 * 7)."#)
-// 打印 "6 times 7 is 42."
+// 打印 "6 times 7 is 42."。
 ```
 
 <!--
@@ -727,7 +727,7 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 ```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
 print("unusualMenagerie has \(unusualMenagerie.count) characters")
-// 打印 "unusualMenagerie has 40 characters"
+// 打印 "unusualMenagerie has 40 characters"。
 ```
 
 <!--
@@ -747,12 +747,12 @@ print("unusualMenagerie has \(unusualMenagerie.count) characters")
 ```swift
 var word = "cafe"
 print("the number of characters in \(word) is \(word.count)")
-// 打印 "the number of characters in cafe is 4"
+// 打印 "the number of characters in cafe is 4"。
 
 word += "\u{301}"    // 拼接一个重音，U+0301
 
 print("the number of characters in \(word) is \(word.count)")
-// 打印 "the number of characters in café is 4"
+// 打印 "the number of characters in café is 4"。
 ```
 
 <!--
@@ -862,7 +862,7 @@ greeting.index(after: greeting.endIndex) // Error
 for index in greeting.indices {
     print("\(greeting[index]) ", terminator: "")
 }
-// 打印 "G u t e n   T a g ! "
+// 打印 "G u t e n   T a g ! "。
 ```
 
 <!--
@@ -1005,7 +1005,7 @@ let sameQuotation = "We're a lot alike, you and I."
 if quotation == sameQuotation {
     print("These two strings are considered equal")
 }
-// 打印 "These two strings are considered equal"
+// 打印 "These two strings are considered equal"。
 ```
 
 <!--
@@ -1065,7 +1065,7 @@ let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
 if eAcuteQuestion == combinedEAcuteQuestion {
     print("These two strings are considered equal")
 }
-// 打印 "These two strings are considered equal"
+// 打印 "These two strings are considered equal"。
 ```
 
 <!--
@@ -1095,7 +1095,7 @@ let cyrillicCapitalLetterA: Character = "\u{0410}"
 if latinCapitalLetterA != cyrillicCapitalLetterA {
     print("These two characters aren't equivalent.")
 }
-// 打印 "These two characters aren't equivalent."
+// 打印 "These two characters aren't equivalent."。
 ```
 
 <!--
@@ -1215,7 +1215,7 @@ for scene in romeoAndJuliet {
     }
 }
 print("There are \(act1SceneCount) scenes in Act 1")
-// 打印 "There are 5 scenes in Act 1"
+// 打印 "There are 5 scenes in Act 1"。
 ```
 
 <!--
@@ -1246,7 +1246,7 @@ for scene in romeoAndJuliet {
     }
 }
 print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
-// 打印 "6 mansion scenes; 2 cell scenes"
+// 打印 "6 mansion scenes; 2 cell scenes"。
 ```
 
 <!--
@@ -1307,7 +1307,7 @@ for codeUnit in dogString.utf8 {
     print("\(codeUnit) ", terminator: "")
 }
 print("")
-// 打印 "68 111 103 226 128 188 240 159 144 182 "
+// 打印 "68 111 103 226 128 188 240 159 144 182 "。
 ```
 
 <!--
@@ -1349,7 +1349,7 @@ for codeUnit in dogString.utf16 {
     print("\(codeUnit) ", terminator: "")
 }
 print("")
-// 打印 "68 111 103 8252 55357 56374 "
+// 打印 "68 111 103 8252 55357 56374 "。
 ```
 
 <!--
@@ -1388,7 +1388,7 @@ for scalar in dogString.unicodeScalars {
     print("\(scalar.value) ", terminator: "")
 }
 print("")
-// 打印 "68 111 103 8252 128054 "
+// 打印 "68 111 103 8252 128054 "。
 ```
 
 <!--

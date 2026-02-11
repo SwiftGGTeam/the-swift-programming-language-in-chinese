@@ -14,7 +14,6 @@
 
 ```swift
 struct BlackjackCard {
-
     // 嵌套的 Suit 枚举
     enum Suit: Character {
         case spades = "♠", hearts = "♡", diamonds = "♢", clubs = "♣"
@@ -57,7 +56,6 @@ struct BlackjackCard {
 
   ```swifttest
   -> struct BlackjackCard {
-
         // nested Suit enumeration
         enum Suit: Character {
            case spades = "♠", hearts = "♡", diamonds = "♢", clubs = "♣"
@@ -117,7 +115,7 @@ struct BlackjackCard {
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
 print("theAceOfSpades: \(theAceOfSpades.description)")
-// 输出 "theAceOfSpades: suit is ♠, value 是 1 或者 11"
+// 输出 "theAceOfSpades: suit is ♠, value 是 1 或者 11"。
 ```
 
 <!--
