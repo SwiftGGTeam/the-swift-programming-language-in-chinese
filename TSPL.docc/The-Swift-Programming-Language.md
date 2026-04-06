@@ -63,6 +63,11 @@
 - <doc:GenericParametersAndArguments>
 - <doc:SummaryOfTheGrammar>
 
+### 修订历史
+
+- <doc:RevisionHistory>
+- <doc:ChangeLog>
+
 <!--
 This source file is part of the Swift.org open source project
 
