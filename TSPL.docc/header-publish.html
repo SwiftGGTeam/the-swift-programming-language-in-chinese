@@ -151,9 +151,56 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
       <a class="promo-banner-cta" href="https://platform.minimaxi.com/subscribe/token-plan?code=FFaI9OHtgF&source=link" target="_blank" rel="noopener">👉 立即参与</a>
     </div>
   </div>
-  <button class="promo-banner-close" onclick="document.getElementById('promo-banner').classList.add('hidden');try{localStorage.setItem('promo-banner-closed','1')}catch(e){}" aria-label="关闭">×</button>
+  <button class="promo-banner-close" id="promo-banner-close" aria-label="关闭">×</button>
 </div>
 
 <script>
-  try { if (localStorage.getItem('promo-banner-closed') === '1') document.getElementById('promo-banner').classList.add('hidden'); } catch(e) {}
+(function() {
+  var STORAGE_KEY = 'promo-banner-closed';
+
+  function hideBanner() {
+    var el = document.getElementById('promo-banner');
+    if (el) el.style.display = 'none';
+  }
+
+  function showBanner() {
+    var el = document.getElementById('promo-banner');
+    if (el) el.style.display = '';
+  }
+
+  function bindClose() {
+    var btn = document.getElementById('promo-banner-close');
+    if (btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        hideBanner();
+        try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch(e) {}
+      });
+    }
+  }
+
+  // Check if already closed this session
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+      hideBanner();
+    }
+  } catch(e) {}
+
+  bindClose();
+
+  // Re-bind after DocC SPA navigations re-render the DOM
+  var observer = new MutationObserver(function() {
+    var banner = document.getElementById('promo-banner');
+    if (banner) {
+      try {
+        if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+          hideBanner();
+        }
+      } catch(e) {}
+      bindClose();
+    }
+  });
+  observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+})();
 </script>
