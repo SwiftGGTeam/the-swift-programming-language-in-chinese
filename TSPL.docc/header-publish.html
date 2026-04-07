@@ -113,6 +113,8 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
     justify-content: center;
     transition: background 0.2s;
     padding: 0;
+    z-index: 10000;
+    pointer-events: auto;
   }
   .promo-banner-close:hover {
     background: rgba(255,255,255,0.3);
@@ -151,56 +153,44 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
       <a class="promo-banner-cta" href="https://platform.minimaxi.com/subscribe/token-plan?code=FFaI9OHtgF&source=link" target="_blank" rel="noopener">👉 立即参与</a>
     </div>
   </div>
-  <button class="promo-banner-close" id="promo-banner-close" aria-label="关闭">×</button>
+  <button class="promo-banner-close" id="promo-banner-close" aria-label="关闭"
+    onclick="this.parentElement.style.display='none';try{sessionStorage.setItem('promo-banner-closed','1')}catch(e){}">×</button>
 </div>
 
 <script>
 (function() {
-  var STORAGE_KEY = 'promo-banner-closed';
-
-  function hideBanner() {
-    var el = document.getElementById('promo-banner');
-    if (el) el.style.display = 'none';
-  }
-
-  function showBanner() {
-    var el = document.getElementById('promo-banner');
-    if (el) el.style.display = '';
-  }
-
-  function bindClose() {
-    var btn = document.getElementById('promo-banner-close');
-    if (btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        hideBanner();
-        try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch(e) {}
-      });
-    }
-  }
-
-  // Check if already closed this session
+  // Hide if already closed this session
   try {
-    if (sessionStorage.getItem(STORAGE_KEY) === '1') {
-      hideBanner();
+    if (sessionStorage.getItem('promo-banner-closed') === '1') {
+      var b = document.getElementById('promo-banner');
+      if (b) b.style.display = 'none';
     }
   } catch(e) {}
 
-  bindClose();
-
-  // Re-bind after DocC SPA navigations re-render the DOM
-  var observer = new MutationObserver(function() {
-    var banner = document.getElementById('promo-banner');
-    if (banner) {
-      try {
-        if (sessionStorage.getItem(STORAGE_KEY) === '1') {
-          hideBanner();
-        }
-      } catch(e) {}
-      bindClose();
+  // Event delegation on document for close button (survives DOM re-renders)
+  document.addEventListener('click', function(e) {
+    var t = e.target;
+    if (t && (t.id === 'promo-banner-close' || t.closest && t.closest('.promo-banner-close'))) {
+      var b = document.getElementById('promo-banner');
+      if (b) b.style.display = 'none';
+      try { sessionStorage.setItem('promo-banner-closed', '1'); } catch(ex) {}
     }
-  });
-  observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+  }, true);
+
+  // Watch for SPA re-renders: hide banner if already dismissed
+  new MutationObserver(function() {
+    try {
+      if (sessionStorage.getItem('promo-banner-closed') === '1') {
+        var b = document.getElementById('promo-banner');
+        if (b && b.style.display !== 'none') b.style.display = 'none';
+      }
+    } catch(e) {}
+  }).observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
+
+<!-- Fallback: if DocC strips <script> tags, use img onerror to bootstrap -->
+<img src="data:," onerror="
+  try{if(sessionStorage.getItem('promo-banner-closed')==='1'){var b=document.getElementById('promo-banner');if(b)b.style.display='none'}}catch(e){}
+  document.addEventListener('click',function(e){var t=e.target;if(t&&(t.id==='promo-banner-close'||(t.closest&&t.closest('.promo-banner-close')))){var b=document.getElementById('promo-banner');if(b)b.style.display='none';try{sessionStorage.setItem('promo-banner-closed','1')}catch(x){}}},true);
+" style="display:none" />
