@@ -1,5 +1,12 @@
 # The Swift Programming Language (Simplified Chinese Version by SwiftGG)
 
+![](https://doc.swiftgg.team/images/org.swift.tspl/banner.jpg)
+🚀 MiniMax Token Plan 惊喜上线！新增语音、音乐、视频和图片生成权益。邀请好友享双重好礼，助力开发体验！
+好友立享 8.8折 专属优惠 + Builder 权益，你赢返利 + 社区特权！
+[👉 立即参与](https://platform.minimaxi.com/subscribe/token-plan?code=FFaI9OHtgF&source=link)
+
+---
+
 [English Version](#english-version) | [中文版本](#中文版本)
 
 ## English Version
