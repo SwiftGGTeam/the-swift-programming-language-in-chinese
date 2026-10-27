@@ -582,7 +582,7 @@ task.cancel()  // 输出 "Canceled!"
   .. _Concurrency_TaskPriority:
 
   Setting Task Priority
-  ~~~~~~~~~~~~~~~~~~~~~
+  ---------------------
 
   - priority values defined by ``Task.Priority`` enum
 
@@ -854,7 +854,7 @@ extension TemperatureLogger {
    .. _Concurrency_ActorIsolation:
 
    Actor Isolation
-   ~~~~~~~~~~~~~~~
+   ---------------
 
    TODO outline impact from SE-0313 Control Over Actor Isolation
    about the 'isolated' and 'nonisolated' keywords
@@ -957,7 +957,7 @@ extension TemperatureLogger {
    .. _Concurrency_PerformanceConsiderations:
 
    Performance Considerations
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   --------------------------
 
    - Switching to an actor might have costs;
    don't use them to protect a simple int that you're incrementing.
